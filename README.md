@@ -1,3 +1,5 @@
+[![Pub](https://img.shields.io/pub/v/built_redux.svg)](https://pub.dartlang.org/packages/built_redux)
+
 ### built_redux
 
 built_redux is a state management library written in dart that enforces immutability.
