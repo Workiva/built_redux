@@ -20,7 +20,7 @@ Built using [built_value][built_value_git]
 
     ```yaml
     dependencies:
-      built_redux: "^0.0.1"
+      built_redux: "^0.0.3"
     ```
 
 2. Add the `built_redux` [transformer] to your `pubspec.yaml`.
@@ -215,6 +215,6 @@ store.actions.decrement(1);
 
 [built_value_git]: https://github.com/google/built_value.dart/
 
-[redux_git]: github.com/reactjs/redux
+[redux_git]: https://github.com/reactjs/redux
 
 [redux_docs]: http://redux.js.org/
