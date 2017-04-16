@@ -8,31 +8,14 @@ import 'todo.dart';
 
 part 'todos.g.dart';
 
-class TodosActions extends ReduxActions {
-  static ActionMgr<Todo> addTodo;
-  static ActionMgr<int> removeTodo;
-  static ActionMgr<int> updateTodoStatus;
+abstract class TodosActions extends ReduxActions {
+  ActionMgr<Todo> addTodo;
+  ActionMgr<int> removeTodo;
+  ActionMgr<int> updateTodoStatus;
 
-  TodosActions(dispatcher) : super(dispatcher);
+  TodosActions._();
+  factory TodosActions() => new _$TodosActions();
 }
-
-// // Action Names
-// var addTodoName = 'ADD_TODO';
-// var removeTodoName = 'REMOVE_TODO';
-// var updateTodoStatusName = 'UPDATE_TODO_STATUS';
-//
-// // Action creators
-// addTodo(Todo todo) => new Action<Todo>()
-//   ..name = addTodoName
-//   ..payload = todo;
-//
-// removeTodo(int todoId) => new Action<int>()
-//   ..name = removeTodoName
-//   ..payload = todoId;
-//
-// updateTodoStatus(int todoId) => new Action<int>()
-//   ..name = removeTodoName
-//   ..payload = todoId;
 
 // Reducers
 addTodoReducer(TodosReducerBuilder builder, Action<Todo> action) =>
@@ -42,20 +25,15 @@ removeTodoReducer(TodosReducerBuilder builder, Action<int> action) =>
     builder.todosMap.remove(action.payload);
 
 updateTodoStatusReducer(TodosReducerBuilder builder, Action<int> action) =>
-    builder.todosMap[action.payload.groupId] = builder.todosMap
-        .build()[action.payload.groupId]
-        .rebuild((tbuilder) => tbuilder..done = !tbuilder.done);
+    builder.todosMap[action.payload] = builder.todosMap.build()[action.payload].rebuild(
+          (tbuilder) => tbuilder..done = !tbuilder.done,
+        );
 
-// final Map<String, Reducer<TodosReducer, TodosReducerBuilder, dynamic>> _reducers = {
-//   addTodoName: addTodoReducer,
-//   removeTodoName: removeTodoReducer,
-//   // updateTodoStatusName:
-// };
-
-final _reducers = new ReducerBuilder<TodosReducerBuilder>()
-  ..add<Todo>(TodosActions.addTodo, addTodoReducer)
-  ..add<int>(TodosActions.removeTodo, removeTodoReducer)
-  ..add<int>(TodosActions.updateTodoStatus, updateTodoStatusReducer);
+final _reducers = (new ReducerBuilder<TodosReducerBuilder>()
+      ..add<Todo>(TodosActionsNames.addTodo, addTodoReducer)
+      ..add<int>(TodosActionsNames.removeTodo, removeTodoReducer)
+      ..add<int>(TodosActionsNames.updateTodoStatus, updateTodoStatusReducer))
+    .build();
 
 // Built Reducer
 abstract class TodosReducer extends BuiltReducer<TodosReducer, TodosReducerBuilder>

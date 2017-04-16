@@ -3,6 +3,31 @@
 part of todos;
 
 // **************************************************************************
+// Generator: BuiltReduxGenerator
+// Target: abstract class TodosActions
+// **************************************************************************
+
+class _$TodosActions extends TodosActions {
+  final ActionMgr<int> updateTodoStatus =
+      new ActionMgr<int>('updateTodoStatus');
+  final ActionMgr<int> removeTodo = new ActionMgr<int>('removeTodo');
+  final ActionMgr<Todo> addTodo = new ActionMgr<Todo>('addTodo');
+  factory _$TodosActions() => new _$TodosActions._();
+  _$TodosActions._() : super._();
+  syncWithStore(dispatcher) {
+    updateTodoStatus.syncWithStore(dispatcher);
+    removeTodo.syncWithStore(dispatcher);
+    addTodo.syncWithStore(dispatcher);
+  }
+}
+
+class TodosActionsNames {
+  static ActionName updateTodoStatus = new ActionName<int>('updateTodoStatus');
+  static ActionName removeTodo = new ActionName<int>('removeTodo');
+  static ActionName addTodo = new ActionName<Todo>('addTodo');
+}
+
+// **************************************************************************
 // Generator: BuiltValueGenerator
 // Target: abstract class TodosReducer
 // **************************************************************************

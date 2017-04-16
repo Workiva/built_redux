@@ -66,7 +66,6 @@ class BuiltStoreTransformer extends Transformer {
       var superclass = cd.extendsClause?.superclass;
       if (superclass == null) continue;
       var name = superclass.name.name;
-      if (name == 'ReduxActions') generateActions(transformedFile, cd);
       if (name == 'BuiltReducer') {
         String reduceChildrenBody =
             "\n\n  @override\n  reduceChildren(dynamic b, Action<dynamic> a) {\n  }";
@@ -117,35 +116,6 @@ class BuiltStoreTransformer extends Transformer {
       transform.addOutput(transform.primaryInput);
     }
   }
-}
-
-generateActions(TransformedSourceFile transformedFile, ClassDeclaration cd) {
-  var initializerCode = "\n    ";
-  for (ClassMember m in cd.members) {
-    if (m is! FieldDeclaration) continue;
-    var v = m as FieldDeclaration;
-
-    // TODO: make actions final if they are not already
-    if (v.fields.type == null) continue;
-
-    var returnType = v.fields.type.name.name;
-    var name = v.fields.variables.first.name.name;
-
-    if (returnType == 'ActionMgr') {
-      transformedFile.insert(
-        transformedFile.sourceFile.location(v.endToken.previous.end),
-        " = new ActionMgr('${cd.name}-$name')",
-      );
-      initializerCode += '$name.syncWithStore(dispatcher),\n    ';
-    } else {
-      initializerCode += '$name = new ${returnType}(dispatcher),\n    ';
-    }
-  }
-
-  transformedFile.insert(
-    transformedFile.sourceFile.location(cd.getConstructor(null).separator.end),
-    initializerCode,
-  );
 }
 
 Iterable<String> getBuiltReducers() {

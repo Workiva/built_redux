@@ -1,7 +1,6 @@
 library example;
 
-export 'middleware/new_group_middleware.dart';
-export 'middleware/new_todo_middleware.dart';
+export 'middleware/creation_middleware.dart';
 
 export 'reducers/app_state.dart';
 export 'reducers/api.dart';

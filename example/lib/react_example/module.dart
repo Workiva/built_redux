@@ -1,30 +1,17 @@
 import 'package:func_comp/func_comp.dart';
 import 'package:over_react/over_react.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:built_redux/built_redux.dart';
 
 import '../reducers/app_state.dart';
 import '../reducers/api.dart';
-import '../reducers/todos.dart';
 import '../reducers/todo.dart';
-import '../reducers/groups.dart';
 import '../reducers/group.dart';
-import '../middleware/new_group_middleware.dart';
-import '../middleware/new_todo_middleware.dart';
 import 'select.dart';
 import 'creator.dart';
 
-// class TodoActions {
-//   Action
-// }
-
 class TodoMappedProps {
-  Function addTodo;
-  Function removeTodo;
-  Function addGroup;
-  Function removeGroup;
-  Function setCurrentGroup;
-  // Function setCurrentGroup;
-
+  AppStateActions actions;
   int currentGroup;
   BuiltMap<int, Group> groups;
   BuiltMap<int, Todo> todos;
@@ -36,12 +23,7 @@ class TodoProps extends TodoMappedProps with StateMgr {}
 var todosReduxBuilder = compose<ReduxProps<AppState>, TodoProps>([
   mapReduxStoreToProps<AppState, TodoMappedProps>(
       (ReduxProps<AppState> reduxProps) => new TodoMappedProps()
-        ..actions = reduxProps.actions
-        // ..addTodo = ((String content) => reduxProps.store.dispatch(createTodo(content)))
-        // ..removeTodo = ((int id) => reduxProps.store.dispatch(removeTodo(id)))
-        // ..addGroup = ((String name) => reduxProps.store.dispatch(createGroup(name)))
-        // ..removeGroup = ((int id) => reduxProps.store.dispatch(removeGroup(id)))
-        // ..setCurrentGroup = ((int id) => reduxProps.store.dispatch(setCurrentGroup(id)))
+        ..actions = reduxProps.store.actions
         ..currentGroup = reduxProps.store.state.currentGroup
         ..groups = reduxProps.store.state.groups.groupMap
         ..todos = currentGroupTodos(reduxProps.store.state)
@@ -55,13 +37,13 @@ ReactElement todosComponent(TodoProps props) => Dom.div()(
         ..label = 'group'
         ..currentGroup = props.currentGroup
         ..optionMap = props.groups
-        ..onSelect = props.setCurrentGroup),
+        ..onSelect = props.actions.setCurrentGroup),
       creatorComponent(new CreatorProps()
-        ..onSubmit = props.addGroup
+        ..onSubmit = props.actions.creationActions.createGroup
         ..name = 'group'),
       Dom.div()(),
       creatorComponent(new CreatorProps()
-        ..onSubmit = props.addTodo
+        ..onSubmit = props.actions.creationActions.createTodo
         ..name = 'todo'),
       todoItems(props),
     );
@@ -71,14 +53,14 @@ ReactElement todoHeader(TodoProps props) =>
 
 ReactElement todoItems(TodoProps props) => Dom.div()(
       props.todos.values.map(
-        (Todo todo) => todoItem(todo),
+        (Todo todo) => todoItem(todo, props.actions.todosActions.updateTodoStatus),
       ),
     );
 
-ReactElement todoItem(Todo todo) => (Dom.div()..key = todo.id)(
+ReactElement todoItem(Todo todo, ActionMgr<int> updateTodoStatus) => (Dom.div()..key = todo.id)(
       todo.text,
       (Dom.input()
-        // ..onChange = (() => )
-        ..value = todo.done
+        ..onChange = ((_) => updateTodoStatus(todo.id))
+        ..checked = todo.done
         ..type = 'checkbox')(),
     );

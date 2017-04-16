@@ -5,36 +5,27 @@ import 'package:built_value/built_value.dart';
 
 import 'groups.dart';
 import 'todos.dart';
+import '../middleware/creation_middleware.dart';
 
 part 'app_state.g.dart';
 
-class AppStateActions extends ReduxActions {
-  static ActionMgr<int> setCurrentGroup;
+abstract class AppStateActions extends ReduxActions {
+  ActionMgr<int> setCurrentGroup;
 
-  static GroupsActions groupActions;
-  static TodosActions todosActions;
+  GroupsActions groupActions;
+  TodosActions todosActions;
+  CreatorActions creationActions;
 
-  AppStateActions(dispatcher) : super(dispatcher);
+  AppStateActions._();
+  factory AppStateActions() => new _$AppStateActions();
 }
 
-// Action Names
-// var setCurrentGroupName = 'SET_CURRENT_GROUP';
-
-// Action creators
-// setCurrentGroup(int newGroup) => new Action<int>()
-//   ..name = setCurrentGroupName
-//   ..payload = newGroup;
-
-// Reducers
-// final Map<String, Reducer<AppState, AppStateBuilder, dynamic>> _reducers = {
-//   setCurrentGroupName: (builder, action) => builder..currentGroup = action.payload,
-// };
-
-final _reducers = new ReducerBuilder()
-  ..add<AppStateBuilder, int>(
-    AppStateActions.setCurrentGroup,
-    (builder, action) => builder..currentGroup = action.payload,
-  );
+final _reducers = (new ReducerBuilder<AppStateBuilder>()
+      ..add<int>(
+        AppStateActionsNames.setCurrentGroup,
+        (builder, action) => builder..currentGroup = action.payload,
+      ))
+    .build();
 
 // Built Reducer
 abstract class AppState extends BuiltReducer<AppState, AppStateBuilder>

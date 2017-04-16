@@ -3,6 +3,30 @@
 part of app_state;
 
 // **************************************************************************
+// Generator: BuiltReduxGenerator
+// Target: abstract class AppStateActions
+// **************************************************************************
+
+class _$AppStateActions extends AppStateActions {
+  GroupsActions groupActions = new GroupsActions();
+  final TodosActions todosActions = new TodosActions();
+  ActionMgr<int> setCurrentGroup = new ActionMgr<int>('setCurrentGroup');
+  CreatorActions creationActions = new CreatorActions();
+  factory _$AppStateActions() => new _$AppStateActions._();
+  _$AppStateActions._() : super._();
+  syncWithStore(dispatcher) {
+    creationActions.syncWithStore(dispatcher);
+    todosActions.syncWithStore(dispatcher);
+    groupActions.syncWithStore(dispatcher);
+    setCurrentGroup.syncWithStore(dispatcher);
+  }
+}
+
+class AppStateActionsNames {
+  static ActionName setCurrentGroup = new ActionName<int>('setCurrentGroup');
+}
+
+// **************************************************************************
 // Generator: BuiltValueGenerator
 // Target: abstract class AppState
 // **************************************************************************

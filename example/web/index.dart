@@ -22,9 +22,10 @@ Future main() async {
   //   querySelector('#container-flux'),
   // );
   //
-  var reduxStore = new Store<AppState>(
+  var reduxStore = new Store<AppState, AppStateActions>(
     _defaultState(),
-    middleware: [newGroupMiddleware, newTodoMiddleware],
+    new AppStateActions(),
+    middleware: [creatorMiddeware],
   );
 
   react_dom.render(

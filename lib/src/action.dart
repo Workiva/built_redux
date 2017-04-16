@@ -1,4 +1,6 @@
 import 'typedefs.dart';
+import 'middleware.dart';
+import 'built_reducer.dart';
 
 /// [Action]
 /// Action [name]s should always be unique!
@@ -31,8 +33,7 @@ class ActionMgr<P> {
 }
 
 abstract class ReduxActions {
-  ActionDispatcher dispatcher;
-  ReduxActions(this.dispatcher);
+  syncWithStore(dispatcher);
 }
 
 /// Action annotaion
@@ -57,11 +58,34 @@ abstract class ReduxActions {
 ///
 
 class ReducerBuilder<B> {
-  Map<String, Reducer> _map;
+  var _map = new Map<String, Reducer>();
 
-  ReducerBuilder();
-
-  add<T>(ActionMgr<T> aMgr, Reducer<T, dynamic, B> reducer) => _map[aMgr.name] = reducer;
+  add<T>(ActionName<T> aMgr, Reducer<T, dynamic, B> reducer) => _map[aMgr.name] = reducer;
 
   build() => _map;
+}
+
+typedef MiddlewareHandler<State extends BuiltReducer, Actions extends ReduxActions>(
+    MiddlewareApi<State, Actions> api, ActionHandler next, Action action);
+
+class MiddlwareBuilder<State extends BuiltReducer, Actions extends ReduxActions> {
+  var _map = new Map<String, MiddlewareHandler<State, Actions>>();
+
+  add<T>(ActionName<T> aMgr, MiddlewareHandler<State, Actions> handler) => _map[aMgr.name] =
+      handler;
+
+  build() => (MiddlewareApi<State, Actions> api) => (ActionHandler next) => (Action action) {
+        var handler = _map[action.name];
+        if (handler != null) {
+          handler(api, next, action);
+          return;
+        }
+
+        next(action);
+      };
+}
+
+class ActionName<T> {
+  String name;
+  ActionName(this.name);
 }

@@ -3,6 +3,32 @@
 part of groups;
 
 // **************************************************************************
+// Generator: BuiltReduxGenerator
+// Target: abstract class GroupsActions
+// **************************************************************************
+
+class _$GroupsActions extends GroupsActions {
+  final ActionMgr<AddTodoToGroupPayload> addTodoToGroup =
+      new ActionMgr<AddTodoToGroupPayload>('addTodoToGroup');
+  final ActionMgr<int> removeGroup = new ActionMgr<int>('removeGroup');
+  final ActionMgr<int> addGroup = new ActionMgr<int>('addGroup');
+  factory _$GroupsActions() => new _$GroupsActions._();
+  _$GroupsActions._() : super._();
+  syncWithStore(dispatcher) {
+    addTodoToGroup.syncWithStore(dispatcher);
+    removeGroup.syncWithStore(dispatcher);
+    addGroup.syncWithStore(dispatcher);
+  }
+}
+
+class GroupsActionsNames {
+  static ActionName addTodoToGroup =
+      new ActionName<AddTodoToGroupPayload>('addTodoToGroup');
+  static ActionName removeGroup = new ActionName<int>('removeGroup');
+  static ActionName addGroup = new ActionName<int>('addGroup');
+}
+
+// **************************************************************************
 // Generator: BuiltValueGenerator
 // Target: abstract class GroupsReducer
 // **************************************************************************

@@ -8,39 +8,20 @@ import 'group.dart';
 
 part 'groups.g.dart';
 
-class GroupsActions extends ReduxActions {
-  static ActionMgr<int> addGroup;
-  static ActionMgr<int> removeGroup;
-  static ActionMgr<AddTodoToGroupPayload> addTodoToGroup;
+abstract class GroupsActions extends ReduxActions {
+  ActionMgr<int> addGroup;
+  ActionMgr<int> removeGroup;
+  ActionMgr<AddTodoToGroupPayload> addTodoToGroup;
 
-  GroupsActions(dispatcher) : super(dispatcher);
+  GroupsActions._();
+  factory GroupsActions() => new _$GroupsActions();
 }
-
-// ction Names
-// var addTodoToGroupName = 'ADD_TODO_GROUP';
-// var addGroupName = 'ADD_GROUP';
-// var removeGroupName = 'REMOVE_GROUP';
 
 // Action Payload
 class AddTodoToGroupPayload {
   int todoId;
   int groupId;
 }
-
-// Action creators
-// addTodoToGroup(int todoId, int groupId) => new Action<AddTodoToGroupPayload>()
-//   ..name = addTodoToGroupName
-//   ..payload = (new AddTodoToGroupPayload()
-//     ..todoId = todoId
-//     ..groupId = groupId);
-//
-// addGroup(Group newGroup) => new Action<Group>()
-//   ..name = addGroupName
-//   ..payload = newGroup;
-//
-// removeGroup(int id) => new Action<int>()
-//   ..name = removeGroupName
-//   ..payload = id;
 
 // Reducers
 _addTodoToGroupReducer(GroupsReducerBuilder builder, Action<AddTodoToGroupPayload> action) =>
@@ -54,16 +35,11 @@ _addGroupReducer(GroupsReducerBuilder builder, Action<Group> action) =>
 _removeGroupReducer(GroupsReducerBuilder builder, Action<int> action) =>
     builder.groupMap.remove(action.payload);
 
-// final Map<String, Reducer<GroupsReducer, GroupsReducerBuilder, dynamic>> _reducers = {
-//   addTodoToGroupName: _addTodoToGroupReducer,
-//   addGroupName: _addGroupReducer,
-//   removeGroupName: _removeGroupReducer,
-// };
-
-final _reducers = new ReducerBuilder<GroupsBuilder>()
-  ..add<Group>(GroupActions.addGroup, _addGroupReducer)
-  ..add<int>(GroupsActions.removeGroup, _removeGroupReducer)
-  ..add<AddTodoToGroupPayload>(GroupsActions.addGroup, _addTodoToGroupReducer);
+final _reducers = (new ReducerBuilder<GroupsReducerBuilder>()
+      ..add<Group>(GroupsActionsNames.addGroup, _addGroupReducer)
+      ..add<int>(GroupsActionsNames.removeGroup, _removeGroupReducer)
+      ..add<AddTodoToGroupPayload>(GroupsActionsNames.addTodoToGroup, _addTodoToGroupReducer))
+    .build();
 
 // Built Reducer
 abstract class GroupsReducer extends BuiltReducer<GroupsReducer, GroupsReducerBuilder>

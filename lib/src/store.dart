@@ -16,6 +16,7 @@ class Store<State extends BuiltReducer, Actions extends ReduxActions> {
 
   // the current state
   State _state;
+  Actions _actions;
 
   Store(
     State defaultState,
@@ -24,8 +25,10 @@ class Store<State extends BuiltReducer, Actions extends ReduxActions> {
   }) {
     // set the initial state
     _state = defaultState;
+    _actions = actions;
+    _actions.syncWithStore(_dispatch.add);
 
-    final MiddlewareApi api = new MiddlewareApi<State>(this);
+    final MiddlewareApi api = new MiddlewareApi<State, Actions>(this);
 
     // setup the middleware dispatch chain
     ActionHandler handler = (action) {
@@ -55,6 +58,9 @@ class Store<State extends BuiltReducer, Actions extends ReduxActions> {
 
   /// [state] returns the current state
   State get state => _state;
+
+  /// [actions] returns the synced actions
+  Actions get actions => _actions;
 
   /// [dispatch] dispatches a new actione
   dispatch(Action a) => _dispatch.add(a);
