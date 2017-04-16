@@ -32,12 +32,11 @@ class Store<State extends BuiltReducer, Actions extends ReduxActions> {
 
     // setup the middleware dispatch chain
     ActionHandler handler = (action) {
-      print("action ${action.name}");
       var state = _state.rebuild((b) => _state.reduce(b, action));
 
       // if the hashcode did not change bail
       if (identical(_state, state)) return;
-      print(state);
+
       // update the internal state and publish the change
       _state = state;
       _stateController.add(_state);
@@ -61,7 +60,4 @@ class Store<State extends BuiltReducer, Actions extends ReduxActions> {
 
   /// [actions] returns the synced actions
   Actions get actions => _actions;
-
-  /// [dispatch] dispatches a new actione
-  dispatch(Action a) => _dispatch.add(a);
 }
