@@ -7,12 +7,6 @@ import 'package:transformer_utils/transformer_utils.dart';
 import 'dart:async';
 import 'dart:io';
 
-final Iterable<String> builtCollectionNames = [
-  "BuiltList",
-  "BuiltMap",
-  "BuiltSet",
-];
-
 class BuiltStoreTransformer extends Transformer {
   final BarbackSettings _settings;
   BuiltStoreTransformer.asPlugin(this._settings);
@@ -59,10 +53,6 @@ class BuiltStoreTransformer extends Transformer {
       if (d is! ClassDeclaration) continue;
       var cd = d as ClassDeclaration;
 
-      // var metadatas = cd.metadata.map((e) => e.name.name);
-      // print("metas are $metadatas");
-      // if (metadatas.contains('ReduxActions')) generateActions(transformedFile, cd);
-
       var superclass = cd.extendsClause?.superclass;
       if (superclass == null) continue;
       var name = superclass.name.name;
@@ -79,36 +69,15 @@ class BuiltStoreTransformer extends Transformer {
           if (builtReducers.contains(md.returnType.name.name))
             reduceChildrenBody =
                 reduceChildrenBody.replaceFirst("{", "{\n    ${md.name}.reduce(b.${md.name}, a);");
-
-          // if (md.returnType.typeArguments != null &&
-          //     md.returnType.typeArguments.arguments != null &&
-          //     md.returnType.typeArguments.arguments.length > 0 &&
-          //     isBuiltReducer(
-          //       md.returnType.typeArguments.arguments.first.name.name,
-          //       unit.declarations,
-          //     )) {
-          //   print("IS BUILT ${md.returnType.typeArguments.arguments.first.name.name}");
-          // var element = md.returnType.typeArguments.arguments.first.type.element;
-          // if (element is ClassElement) {
-          //   var x = element as ClassElement;
-          //   print(x.allSupertypes);
-          // }
-          // }
-          // print(md.returnType.typeArguments.arguments.elementAt(0).type.isSubtypeOf(BuiltReducer));
-
-          // if (builtCollectionNames.contains(md.returnType.name.name))
-          //   reduceChildrenBody = reduceChildrenBody.replaceFirst(
-          //       "{", "{\n    ${md.name}.forEach((k,v) => v.reduce(a));");
         }
 
         transformedFile.insert(
             transformedFile.sourceFile.location(cd.members.endToken.end), reduceChildrenBody);
       }
     }
-    print(transformedFile.getTransformedText());
+
     if (transformedFile.isModified) {
       // Output the transformed source.
-
       transform.addOutput(
           new Asset.fromString(transform.primaryInput.id, transformedFile.getTransformedText()));
     } else {
@@ -152,39 +121,5 @@ absoluteToPackage(String path) {
   for (int i = idxOfLib + 1; i < parts.length; i++) rest += '/${parts[i]}';
   return new Uri(scheme: 'package', path: '${beforeLib}${rest}');
 }
-
-// Uri idToPackageUri(String filePath) {
-//   print('path is ${filePath}');
-//   if (!id.path.startsWith('lib/')) {
-//     return new Uri(path: id.path);
-//   }
-//
-//
-//   return new Uri(
-//       scheme: 'package', path: p.url.join(id.package, id.path.replaceFirst('lib/', '')));
-// }
-
-// Uri uriBase(AssetId id) {
-//   if (!id.path.startsWith('lib/')) {
-//     return new Uri(path: id.path.sp);
-//   }
-//
-//   return new Uri(scheme: 'package', path: p.url.join(id.package, id.path.replaceFirst('lib/', '')));
-// }
-
-// bool isBuiltReducer(String name, NodeList<CompilationUnitMember> declarations) {
-//   for (CompilationUnitMember d in declarations) {
-//     if (d is! ClassDeclaration) continue;
-//     var cd = d as ClassDeclaration;
-//
-//     if (cd.name.name != name) continue;
-//     if (cd.implementsClause == null || cd.implementsClause.interfaces == null) return false;
-//
-//     for (TypeName tn in cd.implementsClause.interfaces)
-//       if (tn.name.name == 'BuiltReducer') return true;
-//   }
-//
-//   return false;
-// }
 
 bool importsBuiltReducer(String source) => source.contains("package:built_redux");

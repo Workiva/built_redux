@@ -16,7 +16,7 @@ class BuiltReduxGenerator extends Generator {
 }
 
 bool needsReduxActions(ClassElement classElement) => needsGen(classElement, 'ReduxActions');
-//
+
 bool needsGen(ClassElement classElement, String type) =>
     classElement.allSupertypes.any((interfaceType) => interfaceType.name == type) &&
     !classElement.displayName.startsWith('_\$');
@@ -32,7 +32,6 @@ generateActions(ClassElement element) {
     var typeName = ele.name;
 
     if (ele is ClassElement && typeName == 'ActionMgr') {
-      // log.shout(_getGenericBounds(e));
       nameCode = nameCode.replaceFirst(
         '\n',
         '\nstatic ActionName $fieldName = new ActionName<${_getActionMgrGenericType(e)}>(\'$fieldName\');\n',
