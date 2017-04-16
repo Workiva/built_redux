@@ -7,7 +7,7 @@ import 'package:react/react_client.dart' as react_client;
 import 'package:react/react_dom.dart' as react_dom;
 import 'package:built_collection/built_collection.dart';
 import 'package:built_redux/built_redux.dart';
-import 'package:func_comp/func_comp.dart';
+import 'package:recompose_dart/recompose_dart.dart';
 
 import 'package:example/example.dart';
 

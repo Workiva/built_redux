@@ -1,3 +1,7 @@
 .pub
 packages
 .packages
+
+example/.pub
+example/packages
+example/.packages

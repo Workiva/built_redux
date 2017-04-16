@@ -1,10 +1,8 @@
 name: example
 
 dependencies:
-  func_comp:
-    path: ../../func_comp
-  built_redux:
-    path: ../.
+  recompose_dart: '^0.0.1'
+  built_redux: '^0.0.1'
 
 dev_dependencies:
   browser: any

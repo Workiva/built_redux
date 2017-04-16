@@ -1,4 +1,4 @@
-import 'package:func_comp/func_comp.dart';
+import 'package:recompose_dart/recompose_dart.dart';
 import 'package:over_react/over_react.dart';
 import 'package:built_collection/built_collection.dart';
 
