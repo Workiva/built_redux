@@ -13,15 +13,7 @@ import 'package:example/example.dart';
 
 Future main() async {
   react_client.setClientConfiguration();
-  //
-  // var actions = new TodoActions();
-  // var store = new TodoStore(actions);
-  //
-  // react_dom.render(
-  //   todosBuilder(new TodoFluxProps(store, actions)),
-  //   querySelector('#container-flux'),
-  // );
-  //
+
   var reduxStore = new Store<AppState, AppStateActions>(
     _defaultState(),
     new AppStateActions(),
