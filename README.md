@@ -22,7 +22,7 @@ Built using [built_value][built_value_git]
 
     ```yaml
     dependencies:
-      built_redux: "^0.0.3"
+      built_redux: "^0.0.5"
     ```
 
 2. Add the `built_redux` [transformer] to your `pubspec.yaml`.
