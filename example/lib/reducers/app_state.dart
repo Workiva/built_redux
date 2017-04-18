@@ -24,8 +24,10 @@ abstract class AppStateActions extends ReduxActions {
 _setCurrentGroupReducer(AppState state, Action<int> action, AppStateBuilder builder) =>
     builder..currentGroup = action.payload;
 
-_setBogus(AppState state, Action<int> action, AppStateBuilder builder) =>
-    builder..bogus += action.payload;
+_setBogus(AppState state, Action<int> action, AppStateBuilder builder) {
+  print("set bogus handled");
+  return builder..bogus += action.payload;
+}
 
 final _reducers = (new ReducerBuilder<AppStateBuilder>()
       ..add<int>(AppStateActionsNames.setCurrentGroup, _setCurrentGroupReducer)
