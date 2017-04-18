@@ -4,7 +4,7 @@ import 'action.dart';
 import 'middleware.dart';
 
 typedef void Reducer<P, V extends Built<V, B>, B extends Builder<V, B>>(
-    B builder, Action<P> action);
+    V state, Action<P> action, B builder);
 
 typedef ActionHandler(Action a);
 typedef ActionHandler NextActionHandler(ActionHandler next);
