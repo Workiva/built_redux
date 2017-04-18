@@ -11,6 +11,7 @@ part 'app_state.g.dart';
 
 abstract class AppStateActions extends ReduxActions {
   ActionMgr<int> setCurrentGroup;
+  ActionMgr<int> setBogus;
 
   GroupsActions groupActions;
   TodosActions todosActions;
@@ -23,8 +24,12 @@ abstract class AppStateActions extends ReduxActions {
 _setCurrentGroupReducer(AppState state, Action<int> action, AppStateBuilder builder) =>
     builder..currentGroup = action.payload;
 
+_setBogus(AppState state, Action<int> action, AppStateBuilder builder) =>
+    builder..bogus += action.payload;
+
 final _reducers = (new ReducerBuilder<AppStateBuilder>()
-      ..add<int>(AppStateActionsNames.setCurrentGroup, _setCurrentGroupReducer))
+      ..add<int>(AppStateActionsNames.setCurrentGroup, _setCurrentGroupReducer)
+      ..add<int>(AppStateActionsNames.setBogus, _setBogus))
     .build();
 
 // Built Reducer
@@ -32,6 +37,9 @@ abstract class AppState extends BuiltReducer<AppState, AppStateBuilder>
     implements Built<AppState, AppStateBuilder> {
   /// [currentGroup] is the group in which the view is currently displaying todos for
   int get currentGroup;
+
+  /// [bogus] is an integer to prove that pure component should updates work
+  int get bogus;
 
   /// [groups] is a list of all todo groups
   GroupsReducer get groups;

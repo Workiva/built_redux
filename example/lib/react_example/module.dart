@@ -1,5 +1,8 @@
+library module;
+
 import 'package:recompose_dart/recompose_dart.dart';
 import 'package:over_react/over_react.dart';
+import 'package:built_value/built_value.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_redux/built_redux.dart';
 
@@ -10,25 +13,30 @@ import '../reducers/group.dart';
 import 'select.dart';
 import 'creator.dart';
 
-class TodoMappedProps {
-  AppStateActions actions;
-  int currentGroup;
-  BuiltMap<int, Group> groups;
-  BuiltMap<int, Todo> todos;
-  String title;
+part 'module.g.dart';
+
+abstract class TodoProps implements Built<TodoProps, TodoPropsBuilder> {
+  AppStateActions get actions;
+  int get currentGroup;
+  BuiltMap<int, Group> get groups;
+  BuiltMap<int, Todo> get todos;
+  String get title;
+
+  TodoProps._();
+  factory TodoProps([updates(TodoPropsBuilder b)]) = _$TodoProps;
 }
 
-class TodoProps extends TodoMappedProps with StateMgr {}
-
 var todosReduxBuilder = compose<ReduxProps<AppState>, TodoProps>([
-  mapReduxStoreToProps<AppState, TodoMappedProps>(
-      (ReduxProps<AppState> reduxProps) => new TodoMappedProps()
+  mapReduxStoreToProps<AppState, TodoProps>(
+      (ReduxProps<AppState> reduxProps) => new TodoProps((b) => b
         ..actions = reduxProps.store.actions
         ..currentGroup = reduxProps.store.state.currentGroup
-        ..groups = reduxProps.store.state.groups.groupMap
-        ..todos = currentGroupTodos(reduxProps.store.state)
-        ..title = "redux"),
+        ..groups = reduxProps.store.state.groups.groupMap.toBuilder()
+        ..todos = currentGroupTodos(reduxProps.store.state).toBuilder()
+        ..title = "redux")),
   pure,
+  lifecycle<TodoProps>(
+      componentDidUpdate: (oldProps, newProps) => print('prev: $oldProps\nnew: $newProps')),
 ])(todosComponent);
 
 ReactElement todosComponent(TodoProps props) => Dom.div()(
@@ -46,6 +54,7 @@ ReactElement todosComponent(TodoProps props) => Dom.div()(
         ..onSubmit = props.actions.creationActions.createTodo
         ..name = 'todo'),
       todoItems(props),
+      (Dom.button()..onClick = (_) => props.actions.setBogus(3))('bogus props change'),
     );
 
 ReactElement todoHeader(TodoProps props) =>

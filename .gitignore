@@ -5,3 +5,4 @@ packages
 example/.pub
 example/packages
 example/.packages
+example/.dart_tool

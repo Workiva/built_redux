@@ -28,8 +28,8 @@ Future main() async {
 
 _defaultState() => new AppState((b) => b
   ..currentGroup = -1
+  ..bogus = 0
   ..groups = new GroupsReducer((b) => b..groupMap = new BuiltMap<int, Group>().toBuilder())
       .toBuilder() // ..groupMap = new BuiltMap<int, Group>(),
-
   ..todos =
       new TodosReducer((b) => b..todosMap = new BuiltMap<int, Todo>().toBuilder()).toBuilder());

@@ -66,7 +66,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.3"
+    version: "0.0.4"
   built_value:
     description:
       name: built_value
@@ -258,7 +258,7 @@ packages:
       name: recompose_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.5"
   shelf:
     description:
       name: shelf
