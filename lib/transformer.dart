@@ -58,7 +58,7 @@ class BuiltStoreTransformer extends Transformer {
       var name = superclass.name.name;
       if (name == 'BuiltReducer') {
         String reduceChildrenBody =
-            "\n\n  @override\n  reduceChildren(dynamic b, Action<dynamic> a) {\n  }";
+            "\n\n  @override\n  reduceChildren(dynamic state, Action<dynamic> a, dynamic builder) {\n  }";
 
         for (ClassMember m in cd.members) {
           if (m is! MethodDeclaration) continue;
@@ -67,8 +67,8 @@ class BuiltStoreTransformer extends Transformer {
           if (!md.isGetter || md.returnType == null) continue;
 
           if (builtReducers.contains(md.returnType.name.name))
-            reduceChildrenBody =
-                reduceChildrenBody.replaceFirst("{", "{\n    ${md.name}.reduce(b.${md.name}, a);");
+            reduceChildrenBody = reduceChildrenBody.replaceFirst(
+                "{", "{\n    ${md.name}.reduce(state.${md.name}, a, builder.${md.name});");
         }
 
         transformedFile.insert(

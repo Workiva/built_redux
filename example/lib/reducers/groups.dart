@@ -24,15 +24,15 @@ class AddTodoToGroupPayload {
 }
 
 // Reducers
-_addTodoToGroupReducer(GroupsReducerBuilder builder, Action<AddTodoToGroupPayload> action) =>
-    builder.groupMap[action.payload.groupId] = builder.groupMap
-        .build()[action.payload.groupId]
+_addTodoToGroupReducer(
+        GroupsReducer state, Action<AddTodoToGroupPayload> action, GroupsReducerBuilder builder) =>
+    builder.groupMap[action.payload.groupId] = state.groupMap[action.payload.groupId]
         .rebuild((gbuilder) => gbuilder..todoIds.add(action.payload.todoId));
 
-_addGroupReducer(GroupsReducerBuilder builder, Action<Group> action) =>
+_addGroupReducer(GroupsReducer state, Action<Group> action, GroupsReducerBuilder builder) =>
     builder.groupMap[action.payload.id] = action.payload;
 
-_removeGroupReducer(GroupsReducerBuilder builder, Action<int> action) =>
+_removeGroupReducer(GroupsReducer state, Action<int> action, GroupsReducerBuilder builder) =>
     builder.groupMap.remove(action.payload);
 
 final _reducers = (new ReducerBuilder<GroupsReducerBuilder>()

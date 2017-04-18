@@ -20,11 +20,11 @@ abstract class AppStateActions extends ReduxActions {
   factory AppStateActions() => new _$AppStateActions();
 }
 
+_setCurrentGroupReducer(AppState state, Action<int> action, AppStateBuilder builder) =>
+    builder..currentGroup = action.payload;
+
 final _reducers = (new ReducerBuilder<AppStateBuilder>()
-      ..add<int>(
-        AppStateActionsNames.setCurrentGroup,
-        (builder, action) => builder..currentGroup = action.payload,
-      ))
+      ..add<int>(AppStateActionsNames.setCurrentGroup, _setCurrentGroupReducer))
     .build();
 
 // Built Reducer

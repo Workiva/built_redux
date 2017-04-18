@@ -1,5 +1,5 @@
 name: built_redux
-version: 0.0.3
+version: 0.0.4
 description:
   A state management library written in dart that enforces immutability
 authors:

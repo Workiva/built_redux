@@ -18,16 +18,16 @@ abstract class TodosActions extends ReduxActions {
 }
 
 // Reducers
-addTodoReducer(TodosReducerBuilder builder, Action<Todo> action) =>
+addTodoReducer(TodosReducer state, Action<Todo> action, TodosReducerBuilder builder) =>
     builder.todosMap[action.payload.id] = action.payload;
 
-removeTodoReducer(TodosReducerBuilder builder, Action<int> action) =>
+removeTodoReducer(TodosReducer state, Action<int> action, TodosReducerBuilder builder) =>
     builder.todosMap.remove(action.payload);
 
-updateTodoStatusReducer(TodosReducerBuilder builder, Action<int> action) =>
-    builder.todosMap[action.payload] = builder.todosMap.build()[action.payload].rebuild(
-          (tbuilder) => tbuilder..done = !tbuilder.done,
-        );
+updateTodoStatusReducer(TodosReducer state, Action<int> action, TodosReducerBuilder builder) =>
+    builder.todosMap[action.payload] = state.todosMap[action.payload].rebuild(
+      (tbuilder) => tbuilder..done = !tbuilder.done,
+    );
 
 final _reducers = (new ReducerBuilder<TodosReducerBuilder>()
       ..add<Todo>(TodosActionsNames.addTodo, addTodoReducer)

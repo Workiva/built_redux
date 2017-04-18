@@ -1,4 +1,4 @@
-/// [Action]
+/// [Action] is the object passed to your reducer to signify the state change that needs to take place.
 /// Action [name]s should always be unique!
 class Action<Payload> {
   /// A unique action name.
@@ -17,7 +17,7 @@ class ActionMgr<P> {
 
   String get name => _name;
 
-  call(P payload) => _dispatcher(new Action()
+  call(P payload) => _dispatcher(new Action<P>()
     ..name = name
     ..payload = payload);
 

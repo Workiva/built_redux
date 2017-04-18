@@ -32,10 +32,10 @@ class Store<State extends BuiltReducer, Actions extends ReduxActions> {
 
     // setup the middleware dispatch chain
     ActionHandler handler = (action) {
-      var state = _state.rebuild((b) => _state.reduce(b, action));
+      var state = _state.rebuild((b) => _state.reduce(_state, action, b));
 
       // if the hashcode did not change bail
-      if (identical(_state, state)) return;
+      if (_state == state) return;
 
       // update the internal state and publish the change
       _state = state;

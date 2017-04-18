@@ -103,11 +103,11 @@ import 'package:built_redux/built_redux.dart';
  * These are reducers, a pure function with (builder, action) => state signature.
  * It describes how an action transforms the state into the next state.
  */
-increment(CounterBuilder builder, Action<int> action) =>
-  builder..count = builder.build().count + action.payload;
+increment(Counter state, Action<int> action, CounterBuilder builder) =>
+  builder..count = state.count + action.payload;
 
-decrement(CounterBuilder builder, Action<int> action) =>
-  builder..count = builder.build().count - action.payload;
+decrement(Counter state, Action<int> action, CounterBuilder builder) =>
+  builder..count = state.count - action.payload;
 
 /**
  * This is a reducer builder. Use of ReducerBuilder is not required, however it
