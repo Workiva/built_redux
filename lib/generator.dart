@@ -34,11 +34,11 @@ generateActions(ClassElement element) {
     if (ele is ClassElement && typeName == 'ActionMgr') {
       nameCode = nameCode.replaceFirst(
         '\n',
-        '\nstatic ActionName $fieldName = new ActionName<${_getActionMgrGenericType(e)}>(\'$fieldName\');\n',
+        '\nstatic ActionName $fieldName = new ActionName<${_getActionMgrGenericType(e)}>(\'${element.name}-$fieldName\');\n',
       );
 
       var actionMgr =
-          '\n${e.toString()} = new ActionMgr<${_getActionMgrGenericType(e)}>(\'$fieldName\');\n';
+          '\n${e.toString()} = new ActionMgr<${_getActionMgrGenericType(e)}>(\'${element.name}-$fieldName\');\n';
       if (!actionMgr.startsWith('\nfinal')) actionMgr = '\nfinal $actionMgr';
       initializerCode = initializerCode.replaceFirst('\n', actionMgr);
       syncWithStoreCode =

@@ -22,8 +22,7 @@ class _$GroupsActions extends GroupsActions {
 }
 
 class GroupsActionsNames {
-  static ActionName addTodoToGroup =
-      new ActionName<AddTodoToGroupPayload>('addTodoToGroup');
+  static ActionName addTodoToGroup = new ActionName<AddTodoToGroupPayload>('addTodoToGroup');
   static ActionName removeGroup = new ActionName<int>('removeGroup');
   static ActionName addGroup = new ActionName<int>('addGroup');
 }
@@ -65,19 +64,15 @@ class _$GroupsReducer extends GroupsReducer {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('GroupsReducer')
-          ..add('groupMap', groupMap))
-        .toString();
+    return (newBuiltValueToStringHelper('GroupsReducer')..add('groupMap', groupMap)).toString();
   }
 }
 
-class GroupsReducerBuilder
-    implements Builder<GroupsReducer, GroupsReducerBuilder> {
+class GroupsReducerBuilder implements Builder<GroupsReducer, GroupsReducerBuilder> {
   _$GroupsReducer _$v;
 
   MapBuilder<int, Group> _groupMap;
-  MapBuilder<int, Group> get groupMap =>
-      _$this._groupMap ??= new MapBuilder<int, Group>();
+  MapBuilder<int, Group> get groupMap => _$this._groupMap ??= new MapBuilder<int, Group>();
   set groupMap(MapBuilder<int, Group> groupMap) => _$this._groupMap = groupMap;
 
   GroupsReducerBuilder();

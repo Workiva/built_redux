@@ -52,6 +52,11 @@ class Store<State extends BuiltReducer, Actions extends ReduxActions> {
     _dispatch.stream.listen(handler);
   }
 
+  dispose() {
+    _stateController.close();
+    _dispatch.close();
+  }
+
   /// [subscribe] returns a stream that will be dispatched whenever the state changes
   Stream<State> get subscribe => _stateController.stream;
 

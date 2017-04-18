@@ -1,6 +1,7 @@
 .pub
 packages
 .packages
+.dart_tool
 
 example/.pub
 example/packages

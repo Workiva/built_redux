@@ -3,7 +3,6 @@ import 'package:analyzer/analyzer.dart';
 import 'package:path/path.dart' as p;
 import 'package:source_span/source_span.dart';
 import 'package:transformer_utils/transformer_utils.dart';
-
 import 'dart:async';
 import 'dart:io';
 
@@ -49,6 +48,7 @@ class BuiltStoreTransformer extends Transformer {
       name: transform.primaryInput.id.path,
       parseFunctionBodies: false,
     );
+
     for (CompilationUnitMember d in unit.declarations) {
       if (d is! ClassDeclaration) continue;
       var cd = d as ClassDeclaration;
@@ -58,7 +58,7 @@ class BuiltStoreTransformer extends Transformer {
       var name = superclass.name.name;
       if (name == 'BuiltReducer') {
         String reduceChildrenBody =
-            "\n\n  @override\n  reduceChildren(dynamic state, Action<dynamic> a, dynamic builder) {\n  }";
+            "\n\n  @override\n  reduceChildren(dynamic state, Action<dynamic> a, dynamic builder) {\n }";
 
         for (ClassMember m in cd.members) {
           if (m is! MethodDeclaration) continue;
@@ -90,8 +90,10 @@ class BuiltStoreTransformer extends Transformer {
 Iterable<String> getBuiltReducers() {
   var builtReducers = ['BuiltReducer'];
 
-  Directory base = new Directory(p.url.join(Directory.current.path, 'lib'));
-  var files = base.listSync(recursive: true);
+  Directory libBase = new Directory(p.url.join(Directory.current.path, 'lib'));
+  var files = libBase.listSync(recursive: true);
+  Directory testBase = new Directory(p.url.join(Directory.current.path, 'test'));
+  files.addAll(testBase.listSync(recursive: true));
   for (var f in files) {
     if (f is! File) continue;
 

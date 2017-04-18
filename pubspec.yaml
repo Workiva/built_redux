@@ -18,10 +18,19 @@ dev_dependencies:
   build: ^0.7.0
   build_runner: ^0.3.0
   built_value_generator: ^1.0.0
-  test: "^0.12.6+2"
+  coverage: "^0.7.3"
+  dart_dev: "^1.0.0"
+  dart_style: ">=0.2.0 <0.3.0"
+  dartdoc: ">=0.8.0 <=0.10.0"
+  test: "^0.12.0"
 
 transformers:
-  - $dart2js
+- built_redux:
+    entry_points:
+     - test/unit/test_counter.dart
+- test/pub_serve:
+    $include: test/**_test{.*,}.dart
+- $dart2js
 
 environment:
   sdk: ">=1.17.1 <2.0.0"

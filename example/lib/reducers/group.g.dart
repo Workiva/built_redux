@@ -17,8 +17,7 @@ class _$Group extends Group {
   @override
   final BuiltList<int> todoIds;
 
-  factory _$Group([void updates(GroupBuilder b)]) =>
-      (new GroupBuilder()..update(updates)).build();
+  factory _$Group([void updates(GroupBuilder b)]) => (new GroupBuilder()..update(updates)).build();
 
   _$Group._({this.id, this.name, this.done, this.todoIds}) : super._() {
     if (id == null) throw new ArgumentError.notNull('id');
@@ -28,8 +27,7 @@ class _$Group extends Group {
   }
 
   @override
-  Group rebuild(void updates(GroupBuilder b)) =>
-      (toBuilder()..update(updates)).build();
+  Group rebuild(void updates(GroupBuilder b)) => (toBuilder()..update(updates)).build();
 
   @override
   GroupBuilder toBuilder() => new GroupBuilder()..replace(this);
@@ -38,16 +36,12 @@ class _$Group extends Group {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! Group) return false;
-    return id == other.id &&
-        name == other.name &&
-        done == other.done &&
-        todoIds == other.todoIds;
+    return id == other.id && name == other.name && done == other.done && todoIds == other.todoIds;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc($jc(0, id.hashCode), name.hashCode), done.hashCode),
-        todoIds.hashCode));
+    return $jf($jc($jc($jc($jc(0, id.hashCode), name.hashCode), done.hashCode), todoIds.hashCode));
   }
 
   @override
@@ -106,9 +100,7 @@ class GroupBuilder implements Builder<Group, GroupBuilder> {
 
   @override
   _$Group build() {
-    final result = _$v ??
-        new _$Group._(
-            id: id, name: name, done: done, todoIds: todoIds?.build());
+    final result = _$v ?? new _$Group._(id: id, name: name, done: done, todoIds: todoIds?.build());
     replace(result);
     return result;
   }
