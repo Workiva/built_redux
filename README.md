@@ -26,7 +26,7 @@ Built using [built_value][built_value_git]
       built_redux: "^0.0.7"
     ```
 
-3. Create a script to run generators for generating built_values and redux actions.
+2. Create a script to run generators for generating built_values and redux actions.
     ```
     import 'dart:async';
 
