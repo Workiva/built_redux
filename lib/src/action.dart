@@ -67,6 +67,7 @@ class ActionDispatcher<P> {
 ///  }
 ///  ```
 ///
+///  ```dart
 ///  class _$BaseActions extends BaseActions {
 ///   final ActionDispatcher<int> foo = new ActionDispatcher<int>('BaseActions-foo');
 ///   final NestedActions nestedActions = new NestedActions();
@@ -84,6 +85,7 @@ class ActionDispatcher<P> {
 ///  class AppStateActionsNames {
 ///   static ActionName foo = new ActionName<int>('BaseActions-foo');
 /// }
+/// ```
 ///
 abstract class ReduxActions {
   syncWithStore(dispatcher);

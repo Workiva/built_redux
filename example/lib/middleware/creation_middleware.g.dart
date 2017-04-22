@@ -8,9 +8,10 @@ part of creation_middleware;
 // **************************************************************************
 
 class _$CreatorActions extends CreatorActions {
-  final ActionDispatcher<String> createGroup =
+  ActionDispatcher<String> createGroup =
       new ActionDispatcher<String>('CreatorActions-createGroup');
-  final ActionDispatcher<String> createTodo =
+
+  ActionDispatcher<String> createTodo =
       new ActionDispatcher<String>('CreatorActions-createTodo');
   factory _$CreatorActions() => new _$CreatorActions._();
   _$CreatorActions._() : super._();

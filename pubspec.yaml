@@ -25,7 +25,6 @@ dev_dependencies:
   test: "^0.12.0"
 
 transformers:
-- built_redux
 - $dart2js
 
 environment:

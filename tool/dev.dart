@@ -8,20 +8,20 @@ main(List<String> args) async {
     'test/',
   ];
 
+  config.format..lineLength = 100;
+
   config.analyze
-    ..strong = true
+    ..strong = false
     ..entryPoints = directories;
 
   config.test
-    ..pubServe = true
     ..concurrency = 1
     ..unitTests = [
       'test/unit/',
     ];
 
   config.coverage
-    ..html = false
-    ..pubServe = true
+    ..html = true
     ..reportOn = ['lib/'];
 
   await dev(args);
