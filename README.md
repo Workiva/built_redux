@@ -23,20 +23,8 @@ Built using [built_value][built_value_git]
 
     ```yaml
     dependencies:
-      built_redux: "^0.0.5"
+      built_redux: "^0.0.7"
     ```
-
-2. Add the `built_redux` [transformer] to your `pubspec.yaml`.
-
-    ```yaml
-    transformers:
-      - built_redux
-      # Reminder: dart2js should come after any other transformers that touch Dart code
-      - $dart2js
-    ```
-
-    _Our transformer uses code generation reduce boilerplate required to set up
-    nested redux store
 
 3. Create a script to run generators for generating built_values and redux actions.
     ```
