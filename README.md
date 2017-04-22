@@ -91,7 +91,7 @@ import 'package:built_redux/built_redux.dart';
 
    /// This is the reducer getter, it describes which actions this BuiltReducer handles
    /// and how each action transforms the state into the next state.
-   get reducers => _reducers;
+   get reducer => _reducer;
 
    // Built value boilerplate
    Counter._();
@@ -116,7 +116,7 @@ decrement(Counter state, Action<int> action, CounterBuilder builder) =>
  * for the action provided to your reducer. Calling .build() returns the map
  * of action names to reducers.
  */
-var _reducers =  (new ReducerBuilder<CounterBuilder>()
+var _reducer =  (new ReducerBuilder<CounterBuilder>()
       ..add<int>(CounterActionsNames.increment, increment)
       ..add<int>(CounterActionsNames.decrement, decrement)).build();
 
