@@ -23,7 +23,7 @@ Built using [built_value][built_value_git]
 
     ```yaml
     dependencies:
-      built_redux: "^0.0.7"
+      built_redux: "^0.1.0"
     ```
 
 2. Create a script to run generators for generating built_values and redux actions.
