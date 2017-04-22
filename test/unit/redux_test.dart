@@ -7,7 +7,7 @@ import 'test_counter.dart';
 
 main() {
   group('redux', () {
-    Store<BaseCounter, BaseCounterActions> store;
+    Store<BaseCounter, BaseCounterBuilder, BaseCounterActions> store;
 
     setup({int numMiddleware: 1}) {
       var actions = new BaseCounterActions();

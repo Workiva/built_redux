@@ -13,7 +13,7 @@ import 'package:example/example.dart';
 Future main() async {
   react_client.setClientConfiguration();
 
-  var reduxStore = new Store<AppState, AppStateActions>(
+  var reduxStore = new Store<AppState, AppStateBuilder, AppStateActions>(
     new AppState(),
     new AppStateActions(),
     middleware: [creatorMiddeware],

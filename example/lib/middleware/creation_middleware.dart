@@ -17,20 +17,20 @@ abstract class CreatorActions extends ReduxActions {
   factory CreatorActions() => new _$CreatorActions();
 }
 
-var creatorMiddeware = (new MiddlwareBuilder<AppState, AppStateActions>()
+var creatorMiddeware = (new MiddlwareBuilder<AppState, AppStateBuilder, AppStateActions>()
       ..add<String>(CreatorActionsNames.createGroup, _createGroup)
       ..add<String>(CreatorActionsNames.createTodo, _createTodo))
     .build();
 
-_createGroup(
-    MiddlewareApi<AppState, AppStateActions> api, ActionHandler next, Action<String> action) {
+_createGroup(MiddlewareApi<AppState, AppStateBuilder, AppStateActions> api, ActionHandler next,
+    Action<String> action) {
   var newGroup = _newGroup(action.payload);
   api.actions.groupActions.addGroup(newGroup);
   api.actions.setCurrentGroup(newGroup.id);
 }
 
-_createTodo(
-    MiddlewareApi<AppState, AppStateActions> api, ActionHandler next, Action<String> action) {
+_createTodo(MiddlewareApi<AppState, AppStateBuilder, AppStateActions> api, ActionHandler next,
+    Action<String> action) {
   var newTodo = _newTodo(action.payload);
   api.actions.todosActions.addTodo(newTodo);
   api.actions.groupActions.addTodoToGroup(new AddTodoToGroupPayload()

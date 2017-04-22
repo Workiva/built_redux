@@ -87,12 +87,13 @@ abstract class MiddlewareActions extends ReduxActions {
   factory MiddlewareActions() => new _$MiddlewareActions();
 }
 
-var createCounterMiddleware = (new MiddlwareBuilder<BaseCounter, BaseCounterActions>()
-      ..add<int>(MiddlewareActionsNames.increment, _doubleIt))
-    .build();
+var createCounterMiddleware =
+    (new MiddlwareBuilder<BaseCounter, BaseCounterBuilder, BaseCounterActions>()
+          ..add<int>(MiddlewareActionsNames.increment, _doubleIt))
+        .build();
 
-_doubleIt(
-    MiddlewareApi<BaseCounter, BaseCounterActions> api, ActionHandler next, Action<int> action) {
+_doubleIt(MiddlewareApi<BaseCounter, BaseCounterBuilder, BaseCounterActions> api,
+    ActionHandler next, Action<int> action) {
   api.actions.increment(api.state.count * 2);
   next(action);
 }

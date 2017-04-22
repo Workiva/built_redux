@@ -11,7 +11,8 @@ main(List<String> args) async {
   config.format..lineLength = 100;
 
   config.analyze
-    ..strong = false
+    ..strong = true
+    ..fatalWarnings = false
     ..entryPoints = directories;
 
   config.test
