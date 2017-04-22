@@ -8,12 +8,14 @@ part of groups;
 // **************************************************************************
 
 class _$GroupsActions extends GroupsActions {
-  final ActionDispatcher<AddTodoToGroupPayload> addTodoToGroup =
+  ActionDispatcher<AddTodoToGroupPayload> addTodoToGroup =
       new ActionDispatcher<AddTodoToGroupPayload>(
           'GroupsActions-addTodoToGroup');
-  final ActionDispatcher<int> removeGroup =
+
+  ActionDispatcher<int> removeGroup =
       new ActionDispatcher<int>('GroupsActions-removeGroup');
-  final ActionDispatcher<Group> addGroup =
+
+  ActionDispatcher<Group> addGroup =
       new ActionDispatcher<Group>('GroupsActions-addGroup');
   factory _$GroupsActions() => new _$GroupsActions._();
   _$GroupsActions._() : super._();

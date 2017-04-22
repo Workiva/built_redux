@@ -8,11 +8,13 @@ part of todos;
 // **************************************************************************
 
 class _$TodosActions extends TodosActions {
-  final ActionDispatcher<int> updateTodoStatus =
+  ActionDispatcher<int> updateTodoStatus =
       new ActionDispatcher<int>('TodosActions-updateTodoStatus');
-  final ActionDispatcher<int> removeTodo =
+
+  ActionDispatcher<int> removeTodo =
       new ActionDispatcher<int>('TodosActions-removeTodo');
-  final ActionDispatcher<Todo> addTodo =
+
+  ActionDispatcher<Todo> addTodo =
       new ActionDispatcher<Todo>('TodosActions-addTodo');
   factory _$TodosActions() => new _$TodosActions._();
   _$TodosActions._() : super._();

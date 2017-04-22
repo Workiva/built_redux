@@ -31,6 +31,7 @@ final _baseReducer = (new ReducerBuilder<BaseCounter, BaseCounterBuilder>()
 
 // Built Reducer
 abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
+    with BaseCounterReduceChildren
     implements Built<BaseCounter, BaseCounterBuilder> {
   int get count;
 
@@ -40,7 +41,10 @@ abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
 
   // Built value boilerplate
   BaseCounter._();
-  factory BaseCounter([updates(BaseCounterBuilder b)]) = _$BaseCounter;
+  factory BaseCounter([updates(BaseCounterBuilder b)]) =>
+      new _$BaseCounter((BaseCounterBuilder b) => b
+        ..count = 1
+        ..nestedCounter = new NestedCounter().toBuilder());
 }
 
 // Nested Counter
@@ -72,7 +76,8 @@ abstract class NestedCounter extends BuiltReducer<NestedCounter, NestedCounterBu
 
   // Built value boilerplate
   NestedCounter._();
-  factory NestedCounter([updates(NestedCounterBuilder b)]) = _$NestedCounter;
+  factory NestedCounter([updates(NestedCounterBuilder b)]) =>
+      new _$NestedCounter((NestedCounterBuilder b) => b..count = 1);
 }
 
 abstract class MiddlewareActions extends ReduxActions {
@@ -88,5 +93,6 @@ var createCounterMiddleware = (new MiddlwareBuilder<BaseCounter, BaseCounterActi
 
 _doubleIt(
     MiddlewareApi<BaseCounter, BaseCounterActions> api, ActionHandler next, Action<int> action) {
-  api.actions.increment(action.payload * 2);
+  api.actions.increment(api.state.count * 2);
+  next(action);
 }

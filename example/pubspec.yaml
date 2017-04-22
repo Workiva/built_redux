@@ -17,7 +17,6 @@ dependency_overrides:
     path: ../.
 
 transformers:
-  - built_redux
   - $dart2js
 
 environment:

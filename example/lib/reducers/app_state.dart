@@ -36,6 +36,7 @@ final _reducer = (new ReducerBuilder<AppState, AppStateBuilder>()
 
 // Built Reducer
 abstract class AppState extends BuiltReducer<AppState, AppStateBuilder>
+    with AppStateReduceChildren
     implements Built<AppState, AppStateBuilder> {
   /// [currentGroup] is the group in which the view is currently displaying todos for
   int get currentGroup;
@@ -51,7 +52,9 @@ abstract class AppState extends BuiltReducer<AppState, AppStateBuilder>
   // The reducer
   get reducer => _reducer;
 
-  // Built value boilerplate
+  // Built value boilerplate and default state
   AppState._();
-  factory AppState([updates(AppStateBuilder b)]) = _$AppState;
+  factory AppState([updates(AppStateBuilder b)]) => new _$AppState((AppStateBuilder b) => b
+    ..currentGroup = -1
+    ..bogus = 0);
 }
