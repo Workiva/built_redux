@@ -1,6 +1,7 @@
 import 'package:built_value/built_value.dart';
 
 import 'action.dart';
+import 'built_reducer.dart';
 import 'middleware.dart';
 
 /// [Reducer] is a function that given a state of type V, an Action of type Action<P>, and a
@@ -16,4 +17,5 @@ typedef ActionHandler(Action a);
 typedef ActionHandler NextActionHandler(ActionHandler next);
 
 /// [Middleware] is a function that given the store's [MiddlewareApi] returns a [NextActionHandler].
-typedef NextActionHandler Middleware<State>(MiddlewareApi api);
+typedef NextActionHandler Middleware<V extends BuiltReducer<V, B>, B extends Builder<V, B>,
+    Actions extends ReduxActions>(MiddlewareApi<V, B, Actions> api);

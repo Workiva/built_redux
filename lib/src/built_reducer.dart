@@ -25,7 +25,7 @@ abstract class BuiltReducer<V extends Built<V, B>, B extends Builder<V, B>> impl
 /// with many different payload types, while maintaining type safety.
 /// Each [Reducer] added with add<T> must take a state of type V, an Action of type
 /// Action<T>, and a builder of type B
-class ReducerBuilder<V extends Built<V, B>, B extends Builder<V, B>> {
+class ReducerBuilder<V extends BuiltReducer<V, B>, B extends Builder<V, B>> {
   var _map = new Map<String, Reducer<dynamic, V, B>>();
 
   add<T>(ActionName<T> aName, Reducer<T, V, B> reducer) => _map[aName.name] = reducer;

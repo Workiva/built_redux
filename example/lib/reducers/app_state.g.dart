@@ -11,7 +11,8 @@ class _$AppStateActions extends AppStateActions {
   CreatorActions creationActions = new CreatorActions();
   TodosActions todosActions = new TodosActions();
   GroupsActions groupActions = new GroupsActions();
-  ActionDispatcher<int> setBogus = new ActionDispatcher<int>('AppStateActions-setBogus');
+  ActionDispatcher<int> setBogus =
+      new ActionDispatcher<int>('AppStateActions-setBogus');
 
   ActionDispatcher<int> setCurrentGroup =
       new ActionDispatcher<int>('AppStateActions-setCurrentGroup');
@@ -28,7 +29,8 @@ class _$AppStateActions extends AppStateActions {
 
 class AppStateActionsNames {
   static ActionName setBogus = new ActionName<int>('AppStateActions-setBogus');
-  static ActionName setCurrentGroup = new ActionName<int>('AppStateActions-setCurrentGroup');
+  static ActionName setCurrentGroup =
+      new ActionName<int>('AppStateActions-setCurrentGroup');
 }
 
 // **************************************************************************
@@ -49,7 +51,8 @@ class _$AppState extends AppState {
   factory _$AppState([void updates(AppStateBuilder b)]) =>
       (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._({this.currentGroup, this.bogus, this.groups, this.todos}) : super._() {
+  _$AppState._({this.currentGroup, this.bogus, this.groups, this.todos})
+      : super._() {
     if (currentGroup == null) throw new ArgumentError.notNull('currentGroup');
     if (bogus == null) throw new ArgumentError.notNull('bogus');
     if (groups == null) throw new ArgumentError.notNull('groups');
@@ -57,7 +60,8 @@ class _$AppState extends AppState {
   }
 
   @override
-  AppState rebuild(void updates(AppStateBuilder b)) => (toBuilder()..update(updates)).build();
+  AppState rebuild(void updates(AppStateBuilder b)) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   AppStateBuilder toBuilder() => new AppStateBuilder()..replace(this);
@@ -75,7 +79,9 @@ class _$AppState extends AppState {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, currentGroup.hashCode), bogus.hashCode), groups.hashCode), todos.hashCode));
+        $jc($jc($jc(0, currentGroup.hashCode), bogus.hashCode),
+            groups.hashCode),
+        todos.hashCode));
   }
 
   @override
@@ -101,7 +107,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set bogus(int bogus) => _$this._bogus = bogus;
 
   GroupsReducerBuilder _groups;
-  GroupsReducerBuilder get groups => _$this._groups ??= new GroupsReducerBuilder();
+  GroupsReducerBuilder get groups =>
+      _$this._groups ??= new GroupsReducerBuilder();
   set groups(GroupsReducerBuilder groups) => _$this._groups = groups;
 
   TodosReducerBuilder _todos;
