@@ -71,8 +71,8 @@ import 'package:built_redux/built_redux.dart';
  * each action and an ActionNames class.
  */
  abstract class CounterActions extends ReduxActions {
-   ActionMgr<int> increment;
-   ActionMgr<int> decrement;
+   ActionDispatcher<int> increment;
+   ActionDispatcher<int> decrement;
 
    // factory to create on instance of the generated implementation of CounterActions
    AppStateActions._();
@@ -150,7 +150,7 @@ store.actions.decrement(1);
  * Actions to be handled by this middleware
  */
 abstract class DoubleAction extends ReduxActions {
-  ActionMgr<int> increment;
+  ActionDispatcher<int> increment;
 
   DoubleAction._();
   factory DoubleAction() => new _$DoubleAction();
@@ -179,8 +179,8 @@ you must add it to definition of CounterActions like so
 
 ```
 abstract class CounterActions extends ReduxActions {
-  ActionMgr<int> increment;
-  ActionMgr<int> decrement;
+  ActionDispatcher<int> increment;
+  ActionDispatcher<int> decrement;
 
   DoubleActions doublerActions;
 

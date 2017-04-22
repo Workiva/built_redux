@@ -10,8 +10,8 @@ import '../reducers/groups.dart';
 part 'creation_middleware.g.dart';
 
 abstract class CreatorActions extends ReduxActions {
-  ActionMgr<String> createTodo;
-  ActionMgr<String> createGroup;
+  ActionDispatcher<String> createTodo;
+  ActionDispatcher<String> createGroup;
 
   CreatorActions._();
   factory CreatorActions() => new _$CreatorActions();
@@ -38,12 +38,12 @@ _createTodo(
     ..groupId = api.state.currentGroup);
 }
 
-_newGroup(String name) => new Group((b) => b
+Group _newGroup(String name) => new Group((b) => b
   ..id = new DateTime.now().millisecondsSinceEpoch
   ..name = name
   ..done = false);
 
-_newTodo(String text) => new Todo((b) => b
+Todo _newTodo(String text) => new Todo((b) => b
   ..id = new DateTime.now().millisecondsSinceEpoch
   ..text = text
   ..done = false);

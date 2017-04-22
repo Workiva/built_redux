@@ -8,8 +8,10 @@ part of creation_middleware;
 // **************************************************************************
 
 class _$CreatorActions extends CreatorActions {
-  final ActionMgr<String> createGroup = new ActionMgr<String>('createGroup');
-  final ActionMgr<String> createTodo = new ActionMgr<String>('createTodo');
+  final ActionDispatcher<String> createGroup =
+      new ActionDispatcher<String>('CreatorActions-createGroup');
+  final ActionDispatcher<String> createTodo =
+      new ActionDispatcher<String>('CreatorActions-createTodo');
   factory _$CreatorActions() => new _$CreatorActions._();
   _$CreatorActions._() : super._();
   syncWithStore(dispatcher) {
@@ -19,6 +21,8 @@ class _$CreatorActions extends CreatorActions {
 }
 
 class CreatorActionsNames {
-  static ActionName createGroup = new ActionName<String>('createGroup');
-  static ActionName createTodo = new ActionName<String>('createTodo');
+  static ActionName createGroup =
+      new ActionName<String>('CreatorActions-createGroup');
+  static ActionName createTodo =
+      new ActionName<String>('CreatorActions-createTodo');
 }

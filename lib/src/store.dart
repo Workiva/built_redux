@@ -42,19 +42,28 @@ class Store<State extends BuiltReducer, Actions extends ReduxActions> {
       _stateController.add(_state);
     };
 
+    // if middleware is give build the chain
     if (middleware.length > 0) {
+      // Scope each function with the store's api
       Iterable<NextActionHandler> chain = middleware.map((m) => m(api));
+
+      // combine each middeware
       NextActionHandler combinedMiddleware =
           chain.reduce((composed, middleware) => (handler) => composed(middleware(handler)));
+
+      // make the last middleware in the chain call the top-level reducer
       handler = combinedMiddleware(handler);
     }
 
     _dispatch.stream.listen(handler);
   }
 
+  /// [dispose] removes closes both the dispatch and subscription stream
   dispose() {
     _stateController.close();
     _dispatch.close();
+    _state = null;
+    _actions = null;
   }
 
   /// [subscribe] returns a stream that will be dispatched whenever the state changes

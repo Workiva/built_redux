@@ -92,8 +92,8 @@ Iterable<String> getBuiltReducers() {
 
   Directory libBase = new Directory(p.url.join(Directory.current.path, 'lib'));
   var files = libBase.listSync(recursive: true);
-  Directory testBase = new Directory(p.url.join(Directory.current.path, 'test'));
-  files.addAll(testBase.listSync(recursive: true));
+  // Directory testBase = new Directory(p.url.join(Directory.current.path, 'test'));
+  // files.addAll(testBase.listSync(recursive: true));
   for (var f in files) {
     if (f is! File) continue;
 

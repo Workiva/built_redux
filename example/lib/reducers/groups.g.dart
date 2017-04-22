@@ -8,10 +8,13 @@ part of groups;
 // **************************************************************************
 
 class _$GroupsActions extends GroupsActions {
-  final ActionMgr<AddTodoToGroupPayload> addTodoToGroup =
-      new ActionMgr<AddTodoToGroupPayload>('addTodoToGroup');
-  final ActionMgr<int> removeGroup = new ActionMgr<int>('removeGroup');
-  final ActionMgr<int> addGroup = new ActionMgr<int>('addGroup');
+  final ActionDispatcher<AddTodoToGroupPayload> addTodoToGroup =
+      new ActionDispatcher<AddTodoToGroupPayload>(
+          'GroupsActions-addTodoToGroup');
+  final ActionDispatcher<int> removeGroup =
+      new ActionDispatcher<int>('GroupsActions-removeGroup');
+  final ActionDispatcher<Group> addGroup =
+      new ActionDispatcher<Group>('GroupsActions-addGroup');
   factory _$GroupsActions() => new _$GroupsActions._();
   _$GroupsActions._() : super._();
   syncWithStore(dispatcher) {
@@ -22,9 +25,11 @@ class _$GroupsActions extends GroupsActions {
 }
 
 class GroupsActionsNames {
-  static ActionName addTodoToGroup = new ActionName<AddTodoToGroupPayload>('addTodoToGroup');
-  static ActionName removeGroup = new ActionName<int>('removeGroup');
-  static ActionName addGroup = new ActionName<int>('addGroup');
+  static ActionName addTodoToGroup =
+      new ActionName<AddTodoToGroupPayload>('GroupsActions-addTodoToGroup');
+  static ActionName removeGroup =
+      new ActionName<int>('GroupsActions-removeGroup');
+  static ActionName addGroup = new ActionName<Group>('GroupsActions-addGroup');
 }
 
 // **************************************************************************
@@ -64,15 +69,19 @@ class _$GroupsReducer extends GroupsReducer {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('GroupsReducer')..add('groupMap', groupMap)).toString();
+    return (newBuiltValueToStringHelper('GroupsReducer')
+          ..add('groupMap', groupMap))
+        .toString();
   }
 }
 
-class GroupsReducerBuilder implements Builder<GroupsReducer, GroupsReducerBuilder> {
+class GroupsReducerBuilder
+    implements Builder<GroupsReducer, GroupsReducerBuilder> {
   _$GroupsReducer _$v;
 
   MapBuilder<int, Group> _groupMap;
-  MapBuilder<int, Group> get groupMap => _$this._groupMap ??= new MapBuilder<int, Group>();
+  MapBuilder<int, Group> get groupMap =>
+      _$this._groupMap ??= new MapBuilder<int, Group>();
   set groupMap(MapBuilder<int, Group> groupMap) => _$this._groupMap = groupMap;
 
   GroupsReducerBuilder();

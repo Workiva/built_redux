@@ -8,7 +8,9 @@ main(List<String> args) async {
     'test/',
   ];
 
-  config.analyze.entryPoints = directories;
+  config.analyze
+    ..strong = true
+    ..entryPoints = directories;
 
   config.test
     ..pubServe = true

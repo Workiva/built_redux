@@ -9,9 +9,9 @@ import 'group.dart';
 part 'groups.g.dart';
 
 abstract class GroupsActions extends ReduxActions {
-  ActionMgr<int> addGroup;
-  ActionMgr<int> removeGroup;
-  ActionMgr<AddTodoToGroupPayload> addTodoToGroup;
+  ActionDispatcher<Group> addGroup;
+  ActionDispatcher<int> removeGroup;
+  ActionDispatcher<AddTodoToGroupPayload> addTodoToGroup;
 
   GroupsActions._();
   factory GroupsActions() => new _$GroupsActions();
@@ -35,7 +35,7 @@ _addGroupReducer(GroupsReducer state, Action<Group> action, GroupsReducerBuilder
 _removeGroupReducer(GroupsReducer state, Action<int> action, GroupsReducerBuilder builder) =>
     builder.groupMap.remove(action.payload);
 
-final _reducers = (new ReducerBuilder<GroupsReducerBuilder>()
+final _reducer = (new ReducerBuilder<GroupsReducer, GroupsReducerBuilder>()
       ..add<Group>(GroupsActionsNames.addGroup, _addGroupReducer)
       ..add<int>(GroupsActionsNames.removeGroup, _removeGroupReducer)
       ..add<AddTodoToGroupPayload>(GroupsActionsNames.addTodoToGroup, _addTodoToGroupReducer))
@@ -46,8 +46,8 @@ abstract class GroupsReducer extends BuiltReducer<GroupsReducer, GroupsReducerBu
     implements Built<GroupsReducer, GroupsReducerBuilder> {
   BuiltMap<int, Group> get groupMap;
 
-  // The reducers
-  get reducers => _reducers;
+  // The reducer
+  get reducer => _reducer;
 
   GroupsReducer._();
   factory GroupsReducer([updates(GroupsReducerBuilder b)]) = _$GroupsReducer;

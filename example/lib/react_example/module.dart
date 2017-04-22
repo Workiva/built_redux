@@ -66,7 +66,7 @@ ReactElement todoItems(TodoProps props) => Dom.div()(
       ),
     );
 
-ReactElement todoItem(Todo todo, ActionMgr<int> updateTodoStatus) => (Dom.div()..key = todo.id)(
+ReactElement todoItem(Todo todo, ActionDispatcher<int> updateTodoStatus) => (Dom.div()..key = todo.id)(
       todo.text,
       (Dom.input()
         ..onChange = ((_) => updateTodoStatus(todo.id))

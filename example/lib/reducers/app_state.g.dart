@@ -10,9 +10,11 @@ part of app_state;
 class _$AppStateActions extends AppStateActions {
   GroupsActions groupActions = new GroupsActions();
   final TodosActions todosActions = new TodosActions();
-  ActionMgr<int> setBogus = new ActionMgr<int>('setBogus');
+  ActionDispatcher<int> setBogus =
+      new ActionDispatcher<int>('AppStateActions-setBogus');
   CreatorActions creationActions = new CreatorActions();
-  final ActionMgr<int> setCurrentGroup = new ActionMgr<int>('setCurrentGroup');
+  final ActionDispatcher<int> setCurrentGroup =
+      new ActionDispatcher<int>('AppStateActions-setCurrentGroup');
   factory _$AppStateActions() => new _$AppStateActions._();
   _$AppStateActions._() : super._();
   syncWithStore(dispatcher) {
@@ -25,8 +27,9 @@ class _$AppStateActions extends AppStateActions {
 }
 
 class AppStateActionsNames {
-  static ActionName setBogus = new ActionName<int>('setBogus');
-  static ActionName setCurrentGroup = new ActionName<int>('setCurrentGroup');
+  static ActionName setBogus = new ActionName<int>('AppStateActions-setBogus');
+  static ActionName setCurrentGroup =
+      new ActionName<int>('AppStateActions-setCurrentGroup');
 }
 
 // **************************************************************************
@@ -47,7 +50,8 @@ class _$AppState extends AppState {
   factory _$AppState([void updates(AppStateBuilder b)]) =>
       (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._({this.currentGroup, this.bogus, this.groups, this.todos}) : super._() {
+  _$AppState._({this.currentGroup, this.bogus, this.groups, this.todos})
+      : super._() {
     if (currentGroup == null) throw new ArgumentError.notNull('currentGroup');
     if (bogus == null) throw new ArgumentError.notNull('bogus');
     if (groups == null) throw new ArgumentError.notNull('groups');
@@ -55,7 +59,8 @@ class _$AppState extends AppState {
   }
 
   @override
-  AppState rebuild(void updates(AppStateBuilder b)) => (toBuilder()..update(updates)).build();
+  AppState rebuild(void updates(AppStateBuilder b)) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   AppStateBuilder toBuilder() => new AppStateBuilder()..replace(this);
@@ -73,7 +78,9 @@ class _$AppState extends AppState {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, currentGroup.hashCode), bogus.hashCode), groups.hashCode), todos.hashCode));
+        $jc($jc($jc(0, currentGroup.hashCode), bogus.hashCode),
+            groups.hashCode),
+        todos.hashCode));
   }
 
   @override
@@ -99,7 +106,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set bogus(int bogus) => _$this._bogus = bogus;
 
   GroupsReducerBuilder _groups;
-  GroupsReducerBuilder get groups => _$this._groups ??= new GroupsReducerBuilder();
+  GroupsReducerBuilder get groups =>
+      _$this._groups ??= new GroupsReducerBuilder();
   set groups(GroupsReducerBuilder groups) => _$this._groups = groups;
 
   TodosReducerBuilder _todos;

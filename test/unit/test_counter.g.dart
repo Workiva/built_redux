@@ -10,9 +10,9 @@ part of test_counter;
 class _$BaseCounterActions extends BaseCounterActions {
   NestedCounterActions nestedCounterActions = new NestedCounterActions();
   final MiddlewareActions middlewareActions = new MiddlewareActions();
-  ActionMgr<int> decrement = new ActionMgr<int>('BaseCounterActions-decrement');
-  final ActionMgr<int> increment =
-      new ActionMgr<int>('BaseCounterActions-increment');
+  ActionDispatcher<int> decrement = new ActionDispatcher<int>('BaseCounterActions-decrement');
+  final ActionDispatcher<int> increment =
+      new ActionDispatcher<int>('BaseCounterActions-increment');
   factory _$BaseCounterActions() => new _$BaseCounterActions._();
   _$BaseCounterActions._() : super._();
   syncWithStore(dispatcher) {
@@ -128,10 +128,10 @@ class BaseCounterBuilder implements Builder<BaseCounter, BaseCounterBuilder> {
 // **************************************************************************
 
 class _$NestedCounterActions extends NestedCounterActions {
-  final ActionMgr<int> decrement =
-      new ActionMgr<int>('NestedCounterActions-decrement');
-  final ActionMgr<int> increment =
-      new ActionMgr<int>('NestedCounterActions-increment');
+  final ActionDispatcher<int> decrement =
+      new ActionDispatcher<int>('NestedCounterActions-decrement');
+  final ActionDispatcher<int> increment =
+      new ActionDispatcher<int>('NestedCounterActions-increment');
   factory _$NestedCounterActions() => new _$NestedCounterActions._();
   _$NestedCounterActions._() : super._();
   syncWithStore(dispatcher) {
@@ -232,8 +232,8 @@ class NestedCounterBuilder
 // **************************************************************************
 
 class _$MiddlewareActions extends MiddlewareActions {
-  final ActionMgr<int> increment =
-      new ActionMgr<int>('MiddlewareActions-increment');
+  final ActionDispatcher<int> increment =
+      new ActionDispatcher<int>('MiddlewareActions-increment');
   factory _$MiddlewareActions() => new _$MiddlewareActions._();
   _$MiddlewareActions._() : super._();
   syncWithStore(dispatcher) {

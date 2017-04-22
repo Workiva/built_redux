@@ -10,8 +10,8 @@ import '../middleware/creation_middleware.dart';
 part 'app_state.g.dart';
 
 abstract class AppStateActions extends ReduxActions {
-  ActionMgr<int> setCurrentGroup;
-  ActionMgr<int> setBogus;
+  ActionDispatcher<int> setCurrentGroup;
+  ActionDispatcher<int> setBogus;
 
   GroupsActions groupActions;
   TodosActions todosActions;
@@ -29,7 +29,7 @@ _setBogus(AppState state, Action<int> action, AppStateBuilder builder) {
   return builder..bogus += action.payload;
 }
 
-final _reducers = (new ReducerBuilder<AppStateBuilder>()
+final _reducer = (new ReducerBuilder<AppState, AppStateBuilder>()
       ..add<int>(AppStateActionsNames.setCurrentGroup, _setCurrentGroupReducer)
       ..add<int>(AppStateActionsNames.setBogus, _setBogus))
     .build();
@@ -48,8 +48,8 @@ abstract class AppState extends BuiltReducer<AppState, AppStateBuilder>
 
   TodosReducer get todos;
 
-  // The reducers
-  get reducers => _reducers;
+  // The reducer
+  get reducer => _reducer;
 
   // Built value boilerplate
   AppState._();

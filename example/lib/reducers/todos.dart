@@ -9,9 +9,9 @@ import 'todo.dart';
 part 'todos.g.dart';
 
 abstract class TodosActions extends ReduxActions {
-  ActionMgr<Todo> addTodo;
-  ActionMgr<int> removeTodo;
-  ActionMgr<int> updateTodoStatus;
+  ActionDispatcher<Todo> addTodo;
+  ActionDispatcher<int> removeTodo;
+  ActionDispatcher<int> updateTodoStatus;
 
   TodosActions._();
   factory TodosActions() => new _$TodosActions();
@@ -29,7 +29,7 @@ updateTodoStatusReducer(TodosReducer state, Action<int> action, TodosReducerBuil
       (tbuilder) => tbuilder..done = !tbuilder.done,
     );
 
-final _reducers = (new ReducerBuilder<TodosReducerBuilder>()
+final _reducer = (new ReducerBuilder<TodosReducer, TodosReducerBuilder>()
       ..add<Todo>(TodosActionsNames.addTodo, addTodoReducer)
       ..add<int>(TodosActionsNames.removeTodo, removeTodoReducer)
       ..add<int>(TodosActionsNames.updateTodoStatus, updateTodoStatusReducer))
@@ -41,8 +41,8 @@ abstract class TodosReducer extends BuiltReducer<TodosReducer, TodosReducerBuild
   // global todo list
   BuiltMap<int, Todo> get todosMap;
 
-  // The reducers
-  get reducers => _reducers;
+  // The reducer
+  get reducer => _reducer;
 
   TodosReducer._();
   factory TodosReducer([updates(TodosReducerBuilder b)]) = _$TodosReducer;

@@ -31,16 +31,16 @@ generateActions(ClassElement element) {
     var ele = e.type.element;
     var typeName = ele.name;
 
-    if (ele is ClassElement && typeName == 'ActionMgr') {
+    if (ele is ClassElement && typeName == 'ActionDispatcher') {
       nameCode = nameCode.replaceFirst(
         '\n',
-        '\nstatic ActionName $fieldName = new ActionName<${_getActionMgrGenericType(e)}>(\'${element.name}-$fieldName\');\n',
+        '\nstatic ActionName $fieldName = new ActionName<${_getActionDispatcherGenericType(e)}>(\'${element.name}-$fieldName\');\n',
       );
 
-      var actionMgr =
-          '\n${e.toString()} = new ActionMgr<${_getActionMgrGenericType(e)}>(\'${element.name}-$fieldName\');\n';
-      if (!actionMgr.startsWith('\nfinal')) actionMgr = '\nfinal $actionMgr';
-      initializerCode = initializerCode.replaceFirst('\n', actionMgr);
+      var actionDispatcher =
+          '\n${e.toString()} = new ActionDispatcher<${_getActionDispatcherGenericType(e)}>(\'${element.name}-$fieldName\');\n';
+      if (!actionDispatcher.startsWith('\nfinal')) actionDispatcher = '\nfinal $actionDispatcher';
+      initializerCode = initializerCode.replaceFirst('\n', actionDispatcher);
       syncWithStoreCode =
           syncWithStoreCode.replaceFirst('\n', '\n$fieldName.syncWithStore(dispatcher);');
     } else if (ele is ClassElement && needsReduxActions(ele)) {
@@ -54,7 +54,7 @@ generateActions(ClassElement element) {
 }
 
 // TODO: find a better way
-_getActionMgrGenericType(FieldElement e) => e.toString().substring(
+_getActionDispatcherGenericType(FieldElement e) => e.toString().substring(
       e.toString().indexOf('<') + 1,
       e.toString().indexOf('>'),
     );

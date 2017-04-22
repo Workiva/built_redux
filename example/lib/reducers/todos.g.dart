@@ -8,10 +8,12 @@ part of todos;
 // **************************************************************************
 
 class _$TodosActions extends TodosActions {
-  final ActionMgr<int> updateTodoStatus =
-      new ActionMgr<int>('updateTodoStatus');
-  final ActionMgr<int> removeTodo = new ActionMgr<int>('removeTodo');
-  final ActionMgr<Todo> addTodo = new ActionMgr<Todo>('addTodo');
+  final ActionDispatcher<int> updateTodoStatus =
+      new ActionDispatcher<int>('TodosActions-updateTodoStatus');
+  final ActionDispatcher<int> removeTodo =
+      new ActionDispatcher<int>('TodosActions-removeTodo');
+  final ActionDispatcher<Todo> addTodo =
+      new ActionDispatcher<Todo>('TodosActions-addTodo');
   factory _$TodosActions() => new _$TodosActions._();
   _$TodosActions._() : super._();
   syncWithStore(dispatcher) {
@@ -22,9 +24,10 @@ class _$TodosActions extends TodosActions {
 }
 
 class TodosActionsNames {
-  static ActionName updateTodoStatus = new ActionName<int>('updateTodoStatus');
-  static ActionName removeTodo = new ActionName<int>('removeTodo');
-  static ActionName addTodo = new ActionName<Todo>('addTodo');
+  static ActionName updateTodoStatus =
+      new ActionName<int>('TodosActions-updateTodoStatus');
+  static ActionName removeTodo = new ActionName<int>('TodosActions-removeTodo');
+  static ActionName addTodo = new ActionName<Todo>('TodosActions-addTodo');
 }
 
 // **************************************************************************
