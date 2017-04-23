@@ -8,29 +8,30 @@ import 'built_reducer.dart';
 import 'middleware.dart';
 import 'typedefs.dart';
 
-// TODO: extend disposable
-class Store<V extends BuiltReducer<V, B>, B extends Builder<V, B>, Actions extends ReduxActions> {
+/// [Store] is the container of your state.
+class Store<State extends BuiltReducer<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
   // stream used for dispatching actions
   final StreamController<Action<dynamic>> _dispatch = new StreamController.broadcast();
 
   // stream used to dispatch changes to the state
-  final StreamController<V> _stateController = new StreamController.broadcast();
+  final StreamController<State> _stateController = new StreamController.broadcast();
 
   // the current state
-  V _state;
+  State _state;
   Actions _actions;
 
   Store(
-    V defaultState,
+    State defaultState,
     Actions actions, {
-    Iterable<Middleware<V, B, Actions>> middleware: const [],
+    Iterable<Middleware<State, StateBuilder, Actions>> middleware: const [],
   }) {
     // set the initial state
     _state = defaultState;
     _actions = actions;
     _actions.syncWithStore(_dispatch.add);
 
-    final MiddlewareApi api = new MiddlewareApi<V, B, Actions>(this);
+    final MiddlewareApi api = new MiddlewareApi<State, StateBuilder, Actions>(this);
 
     // setup the middleware dispatch chain
     ActionHandler handler = (action) {
@@ -69,10 +70,10 @@ class Store<V extends BuiltReducer<V, B>, B extends Builder<V, B>, Actions exten
   }
 
   /// [subscribe] returns a stream that will be dispatched whenever the state changes
-  Stream<V> get subscribe => _stateController.stream;
+  Stream<State> get subscribe => _stateController.stream;
 
   /// [state] returns the current state
-  V get state => _state;
+  State get state => _state;
 
   /// [actions] returns the synced actions
   Actions get actions => _actions;

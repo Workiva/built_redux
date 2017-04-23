@@ -6,8 +6,11 @@ import 'middleware.dart';
 
 /// [Reducer] is a function that given a state of type V, an Action of type Action<P>, and a
 /// builder of type B builds the next state
-typedef void Reducer<P, V extends Built<V, B>, B extends Builder<V, B>>(
-    V state, Action<P> action, B builder);
+typedef void Reducer<
+    Payload,
+    State extends Built<State, StateBuilder>,
+    StateBuilder extends Builder<State,
+        StateBuilder>>(State state, Action<Payload> action, StateBuilder builder);
 
 /// [ActionHandler] handles an action, this will contain the actual middleware logic
 typedef ActionHandler(Action a);
@@ -17,5 +20,7 @@ typedef ActionHandler(Action a);
 typedef ActionHandler NextActionHandler(ActionHandler next);
 
 /// [Middleware] is a function that given the store's [MiddlewareApi] returns a [NextActionHandler].
-typedef NextActionHandler Middleware<V extends BuiltReducer<V, B>, B extends Builder<V, B>,
-    Actions extends ReduxActions>(MiddlewareApi<V, B, Actions> api);
+typedef NextActionHandler Middleware<
+    State extends BuiltReducer<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>,
+    Actions extends ReduxActions>(MiddlewareApi<State, StateBuilder, Actions> api);
