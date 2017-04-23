@@ -76,9 +76,8 @@ class ActionDispatcher<P> {
 ///   _$BaseActions._() : super._();
 ///
 ///   syncWithStore(dispatcher) {
-///    creationActions.syncWithStore(dispatcher);
-///     todosActions.syncWithStore(dispatcher);
-///     groupActions.syncWithStore(dispatcher);
+///     foo.syncWithStore(dispatcher);
+///     nestedActions.syncWithStore(dispatcher);
 ///   }
 /// }
 ///

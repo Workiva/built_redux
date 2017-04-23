@@ -28,11 +28,11 @@ abstract class TodoProps implements Built<TodoProps, TodoPropsBuilder> {
 
 var todosReduxBuilder = compose<ReduxProps<AppState>, TodoProps>([
   mapReduxStoreToProps<AppState, TodoProps>(
-      (ReduxProps<AppState> reduxProps) => new TodoProps((b) => b
+      (ReduxProps<AppState> reduxProps) => new TodoProps((TodoPropsBuilder b) => b
         ..actions = reduxProps.store.actions
         ..currentGroup = reduxProps.store.state.currentGroup
-        ..groups = reduxProps.store.state.groups.groupMap.toBuilder()
-        ..todos = currentGroupTodos(reduxProps.store.state).toBuilder()
+        ..groups.addAll(reduxProps.store.state.groups.groupMap)
+        ..todos.addAll(currentGroupTodos(reduxProps.store.state).asMap())
         ..title = "redux")),
   pure,
   lifecycle<TodoProps>(
@@ -66,7 +66,8 @@ ReactElement todoItems(TodoProps props) => Dom.div()(
       ),
     );
 
-ReactElement todoItem(Todo todo, ActionDispatcher<int> updateTodoStatus) => (Dom.div()..key = todo.id)(
+ReactElement todoItem(Todo todo, ActionDispatcher<int> updateTodoStatus) =>
+    (Dom.div()..key = todo.id)(
       todo.text,
       (Dom.input()
         ..onChange = ((_) => updateTodoStatus(todo.id))
