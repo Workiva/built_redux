@@ -27,11 +27,12 @@ class MiddlwareBuilder<State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
   var _map = new Map<String, MiddlewareHandler<State, StateBuilder, Actions>>();
 
-  add<T>(ActionName<T> aMgr, MiddlewareHandler<State, StateBuilder, Actions> handler) =>
-      _map[aMgr.name] = handler;
+  void add<T>(ActionName<T> aMgr, MiddlewareHandler<State, StateBuilder, Actions> handler) {
+    _map[aMgr.name] = handler;
+  }
 
   /// build returns a [Middlware] function that handles all actions added with [add]
-  build() =>
+  Middleware<State, StateBuilder, Actions> build() =>
       (MiddlewareApi<State, StateBuilder, Actions> api) => (ActionHandler next) => (Action action) {
             var handler = _map[action.name];
             if (handler != null) {

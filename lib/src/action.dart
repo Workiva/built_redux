@@ -9,7 +9,7 @@ class Action<Payload> {
 }
 
 // Dispatches an action to the store
-typedef Dispatcher<P>(Action<P> action);
+typedef void Dispatcher<P>(Action<P> action);
 
 /// [ActionDispatcher] dispatches an action with the name provided
 /// in the constructor and the payload supplied when called. You will notice
@@ -26,13 +26,13 @@ class ActionDispatcher<P> {
 
   String get name => _name;
 
-  call(P payload) => _dispatcher(new Action<P>()
+  void call(P payload) => _dispatcher(new Action<P>()
     ..name = name
     ..payload = payload);
 
   ActionDispatcher(this._name);
 
-  syncWithStore(dispatcher) {
+  void syncWithStore(dispatcher) {
     _dispatcher = dispatcher;
   }
 }
@@ -87,7 +87,7 @@ class ActionDispatcher<P> {
 /// ```
 ///
 abstract class ReduxActions {
-  syncWithStore(dispatcher);
+  void syncWithStore(dispatcher);
 }
 
 /// [ActionName] is an object that simply contains the action name but is typed with a generic that
