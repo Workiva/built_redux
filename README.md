@@ -84,13 +84,15 @@ import 'package:built_redux/built_redux.dart';
 
    // Built value boilerplate
    Counter._();
-   factory Counter([updates(CounterBuilder b)]) = _$Counter;
+   factory Counter([updates(CounterBuilder b)]) => _$Counter((CounterBuilder b) => b..count = 0);
  }
 
 
 /**
- * These are reducers, a pure function with (builder, action) => state signature.
+ * These are reducers, a pure function with (state, action, builder) => state signature.
  * It describes how an action transforms the state into the next state.
+ * You are required to builder passed, calling state.rebuild will NOT update
+ * the state in your redux store.
  */
 increment(Counter state, Action<int> action, CounterBuilder builder) =>
   builder..count = state.count + action.payload;
@@ -105,14 +107,14 @@ decrement(Counter state, Action<int> action, CounterBuilder builder) =>
  * for the action provided to your reducer. Calling .build() returns the map
  * of action names to reducers.
  */
-var _reducer =  (new ReducerBuilder<CounterBuilder>()
+var _reducer =  (new ReducerBuilder<Counter, CounterBuilder>()
       ..add<int>(CounterActionsNames.increment, increment)
       ..add<int>(CounterActionsNames.decrement, decrement)).build();
 
 // Create a Redux store holding the state of your app.
 // Its API is subscribe, state, actions.
-var store = new Store<AppState, AppStateActions>(
-  _defaultState(),
+var store = new Store<Counter, CounterBuilder, CounterActions>(
+  new Counter(),
   new CounterActions(),
 );
 
@@ -153,10 +155,10 @@ abstract class DoubleAction extends ReduxActions {
  * if an action not handled by this middlware is received. Calling .build() returns the
  * middleware function that can be passed to your store at instantiation.
  */
-var doubleMiddleware =  (new MiddlwareBuilder<Counter, CounterActions>()
+var doubleMiddleware =  (new MiddlwareBuilder<Counter, CounterBuilder, CounterActions>()
       ..add<int>(DoubleActionNames.increment, _doubleIt)).build();
 
-_doubleIt(MiddlewareApi api, ActionHandler next, Action<int> action) {
+_doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api, ActionHandler next, Action<int> action) {
   api.actions.increment(action.payload * 2);
 }
 ```
@@ -183,8 +185,8 @@ Check the usage after adding this middleware
 ```
 // Create a Redux store holding the state of your app.
 // Its API is subscribe, state, actions.
-var store = new Store<AppState, AppStateActions>(
-  _defaultState(),
+var store = new Store<Counter, CounterBuilder, CounterActions>(
+  new Counter(),
   new CounterActions(),
   middleware: [doubleMiddleware],
 );
