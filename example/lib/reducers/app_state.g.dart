@@ -40,24 +40,34 @@ class AppStateActionsNames {
 
 class _$AppState extends AppState {
   @override
-  final int currentGroup;
+  final int currentGroupId;
   @override
   final int bogus;
   @override
   final GroupsReducer groups;
   @override
   final TodosReducer todos;
+  Group __currentGroup;
+  BuiltMap<int, Todo> __currentGroupTodos;
 
   factory _$AppState([void updates(AppStateBuilder b)]) =>
       (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._({this.currentGroup, this.bogus, this.groups, this.todos})
+  _$AppState._({this.currentGroupId, this.bogus, this.groups, this.todos})
       : super._() {
-    if (currentGroup == null) throw new ArgumentError.notNull('currentGroup');
+    if (currentGroupId == null)
+      throw new ArgumentError.notNull('currentGroupId');
     if (bogus == null) throw new ArgumentError.notNull('bogus');
     if (groups == null) throw new ArgumentError.notNull('groups');
     if (todos == null) throw new ArgumentError.notNull('todos');
   }
+
+  @override
+  Group get currentGroup => __currentGroup ??= super.currentGroup;
+
+  @override
+  BuiltMap<int, Todo> get currentGroupTodos =>
+      __currentGroupTodos ??= super.currentGroupTodos;
 
   @override
   AppState rebuild(void updates(AppStateBuilder b)) =>
@@ -70,7 +80,7 @@ class _$AppState extends AppState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! AppState) return false;
-    return currentGroup == other.currentGroup &&
+    return currentGroupId == other.currentGroupId &&
         bogus == other.bogus &&
         groups == other.groups &&
         todos == other.todos;
@@ -79,7 +89,7 @@ class _$AppState extends AppState {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, currentGroup.hashCode), bogus.hashCode),
+        $jc($jc($jc(0, currentGroupId.hashCode), bogus.hashCode),
             groups.hashCode),
         todos.hashCode));
   }
@@ -87,7 +97,7 @@ class _$AppState extends AppState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('AppState')
-          ..add('currentGroup', currentGroup)
+          ..add('currentGroupId', currentGroupId)
           ..add('bogus', bogus)
           ..add('groups', groups)
           ..add('todos', todos))
@@ -98,9 +108,10 @@ class _$AppState extends AppState {
 class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState _$v;
 
-  int _currentGroup;
-  int get currentGroup => _$this._currentGroup;
-  set currentGroup(int currentGroup) => _$this._currentGroup = currentGroup;
+  int _currentGroupId;
+  int get currentGroupId => _$this._currentGroupId;
+  set currentGroupId(int currentGroupId) =>
+      _$this._currentGroupId = currentGroupId;
 
   int _bogus;
   int get bogus => _$this._bogus;
@@ -119,7 +130,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
   AppStateBuilder get _$this {
     if (_$v != null) {
-      _currentGroup = _$v.currentGroup;
+      _currentGroupId = _$v.currentGroupId;
       _bogus = _$v.bogus;
       _groups = _$v.groups?.toBuilder();
       _todos = _$v.todos?.toBuilder();
@@ -143,7 +154,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState build() {
     final result = _$v ??
         new _$AppState._(
-            currentGroup: currentGroup,
+            currentGroupId: currentGroupId,
             bogus: bogus,
             groups: groups?.build(),
             todos: todos?.build());

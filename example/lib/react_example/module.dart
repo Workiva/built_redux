@@ -7,7 +7,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_redux/built_redux.dart';
 
 import '../reducers/app_state.dart';
-import '../reducers/api.dart';
 import '../reducers/todo.dart';
 import '../reducers/group.dart';
 import 'select.dart';
@@ -17,7 +16,10 @@ part 'module.g.dart';
 
 abstract class TodoProps implements Built<TodoProps, TodoPropsBuilder> {
   AppStateActions get actions;
-  int get currentGroup;
+
+  @nullable
+  Group get currentGroup;
+
   BuiltMap<int, Group> get groups;
   BuiltMap<int, Todo> get todos;
   String get title;
@@ -26,14 +28,15 @@ abstract class TodoProps implements Built<TodoProps, TodoPropsBuilder> {
   factory TodoProps([updates(TodoPropsBuilder b)]) = _$TodoProps;
 }
 
-var todosReduxBuilder = compose<ReduxProps<AppState>, TodoProps>([
+var todosReduxBuilder = compose<ReduxProps<AppState, AppStateBuilder, AppStateActions>, TodoProps>([
   mapReduxStoreToProps<AppState, TodoProps>(
-      (ReduxProps<AppState> reduxProps) => new TodoProps((TodoPropsBuilder b) => b
-        ..actions = reduxProps.store.actions
-        ..currentGroup = reduxProps.store.state.currentGroup
-        ..groups.addAll(reduxProps.store.state.groups.groupMap)
-        ..todos.addAll(currentGroupTodos(reduxProps.store.state).asMap())
-        ..title = "redux")),
+      (ReduxProps<AppState, AppStateBuilder, AppStateActions> reduxProps) =>
+          new TodoProps((TodoPropsBuilder b) => b
+            ..actions = reduxProps.store.actions
+            ..currentGroup = reduxProps.store.state.currentGroup?.toBuilder()
+            ..groups.addAll(reduxProps.store.state.groups.groupMap.asMap())
+            ..todos.addAll(reduxProps.store.state.currentGroupTodos.asMap())
+            ..title = "redux")),
   pure,
   lifecycle<TodoProps>(
       componentDidUpdate: (oldProps, newProps) => print('prev: $oldProps\nnew: $newProps')),
@@ -43,7 +46,7 @@ ReactElement todosComponent(TodoProps props) => Dom.div()(
       todoHeader(props),
       selectComponent(new SelectProps()
         ..label = 'group'
-        ..currentGroup = props.currentGroup
+        ..currentGroup = props.currentGroup == null ? -1 : props.currentGroup.id
         ..optionMap = props.groups
         ..onSelect = props.actions.setCurrentGroup),
       creatorComponent(new CreatorProps()

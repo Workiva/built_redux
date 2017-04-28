@@ -2,9 +2,13 @@ library app_state;
 
 import 'package:built_redux/built_redux.dart';
 import 'package:built_value/built_value.dart';
+import 'package:built_collection/built_collection.dart';
 
 import 'groups.dart';
+import 'group.dart';
 import 'todos.dart';
+import 'todo.dart';
+import 'utils.dart';
 import '../middleware/creation_middleware.dart';
 
 part 'app_state.g.dart';
@@ -22,7 +26,7 @@ abstract class AppStateActions extends ReduxActions {
 }
 
 _setCurrentGroupReducer(AppState state, Action<int> action, AppStateBuilder builder) =>
-    builder..currentGroup = action.payload;
+    builder..currentGroupId = action.payload;
 
 _setBogus(AppState state, Action<int> action, AppStateBuilder builder) {
   print("set bogus handled");
@@ -39,7 +43,19 @@ abstract class AppState extends BuiltReducer<AppState, AppStateBuilder>
     with AppStateReduceChildren
     implements Built<AppState, AppStateBuilder> {
   /// [currentGroup] is the group in which the view is currently displaying todos for
-  int get currentGroup;
+  int get currentGroupId;
+
+  @memoized
+  Group get currentGroup => groups.groupMap[currentGroupId];
+
+  @memoized
+  BuiltMap<int, Todo> get currentGroupTodos {
+    if (currentGroupId == -1) return new BuiltMap<int, Todo>();
+    return filterMap<int, Todo>(
+      todos.todosMap,
+      currentGroup.todoIds,
+    );
+  }
 
   /// [bogus] is an integer to prove that pure component should updates work
   int get bogus;
@@ -55,6 +71,6 @@ abstract class AppState extends BuiltReducer<AppState, AppStateBuilder>
   // Built value boilerplate and default state
   AppState._();
   factory AppState([updates(AppStateBuilder b)]) => new _$AppState((AppStateBuilder b) => b
-    ..currentGroup = -1
+    ..currentGroupId = -1
     ..bogus = 0);
 }
