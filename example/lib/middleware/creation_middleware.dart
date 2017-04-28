@@ -35,7 +35,7 @@ _createTodo(MiddlewareApi<AppState, AppStateBuilder, AppStateActions> api, Actio
   api.actions.todosActions.addTodo(newTodo);
   api.actions.groupActions.addTodoToGroup(new AddTodoToGroupPayload()
     ..todoId = newTodo.id
-    ..groupId = api.state.currentGroup);
+    ..groupId = api.state.currentGroupId);
 }
 
 Group _newGroup(String name) => new Group((b) => b
