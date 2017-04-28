@@ -8,14 +8,16 @@ import 'built_reducer.dart';
 import 'middleware.dart';
 import 'typedefs.dart';
 
-/// [Store] is the container of your state.
+/// [Store] is the container of your state. It listens for actions, invokes reducers,
+/// and publishes changes to the state
 class Store<State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
   // stream used for dispatching actions
   final StreamController<Action<dynamic>> _dispatch = new StreamController.broadcast();
 
   // stream used to dispatch changes to the state
-  final StreamController<State> _stateController = new StreamController.broadcast();
+  final StreamController<StoreChange<State, StateBuilder, dynamic>> _stateController =
+      new StreamController.broadcast();
 
   // the current state
   State _state;
@@ -41,8 +43,8 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
       if (_state == state) return;
 
       // update the internal state and publish the change
+      _stateController.add(new StoreChange(state, _state, action));
       _state = state;
-      _stateController.add(_state);
     };
 
     // if middleware is give build the chain
@@ -70,11 +72,46 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
   }
 
   /// [subscribe] returns a stream that will be dispatched whenever the state changes
-  Stream<State> get subscribe => _stateController.stream;
+  Stream<StoreChange<State, StateBuilder, dynamic>> get subscribe => _stateController.stream;
 
   /// [state] returns the current state
   State get state => _state;
 
   /// [actions] returns the synced actions
   Actions get actions => _actions;
+}
+
+/// [StoreChange] is the payload for the [Store] subscription
+class StoreChange<State extends BuiltReducer<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>, P> {
+  final State next;
+  final State prev;
+  final Action<P> action;
+
+  StoreChange(State n, State p, Action<P> a)
+      : next = n,
+        prev = p,
+        action = a;
+}
+
+/// [StoreChangeHandler] handles a change the store after an action of type Action<T>
+typedef StoreChangeHandler<
+    State extends BuiltReducer<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>,
+    P>(StoreChange<State, StateBuilder, P> storeChange);
+
+/// [StoreChangeHandlerBuilder] allows you to listen to the [Store] and perform a handler for a given
+/// set of actions with many different payload types, while maintaining type safety.
+/// Each [StoreChangeHandler] added with add<T> must take a [StoreChange] with prev and next of type
+/// <State, StateBuilder> an Action of typ Action<T>,
+class StoreChangeHandlerBuilder<State extends BuiltReducer<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>> {
+  final _map = new Map<String, StoreChangeHandler<State, StateBuilder, dynamic>>();
+
+  void add<Payload>(
+      ActionName<Payload> aName, StoreChangeHandler<State, StateBuilder, Payload> reducer) {
+    _map[aName.name] = reducer;
+  }
+
+  Map<String, StoreChangeHandler<State, StateBuilder, dynamic>> build() => _map;
 }
