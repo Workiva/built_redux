@@ -66,7 +66,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   built_value:
     description:
       name: built_value
@@ -126,7 +126,7 @@ packages:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   glob:
     description:
       name: glob
@@ -249,15 +249,22 @@ packages:
     version: "0.24.0"
   react:
     description:
-      name: react
-      url: "https://pub.dartlang.org"
-    source: hosted
+      ref: context
+      resolved-ref: a5af894a95356ca6d7baf08aa0772d2628ecf5ca
+      url: "git://github.com/greglittlefield-wf/react-dart.git"
+    source: git
     version: "3.2.1"
+  react_built_redux:
+    description:
+      path: "../../react_built_redux"
+      relative: true
+    source: path
+    version: "0.0.0"
   recompose_dart:
     description:
-      name: recompose_dart
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../../recompose_dart"
+      relative: true
+    source: path
     version: "0.0.8"
   shelf:
     description:
