@@ -66,7 +66,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.1"
+    version: "0.1.2"
   built_value:
     description:
       name: built_value
@@ -256,16 +256,17 @@ packages:
     version: "3.2.1"
   react_built_redux:
     description:
-      path: "../../react_built_redux"
-      relative: true
-    source: path
-    version: "0.0.0"
+      ref: master
+      resolved-ref: f17e923d32b596f4bd2dcbcf82e38dfc2bbcba62
+      url: "git://github.com/davidmarne/react_built_redux.git"
+    source: git
+    version: "0.0.1"
   recompose_dart:
     description:
-      path: "../../recompose_dart"
-      relative: true
-    source: path
-    version: "0.0.8"
+      name: recompose_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.9"
   shelf:
     description:
       name: shelf

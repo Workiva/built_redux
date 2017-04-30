@@ -1,7 +1,11 @@
 name: example
 
 dependencies:
-  recompose_dart: '^0.0.5'
+  recompose_dart: '^0.0.9'
+  react_built_redux:
+    git:
+      url: git://github.com/davidmarne/react_built_redux.git
+      ref: master
 
 dev_dependencies:
   browser: any
@@ -14,10 +18,6 @@ dev_dependencies:
 dependency_overrides:
   built_redux:
     path: ../.
-  recompose_dart:
-    path: ../../recompose_dart/
-  react_built_redux:
-    path: ../../react_built_redux/
   react:
     git:
       url: git://github.com/greglittlefield-wf/react-dart.git
