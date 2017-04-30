@@ -25,7 +25,7 @@ removeTodoReducer(TodosReducer state, Action<int> action, TodosReducerBuilder bu
     builder.todosMap.remove(action.payload);
 
 updateTodoStatusReducer(TodosReducer state, Action<int> action, TodosReducerBuilder builder) =>
-    builder.todosMap[action.payload] = state.todosMap[action.payload].rebuild(
+    builder.todosMap[action.payload] = builder.todosMap[action.payload].rebuild(
       (tbuilder) => tbuilder..done = !tbuilder.done,
     );
 

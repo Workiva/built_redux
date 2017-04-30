@@ -33,7 +33,7 @@ var todosReduxBuilder = compose<ReduxProps<AppState, AppStateBuilder, AppStateAc
       (ReduxProps<AppState, AppStateBuilder, AppStateActions> reduxProps) =>
           new TodoProps((TodoPropsBuilder b) => b
             ..actions = reduxProps.store.actions
-            ..currentGroup = reduxProps.store.state.currentGroup?.toBuilder()
+            ..currentGroup = reduxProps.store.state.groups.currentGroup?.toBuilder()
             ..groups.addAll(reduxProps.store.state.groups.groupMap.asMap())
             ..todos.addAll(reduxProps.store.state.currentGroupTodos.asMap())
             ..title = "redux")),
@@ -48,7 +48,7 @@ ReactElement todosComponent(TodoProps props) => Dom.div()(
         ..label = 'group'
         ..currentGroup = props.currentGroup == null ? -1 : props.currentGroup.id
         ..optionMap = props.groups
-        ..onSelect = props.actions.setCurrentGroup),
+        ..onSelect = props.actions.groupActions.setCurrentGroup),
       creatorComponent(new CreatorProps()
         ..onSubmit = props.actions.creationActions.createGroup
         ..name = 'group'),
