@@ -1,6 +1,7 @@
 library module;
 
 import 'package:recompose_dart/recompose_dart.dart';
+import 'package:react_built_redux/react_built_redux.dart';
 import 'package:over_react/over_react.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_collection/built_collection.dart';
@@ -28,14 +29,14 @@ abstract class TodoProps implements Built<TodoProps, TodoPropsBuilder> {
   factory TodoProps([updates(TodoPropsBuilder b)]) = _$TodoProps;
 }
 
-var todosReduxBuilder = compose<ReduxProps<AppState, AppStateBuilder, AppStateActions>, TodoProps>([
-  mapReduxStoreToProps<AppState, TodoProps>(
-      (ReduxProps<AppState, AppStateBuilder, AppStateActions> reduxProps) =>
+var todosReduxBuilder = compose<dynamic, TodoProps>([
+  mapStoreToProps<AppState, AppStateBuilder, AppStateActions, dynamic, TodoProps>(
+      (Store<AppState, AppStateBuilder, AppStateActions> store, dynamic _) =>
           new TodoProps((TodoPropsBuilder b) => b
-            ..actions = reduxProps.store.actions
-            ..currentGroup = reduxProps.store.state.groups.currentGroup?.toBuilder()
-            ..groups.addAll(reduxProps.store.state.groups.groupMap.asMap())
-            ..todos.addAll(reduxProps.store.state.currentGroupTodos.asMap())
+            ..actions = store.actions
+            ..currentGroup = store.state.groups.currentGroup?.toBuilder()
+            ..groups.addAll(store.state.groups.groupMap.asMap())
+            ..todos.addAll(store.state.currentGroupTodos.asMap())
             ..title = "redux")),
   pure,
   lifecycle<TodoProps>(

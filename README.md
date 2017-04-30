@@ -4,6 +4,7 @@
 ### built_redux
 
 built_redux is a state management library written in dart that enforces immutability.
+built_redux stores can be built with middleware and nested reducers
 
 Inspired by [redux][redux_git]
 
@@ -26,7 +27,7 @@ Built using [built_value][built_value_git]
       built_redux: "^0.1.0"
     ```
 
-2. Create a script to run generators for generating built_values and redux actions.
+2. Create a script to run generators for generating built_values and additional built_redux classes.
     ```
     import 'dart:async';
 
@@ -122,7 +123,7 @@ var store = new Store<Counter, CounterBuilder, CounterActions>(
 // Normally you'd use a view binding library (e.g. React Redux) rather than subscribe() directly.
 // However it can also be handy to persist the current state in the localStorage.
 
-store.subscribe(() =>
+store.subscribe((_) =>
   print(store.state);
 )
 
@@ -202,6 +203,29 @@ store.actions.doublerActions.increment(2);
 // 5
 store.actions.decrement(1);
 // 4
+```
+
+Nested reducers can be added to your BuiltReducer. In this example NestedCounter
+is another BuiltReducer. In order for nested reducers to work you must mix in
+{Built reducer name}ReduceChildren just like BaseCounterReduceChildren is below.
+This class will be generated for you by the BuiltReduxGenerator.
+```
+abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
+    with BaseCounterReduceChildren
+    implements Built<BaseCounter, BaseCounterBuilder> {
+  int get count;
+
+  NestedCounter get nestedCounter;
+
+  get reducer => _baseReducer;
+
+  // Built value boilerplate
+  BaseCounter._();
+  factory BaseCounter([updates(BaseCounterBuilder b)]) =>
+      new _$BaseCounter((BaseCounterBuilder b) => b
+        ..count = 1
+        ..nestedCounter = new NestedCounter().toBuilder());
+}
 ```
 
 [built_value_blog]: https://medium.com/dartlang/darts-built-value-for-immutable-object-models-83e2497922d4

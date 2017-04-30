@@ -9,7 +9,6 @@ import 'todos.dart';
 import 'todo.dart';
 import 'utils.dart';
 import '../middleware/creation_middleware.dart';
-import 'package:built_value/serializer.dart';
 
 part 'app_state.g.dart';
 

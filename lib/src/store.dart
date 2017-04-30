@@ -7,15 +7,18 @@ import 'action.dart';
 import 'built_reducer.dart';
 import 'middleware.dart';
 import 'typedefs.dart';
+import 'store_change.dart';
 
-/// [Store] is the container of your state.
+/// [Store] is the container of your state. It listens for actions, invokes reducers,
+/// and publishes changes to the state
 class Store<State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
   // stream used for dispatching actions
   final StreamController<Action<dynamic>> _dispatch = new StreamController.broadcast();
 
   // stream used to dispatch changes to the state
-  final StreamController<State> _stateController = new StreamController.broadcast();
+  final StreamController<StoreChange<State, StateBuilder, dynamic>> _stateController =
+      new StreamController.broadcast();
 
   // the current state
   State _state;
@@ -41,8 +44,8 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
       if (_state == state) return;
 
       // update the internal state and publish the change
+      _stateController.add(new StoreChange<State, StateBuilder, dynamic>(state, _state, action));
       _state = state;
-      _stateController.add(_state);
     };
 
     // if middleware is give build the chain
@@ -70,7 +73,7 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
   }
 
   /// [subscribe] returns a stream that will be dispatched whenever the state changes
-  Stream<State> get subscribe => _stateController.stream;
+  Stream<StoreChange<State, StateBuilder, dynamic>> get subscribe => _stateController.stream;
 
   /// [state] returns the current state
   State get state => _state;
