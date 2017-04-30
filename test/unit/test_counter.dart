@@ -1,5 +1,7 @@
 library test_counter;
 
+import 'dart:async';
+
 import 'package:built_redux/built_redux.dart';
 import 'package:built_value/built_value.dart';
 
@@ -80,6 +82,8 @@ abstract class NestedCounter extends BuiltReducer<NestedCounter, NestedCounterBu
       new _$NestedCounter((NestedCounterBuilder b) => b..count = 1);
 }
 
+// Middleware
+
 abstract class MiddlewareActions extends ReduxActions {
   ActionDispatcher<int> increment;
 
@@ -87,13 +91,18 @@ abstract class MiddlewareActions extends ReduxActions {
   factory MiddlewareActions() => new _$MiddlewareActions();
 }
 
-var createCounterMiddleware =
-    (new MiddlwareBuilder<BaseCounter, BaseCounterBuilder, BaseCounterActions>()
-          ..add<int>(MiddlewareActionsNames.increment, _doubleIt))
-        .build();
+var counterMiddleware = (new MiddlwareBuilder<BaseCounter, BaseCounterBuilder, BaseCounterActions>()
+      ..add<int>(MiddlewareActionsNames.increment, _doubleIt))
+    .build();
 
 _doubleIt(MiddlewareApi<BaseCounter, BaseCounterBuilder, BaseCounterActions> api,
     ActionHandler next, Action<int> action) {
   api.actions.increment(api.state.count * 2);
   next(action);
 }
+
+// Change handler
+
+createChangeHandler(Completer comp) =>
+    (new StoreChangeHandlerBuilder<BaseCounter, BaseCounterBuilder, BaseCounterActions>()
+      ..add<int>(BaseCounterActionsNames.increment, (change) => comp.complete(change)));

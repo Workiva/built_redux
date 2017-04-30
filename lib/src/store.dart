@@ -95,23 +95,34 @@ class StoreChange<State extends BuiltReducer<State, StateBuilder>,
 }
 
 /// [StoreChangeHandler] handles a change the store after an action of type Action<T>
-typedef StoreChangeHandler<
-    State extends BuiltReducer<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>,
-    P>(StoreChange<State, StateBuilder, P> storeChange);
+typedef StoreChangeHandler<P, State extends BuiltReducer<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>>(
+  StoreChange<State, StateBuilder, P> storeChange,
+);
 
 /// [StoreChangeHandlerBuilder] allows you to listen to the [Store] and perform a handler for a given
 /// set of actions with many different payload types, while maintaining type safety.
 /// Each [StoreChangeHandler] added with add<T> must take a [StoreChange] with prev and next of type
 /// <State, StateBuilder> an Action of typ Action<T>,
 class StoreChangeHandlerBuilder<State extends BuiltReducer<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>> {
-  final _map = new Map<String, StoreChangeHandler<State, StateBuilder, dynamic>>();
+    StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
+  final _map = new Map<String, StoreChangeHandler<dynamic, State, StateBuilder>>();
+  StreamSubscription _subscription;
 
   void add<Payload>(
-      ActionName<Payload> aName, StoreChangeHandler<State, StateBuilder, Payload> reducer) {
+      ActionName<Payload> aName, StoreChangeHandler<Payload, State, StateBuilder> reducer) {
     _map[aName.name] = reducer;
   }
 
-  Map<String, StoreChangeHandler<State, StateBuilder, dynamic>> build() => _map;
+  build(Store<State, StateBuilder, Actions> store) {
+    // TODO: dispose this sub
+    _subscription = store.subscribe.listen((StoreChange<State, StateBuilder, Actions> storeChange) {
+      var handler = _map[storeChange.action.name];
+      if (handler != null) handler(storeChange);
+    });
+  }
+
+  dispose() {
+    _subscription.cancel();
+  }
 }

@@ -15,7 +15,7 @@ main() {
 
       var middlware = new List<Middleware>();
       for (int i = 0; i < numMiddleware; i++) {
-        middlware.add(createCounterMiddleware);
+        middlware.add(counterMiddleware);
       }
 
       store = new Store(
@@ -31,37 +31,47 @@ main() {
 
     test('base action updates state', () async {
       setup();
-      Completer onStateChangeCompleter = new Completer<BaseCounter>();
-      store.subscribe.listen((BaseCounter state) => onStateChangeCompleter.complete(state));
+      Completer onStateChangeCompleter =
+          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      store.subscribe.listen(
+          (StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions> state) =>
+              onStateChangeCompleter.complete(state));
       store.actions.increment(4);
-      var nextState = await onStateChangeCompleter.future;
-      expect(nextState.count, 5);
+      var stateChange = await onStateChangeCompleter.future;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 5);
     });
 
     test('nested action updates state', () async {
       setup();
-      Completer onStateChangeCompleter = new Completer<BaseCounter>();
-      store.subscribe.listen((BaseCounter state) => onStateChangeCompleter.complete(state));
+      Completer onStateChangeCompleter =
+          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      store.subscribe.listen((state) => onStateChangeCompleter.complete(state));
       store.actions.nestedCounterActions.increment(4);
-      var nextState = await onStateChangeCompleter.future;
-      expect(nextState.nestedCounter.count, 5);
+      var stateChange = await onStateChangeCompleter.future;
+      expect(stateChange.prev.nestedCounter.count, 1);
+      expect(stateChange.next.nestedCounter.count, 5);
     });
 
     test('middleware action doubles count and updates state', () async {
       setup();
-      Completer onStateChangeCompleter = new Completer<BaseCounter>();
-      store.subscribe.listen((BaseCounter state) => onStateChangeCompleter.complete(state));
+      Completer onStateChangeCompleter =
+          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      store.subscribe.listen((state) => onStateChangeCompleter.complete(state));
       store.actions.middlewareActions.increment(0);
-      var nextState = await onStateChangeCompleter.future;
-      expect(nextState.count, 3);
+      var stateChange = await onStateChangeCompleter.future;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 3);
     });
 
     test('2 middlwares doubles count twice and updates state', () async {
       setup(numMiddleware: 2);
-      Completer onStateChangeCompleter = new Completer<BaseCounter>();
-      Completer onStateChangeCompleter2 = new Completer<BaseCounter>();
+      Completer onStateChangeCompleter =
+          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      Completer onStateChangeCompleter2 =
+          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
 
-      store.subscribe.listen((BaseCounter state) {
+      store.subscribe.listen((state) {
         if (!onStateChangeCompleter.isCompleted)
           onStateChangeCompleter.complete(state);
         else
@@ -69,10 +79,30 @@ main() {
       });
       // should add 2 twice
       store.actions.middlewareActions.increment(0);
-      var nextState = await onStateChangeCompleter.future;
-      expect(nextState.count, 3);
-      nextState = await onStateChangeCompleter2.future;
-      expect(nextState.count, 5);
+      var stateChange = await onStateChangeCompleter.future;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 3);
+      var stateChange2 = await onStateChangeCompleter2.future;
+      expect(stateChange2.prev.count, 3);
+      expect(stateChange2.next.count, 5);
+    });
+
+    test('store change handler', () async {
+      setup();
+      Completer onStateChangeCompleter =
+          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+
+      var storeChagneHandler = createChangeHandler(onStateChangeCompleter);
+      storeChagneHandler.build(store);
+      // dipatch 2 different actions, since the handler is only set to listen to base.increment
+      // if both are handled by the handler the completer with throw an error
+      store.actions.nestedCounterActions.increment(4);
+      store.actions.increment(4);
+
+      var stateChange = await onStateChangeCompleter.future;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 5);
+      storeChagneHandler.dispose();
     });
   });
 }
