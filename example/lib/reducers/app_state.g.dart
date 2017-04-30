@@ -13,9 +13,6 @@ class _$AppStateActions extends AppStateActions {
   GroupsActions groupActions = new GroupsActions();
   ActionDispatcher<int> setBogus =
       new ActionDispatcher<int>('AppStateActions-setBogus');
-
-  ActionDispatcher<int> setCurrentGroup =
-      new ActionDispatcher<int>('AppStateActions-setCurrentGroup');
   factory _$AppStateActions() => new _$AppStateActions._();
   _$AppStateActions._() : super._();
   syncWithStore(dispatcher) {
@@ -23,14 +20,11 @@ class _$AppStateActions extends AppStateActions {
     todosActions.syncWithStore(dispatcher);
     groupActions.syncWithStore(dispatcher);
     setBogus.syncWithStore(dispatcher);
-    setCurrentGroup.syncWithStore(dispatcher);
   }
 }
 
 class AppStateActionsNames {
   static ActionName setBogus = new ActionName<int>('AppStateActions-setBogus');
-  static ActionName setCurrentGroup =
-      new ActionName<int>('AppStateActions-setCurrentGroup');
 }
 
 // **************************************************************************
@@ -40,30 +34,21 @@ class AppStateActionsNames {
 
 class _$AppState extends AppState {
   @override
-  final int currentGroupId;
-  @override
   final int bogus;
   @override
   final GroupsReducer groups;
   @override
   final TodosReducer todos;
-  Group __currentGroup;
   BuiltMap<int, Todo> __currentGroupTodos;
 
   factory _$AppState([void updates(AppStateBuilder b)]) =>
       (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._({this.currentGroupId, this.bogus, this.groups, this.todos})
-      : super._() {
-    if (currentGroupId == null)
-      throw new ArgumentError.notNull('currentGroupId');
+  _$AppState._({this.bogus, this.groups, this.todos}) : super._() {
     if (bogus == null) throw new ArgumentError.notNull('bogus');
     if (groups == null) throw new ArgumentError.notNull('groups');
     if (todos == null) throw new ArgumentError.notNull('todos');
   }
-
-  @override
-  Group get currentGroup => __currentGroup ??= super.currentGroup;
 
   @override
   BuiltMap<int, Todo> get currentGroupTodos =>
@@ -80,24 +65,20 @@ class _$AppState extends AppState {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! AppState) return false;
-    return currentGroupId == other.currentGroupId &&
-        bogus == other.bogus &&
+    return bogus == other.bogus &&
         groups == other.groups &&
         todos == other.todos;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc(0, currentGroupId.hashCode), bogus.hashCode),
-            groups.hashCode),
-        todos.hashCode));
+    return $jf(
+        $jc($jc($jc(0, bogus.hashCode), groups.hashCode), todos.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('AppState')
-          ..add('currentGroupId', currentGroupId)
           ..add('bogus', bogus)
           ..add('groups', groups)
           ..add('todos', todos))
@@ -107,11 +88,6 @@ class _$AppState extends AppState {
 
 class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState _$v;
-
-  int _currentGroupId;
-  int get currentGroupId => _$this._currentGroupId;
-  set currentGroupId(int currentGroupId) =>
-      _$this._currentGroupId = currentGroupId;
 
   int _bogus;
   int get bogus => _$this._bogus;
@@ -130,7 +106,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
   AppStateBuilder get _$this {
     if (_$v != null) {
-      _currentGroupId = _$v.currentGroupId;
       _bogus = _$v.bogus;
       _groups = _$v.groups?.toBuilder();
       _todos = _$v.todos?.toBuilder();
@@ -154,10 +129,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState build() {
     final result = _$v ??
         new _$AppState._(
-            currentGroupId: currentGroupId,
-            bogus: bogus,
-            groups: groups?.build(),
-            todos: todos?.build());
+            bogus: bogus, groups: groups?.build(), todos: todos?.build());
     replace(result);
     return result;
   }
