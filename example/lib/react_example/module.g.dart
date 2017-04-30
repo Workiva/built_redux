@@ -11,7 +11,7 @@ class _$TodoProps extends TodoProps {
   @override
   final AppStateActions actions;
   @override
-  final int currentGroup;
+  final Group currentGroup;
   @override
   final BuiltMap<int, Group> groups;
   @override
@@ -26,7 +26,6 @@ class _$TodoProps extends TodoProps {
       {this.actions, this.currentGroup, this.groups, this.todos, this.title})
       : super._() {
     if (actions == null) throw new ArgumentError.notNull('actions');
-    if (currentGroup == null) throw new ArgumentError.notNull('currentGroup');
     if (groups == null) throw new ArgumentError.notNull('groups');
     if (todos == null) throw new ArgumentError.notNull('todos');
     if (title == null) throw new ArgumentError.notNull('title');
@@ -79,9 +78,10 @@ class TodoPropsBuilder implements Builder<TodoProps, TodoPropsBuilder> {
   AppStateActions get actions => _$this._actions;
   set actions(AppStateActions actions) => _$this._actions = actions;
 
-  int _currentGroup;
-  int get currentGroup => _$this._currentGroup;
-  set currentGroup(int currentGroup) => _$this._currentGroup = currentGroup;
+  GroupBuilder _currentGroup;
+  GroupBuilder get currentGroup => _$this._currentGroup ??= new GroupBuilder();
+  set currentGroup(GroupBuilder currentGroup) =>
+      _$this._currentGroup = currentGroup;
 
   MapBuilder<int, Group> _groups;
   MapBuilder<int, Group> get groups =>
@@ -102,7 +102,7 @@ class TodoPropsBuilder implements Builder<TodoProps, TodoPropsBuilder> {
   TodoPropsBuilder get _$this {
     if (_$v != null) {
       _actions = _$v.actions;
-      _currentGroup = _$v.currentGroup;
+      _currentGroup = _$v.currentGroup?.toBuilder();
       _groups = _$v.groups?.toBuilder();
       _todos = _$v.todos?.toBuilder();
       _title = _$v.title;
@@ -127,7 +127,7 @@ class TodoPropsBuilder implements Builder<TodoProps, TodoPropsBuilder> {
     final result = _$v ??
         new _$TodoProps._(
             actions: actions,
-            currentGroup: currentGroup,
+            currentGroup: _currentGroup?.build(),
             groups: groups?.build(),
             todos: todos?.build(),
             title: title);

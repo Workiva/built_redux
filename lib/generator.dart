@@ -59,7 +59,7 @@ String _generateActions(ClassElement element) {
 
     if (_isActionDispatcher(ele)) {
       // generate the action name
-      nameCode = appendCode(
+      nameCode = _appendCode(
         nameCode,
         'static ActionName $fieldName = new ActionName<${_getActionDispatcherGenericType(e)}>(\'${element.name}-$fieldName\');\n',
       );
@@ -73,23 +73,23 @@ String _generateActions(ClassElement element) {
         actionDispatcher = '\nfinal $actionDispatcher';
 
       // append the action dispatcher to the class definition
-      initializerCode = appendCode(initializerCode, actionDispatcher);
+      initializerCode = _appendCode(initializerCode, actionDispatcher);
 
       // append the sync function for this dispatcher
-      syncWithStoreCode = appendCode(
+      syncWithStoreCode = _appendCode(
         syncWithStoreCode,
         '$fieldName.syncWithStore(dispatcher);',
       );
     } else if (ele is ClassElement && _needsReduxActions(ele)) {
       // this is a nested instance of redux actions
       // generate the instantiation
-      initializerCode = appendCode(
+      initializerCode = _appendCode(
         initializerCode,
         '${e.toString()} = new $typeName();',
       );
 
       // append the sync function for this set of actions
-      syncWithStoreCode = appendCode(
+      syncWithStoreCode = _appendCode(
         syncWithStoreCode,
         '\n$fieldName.syncWithStore(dispatcher);',
       );
@@ -121,10 +121,10 @@ String _generateReduceChildren(ClassElement element) {
     var ele = e.type.element;
     if (ele is ClassElement && _isBuiltReducer(ele)) {
       String brName = e.name;
-      nameCode = appendCode(nameCode, 'state.$brName.reduce(state.$brName, a, builder.$brName);');
+      nameCode = _appendCode(nameCode, 'state.$brName.reduce(state.$brName, a, builder.$brName);');
     }
   }
   return nameCode;
 }
 
-String appendCode(String before, String newCode) => before.replaceFirst('\n', '\n$newCode');
+String _appendCode(String before, String newCode) => before.replaceFirst('\n', '\n$newCode');

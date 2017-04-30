@@ -1,5 +1,4 @@
 import 'package:built_value/built_value.dart';
-
 import 'action.dart';
 import 'typedefs.dart';
 
@@ -7,12 +6,14 @@ abstract class BuiltReducer<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>> implements Built<State, StateBuilder> {
   /// This is a map, not a single function with switch statement as per js redux implementation.
   /// This is so each reducer can have the action payload generic be a different non dynamic value
-  Map<String, Reducer<dynamic, State, StateBuilder>> get reducer;
+  Map<String, Reducer<dynamic, State, StateBuilder>> get reducer => null;
 
   void reduce(State state, Action<dynamic> a, StateBuilder builder) {
-    var handler = reducer[a.name];
-    // TODO: warn if payload type doesn't match reducer
-    if (handler != null) handler(state, a, builder);
+    if (reducer != null) {
+      var handler = reducer[a.name];
+      // TODO: warn if payload type doesn't match reducer
+      if (handler != null) handler(state, a, builder);
+    }
 
     reduceChildren(state, a, builder);
   }

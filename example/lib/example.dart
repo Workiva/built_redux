@@ -3,7 +3,6 @@ library example;
 export 'middleware/creation_middleware.dart';
 
 export 'reducers/app_state.dart';
-export 'reducers/api.dart';
 export 'reducers/group.dart';
 export 'reducers/groups.dart';
 export 'reducers/todo.dart';

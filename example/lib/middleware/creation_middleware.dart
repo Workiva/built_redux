@@ -23,11 +23,8 @@ var creatorMiddeware = (new MiddlwareBuilder<AppState, AppStateBuilder, AppState
     .build();
 
 _createGroup(MiddlewareApi<AppState, AppStateBuilder, AppStateActions> api, ActionHandler next,
-    Action<String> action) {
-  var newGroup = _newGroup(action.payload);
-  api.actions.groupActions.addGroup(newGroup);
-  api.actions.setCurrentGroup(newGroup.id);
-}
+        Action<String> action) =>
+    api.actions.groupActions.addGroup(_newGroup(action.payload));
 
 _createTodo(MiddlewareApi<AppState, AppStateBuilder, AppStateActions> api, ActionHandler next,
     Action<String> action) {
@@ -35,7 +32,7 @@ _createTodo(MiddlewareApi<AppState, AppStateBuilder, AppStateActions> api, Actio
   api.actions.todosActions.addTodo(newTodo);
   api.actions.groupActions.addTodoToGroup(new AddTodoToGroupPayload()
     ..todoId = newTodo.id
-    ..groupId = api.state.currentGroup);
+    ..groupId = api.state.groups.currentGroupId);
 }
 
 Group _newGroup(String name) => new Group((b) => b
