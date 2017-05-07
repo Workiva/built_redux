@@ -205,6 +205,8 @@ store.actions.decrement(1);
 // 4
 ```
 
+### Nested reducers
+
 Nested reducers can be added to your BuiltReducer. In this example NestedCounter
 is another BuiltReducer. In order for nested reducers to work you must mix in
 {Built reducer name}ReduceChildren just like BaseCounterReduceChildren is below.
