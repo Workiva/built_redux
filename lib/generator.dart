@@ -103,7 +103,7 @@ String _generateActions(ClassElement element) {
 // TODO: find a better way
 String _getActionDispatcherGenericType(FieldElement e) => e.toString().substring(
       e.toString().indexOf('<') + 1,
-      e.toString().indexOf('>'),
+      e.toString().lastIndexOf('>'),
     );
 
 List<DartType> _getBVTypes(ClassElement element) {
