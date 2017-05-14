@@ -20,7 +20,7 @@ class StoreChange<State extends BuiltReducer<State, StateBuilder>,
 }
 
 /// [StoreChangeHandler] handles a change the store after an action of type Action<T>
-typedef StoreChangeHandler<P, State extends BuiltReducer<State, StateBuilder>,
+typedef void StoreChangeHandler<P, State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>>(
   StoreChange<State, StateBuilder, P> storeChange,
 );
@@ -40,8 +40,7 @@ class StoreChangeHandlerBuilder<State extends BuiltReducer<State, StateBuilder>,
   }
 
   build(Store<State, StateBuilder, Actions> store) {
-    // TODO: dispose this sub
-    _subscription = store.subscribe.listen((StoreChange<State, StateBuilder, dynamic> storeChange) {
+    _subscription = store.stream.listen((StoreChange<State, StateBuilder, dynamic> storeChange) {
       var handler = _map[storeChange.action.name];
       if (handler != null) handler(storeChange);
     });

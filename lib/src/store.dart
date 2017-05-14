@@ -73,7 +73,7 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
   }
 
   /// [subscribe] returns a stream that will be dispatched whenever the state changes
-  Stream<StoreChange<State, StateBuilder, dynamic>> get subscribe => _stateController.stream;
+  Stream<StoreChange<State, StateBuilder, dynamic>> get stream => _stateController.stream;
 
   /// [state] returns the current state
   State get state => _state;

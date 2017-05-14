@@ -22,7 +22,7 @@ class MiddlewareApi<State extends BuiltReducer<State, StateBuilder>,
 /// [MiddlwareBuilder] allows you to build a reducer that handles many different actions
 /// with many different payload types, while maintaining type safety.
 /// Each [MiddlewareHandler] added with add<T> must take a state of type State, an Action of type
-/// Action<T>, and a builder of type B
+/// Action<T>, and a builder of type StateBuilder
 class MiddlwareBuilder<State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
   var _map = new Map<String, MiddlewareHandler<State, StateBuilder, Actions>>();
@@ -47,7 +47,7 @@ class MiddlwareBuilder<State extends BuiltReducer<State, StateBuilder>,
 /// [MiddlewareHandler] is a function that handles an action in a middleware. Its is only for
 /// use with [MiddlwareBuilder]. If you are not using [MiddlwareBuilder] middleware must be
 /// decalred as a [Middleware] function.
-typedef MiddlewareHandler<
+typedef void MiddlewareHandler<
     State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions>(MiddlewareApi<State, StateBuilder, Actions> api, ActionHandler next, Action action);
