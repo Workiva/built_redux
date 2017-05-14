@@ -33,7 +33,7 @@ main() {
       setup();
       Completer onStateChangeCompleter =
           new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      store.subscribe.listen(
+      store.stream.listen(
           (StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions> state) =>
               onStateChangeCompleter.complete(state));
       store.actions.increment(4);
@@ -46,7 +46,7 @@ main() {
       setup();
       Completer onStateChangeCompleter =
           new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      store.subscribe.listen((state) => onStateChangeCompleter.complete(state));
+      store.stream.listen((state) => onStateChangeCompleter.complete(state));
       store.actions.nestedCounterActions.increment(4);
       var stateChange = await onStateChangeCompleter.future;
       expect(stateChange.prev.nestedCounter.count, 1);
@@ -57,7 +57,7 @@ main() {
       setup();
       Completer onStateChangeCompleter =
           new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      store.subscribe.listen((state) => onStateChangeCompleter.complete(state));
+      store.stream.listen((state) => onStateChangeCompleter.complete(state));
       store.actions.middlewareActions.increment(0);
       var stateChange = await onStateChangeCompleter.future;
       expect(stateChange.prev.count, 1);
@@ -71,7 +71,7 @@ main() {
       Completer onStateChangeCompleter2 =
           new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
 
-      store.subscribe.listen((state) {
+      store.stream.listen((state) {
         if (!onStateChangeCompleter.isCompleted)
           onStateChangeCompleter.complete(state);
         else

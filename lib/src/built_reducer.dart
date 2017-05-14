@@ -11,7 +11,6 @@ abstract class BuiltReducer<State extends Built<State, StateBuilder>,
   void reduce(State state, Action<dynamic> a, StateBuilder builder) {
     if (reducer != null) {
       var handler = reducer[a.name];
-      // TODO: warn if payload type doesn't match reducer
       if (handler != null) handler(state, a, builder);
     }
 

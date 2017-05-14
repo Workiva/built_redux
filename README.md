@@ -44,7 +44,7 @@ Built using [built_value][built_value_git]
                 new BuiltValueGenerator(),
                 new BuiltReduxGenerator(),
               ]),
-              new InputSet('my_lib', const ['lib/**/*.dart'])),
+              new InputSet('my_lib', const ['lib//////.dart'])),
           deleteFilesByDefault: true);
     }
     ```
@@ -54,13 +54,11 @@ Built using [built_value][built_value_git]
 ```
 import 'package:built_redux/built_redux.dart';
 
-/**
- * This is a an implementation of ReduxActions. Actions are middleware and ui
- * components invoke a change to the redux store's state. By extending ReduxActions
- * the built_redux generator will generate the required boilerplate to create
- * each action and an ActionNames class.
- */
- abstract class CounterActions extends ReduxActions {
+ // This is a an implementation of ReduxActions. Actions are middleware and ui
+ // components invoke a change to the redux store's state. By extending ReduxActions
+ // the built_redux generator will generate the required boilerplate to create
+ // each action and an ActionNames class.
+  abstract class CounterActions extends ReduxActions {
    ActionDispatcher<int> increment;
    ActionDispatcher<int> decrement;
 
@@ -69,12 +67,10 @@ import 'package:built_redux/built_redux.dart';
    factory AppStateActions() => new _$AppStateActions();
  }
 
-/**
- * This is a BuiltReducer. It is essentially an implementation of built_value
- * with one extra getter named reducers. This getter is simply a map from action
- * name to a reducer function.
- */
- abstract class Counter extends BuiltReducer<Counter, CounterBuilder>
+ // This is a BuiltReducer. It is essentially an implementation of built_value
+ // with one extra getter named reducers. This getter is simply a map from action
+ // name to a reducer function.
+  abstract class Counter extends BuiltReducer<Counter, CounterBuilder>
      implements Built<Counter, CounterBuilder> {
    /// [count] value of the counter
    int get count;
@@ -89,26 +85,22 @@ import 'package:built_redux/built_redux.dart';
  }
 
 
-/**
- * These are reducers, a pure function with (state, action, builder) => state signature.
- * It describes how an action transforms the state into the next state.
- * You are required to builder passed, calling state.rebuild will NOT update
- * the state in your redux store.
- */
-increment(Counter state, Action<int> action, CounterBuilder builder) =>
+ // These are reducers, a pure function with (state, action, builder) => state signature.
+ // It describes how an action transforms the state into the next state.
+ // You are required to builder passed, calling state.rebuild will NOT update
+ // the state in your redux store.
+ increment(Counter state, Action<int> action, CounterBuilder builder) =>
   builder..count = state.count + action.payload;
 
 decrement(Counter state, Action<int> action, CounterBuilder builder) =>
   builder..count = state.count - action.payload;
 
-/**
- * This is a reducer builder. Use of ReducerBuilder is not required, however it
- * is strongly recommended as it gives you static type checking to make sure
- * the payload for action name provided is the same as the expected payload
- * for the action provided to your reducer. Calling .build() returns the map
- * of action names to reducers.
- */
-var _reducer =  (new ReducerBuilder<Counter, CounterBuilder>()
+ // This is a reducer builder. Use of ReducerBuilder is not required, however it
+ // is strongly recommended as it gives you static type checking to make sure
+ // the payload for action name provided is the same as the expected payload
+ // for the action provided to your reducer. Calling .build() returns the map
+ // of action names to reducers.
+ var _reducer =  (new ReducerBuilder<Counter, CounterBuilder>()
       ..add<int>(CounterActionsNames.increment, increment)
       ..add<int>(CounterActionsNames.decrement, decrement)).build();
 
@@ -123,7 +115,7 @@ var store = new Store<Counter, CounterBuilder, CounterActions>(
 // Normally you'd use a view binding library (e.g. React Redux) rather than subscribe() directly.
 // However it can also be handy to persist the current state in the localStorage.
 
-store.subscribe((_) =>
+store.stream((_) =>
   print(store.state);
 )
 
@@ -138,29 +130,25 @@ store.actions.decrement(1);
 
 ### Writing middleware
 ```
-/**
- * Actions to be handled by this middleware
- */
-abstract class DoubleAction extends ReduxActions {
+ // Actions to be handled by this middleware
+ abstract class DoubleAction extends ReduxActions {
   ActionDispatcher<int> increment;
 
   DoubleAction._();
   factory DoubleAction() => new _$DoubleAction();
 }
 
-/**
- * This is a middleware builder. Use of MiddlewareBuilder is not required, however
- * just like ReducerBuilder it is strongly recommended as it gives you static type checking to make sure
- * the payload for action name provided is the same as the expected payload
- * for the action provided to your reducer. It will also call next(action) for you
- * if an action not handled by this middlware is received. Calling .build() returns the
- * middleware function that can be passed to your store at instantiation.
- */
-var doubleMiddleware =  (new MiddlwareBuilder<Counter, CounterBuilder, CounterActions>()
+ // This is a middleware builder. Use of MiddlewareBuilder is not required, however
+ // just like ReducerBuilder it is strongly recommended as it gives you static type checking to make sure
+ // the payload for action name provided is the same as the expected payload
+ // for the action provided to your reducer. It will also call next(action) for you
+ // if an action not handled by this middlware is received. Calling .build() returns the
+ // middleware function that can be passed to your store at instantiation.
+ var doubleMiddleware =  (new MiddlwareBuilder<Counter, CounterBuilder, CounterActions>()
       ..add<int>(DoubleActionNames.increment, _doubleIt)).build();
 
 _doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api, ActionHandler next, Action<int> action) {
-  api.actions.increment(action.payload * 2);
+  api.actions.increment(action.payload // 2);
 }
 ```
 
@@ -192,7 +180,7 @@ var store = new Store<Counter, CounterBuilder, CounterActions>(
   middleware: [doubleMiddleware],
 );
 
-store.subscribe(() =>
+store.stream(() =>
   print(store.state);
 )
 

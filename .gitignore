@@ -2,6 +2,7 @@
 packages
 .packages
 .dart_tool
+pubspec.lock
 
 example/.pub
 example/packages

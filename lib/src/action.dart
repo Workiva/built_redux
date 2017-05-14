@@ -50,7 +50,7 @@ class ActionDispatcher<P> {
 /// as the [ActionDispatcher] payload generic. This allows you to build reducer handlers with type
 /// safety without having to instantiate your instance of [ReduxActions].
 ///
-/// One can also next [ReduxActions] just like one can nest [BuiltReducer]s.
+/// One can also nest [ReduxActions] just like one can nest [BuiltReducer]s.
 ///
 ///  Example:
 ///
@@ -81,11 +81,25 @@ class ActionDispatcher<P> {
 ///   }
 /// }
 ///
-///  class AppStateActionsNames {
+///  class BaseActionsNames {
 ///   static ActionName foo = new ActionName<int>('BaseActions-foo');
 /// }
-/// ```
 ///
+/// class _$NestedActions extends NestedActions {
+///   final ActionDispatcher<int> bar = new ActionDispatcher<int>('NestedActions-bar');
+///
+///   factory _$NestedActions() => new _$NestedActions._();
+///   _$NestedActions._() : super._();
+///
+///   syncWithStore(dispatcher) {
+///     bar.syncWithStore(dispatcher);
+///   }
+/// }
+///
+///  class NestedActionsNames {
+///   static ActionName bar = new ActionName<int>('NestedActions-bar');
+/// }
+/// ```
 abstract class ReduxActions {
   void syncWithStore(dispatcher);
 }
