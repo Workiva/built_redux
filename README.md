@@ -33,7 +33,7 @@ Built using [built_value][built_value_git]
 
     ```yaml
     dependencies:
-      built_redux: "^0.1.0"
+      built_redux: "^1.0.0"
     ```
 
 2. Create a script to run generators for generating built_values and additional built_redux classes.
@@ -53,7 +53,7 @@ Built using [built_value][built_value_git]
                 new BuiltValueGenerator(),
                 new BuiltReduxGenerator(),
               ]),
-              new InputSet('my_lib', const ['lib//////.dart'])),
+              new InputSet('my_lib', const ['lib/**/*.dart'])),
           deleteFilesByDefault: true);
     }
     ```
@@ -181,7 +181,7 @@ abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
       ..add<int>(DoubleActionNames.increment, _doubleIt)).build();
 
 _doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api, ActionHandler next, Action<int> action) {
-  api.actions.increment(action.payload // 2);
+  api.actions.increment(action.payload * 2);
 }
 ```
 
