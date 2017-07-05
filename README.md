@@ -225,7 +225,7 @@ store.actions.decrement(1);
 
 A middleware can also be defined without using a MiddlewareBuilder to execute a function for all actions. For example, the following middleware logs every action dispatched as well the the state after the action was handled:
 ```dart
-NextActionHandler loggingMiddleware(MiddlewareApi<App, AppBuilder, AppActions> api) =>
+NextActionHandler loggingMiddleware(MiddlewareApi<Counter, CounterBuilder, CounterActions> api) =>
     (ActionHandler next) => (Action action) {
           next(action);
           print("Action: ${action.name}");
