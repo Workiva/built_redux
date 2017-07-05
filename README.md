@@ -160,7 +160,7 @@ abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
 ```
 
 ### Writing middleware
-```
+```dart
  // Define specific actions to be handled by this middleware
  // A middlware can also listen to and perform side effects on any actions defined elsewhere
  abstract class DoubleAction extends ReduxActions {
