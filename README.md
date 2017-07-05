@@ -37,7 +37,7 @@ Built using [built_value][built_value_git]
     ```
 
 2. Create a script to run generators for generating built_values and additional built_redux classes.
-    ```
+    ```dart
     import 'dart:async';
 
     import 'package:build_runner/build_runner.dart';
@@ -60,7 +60,7 @@ Built using [built_value][built_value_git]
 
 ### Writing a built_redux store
 
-```
+```dart
 import 'package:built_redux/built_redux.dart';
 
  // This is a an implementation of ReduxActions. Actions are middleware and ui
@@ -72,8 +72,8 @@ import 'package:built_redux/built_redux.dart';
    ActionDispatcher<int> decrement;
 
    // factory to create on instance of the generated implementation of CounterActions
-   AppStateActions._();
-   factory AppStateActions() => new _$AppStateActions();
+   CounterActions._();
+   factory CounterActions() => new _$CounterActions();
  }
 
  // This is a BuiltReducer. It is essentially an implementation of built_value
@@ -123,9 +123,7 @@ var store = new Store<Counter, CounterBuilder, CounterActions>(
 // You can use stream.listen() to update the UI in response to state changes.
 // Normally you'd use a view binding library (e.g. [flutter_built_redux]) rather than stream.listen() directly.
 // However it can also be handy to persist the current state in the localStorage.
-store.stream.listen((_) =>
-  print(store.state);
-)
+store.stream.listen((_) => print(store.state));
 
 // The only way to mutate the internal state is to dispatch an action.
 store.actions.increment(1);
@@ -142,7 +140,7 @@ Nested reducers can be added to your BuiltReducer. In this example NestedCounter
 is another BuiltReducer. In order for nested reducers to work you must mix in
 {Built reducer name}ReduceChildren just like BaseCounterReduceChildren is below.
 This class will be generated for you by the BuiltReduxGenerator.
-```
+```dart
 abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
     with BaseCounterReduceChildren
     implements Built<BaseCounter, BaseCounterBuilder> {
@@ -163,7 +161,8 @@ abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
 
 ### Writing middleware
 ```
- // Actions to be handled by this middleware
+ // Define specific actions to be handled by this middleware
+ // A middlware can also listen to and perform side effects on any actions defined elsewhere
  abstract class DoubleAction extends ReduxActions {
   ActionDispatcher<int> increment;
 
@@ -190,7 +189,7 @@ These are the same types as the defaultState and actions classes passed when
 the store was instantiated. In order for DoubleActions to be handled by redux
 you must add it to definition of CounterActions like so
 
-```
+```dart
 abstract class CounterActions extends ReduxActions {
   ActionDispatcher<int> increment;
   ActionDispatcher<int> decrement;
@@ -198,13 +197,13 @@ abstract class CounterActions extends ReduxActions {
   DoubleActions doublerActions;
 
   // factory to create on instance of the generated implementation of CounterActions
-  AppStateActions._();
-  factory AppStateActions() => new _$AppStateActions();
+  CounterActions._();
+  factory CounterActions() => new _$CounterActions();
 }
 ```
 
 Check the usage after adding this middleware
-```
+```dart
 // Create a Redux store holding the state of your app.
 // Its API is subscribe, state, actions.
 var store = new Store<Counter, CounterBuilder, CounterActions>(
@@ -213,9 +212,7 @@ var store = new Store<Counter, CounterBuilder, CounterActions>(
   middleware: [doubleMiddleware],
 );
 
-store.stream.listen((_) =>
-  print(store.state);
-)
+store.stream.listen((_) => print(store.state));
 
 // The only way to mutate the internal state is to dispatch an action.
 store.actions.increment(1);
@@ -226,6 +223,16 @@ store.actions.decrement(1);
 // 4
 ```
 
+A middleware can also be defined without using a MiddlewareBuilder to execute a function for all actions. For example, the following middleware logs every action dispatched as well the the state after the action was handled:
+```dart
+NextActionHandler loggingMiddleware(MiddlewareApi<App, AppBuilder, AppActions> api) =>
+    (ActionHandler next) => (Action action) {
+          next(action);
+          print("Action: ${action.name}");
+          print("Payload: ${action.payload}");
+          print("Next State: ${api.state}");
+        };
+```
 
 [built_value_blog]: https://medium.com/dartlang/darts-built-value-for-immutable-object-models-83e2497922d4
 
