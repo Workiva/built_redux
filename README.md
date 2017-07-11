@@ -162,7 +162,7 @@ abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
 ### Writing middleware
 ```dart
  // Define specific actions to be handled by this middleware
- // A middlware can also listen to and perform side effects on any actions defined elsewhere
+ // A middleware can also listen to and perform side effects on any actions defined elsewhere
  abstract class DoubleAction extends ReduxActions {
   ActionDispatcher<int> increment;
 
@@ -174,9 +174,9 @@ abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
  // just like ReducerBuilder it is strongly recommended as it gives you static type checking to make sure
  // the payload for action name provided is the same as the expected payload
  // for the action provided to your reducer. It will also call next(action) for you
- // if an action not handled by this middlware is received. Calling .build() returns the
+ // if an action not handled by this middleware is received. Calling .build() returns the
  // middleware function that can be passed to your store at instantiation.
- var doubleMiddleware =  (new MiddlwareBuilder<Counter, CounterBuilder, CounterActions>()
+ var doubleMiddleware =  (new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
       ..add<int>(DoubleActionNames.increment, _doubleIt)).build();
 
 _doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api, ActionHandler next, Action<int> action) {
@@ -184,7 +184,7 @@ _doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api, ActionHand
 }
 ```
 
-You will notice that MiddlwareBuilder's generics are Counter and CounterActions.
+You will notice that MiddlewareBuilder's generics are Counter and CounterActions.
 These are the same types as the defaultState and actions classes passed when
 the store was instantiated. In order for DoubleActions to be handled by redux
 you must add it to definition of CounterActions like so

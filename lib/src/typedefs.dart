@@ -15,7 +15,7 @@ typedef void Reducer<
 /// [ActionHandler] handles an action, this will contain the actual middleware logic
 typedef void ActionHandler(Action a);
 
-/// [NextActionHandler] takes the next [ActionHandler] in the middlware chain and returns
+/// [NextActionHandler] takes the next [ActionHandler] in the middleware chain and returns
 /// an [ActionHandler] for the middleware
 typedef ActionHandler NextActionHandler(ActionHandler next);
 

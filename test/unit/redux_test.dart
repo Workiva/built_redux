@@ -13,15 +13,15 @@ main() {
       var actions = new BaseCounterActions();
       var defaultValue = new BaseCounter();
 
-      var middlware = new List<Middleware>();
+      var middleware = new List<Middleware>();
       for (int i = 0; i < numMiddleware; i++) {
-        middlware.add(counterMiddleware);
+        middleware.add(counterMiddleware);
       }
 
       store = new Store(
         defaultValue,
         actions,
-        middleware: middlware,
+        middleware: middleware,
       );
     }
 
@@ -64,7 +64,7 @@ main() {
       expect(stateChange.next.count, 3);
     });
 
-    test('2 middlwares doubles count twice and updates state', () async {
+    test('2 middlewares doubles count twice and updates state', () async {
       setup(numMiddleware: 2);
       Completer onStateChangeCompleter =
           new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
