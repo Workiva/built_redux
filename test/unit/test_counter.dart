@@ -33,6 +33,7 @@ final _baseReducer = (new ReducerBuilder<BaseCounter, BaseCounterBuilder>()
 
 // Built Reducer
 abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
+    with BaseCounterReduceChildren
     implements Built<BaseCounter, BaseCounterBuilder> {
   int get count;
 
