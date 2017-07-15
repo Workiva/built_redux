@@ -33,9 +33,8 @@ main() {
       setup();
       Completer onStateChangeCompleter =
           new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      store.stream.listen(
-          (StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions> state) =>
-              onStateChangeCompleter.complete(state));
+      store.stream.listen((StoreChange<BaseCounter, BaseCounterBuilder, dynamic> state) =>
+          onStateChangeCompleter.complete(state));
       store.actions.increment(4);
       var stateChange = await onStateChangeCompleter.future;
       expect(stateChange.prev.count, 1);

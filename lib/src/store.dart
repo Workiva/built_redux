@@ -14,7 +14,7 @@ import 'store_change.dart';
 class Store<State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
   // stream used for dispatching actions
-  final StreamController<Action<dynamic>> _dispatch = new StreamController.broadcast();
+  final StreamController<Action<dynamic>> _dispatch = new StreamController();
 
   // stream used to dispatch changes to the state
   final StreamController<StoreChange<State, StateBuilder, dynamic>> _stateController =
@@ -44,7 +44,7 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
       if (_state == state) return;
 
       // update the internal state and publish the change
-      _stateController.add(new StoreChange<State, StateBuilder, dynamic>(state, _state, action));
+      _stateController.add(new StoreChange<State, StateBuilder, Actions>(state, _state, action));
       _state = state;
     };
 
