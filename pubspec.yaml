@@ -16,6 +16,7 @@ dev_dependencies:
   built_value_generator: ^1.0.0
   dart_dev: "^1.0.0"
   dart_style: '>=0.2.4 <2.0.0'
+  coverage: ^0.7.3
   test: "^0.12.0"
 
 environment:
