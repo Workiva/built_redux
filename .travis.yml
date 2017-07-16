@@ -1,6 +1,6 @@
 language: dart
 dart:
-  - 1.22.1
+  - 1.24.2
 script:
   - dart tool/build.dart
   - pub run dart_dev format --check
