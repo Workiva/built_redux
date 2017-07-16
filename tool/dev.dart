@@ -5,7 +5,8 @@ import 'package:dart_dev/dart_dev.dart' show dev, config;
 main(List<String> args) async {
   const directories = const <String>[
     'lib/',
-    'test/',
+    'lib/src/',
+    'test/unit/',
   ];
 
   config.format..lineLength = 100;

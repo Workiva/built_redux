@@ -25,23 +25,24 @@ class MiddlewareApi<State extends BuiltReducer<State, StateBuilder>,
 /// Action<T>, and a builder of type StateBuilder
 class MiddlewareBuilder<State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
-  var _map = new Map<String, MiddlewareHandler<State, StateBuilder, Actions>>();
+  var _map = new Map<String, MiddlewareHandler<State, StateBuilder, Actions, dynamic>>();
 
-  void add<T>(ActionName<T> aMgr, MiddlewareHandler<State, StateBuilder, Actions> handler) {
+  void add<T>(ActionName<T> aMgr, MiddlewareHandler<State, StateBuilder, Actions, T> handler) {
     _map[aMgr.name] = handler;
   }
 
   /// build returns a [Middleware] function that handles all actions added with [add]
   Middleware<State, StateBuilder, Actions> build() =>
-      (MiddlewareApi<State, StateBuilder, Actions> api) => (ActionHandler next) => (Action action) {
-            var handler = _map[action.name];
-            if (handler != null) {
-              handler(api, next, action);
-              return;
-            }
+      (MiddlewareApi<State, StateBuilder, Actions> api) =>
+          (ActionHandler next) => (Action<dynamic> action) {
+                var handler = _map[action.name];
+                if (handler != null) {
+                  handler(api, next, action);
+                  return;
+                }
 
-            next(action);
-          };
+                next(action);
+              };
 }
 
 /// [MiddlewareHandler] is a function that handles an action in a middleware. Its is only for
@@ -50,4 +51,5 @@ class MiddlewareBuilder<State extends BuiltReducer<State, StateBuilder>,
 typedef void MiddlewareHandler<
     State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
-    Actions extends ReduxActions>(MiddlewareApi<State, StateBuilder, Actions> api, ActionHandler next, Action action);
+    Actions extends ReduxActions,
+    Payload>(MiddlewareApi<State, StateBuilder, Actions> api, ActionHandler next, Action<Payload> action);
