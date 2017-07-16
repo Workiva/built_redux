@@ -2,9 +2,9 @@ language: dart
 dart:
   - 1.22.1
 script:
+  - dart tool/build.dart
   - pub run dart_dev format --check
   - pub run dart_dev analyze
-  - dart tool/build.dart
   - pub run dart_dev test
   - pub run dart_dev coverage --no-html
   - bash <(curl -s https://codecov.io/bash) -f coverage/coverage.lcov
