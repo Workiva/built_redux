@@ -44,7 +44,7 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
       if (_state == state) return;
 
       // update the internal state and publish the change
-      _stateController.add(new StoreChange<State, StateBuilder, Actions>(state, _state, action));
+      _stateController.add(new StoreChange<State, StateBuilder, dynamic>(state, _state, action));
       _state = state;
     };
 
