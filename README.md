@@ -33,7 +33,7 @@ Built using [built_value][built_value_git]
 
     ```yaml
     dependencies:
-      built_redux: "^1.0.0"
+      built_redux: "^2.0.0"
     ```
 
 2. Create a script to run generators for generating built_values and additional built_redux classes.
@@ -167,8 +167,6 @@ abstract class NestedActions extends ReduxActions {
   ActionDispatcher<int> increment;
   ActionDispatcher<int> decrement;
 
-  NestedActions nestedActions;
-
   // factory to create on instance of the generated implementation of NestedActions
   NestedActions._();
   factory NestedActions() => new _$NestedActions();
@@ -196,7 +194,7 @@ store.stream.listen((_) => print(store.state.nestedCounter.count));
 store.actions.nestedActions.increment(1);
 // 1
 store.actions.increment(2);
-// nothing logged
+// 1
 ```
 
 ### Writing middleware
