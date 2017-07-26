@@ -8,6 +8,7 @@ import 'built_reducer.dart';
 import 'middleware.dart';
 import 'typedefs.dart';
 import 'store_change.dart';
+import 'state_transformer.dart';
 
 /// [Store] is the container of your state. It listens for actions, invokes reducers,
 /// and publishes changes to the state
@@ -80,4 +81,12 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
 
   /// [actions] returns the synced actions
   Actions get actions => _actions;
+
+  /// [substateStream] returns a stream to the state that is returned by the mapper function.
+  /// For example: say my state object had a property count, then store.substateStream((state) => state.count),
+  /// would return a stream that fires whenever count changes.
+  Stream<SubStateChange<SubState>> substateStream<SubState>(
+    StateMapper<State, StateBuilder, SubState> mapper,
+  ) =>
+      _stateController.stream.transform(new StateChangeTransformer(mapper));
 }
