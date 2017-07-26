@@ -103,5 +103,24 @@ main() {
       expect(stateChange.next.count, 5);
       storeChagneHandler.dispose();
     });
+
+    test('store change handler', () async {
+      setup();
+
+      Completer onStreamFiredCompleter = new Completer<SubStateChange<int>>();
+
+      final _sub = store
+          .substateStream<int>((BaseCounter state) => state.count)
+          .listen(onStreamFiredCompleter.complete);
+
+      store.actions.increment(4);
+      // would cause completer to complete twice and fail the test
+      store.actions.nestedCounterActions.increment(1);
+
+      var change = await onStreamFiredCompleter.future;
+      expect(change.next, 5);
+      expect(change.next, 5);
+      _sub.cancel();
+    });
   });
 }
