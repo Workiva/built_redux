@@ -37,17 +37,23 @@ class BaseCounterActionsNames {
 // Target: abstract class BaseCounter
 // **************************************************************************
 
+// ignore_for_file: annotate_overrides
 class _$BaseCounter extends BaseCounter {
   @override
   final int count;
+  @override
+  final BuiltList<int> indexOutOfRangeList;
   @override
   final NestedCounter nestedCounter;
 
   factory _$BaseCounter([void updates(BaseCounterBuilder b)]) =>
       (new BaseCounterBuilder()..update(updates)).build();
 
-  _$BaseCounter._({this.count, this.nestedCounter}) : super._() {
+  _$BaseCounter._({this.count, this.indexOutOfRangeList, this.nestedCounter})
+      : super._() {
     if (count == null) throw new ArgumentError.notNull('count');
+    if (indexOutOfRangeList == null)
+      throw new ArgumentError.notNull('indexOutOfRangeList');
     if (nestedCounter == null) throw new ArgumentError.notNull('nestedCounter');
   }
 
@@ -62,18 +68,22 @@ class _$BaseCounter extends BaseCounter {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! BaseCounter) return false;
-    return count == other.count && nestedCounter == other.nestedCounter;
+    return count == other.count &&
+        indexOutOfRangeList == other.indexOutOfRangeList &&
+        nestedCounter == other.nestedCounter;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, count.hashCode), nestedCounter.hashCode));
+    return $jf($jc($jc($jc(0, count.hashCode), indexOutOfRangeList.hashCode),
+        nestedCounter.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('BaseCounter')
           ..add('count', count)
+          ..add('indexOutOfRangeList', indexOutOfRangeList)
           ..add('nestedCounter', nestedCounter))
         .toString();
   }
@@ -86,6 +96,12 @@ class BaseCounterBuilder implements Builder<BaseCounter, BaseCounterBuilder> {
   int get count => _$this._count;
   set count(int count) => _$this._count = count;
 
+  ListBuilder<int> _indexOutOfRangeList;
+  ListBuilder<int> get indexOutOfRangeList =>
+      _$this._indexOutOfRangeList ??= new ListBuilder<int>();
+  set indexOutOfRangeList(ListBuilder<int> indexOutOfRangeList) =>
+      _$this._indexOutOfRangeList = indexOutOfRangeList;
+
   NestedCounterBuilder _nestedCounter;
   NestedCounterBuilder get nestedCounter =>
       _$this._nestedCounter ??= new NestedCounterBuilder();
@@ -97,6 +113,7 @@ class BaseCounterBuilder implements Builder<BaseCounter, BaseCounterBuilder> {
   BaseCounterBuilder get _$this {
     if (_$v != null) {
       _count = _$v.count;
+      _indexOutOfRangeList = _$v.indexOutOfRangeList?.toBuilder();
       _nestedCounter = _$v.nestedCounter?.toBuilder();
       _$v = null;
     }
@@ -118,7 +135,9 @@ class BaseCounterBuilder implements Builder<BaseCounter, BaseCounterBuilder> {
   _$BaseCounter build() {
     final result = _$v ??
         new _$BaseCounter._(
-            count: count, nestedCounter: nestedCounter?.build());
+            count: count,
+            indexOutOfRangeList: indexOutOfRangeList?.build(),
+            nestedCounter: nestedCounter?.build());
     replace(result);
     return result;
   }
@@ -167,6 +186,7 @@ class NestedCounterActionsNames {
 // Target: abstract class NestedCounter
 // **************************************************************************
 
+// ignore_for_file: annotate_overrides
 class _$NestedCounter extends NestedCounter {
   @override
   final int count;

@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:built_redux/built_redux.dart';
 import 'package:built_value/built_value.dart';
+import 'package:built_collection/built_collection.dart';
 
 part 'test_counter.g.dart';
 
@@ -36,6 +37,8 @@ abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
     with BaseCounterReduceChildren
     implements Built<BaseCounter, BaseCounterBuilder> {
   int get count;
+
+  BuiltList<int> get indexOutOfRangeList;
 
   NestedCounter get nestedCounter;
 

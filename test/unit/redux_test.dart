@@ -104,12 +104,12 @@ main() {
       storeChagneHandler.dispose();
     });
 
-    test('store change handler', () async {
+    test('state transformer', () async {
       setup();
 
       Completer onStreamFiredCompleter = new Completer<SubStateChange<int>>();
 
-      final _sub = store
+      final sub = store
           .substateStream<int>((BaseCounter state) => state.count)
           .listen(onStreamFiredCompleter.complete);
 
@@ -118,9 +118,40 @@ main() {
       store.actions.nestedCounterActions.increment(1);
 
       var change = await onStreamFiredCompleter.future;
+      expect(change.prev, 1);
       expect(change.next, 5);
-      expect(change.next, 5);
-      _sub.cancel();
+      sub.cancel();
+    });
+
+    test('state transformer pause / resume', () async {
+      setup();
+      StreamSubscription<SubStateChange<int>> sub;
+      sub = store.substateStream<int>((BaseCounter state) => state.count).listen(
+        expectAsync1((SubStateChange<int> change) {
+          expect(change.prev, 1);
+          expect(change.next, 5);
+          sub.cancel();
+        }),
+      );
+
+      store.actions.increment(4);
+      sub.pause();
+      sub.resume();
+    });
+
+    test('state transformer handles errors', () async {
+      setup();
+
+      Completer onStreamError = new Completer<Error>();
+
+      final sub = store
+          .substateStream<int>((BaseCounter state) => state.indexOutOfRangeList[1])
+          .handleError(onStreamError.complete)
+          .listen((_) => fail("error should be handled"));
+
+      store.actions.increment(4);
+      await onStreamError.future;
+      sub.cancel();
     });
   });
 }

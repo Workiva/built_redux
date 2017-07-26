@@ -123,7 +123,7 @@ var store = new Store<Counter, CounterBuilder, CounterActions>(
 // You can use stream.listen() to update the UI in response to state changes.
 // Normally you'd use a view binding library (e.g. [flutter_built_redux]) rather than stream.listen() directly.
 // However it can also be handy to persist the current state in the localStorage.
-store.stream.listen((_) => print(store.state));
+store.stream.listen((_) => print(store.state.count));
 
 // The only way to mutate the internal state is to dispatch an action.
 store.actions.increment(1);
@@ -157,6 +157,46 @@ abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
         ..count = 1
         ..nestedCounter = new NestedCounter().toBuilder());
 }
+
+```
+
+Nested actions can also be used to help organize actions for given reducers. First define your actions:
+
+```dart
+abstract class NestedActions extends ReduxActions {
+  ActionDispatcher<int> increment;
+  ActionDispatcher<int> decrement;
+
+  NestedActions nestedActions;
+
+  // factory to create on instance of the generated implementation of NestedActions
+  NestedActions._();
+  factory NestedActions() => new _$NestedActions();
+}
+```
+Then add them to your main action class like so:
+```dart
+abstract class CounterActions extends ReduxActions {
+  ActionDispatcher<int> increment;
+  ActionDispatcher<int> decrement;
+
+  NestedActions nestedActions;
+
+  // factory to create on instance of the generated implementation of CounterActions
+  CounterActions._();
+  factory CounterActions() => new _$CounterActions();
+}
+```
+
+Check the usage:
+```dart
+store.stream.listen((_) => print(store.state.nestedCounter.count));
+
+// The only way to mutate the internal state is to dispatch an action.
+store.actions.nestedActions.increment(1);
+// 1
+store.actions.increment(2);
+// nothing logged
 ```
 
 ### Writing middleware
@@ -212,7 +252,7 @@ var store = new Store<Counter, CounterBuilder, CounterActions>(
   middleware: [doubleMiddleware],
 );
 
-store.stream.listen((_) => print(store.state));
+store.stream.listen((_) => print(store.state.count));
 
 // The only way to mutate the internal state is to dispatch an action.
 store.actions.increment(1);
@@ -233,6 +273,24 @@ NextActionHandler loggingMiddleware(MiddlewareApi<Counter, CounterBuilder, Count
           print("Next State: ${api.state}");
         };
 ```
+
+### Observing substate
+Streams can easily be accessed to observe any piece of your state tree by passing a mapper the store's
+substateStream function. For example, say I only care about BaseCounter.count
+in the previous example and I do not want to be notified when BaseCounter.nestedCounter changes.
+I can create a stream that will only emit an event when BaseCounter.count changes, as so:
+```dart
+final countStream = store.substateStream<int>((BaseCounter state) => state.count);
+
+countStream.listen((change) => print('prev: ${change.prev}, next: ${change.next}'));
+
+store.actions.increment(1);
+// prev: 1, next: 2
+store.actions.nestedCounter.increment(2);
+// nothing logged
+
+```
+
 
 [built_value_blog]: https://medium.com/dartlang/darts-built-value-for-immutable-object-models-83e2497922d4
 
