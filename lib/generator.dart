@@ -61,7 +61,7 @@ String _generateActions(ClassElement element) {
       // generate the action name
       nameCode = _appendCode(
         nameCode,
-        'static ActionName $fieldName = new ActionName<${_getActionDispatcherGenericType(e)}>(\'${element.name}-$fieldName\');\n',
+        'static final ActionName<${_getActionDispatcherGenericType(e)}> $fieldName = new ActionName<${_getActionDispatcherGenericType(e)}>(\'${element.name}-$fieldName\');\n',
       );
 
       // generate the dispatcher
@@ -69,7 +69,7 @@ String _generateActions(ClassElement element) {
           '\n${e.toString()} = new ActionDispatcher<${_getActionDispatcherGenericType(e)}>(\'${element.name}-$fieldName\');\n';
 
       // if it was not declared final make it final
-      if (_isGeneratedDispatcherFinal(actionDispatcher))
+      if (!_isGeneratedDispatcherFinal(actionDispatcher))
         actionDispatcher = '\nfinal $actionDispatcher';
 
       // append the action dispatcher to the class definition
@@ -85,7 +85,7 @@ String _generateActions(ClassElement element) {
       // generate the instantiation
       initializerCode = _appendCode(
         initializerCode,
-        '${e.toString()} = new $typeName();',
+        'final ${e.toString()} = new $typeName();',
       );
 
       // append the sync function for this set of actions

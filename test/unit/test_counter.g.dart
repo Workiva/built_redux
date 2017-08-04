@@ -8,12 +8,12 @@ part of test_counter;
 // **************************************************************************
 
 class _$BaseCounterActions extends BaseCounterActions {
-  MiddlewareActions middlewareActions = new MiddlewareActions();
-  NestedCounterActions nestedCounterActions = new NestedCounterActions();
-  ActionDispatcher<int> decrement =
+  final MiddlewareActions middlewareActions = new MiddlewareActions();
+  final NestedCounterActions nestedCounterActions = new NestedCounterActions();
+  final ActionDispatcher<int> decrement =
       new ActionDispatcher<int>('BaseCounterActions-decrement');
 
-  ActionDispatcher<int> increment =
+  final ActionDispatcher<int> increment =
       new ActionDispatcher<int>('BaseCounterActions-increment');
   factory _$BaseCounterActions() => new _$BaseCounterActions._();
   _$BaseCounterActions._() : super._();
@@ -26,9 +26,9 @@ class _$BaseCounterActions extends BaseCounterActions {
 }
 
 class BaseCounterActionsNames {
-  static ActionName decrement =
+  static final ActionName<int> decrement =
       new ActionName<int>('BaseCounterActions-decrement');
-  static ActionName increment =
+  static final ActionName<int> increment =
       new ActionName<int>('BaseCounterActions-increment');
 }
 
@@ -161,10 +161,10 @@ class BaseCounterReduceChildren {
 // **************************************************************************
 
 class _$NestedCounterActions extends NestedCounterActions {
-  ActionDispatcher<int> decrement =
+  final ActionDispatcher<int> decrement =
       new ActionDispatcher<int>('NestedCounterActions-decrement');
 
-  ActionDispatcher<int> increment =
+  final ActionDispatcher<int> increment =
       new ActionDispatcher<int>('NestedCounterActions-increment');
   factory _$NestedCounterActions() => new _$NestedCounterActions._();
   _$NestedCounterActions._() : super._();
@@ -175,9 +175,9 @@ class _$NestedCounterActions extends NestedCounterActions {
 }
 
 class NestedCounterActionsNames {
-  static ActionName decrement =
+  static final ActionName<int> decrement =
       new ActionName<int>('NestedCounterActions-decrement');
-  static ActionName increment =
+  static final ActionName<int> increment =
       new ActionName<int>('NestedCounterActions-increment');
 }
 
@@ -267,7 +267,7 @@ class NestedCounterBuilder
 // **************************************************************************
 
 class _$MiddlewareActions extends MiddlewareActions {
-  ActionDispatcher<int> increment =
+  final ActionDispatcher<int> increment =
       new ActionDispatcher<int>('MiddlewareActions-increment');
   factory _$MiddlewareActions() => new _$MiddlewareActions._();
   _$MiddlewareActions._() : super._();
@@ -277,6 +277,6 @@ class _$MiddlewareActions extends MiddlewareActions {
 }
 
 class MiddlewareActionsNames {
-  static ActionName increment =
+  static final ActionName<int> increment =
       new ActionName<int>('MiddlewareActions-increment');
 }
