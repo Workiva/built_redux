@@ -3,16 +3,19 @@ import 'package:built_value/built_value.dart';
 import 'built_reducer.dart';
 import 'store_change.dart';
 
+/// [SubStateChange] is the payload for `StateChangeTransformer`'s stream. It contains
+/// the previous and next value of the state resulting from the mapper provided to `StateChangeTransformer`
 class SubStateChange<SubState> {
   SubState prev;
   SubState next;
   SubStateChange(this.prev, this.next);
 }
 
+/// [StateMapper] takes a state model and maps it to the values one cares about
 typedef SubState StateMapper<State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, SubState>(State state);
 
-/// Transforms the store's stream to emit an event only when the state resulting from the
+/// [StateChangeTransformer] transforms the store's stream to emit an event only when the state resulting from the
 /// mapper provided changes
 class StateChangeTransformer<State extends BuiltReducer<State, StateBuilder>,
         StateBuilder extends Builder<State, StateBuilder>, SubState>
