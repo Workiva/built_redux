@@ -49,7 +49,7 @@ Built using [built_value][built_value_git]
     Future main(List<String> args) async {
       await build(
           new PhaseGroup.singleAction(
-              new GeneratorBuilder([
+              new PartBuilder([
                 new BuiltValueGenerator(),
                 new BuiltReduxGenerator(),
               ]),
@@ -88,9 +88,9 @@ import 'package:built_redux/built_redux.dart';
    /// and how each action transforms the state into the next state.
    get reducer => _reducer;
 
-   // Built value boilerplate
+   // Built value constructor
    Counter._();
-   factory Counter([updates(CounterBuilder b)]) => _$Counter((CounterBuilder b) => b..count = 0);
+   factory BaseCounter() => new _$BaseCounter._(count: 1);
  }
 
 
@@ -110,8 +110,8 @@ decrement(Counter state, Action<int> action, CounterBuilder builder) =>
  // for the action provided to your reducer. Calling .build() returns the map
  // of action names to reducers.
  var _reducer =  (new ReducerBuilder<Counter, CounterBuilder>()
-      ..add<int>(CounterActionsNames.increment, increment)
-      ..add<int>(CounterActionsNames.decrement, decrement)).build();
+      ..add(CounterActionsNames.increment, increment)
+      ..add(CounterActionsNames.decrement, decrement)).build();
 
 // Create a Redux store holding the state of your app.
 // Its API contains three getters: stream, state, and actions.
@@ -150,12 +150,12 @@ abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
 
   get reducer => _baseReducer;
 
-  // Built value boilerplate
+  // Built value constructor
   BaseCounter._();
-  factory BaseCounter([updates(BaseCounterBuilder b)]) =>
-      new _$BaseCounter((BaseCounterBuilder b) => b
-        ..count = 1
-        ..nestedCounter = new NestedCounter().toBuilder());
+  factory BaseCounter() => new _$BaseCounter._(
+    count: 1,
+    nestedCounter: new NestedCounter(),
+  );
 }
 
 ```
@@ -215,7 +215,7 @@ store.actions.increment(2);
  // if an action not handled by this middleware is received. Calling .build() returns the
  // middleware function that can be passed to your store at instantiation.
  var doubleMiddleware =  (new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
-      ..add<int>(DoubleActionNames.increment, _doubleIt)).build();
+      ..add(DoubleActionNames.increment, _doubleIt)).build();
 
 _doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api, ActionHandler next, Action<int> action) {
   api.actions.increment(action.payload * 2);

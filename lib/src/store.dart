@@ -73,6 +73,16 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
     _actions = null;
   }
 
+  /// [replaceState] replaces the state of your store.
+  /// Useful for undo/redo, testing, and development tools
+  void replaceState(State state) {
+    if (_state != state) {
+      _stateController.add(new StoreChange<State, StateBuilder, dynamic>(
+          state, _state, new Action()..name = 'replaceState'));
+      _state = state;
+    }
+  }
+
   /// [subscribe] returns a stream that will be dispatched whenever the state changes
   Stream<StoreChange<State, StateBuilder, dynamic>> get stream => _stateController.stream;
 

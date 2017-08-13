@@ -104,6 +104,31 @@ main() {
       storeChagneHandler.dispose();
     });
 
+    test('replaceState', () async {
+      setup();
+      Completer onStateChangeCompleter =
+          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      Completer onStateChangeCompleter2 =
+          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+
+      store.stream.listen((state) {
+        if (!onStateChangeCompleter.isCompleted)
+          onStateChangeCompleter.complete(state);
+        else
+          onStateChangeCompleter2.complete(state);
+      });
+
+      store.actions.increment(4);
+      var stateChange = await onStateChangeCompleter.future;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 5);
+
+      store.replaceState(new BaseCounter());
+      stateChange = await onStateChangeCompleter2.future;
+      expect(stateChange.prev.count, 5);
+      expect(stateChange.next.count, 1);
+    });
+
     test('state transformer', () async {
       setup();
 

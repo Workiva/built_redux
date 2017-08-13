@@ -6,18 +6,21 @@ import 'package:source_gen/source_gen.dart';
 
 class BuiltReduxGenerator extends Generator {
   @override
-  Future<String> generate(Element element, BuildStep buildStep) async {
-    if (element is ClassElement && _needsReduxActions(element)) {
-      log.info('Generating action classes for ${element.name}');
-      return _generateActions(element);
+  Future<String> generate(LibraryReader library, BuildStep buildStep) async {
+    final result = new StringBuffer();
+    for (final element in library.allElements) {
+      if (element is ClassElement && _needsReduxActions(element)) {
+        log.info('Generating action classes for ${element.name}');
+        result.writeln(_generateActions(element));
+      }
+
+      if (element is ClassElement && _needsReduceChildren(element)) {
+        log.info('Generating reduce children classes for ${element.name}');
+        result.writeln(_generateReduceChildren(element));
+      }
     }
 
-    if (element is ClassElement && _needsReduceChildren(element)) {
-      log.info('Generating reduce children classes for ${element.name}');
-      return _generateReduceChildren(element);
-    }
-
-    return null;
+    return result.toString();
   }
 }
 

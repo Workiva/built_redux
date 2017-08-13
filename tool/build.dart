@@ -9,7 +9,7 @@ import 'package:built_redux/generator.dart';
 Future main(List<String> args) async {
   await build(
       new PhaseGroup.singleAction(
-          new GeneratorBuilder([
+          new PartBuilder([
             new BuiltValueGenerator(),
             new BuiltReduxGenerator(),
           ]),
