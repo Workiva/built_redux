@@ -6,30 +6,36 @@ import 'package:source_gen/source_gen.dart';
 
 class BuiltReduxGenerator extends Generator {
   @override
-  Future<String> generate(Element element, BuildStep buildStep) async {
-    if (element is ClassElement && _needsReduxActions(element)) {
-      log.info('Generating action classes for ${element.name}');
-      return _generateActions(element);
+  Future<String> generate(LibraryReader library, BuildStep buildStep) async {
+    final result = new StringBuffer();
+    for (final element in library.allElements) {
+      if (element is ClassElement && _needsReduxActions(element)) {
+        log.info('Generating action classes for ${element.name}');
+        result.writeln(_generateActions(element));
+      }
+
+      if (element is ClassElement && _needsReduceChildren(element)) {
+        log.info('Generating reduce children classes for ${element.name}');
+        result.writeln(_generateReduceChildren(element));
+      }
     }
 
-    if (element is ClassElement && _needsReduceChildren(element)) {
-      log.info('Generating reduce children classes for ${element.name}');
-      return _generateReduceChildren(element);
-    }
-
-    return null;
+    return result.toString();
   }
 }
 
-bool _needsReduxActions(ClassElement classElement) => _hasSuperType(classElement, 'ReduxActions');
+bool _needsReduxActions(ClassElement classElement) =>
+    _hasSuperType(classElement, 'ReduxActions');
 
 bool _needsReduceChildren(ClassElement classElement) =>
     _isBuiltReducer(classElement) && _containsNestedReducers(classElement);
 
-bool _isBuiltReducer(ClassElement classElement) => _hasSuperType(classElement, 'BuiltReducer');
+bool _isBuiltReducer(ClassElement classElement) =>
+    _hasSuperType(classElement, 'BuiltReducer');
 
 bool _hasSuperType(ClassElement classElement, String type) =>
-    classElement.allSupertypes.any((interfaceType) => interfaceType.name == type) &&
+    classElement.allSupertypes
+        .any((interfaceType) => interfaceType.name == type) &&
     !classElement.displayName.startsWith('_\$');
 
 bool _containsNestedReducers(ClassElement classElement) {
@@ -96,21 +102,24 @@ String _generateActions(ClassElement element) {
     }
   }
 
-  initializerCode = initializerCode.replaceFirst('syncWithStore(dispatcher);', syncWithStoreCode);
+  initializerCode = initializerCode.replaceFirst(
+      'syncWithStore(dispatcher);', syncWithStoreCode);
   return '$initializerCode\n\n$nameCode';
 }
 
 // TODO: find a better way
-String _getActionDispatcherGenericType(FieldElement e) => e.toString().substring(
-      e.toString().indexOf('<') + 1,
-      e.toString().lastIndexOf('>'),
-    );
+String _getActionDispatcherGenericType(FieldElement e) =>
+    e.toString().substring(
+          e.toString().indexOf('<') + 1,
+          e.toString().lastIndexOf('>'),
+        );
 
 List<DartType> _getBVTypes(ClassElement element) {
   for (var st in element.allSupertypes) {
     if (st.name == 'BuiltReducer') return st.typeArguments;
   }
-  throw new Exception('No typeArguments on BuiltReducer for element ${element.name}');
+  throw new Exception(
+      'No typeArguments on BuiltReducer for element ${element.name}');
 }
 
 String _generateReduceChildren(ClassElement element) {
@@ -121,10 +130,12 @@ String _generateReduceChildren(ClassElement element) {
     var ele = e.type.element;
     if (ele is ClassElement && _isBuiltReducer(ele)) {
       String brName = e.name;
-      nameCode = _appendCode(nameCode, 'state.$brName.reduce(state.$brName, a, builder.$brName);');
+      nameCode = _appendCode(
+          nameCode, 'state.$brName.reduce(state.$brName, a, builder.$brName);');
     }
   }
   return nameCode;
 }
 
-String _appendCode(String before, String newCode) => before.replaceFirst('\n', '\n$newCode');
+String _appendCode(String before, String newCode) =>
+    before.replaceFirst('\n', '\n$newCode');

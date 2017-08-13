@@ -12,14 +12,16 @@ import 'state_transformer.dart';
 
 /// [Store] is the container of your state. It listens for actions, invokes reducers,
 /// and publishes changes to the state
-class Store<State extends BuiltReducer<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
+class Store<
+    State extends BuiltReducer<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>,
+    Actions extends ReduxActions> {
   // stream used for dispatching actions
   final StreamController<Action<dynamic>> _dispatch = new StreamController();
 
   // stream used to dispatch changes to the state
-  final StreamController<StoreChange<State, StateBuilder, dynamic>> _stateController =
-      new StreamController.broadcast();
+  final StreamController<StoreChange<State, StateBuilder, dynamic>>
+      _stateController = new StreamController.broadcast();
 
   // the current state
   State _state;
@@ -35,7 +37,8 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
     _actions = actions;
     _actions.syncWithStore(_dispatch.add);
 
-    final MiddlewareApi api = new MiddlewareApi<State, StateBuilder, Actions>(this);
+    final MiddlewareApi api =
+        new MiddlewareApi<State, StateBuilder, Actions>(this);
 
     // setup the middleware dispatch chain
     ActionHandler handler = (action) {
@@ -45,7 +48,8 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
       if (_state == state) return;
 
       // update the internal state and publish the change
-      _stateController.add(new StoreChange<State, StateBuilder, dynamic>(state, _state, action));
+      _stateController.add(
+          new StoreChange<State, StateBuilder, dynamic>(state, _state, action));
       _state = state;
     };
 
@@ -55,8 +59,8 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
       Iterable<NextActionHandler> chain = middleware.map((m) => m(api));
 
       // combine each middeware
-      NextActionHandler combinedMiddleware =
-          chain.reduce((composed, middleware) => (handler) => composed(middleware(handler)));
+      NextActionHandler combinedMiddleware = chain.reduce(
+          (composed, middleware) => (handler) => composed(middleware(handler)));
 
       // make the last middleware in the chain call the top-level reducer
       handler = combinedMiddleware(handler);
@@ -73,8 +77,19 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
     _actions = null;
   }
 
+  /// [replaceState] replaces the state of your store.
+  /// Useful for undo/redo, testing, and development tools
+  void replaceState(State state) {
+    if (_state != state) {
+      _stateController.add(new StoreChange<State, StateBuilder, dynamic>(
+          state, _state, new Action('replaceState', null)));
+      _state = state;
+    }
+  }
+
   /// [subscribe] returns a stream that will be dispatched whenever the state changes
-  Stream<StoreChange<State, StateBuilder, dynamic>> get stream => _stateController.stream;
+  Stream<StoreChange<State, StateBuilder, dynamic>> get stream =>
+      _stateController.stream;
 
   /// [state] returns the current state
   State get state => _state;

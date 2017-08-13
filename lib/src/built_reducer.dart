@@ -2,8 +2,10 @@ import 'package:built_value/built_value.dart';
 import 'action.dart';
 import 'typedefs.dart';
 
+/// [BuiltReducer] can be extended by a built value to give the model a reducer function
 abstract class BuiltReducer<State extends Built<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>> implements Built<State, StateBuilder> {
+        StateBuilder extends Builder<State, StateBuilder>>
+    implements Built<State, StateBuilder> {
   /// This is a map, not a single function with switch statement as per js redux implementation.
   /// This is so each reducer can have the action payload generic be a different non dynamic value
   Map<String, Reducer<dynamic, State, StateBuilder>> get reducer => null;
@@ -30,7 +32,8 @@ class ReducerBuilder<State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>> {
   var _map = new Map<String, Reducer<dynamic, State, StateBuilder>>();
 
-  void add<Payload>(ActionName<Payload> aName, Reducer<Payload, State, StateBuilder> reducer) {
+  void add<Payload>(ActionName<Payload> aName,
+      Reducer<Payload, State, StateBuilder> reducer) {
     _map[aName.name] = reducer;
   }
 

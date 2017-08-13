@@ -20,7 +20,9 @@ class StoreChange<State extends BuiltReducer<State, StateBuilder>,
 }
 
 /// [StoreChangeHandler] handles a change the store after an action of type Action<T>
-typedef void StoreChangeHandler<P, State extends BuiltReducer<State, StateBuilder>,
+typedef void StoreChangeHandler<
+    P,
+    State extends BuiltReducer<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>>(
   StoreChange<State, StateBuilder, P> storeChange,
 );
@@ -29,18 +31,22 @@ typedef void StoreChangeHandler<P, State extends BuiltReducer<State, StateBuilde
 /// set of actions with many different payload types, while maintaining type safety.
 /// Each [StoreChangeHandler] added with add<T> must take a [StoreChange] with prev and next of type
 /// <State, StateBuilder> an Action of typ Action<T>,
-class StoreChangeHandlerBuilder<State extends BuiltReducer<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
-  final _map = new Map<String, StoreChangeHandler<dynamic, State, StateBuilder>>();
+class StoreChangeHandlerBuilder<
+    State extends BuiltReducer<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>,
+    Actions extends ReduxActions> {
+  final _map =
+      new Map<String, StoreChangeHandler<dynamic, State, StateBuilder>>();
   StreamSubscription<StoreChange<State, StateBuilder, dynamic>> _subscription;
 
-  void add<Payload>(
-      ActionName<Payload> aName, StoreChangeHandler<Payload, State, StateBuilder> reducer) {
+  void add<Payload>(ActionName<Payload> aName,
+      StoreChangeHandler<Payload, State, StateBuilder> reducer) {
     _map[aName.name] = reducer;
   }
 
   build(Store<State, StateBuilder, Actions> store) {
-    _subscription = store.stream.listen((StoreChange<State, StateBuilder, dynamic> storeChange) {
+    _subscription = store.stream
+        .listen((StoreChange<State, StateBuilder, dynamic> storeChange) {
       var handler = _map[storeChange.action.name];
       if (handler != null) handler(storeChange);
     });

@@ -9,7 +9,7 @@ main(List<String> args) async {
     'test/unit/',
   ];
 
-  config.format..lineLength = 100;
+  config.format..lineLength = 80;
 
   config.analyze
     ..strong = true
