@@ -2,6 +2,7 @@ import 'package:built_value/built_value.dart';
 import 'action.dart';
 import 'typedefs.dart';
 
+/// [BuiltReducer] can be extended by a built value to give the model a reducer function
 abstract class BuiltReducer<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>> implements Built<State, StateBuilder> {
   /// This is a map, not a single function with switch statement as per js redux implementation.

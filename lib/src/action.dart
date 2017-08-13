@@ -2,10 +2,12 @@
 /// Action [name]s should always be unique!
 class Action<Payload> {
   /// A unique action name.
-  String name;
+  final String name;
 
   /// The actions payload.
-  Payload payload;
+  final Payload payload;
+
+  Action(this.name, this.payload);
 }
 
 // Dispatches an action to the store
@@ -26,9 +28,7 @@ class ActionDispatcher<P> {
 
   String get name => _name;
 
-  void call(P payload) => _dispatcher(new Action<P>()
-    ..name = name
-    ..payload = payload);
+  void call(P payload) => _dispatcher(new Action<P>(name, payload));
 
   ActionDispatcher(this._name);
 
