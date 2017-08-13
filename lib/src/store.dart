@@ -78,7 +78,7 @@ class Store<State extends BuiltReducer<State, StateBuilder>,
   void replaceState(State state) {
     if (_state != state) {
       _stateController.add(new StoreChange<State, StateBuilder, dynamic>(
-          state, _state, new Action()..name = 'replaceState'));
+          state, _state, new Action('replaceState', null)));
       _state = state;
     }
   }
