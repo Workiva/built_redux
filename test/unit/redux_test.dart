@@ -31,10 +31,11 @@ main() {
 
     test('base action updates state', () async {
       setup();
-      Completer onStateChangeCompleter =
-          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      store.stream.listen((StoreChange<BaseCounter, BaseCounterBuilder, dynamic> state) =>
-          onStateChangeCompleter.complete(state));
+      Completer onStateChangeCompleter = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      store.stream.listen(
+          (StoreChange<BaseCounter, BaseCounterBuilder, dynamic> state) =>
+              onStateChangeCompleter.complete(state));
       store.actions.increment(4);
       var stateChange = await onStateChangeCompleter.future;
       expect(stateChange.prev.count, 1);
@@ -43,8 +44,8 @@ main() {
 
     test('nested action updates state', () async {
       setup();
-      Completer onStateChangeCompleter =
-          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      Completer onStateChangeCompleter = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
       store.stream.listen((state) => onStateChangeCompleter.complete(state));
       store.actions.nestedCounterActions.increment(4);
       var stateChange = await onStateChangeCompleter.future;
@@ -54,8 +55,8 @@ main() {
 
     test('middleware action doubles count and updates state', () async {
       setup();
-      Completer onStateChangeCompleter =
-          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      Completer onStateChangeCompleter = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
       store.stream.listen((state) => onStateChangeCompleter.complete(state));
       store.actions.middlewareActions.increment(0);
       var stateChange = await onStateChangeCompleter.future;
@@ -65,10 +66,10 @@ main() {
 
     test('2 middlewares doubles count twice and updates state', () async {
       setup(numMiddleware: 2);
-      Completer onStateChangeCompleter =
-          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      Completer onStateChangeCompleter2 =
-          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      Completer onStateChangeCompleter = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      Completer onStateChangeCompleter2 = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
 
       store.stream.listen((state) {
         if (!onStateChangeCompleter.isCompleted)
@@ -88,8 +89,8 @@ main() {
 
     test('store change handler', () async {
       setup();
-      Completer onStateChangeCompleter =
-          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      Completer onStateChangeCompleter = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
 
       var storeChagneHandler = createChangeHandler(onStateChangeCompleter);
       storeChagneHandler.build(store);
@@ -106,10 +107,10 @@ main() {
 
     test('replaceState', () async {
       setup();
-      Completer onStateChangeCompleter =
-          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      Completer onStateChangeCompleter2 =
-          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      Completer onStateChangeCompleter = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      Completer onStateChangeCompleter2 = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
 
       store.stream.listen((state) {
         if (!onStateChangeCompleter.isCompleted)
@@ -151,7 +152,8 @@ main() {
     test('state transformer pause / resume', () async {
       setup();
       StreamSubscription<SubStateChange<int>> sub;
-      sub = store.substateStream<int>((BaseCounter state) => state.count).listen(
+      sub =
+          store.substateStream<int>((BaseCounter state) => state.count).listen(
         expectAsync1((SubStateChange<int> change) {
           expect(change.prev, 1);
           expect(change.next, 5);
@@ -170,7 +172,8 @@ main() {
       Completer onStreamError = new Completer<Error>();
 
       final sub = store
-          .substateStream<int>((BaseCounter state) => state.indexOutOfRangeList[1])
+          .substateStream<int>(
+              (BaseCounter state) => state.indexOutOfRangeList[1])
           .handleError(onStreamError.complete)
           .listen((_) => fail("error should be handled"));
 

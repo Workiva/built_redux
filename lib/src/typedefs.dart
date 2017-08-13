@@ -10,7 +10,8 @@ typedef void Reducer<
     Payload,
     State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State,
-        StateBuilder>>(State state, Action<Payload> action, StateBuilder builder);
+        StateBuilder>>(
+    State state, Action<Payload> action, StateBuilder builder);
 
 /// [ActionHandler] handles an action, this will contain the actual middleware logic
 typedef void ActionHandler(Action a);

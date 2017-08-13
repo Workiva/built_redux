@@ -20,27 +20,32 @@ typedef SubState StateMapper<State extends BuiltReducer<State, StateBuilder>,
 class StateChangeTransformer<State extends BuiltReducer<State, StateBuilder>,
         StateBuilder extends Builder<State, StateBuilder>, SubState>
     implements
-        StreamTransformer<StoreChange<State, StateBuilder, dynamic>, SubStateChange<SubState>> {
-  final StreamTransformer<StoreChange<State, StateBuilder, dynamic>, SubStateChange<SubState>>
-      transformer;
+        StreamTransformer<StoreChange<State, StateBuilder, dynamic>,
+            SubStateChange<SubState>> {
+  final StreamTransformer<StoreChange<State, StateBuilder, dynamic>,
+      SubStateChange<SubState>> transformer;
 
   StateChangeTransformer(StateMapper<State, StateBuilder, SubState> mapper)
       : transformer = _buildTransformer(mapper);
 
   @override
-  Stream<SubStateChange<SubState>> bind(Stream<StoreChange<State, StateBuilder, dynamic>> stream) =>
+  Stream<SubStateChange<SubState>> bind(
+          Stream<StoreChange<State, StateBuilder, dynamic>> stream) =>
       transformer.bind(stream);
 
-  static StreamTransformer<StoreChange<State, StateBuilder, dynamic>, SubStateChange<SubState>>
+  static StreamTransformer<StoreChange<State, StateBuilder, dynamic>,
+          SubStateChange<SubState>>
       _buildTransformer<
           State extends BuiltReducer<State, StateBuilder>,
           StateBuilder extends Builder<State, StateBuilder>,
           SubState>(StateMapper<State, StateBuilder, SubState> mapper) {
     return new StreamTransformer<StoreChange<State, StateBuilder, dynamic>,
             SubStateChange<SubState>>(
-        (Stream<StoreChange<State, StateBuilder, dynamic>> input, bool cancelOnError) {
+        (Stream<StoreChange<State, StateBuilder, dynamic>> input,
+            bool cancelOnError) {
       StreamController<SubStateChange<SubState>> controller;
-      StreamSubscription<StoreChange<State, StateBuilder, dynamic>> subscription;
+      StreamSubscription<StoreChange<State, StateBuilder, dynamic>>
+          subscription;
 
       controller = new StreamController<SubStateChange<SubState>>(
           sync: true,
@@ -64,7 +69,8 @@ class StateChangeTransformer<State extends BuiltReducer<State, StateBuilder>,
               cancelOnError: cancelOnError,
             );
           },
-          onPause: ([Future<dynamic> resumeSignal]) => subscription.pause(resumeSignal),
+          onPause: ([Future<dynamic> resumeSignal]) =>
+              subscription.pause(resumeSignal),
           onResume: () => subscription.resume(),
           onCancel: () => subscription.cancel());
 

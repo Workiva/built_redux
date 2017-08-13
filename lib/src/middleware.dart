@@ -7,8 +7,10 @@ import 'typedefs.dart';
 
 /// [MiddlewareApi] put in scope to your [Middleware] function by redux.
 /// When using [MiddlewareBuilder] (recommended) [MiddlewareApi] is passed to your [MiddlewareHandler]
-class MiddlewareApi<State extends BuiltReducer<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
+class MiddlewareApi<
+    State extends BuiltReducer<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>,
+    Actions extends ReduxActions> {
   Store<State, StateBuilder, Actions> _store;
   MiddlewareApi(this._store);
 
@@ -23,11 +25,15 @@ class MiddlewareApi<State extends BuiltReducer<State, StateBuilder>,
 /// with many different payload types, while maintaining type safety.
 /// Each [MiddlewareHandler] added with add<T> must take a state of type State, an Action of type
 /// Action<T>, and a builder of type StateBuilder
-class MiddlewareBuilder<State extends BuiltReducer<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions> {
-  var _map = new Map<String, MiddlewareHandler<State, StateBuilder, Actions, dynamic>>();
+class MiddlewareBuilder<
+    State extends BuiltReducer<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>,
+    Actions extends ReduxActions> {
+  var _map = new Map<String,
+      MiddlewareHandler<State, StateBuilder, Actions, dynamic>>();
 
-  void add<T>(ActionName<T> aMgr, MiddlewareHandler<State, StateBuilder, Actions, T> handler) {
+  void add<T>(ActionName<T> aMgr,
+      MiddlewareHandler<State, StateBuilder, Actions, T> handler) {
     _map[aMgr.name] = handler;
   }
 
