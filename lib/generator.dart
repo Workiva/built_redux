@@ -26,10 +26,11 @@ class BuiltReduxGenerator extends Generator {
 bool _needsReduxActions(ClassElement classElement) =>
     _hasSuperType(classElement, 'ReduxActions');
 
-bool _isBuiltReducer(ClassElement classElement) => classElement
-    .computeNode()
-    .toString()
-    .contains('extends ${classElement.name}Reducer');
+bool _isBuiltReducer(ClassElement classElement) {
+  final declaration = classElement.computeNode().toString();
+  return declaration.contains('extends ${classElement.name}Reducer') ||
+      declaration.contains('extends Object with ${classElement.name}Reducer');
+}
 
 bool _hasSuperType(ClassElement classElement, String type) =>
     classElement.allSupertypes
