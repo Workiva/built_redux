@@ -63,7 +63,7 @@ Built using [built_value][built_value_git]
 ```dart
 import 'package:built_redux/built_redux.dart';
 
- // This is a an implementation of ReduxActions. Actions are middleware and ui
+ // This is a an implementation of ReduxActions. Actions are what middleware and ui
  // components invoke a change to the redux store's state. By extending ReduxActions
  // the built_redux generator will generate the required boilerplate to create
  // each action and an ActionNames class.
@@ -88,14 +88,14 @@ import 'package:built_redux/built_redux.dart';
    /// to reducer functions. The reducer functions then rebuild the state.
    get reducer => _reducer;
 
-   // Built value constructor
+   // Built value constructor. The factory is returning the default state
    Counter._();
    factory BaseCounter() => new _$BaseCounter._(count: 1);
  }
 
 
 // These are reducer functions. They have a (state, action, builder) => void signature.
-// It describes how an action transforms the state into the next state by applying changes to the builder supplied.
+// They describes how an action transforms the state into the next state by applying changes to the builder supplied.
 // You are required to builder passed, calling state.rebuild will NOT update the state in your redux store.
 increment(Counter state, Action<int> action, CounterBuilder builder) =>
   builder..count = state.count + action.payload;
@@ -133,10 +133,11 @@ store.actions.decrement(1);
 
 ### Generated Reducer Mixin
 
-A generated implementation of the BuiltReducer interface will be created by
-an extends clause to any built value that mixes in a class with the naming scheme {ModelName}Reducer.
+A generated implementation of the BuiltReducer interface will be created for every built value that includes
+an extends clause that mixes in a class with the naming scheme {ModelName}Reducer.
 (For now this must be the first mixin after the extends clause).
 Once the generator is run you can check the .g.dart files for a mixin called {ModelName}Reducer.
+In the example above CounterReducer is generated.
 
 ### Nested Reducers
 
@@ -154,7 +155,7 @@ abstract class BaseCounter extends Object
 
   get reducer => _baseReducer;
 
-  // Built value constructor
+  // Built value constructor. The factory is returning the default state
   BaseCounter._();
   factory BaseCounter() => new _$BaseCounter._(
     count: 1,
