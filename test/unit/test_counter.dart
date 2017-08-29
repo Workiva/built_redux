@@ -35,7 +35,8 @@ final _baseReducer = (new ReducerBuilder<BaseCounter, BaseCounterBuilder>()
     .build();
 
 // Built Reducer
-abstract class BaseCounter extends BaseCounterReducer
+abstract class BaseCounter extends Object
+    with BaseCounterReducer
     implements Built<BaseCounter, BaseCounterBuilder> {
   int get count;
 
@@ -79,7 +80,8 @@ final _nestedReducer =
           ..add(NestedCounterActionsNames.decrement, _nestedDecrement))
         .build();
 
-abstract class NestedCounter extends NestedCounterReducer
+abstract class NestedCounter extends Object
+    with NestedCounterReducer
     implements Built<NestedCounter, NestedCounterBuilder> {
   int get count;
 

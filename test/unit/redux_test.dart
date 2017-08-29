@@ -31,35 +31,24 @@ main() {
 
     test('base action updates state', () async {
       setup();
-      Completer onStateChangeCompleter = new Completer<
-          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      store.stream.listen(
-          (StoreChange<BaseCounter, BaseCounterBuilder, dynamic> state) =>
-              onStateChangeCompleter.complete(state));
       store.actions.increment(4);
-      var stateChange = await onStateChangeCompleter.future;
+      var stateChange = await store.stream.first;
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 5);
     });
 
     test('nested action updates state', () async {
       setup();
-      Completer onStateChangeCompleter = new Completer<
-          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      store.stream.listen((state) => onStateChangeCompleter.complete(state));
       store.actions.nestedCounterActions.increment(4);
-      var stateChange = await onStateChangeCompleter.future;
+      var stateChange = await store.stream.first;
       expect(stateChange.prev.nestedCounter.count, 1);
       expect(stateChange.next.nestedCounter.count, 5);
     });
 
     test('middleware action doubles count and updates state', () async {
       setup();
-      Completer onStateChangeCompleter = new Completer<
-          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      store.stream.listen((state) => onStateChangeCompleter.complete(state));
       store.actions.middlewareActions.increment(0);
-      var stateChange = await onStateChangeCompleter.future;
+      var stateChange = await store.stream.first;
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 3);
     });
@@ -79,12 +68,12 @@ main() {
       });
       // should add 2 twice
       store.actions.middlewareActions.increment(0);
-      var stateChange = await onStateChangeCompleter.future;
+      var stateChange = await store.stream.first;
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 3);
-      var stateChange2 = await onStateChangeCompleter2.future;
-      expect(stateChange2.prev.count, 3);
-      expect(stateChange2.next.count, 5);
+      stateChange = await store.stream.first;
+      expect(stateChange.prev.count, 3);
+      expect(stateChange.next.count, 5);
     });
 
     test('store change handler', () async {
@@ -133,20 +122,15 @@ main() {
     test('state transformer', () async {
       setup();
 
-      Completer onStreamFiredCompleter = new Completer<SubStateChange<int>>();
-
-      final sub = store
-          .substateStream<int>((BaseCounter state) => state.count)
-          .listen(onStreamFiredCompleter.complete);
+      final sub = store.substateStream<int>((BaseCounter state) => state.count);
 
       store.actions.increment(4);
       // would cause completer to complete twice and fail the test
       store.actions.nestedCounterActions.increment(1);
 
-      var change = await onStreamFiredCompleter.future;
+      var change = await sub.first;
       expect(change.prev, 1);
       expect(change.next, 5);
-      sub.cancel();
     });
 
     test('state transformer pause / resume', () async {
