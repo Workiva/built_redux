@@ -6,7 +6,6 @@ import 'typedefs.dart';
 abstract class BuiltReducer<State extends Built<State, StateBuilder>,
         StateBuilder extends Builder<State, StateBuilder>>
     implements Built<State, StateBuilder> {
-    
   /// [reduce] describes how an action transforms the state into the next state by applying changes to the builder supplied.
   /// You are required to builder passed, calling state.rebuild will NOT update the state in your redux store.
   void reduce(State state, Action<dynamic> a, StateBuilder builder);
