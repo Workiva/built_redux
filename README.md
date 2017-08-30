@@ -78,14 +78,15 @@ import 'package:built_redux/built_redux.dart';
 
  // This is a BuiltReducer. It is an implementation of the Built and BuiltReducer
  // interfaces.
-  abstract class Counter extends object
+  abstract class Counter extends Object
      with CounterReducer
      implements Built<Counter, CounterBuilder> {
    /// [count] value of the counter
    int get count;
 
-   /// This is the implementation of the BuiltReducerreducer, it returns a map of actions
-   /// to reducer functions. The reducer functions then rebuild the state.
+   /// reducer returns a map of actions to reducer functions. 
+   /// the generated implementation of reduce will find a reducer function for an action in this map
+   /// then call the reducer function to rebuild the state.
    get reducer => _reducer;
 
    // Built value constructor. The factory is returning the default state
