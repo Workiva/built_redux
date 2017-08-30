@@ -63,7 +63,7 @@ Built using [built_value][built_value_git]
 ```dart
 import 'package:built_redux/built_redux.dart';
 
- // This is a an implementation of ReduxActions. Actions are middleware and ui
+ // This is a an implementation of ReduxActions. Actions are what middleware and ui
  // components invoke a change to the redux store's state. By extending ReduxActions
  // the built_redux generator will generate the required boilerplate to create
  // each action and an ActionNames class.
@@ -76,28 +76,28 @@ import 'package:built_redux/built_redux.dart';
    factory CounterActions() => new _$CounterActions();
  }
 
- // This is a BuiltReducer. It is essentially an implementation of built_value
- // with one extra getter named reducers. This getter is simply a map from action
- // name to a reducer function.
-  abstract class Counter extends BuiltReducer<Counter, CounterBuilder>
+ // This is a BuiltReducer. It is an implementation of the Built and BuiltReducer
+ // interfaces.
+  abstract class Counter extends Object
+     with CounterReducer
      implements Built<Counter, CounterBuilder> {
    /// [count] value of the counter
    int get count;
 
-   /// This is the reducer getter, it describes which actions this BuiltReducer handles
-   /// and how each action transforms the state into the next state.
+   /// reducer returns a map of actions to reducer functions. 
+   /// the generated implementation of reduce will find a reducer function for an action in this map
+   /// then call the reducer function to rebuild the state.
    get reducer => _reducer;
 
-   // Built value constructor
+   // Built value constructor. The factory is returning the default state
    Counter._();
    factory BaseCounter() => new _$BaseCounter._(count: 1);
  }
 
 
-// These are reducers, a pure function with (state, action, builder) => state signature.
-// It describes how an action transforms the state into the next state.
-// You are required to builder passed, calling state.rebuild will NOT update
-// the state in your redux store.
+// These are reducer functions. They have a (state, action, builder) => void signature.
+// They describes how an action transforms the state into the next state by applying changes to the builder supplied.
+// You are required to builder passed, calling state.rebuild will NOT update the state in your redux store.
 increment(Counter state, Action<int> action, CounterBuilder builder) =>
   builder..count = state.count + action.payload;
 
@@ -108,7 +108,7 @@ decrement(Counter state, Action<int> action, CounterBuilder builder) =>
  // is strongly recommended as it gives you static type checking to make sure
  // the payload for action name provided is the same as the expected payload
  // for the action provided to your reducer. Calling .build() returns the map
- // of action names to reducers.
+ // of action names to reducer functions.
  var _reducer =  (new ReducerBuilder<Counter, CounterBuilder>()
       ..add(CounterActionsNames.increment, increment)
       ..add(CounterActionsNames.decrement, decrement)).build();
@@ -121,8 +121,6 @@ var store = new Store<Counter, CounterBuilder, CounterActions>(
 );
 
 // You can use stream.listen() to update the UI in response to state changes.
-// Normally you'd use a view binding library (e.g. [flutter_built_redux]) rather than stream.listen() directly.
-// However it can also be handy to persist the current state in the localStorage.
 store.stream.listen((_) => print(store.state.count));
 
 // The only way to mutate the internal state is to dispatch an action.
@@ -134,15 +132,23 @@ store.actions.decrement(1);
 // 2
 ```
 
-### Nested reducers
+### Generated Reducer Mixin
 
-Nested reducers can be added to your BuiltReducer. In this example NestedCounter
-is another BuiltReducer. In order for nested reducers to work you must mix in
-{Built reducer name}ReduceChildren just like BaseCounterReduceChildren is below.
-This class will be generated for you by the BuiltReduxGenerator.
+A generated implementation of the BuiltReducer interface will be created for every built value that includes
+an extends clause that mixes in a class with the naming scheme {ModelName}Reducer.
+(For now this must be the first mixin after the extends clause).
+Once the generator is run you can check the .g.dart files for a mixin called {ModelName}Reducer.
+In the example above CounterReducer is generated.
+
+### Nested Reducers
+
+A reducer can include vaules that also implement BuiltReducer. In this case NestedCounter
+also implements BuiltReducer. This means BaseCounter can handle a different set of actions
+than NestedCounter.
+
 ```dart
-abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
-    with BaseCounterReduceChildren
+abstract class BaseCounter extends Object
+    with BaseCounterReducer
     implements Built<BaseCounter, BaseCounterBuilder> {
   int get count;
 
@@ -150,7 +156,7 @@ abstract class BaseCounter extends BuiltReducer<BaseCounter, BaseCounterBuilder>
 
   get reducer => _baseReducer;
 
-  // Built value constructor
+  // Built value constructor. The factory is returning the default state
   BaseCounter._();
   factory BaseCounter() => new _$BaseCounter._(
     count: 1,

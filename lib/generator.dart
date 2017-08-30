@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -14,9 +13,9 @@ class BuiltReduxGenerator extends Generator {
         result.writeln(_generateActions(element));
       }
 
-      if (element is ClassElement && _needsReduceChildren(element)) {
+      if (element is ClassElement && _isBuiltReducer(element)) {
         log.info('Generating reduce children classes for ${element.name}');
-        result.writeln(_generateReduceChildren(element));
+        result.writeln(_generateReducer(element));
       }
     }
 
@@ -27,25 +26,16 @@ class BuiltReduxGenerator extends Generator {
 bool _needsReduxActions(ClassElement classElement) =>
     _hasSuperType(classElement, 'ReduxActions');
 
-bool _needsReduceChildren(ClassElement classElement) =>
-    _isBuiltReducer(classElement) && _containsNestedReducers(classElement);
-
-bool _isBuiltReducer(ClassElement classElement) =>
-    _hasSuperType(classElement, 'BuiltReducer');
+bool _isBuiltReducer(ClassElement classElement) {
+  final declaration = classElement.computeNode().toString();
+  return declaration.contains('extends ${classElement.name}Reducer') ||
+      declaration.contains('extends Object with ${classElement.name}Reducer');
+}
 
 bool _hasSuperType(ClassElement classElement, String type) =>
     classElement.allSupertypes
         .any((interfaceType) => interfaceType.name == type) &&
     !classElement.displayName.startsWith('_\$');
-
-bool _containsNestedReducers(ClassElement classElement) {
-  // TODO: warn if classElement doesn't mix in its withChildren
-  for (var e in classElement.fields) {
-    var ele = e.type.element;
-    if (ele is ClassElement && _isBuiltReducer(ele)) return true;
-  }
-  return false;
-}
 
 bool _isActionDispatcher(Element element) =>
     element is ClassElement && element.name == 'ActionDispatcher';
@@ -114,28 +104,46 @@ String _getActionDispatcherGenericType(FieldElement e) =>
           e.toString().lastIndexOf('>'),
         );
 
-List<DartType> _getBVTypes(ClassElement element) {
-  for (var st in element.allSupertypes) {
-    if (st.name == 'BuiltReducer') return st.typeArguments;
-  }
-  throw new Exception(
-      'No typeArguments on BuiltReducer for element ${element.name}');
-}
-
-String _generateReduceChildren(ClassElement element) {
-  var types = _getBVTypes(element);
+String _generateReducer(ClassElement element) {
+  const reduceChildrenMatcher = '**reduceChildrenMatcher**';
+  var builtName = element.name;
+  var builderName = '${element.name}Builder';
   var nameCode =
-      "class ${element.name}ReduceChildren {reduceChildren(${types[0].name} state, Action<dynamic> a, ${types[0].name}Builder builder) {\n }}";
+      """abstract class ${builtName}Reducer implements BuiltReducer<$builtName, $builderName> {
+        Map<String, Reducer<dynamic, $builtName, $builderName>>
+            get reducer => null;
+
+        void reduce(
+            $builtName state, Action<dynamic> a, $builderName builder) {
+          if (reducer != null) {
+            var handler = reducer[a.name];
+            if (handler != null) handler(state, a, builder);
+          }
+          reduceChildren(state, a, builder);
+        }
+
+        reduceChildren($builtName state, Action<dynamic> a, $builderName builder) { $reduceChildrenMatcher }
+      }""";
+
+  var reduceChildrenContent = '';
   for (var e in element.fields) {
     var ele = e.type.element;
     if (ele is ClassElement && _isBuiltReducer(ele)) {
       String brName = e.name;
-      nameCode = _appendCode(
-          nameCode, 'state.$brName.reduce(state.$brName, a, builder.$brName);');
+      reduceChildrenContent +=
+          'state.$brName.reduce(state.$brName, a, builder.$brName);';
     }
   }
-  return nameCode;
+
+  return _replaceMatcher(
+    reduceChildrenMatcher,
+    nameCode,
+    reduceChildrenContent,
+  );
 }
 
 String _appendCode(String before, String newCode) =>
     before.replaceFirst('\n', '\n$newCode');
+
+String _replaceMatcher(String matcher, String before, String newCode) =>
+    before.replaceFirst(matcher, '$newCode');
