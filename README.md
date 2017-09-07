@@ -33,7 +33,7 @@ Built using [built_value][built_value_git]
 
     ```yaml
     dependencies:
-      built_redux: "^2.0.0"
+      built_redux: "^5.0.0"
     ```
 
 2. Create a script to run generators for generating built_values and additional built_redux classes.
@@ -47,14 +47,15 @@ Built using [built_value][built_value_git]
 
     /// Build the generated files in the built_value chat example.
     Future main(List<String> args) async {
-      await build(
-          new PhaseGroup.singleAction(
-              new PartBuilder([
-                new BuiltValueGenerator(),
-                new BuiltReduxGenerator(),
-              ]),
-              new InputSet('my_lib', const ['lib/**/*.dart'])),
-          deleteFilesByDefault: true);
+      await build([
+        new BuildAction(
+            new PartBuilder([
+              new BuiltValueGenerator(),
+              new BuiltReduxGenerator(),
+            ]),
+            'built_redux',
+            inputs: const ['test/unit/test_counter.dart'])
+      ], deleteFilesByDefault: true);
     }
     ```
 

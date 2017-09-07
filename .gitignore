@@ -10,3 +10,6 @@ example/.packages
 example/.dart_tool
 
 coverage/
+
+# IntelliJ IDEA
+.idea/

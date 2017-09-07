@@ -7,12 +7,13 @@ import 'package:built_redux/generator.dart';
 
 /// Build the generated files in the built_value chat example.
 Future main(List<String> args) async {
-  await build(
-      new PhaseGroup.singleAction(
-          new PartBuilder([
-            new BuiltValueGenerator(),
-            new BuiltReduxGenerator(),
-          ]),
-          new InputSet('built_redux', const ['test/unit/test_counter.dart'])),
-      deleteFilesByDefault: true);
+  await build([
+    new BuildAction(
+        new PartBuilder([
+          new BuiltValueGenerator(),
+          new BuiltReduxGenerator(),
+        ]),
+        'built_redux',
+        inputs: const ['test/unit/test_counter.dart'])
+  ], deleteFilesByDefault: true);
 }
