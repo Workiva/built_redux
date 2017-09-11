@@ -194,22 +194,37 @@ class NestedCounterBuilder
 class _$BaseCounterActions extends BaseCounterActions {
   final MiddlewareActions middlewareActions = new MiddlewareActions();
   final NestedCounterActions nestedCounterActions = new NestedCounterActions();
+  final ActionDispatcher<FooTypedef> foo =
+      new ActionDispatcher<FooTypedef>('BaseCounterActions-foo');
+
+  final ActionDispatcher<Null> incrementOne =
+      new ActionDispatcher<Null>('BaseCounterActions-incrementOne');
+
   final ActionDispatcher<int> decrement =
       new ActionDispatcher<int>('BaseCounterActions-decrement');
 
   final ActionDispatcher<int> increment =
       new ActionDispatcher<int>('BaseCounterActions-increment');
   factory _$BaseCounterActions() => new _$BaseCounterActions._();
+
   _$BaseCounterActions._() : super._();
-  syncWithStore(dispatcher) {
+
+  @override
+  void syncWithStore(Dispatcher dispatcher) {
     middlewareActions.syncWithStore(dispatcher);
     nestedCounterActions.syncWithStore(dispatcher);
+    foo.syncWithStore(dispatcher);
+    incrementOne.syncWithStore(dispatcher);
     decrement.syncWithStore(dispatcher);
     increment.syncWithStore(dispatcher);
   }
 }
 
 class BaseCounterActionsNames {
+  static final ActionName<FooTypedef> foo =
+      new ActionName<FooTypedef>('BaseCounterActions-foo');
+  static final ActionName<Null> incrementOne =
+      new ActionName<Null>('BaseCounterActions-incrementOne');
   static final ActionName<int> decrement =
       new ActionName<int>('BaseCounterActions-decrement');
   static final ActionName<int> increment =
@@ -224,33 +239,48 @@ abstract class BaseCounterReducer
   void reduce(
       BaseCounter state, Action<dynamic> a, BaseCounterBuilder builder) {
     if (reducer != null) {
-      var handler = reducer[a.name];
+      final handler = reducer[a.name];
       if (handler != null) handler(state, a, builder);
     }
     reduceChildren(state, a, builder);
   }
 
-  reduceChildren(
+  void reduceChildren(
       BaseCounter state, Action<dynamic> a, BaseCounterBuilder builder) {
     state.nestedCounter.reduce(state.nestedCounter, a, builder.nestedCounter);
   }
 }
 
 class _$NestedCounterActions extends NestedCounterActions {
+  final ActionDispatcher<FooTypedef> fooTypedef =
+      new ActionDispatcher<FooTypedef>('NestedCounterActions-fooTypedef');
+
+  final ActionDispatcher<Null> incrementOne =
+      new ActionDispatcher<Null>('NestedCounterActions-incrementOne');
+
   final ActionDispatcher<int> decrement =
       new ActionDispatcher<int>('NestedCounterActions-decrement');
 
   final ActionDispatcher<int> increment =
       new ActionDispatcher<int>('NestedCounterActions-increment');
   factory _$NestedCounterActions() => new _$NestedCounterActions._();
+
   _$NestedCounterActions._() : super._();
-  syncWithStore(dispatcher) {
+
+  @override
+  void syncWithStore(Dispatcher dispatcher) {
+    fooTypedef.syncWithStore(dispatcher);
+    incrementOne.syncWithStore(dispatcher);
     decrement.syncWithStore(dispatcher);
     increment.syncWithStore(dispatcher);
   }
 }
 
 class NestedCounterActionsNames {
+  static final ActionName<FooTypedef> fooTypedef =
+      new ActionName<FooTypedef>('NestedCounterActions-fooTypedef');
+  static final ActionName<Null> incrementOne =
+      new ActionName<Null>('NestedCounterActions-incrementOne');
   static final ActionName<int> decrement =
       new ActionName<int>('NestedCounterActions-decrement');
   static final ActionName<int> increment =
@@ -265,13 +295,13 @@ abstract class NestedCounterReducer
   void reduce(
       NestedCounter state, Action<dynamic> a, NestedCounterBuilder builder) {
     if (reducer != null) {
-      var handler = reducer[a.name];
+      final handler = reducer[a.name];
       if (handler != null) handler(state, a, builder);
     }
     reduceChildren(state, a, builder);
   }
 
-  reduceChildren(
+  void reduceChildren(
       NestedCounter state, Action<dynamic> a, NestedCounterBuilder builder) {}
 }
 
@@ -279,8 +309,11 @@ class _$MiddlewareActions extends MiddlewareActions {
   final ActionDispatcher<int> increment =
       new ActionDispatcher<int>('MiddlewareActions-increment');
   factory _$MiddlewareActions() => new _$MiddlewareActions._();
+
   _$MiddlewareActions._() : super._();
-  syncWithStore(dispatcher) {
+
+  @override
+  void syncWithStore(Dispatcher dispatcher) {
     increment.syncWithStore(dispatcher);
   }
 }

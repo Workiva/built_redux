@@ -13,7 +13,10 @@ main() {
       var actions = new BaseCounterActions();
       var defaultValue = new BaseCounter();
 
-      var middleware = new List<Middleware>();
+      var middleware =
+          <Middleware<BaseCounter, BaseCounterBuilder, BaseCounterActions>>[
+        fooTypedefMiddleware
+      ];
       for (int i = 0; i < numMiddleware; i++) {
         middleware.add(counterMiddleware);
       }
@@ -164,6 +167,24 @@ main() {
       store.actions.increment(4);
       await onStreamError.future;
       sub.cancel();
+    });
+
+    test('ActionDispatcher<Null>', () async {
+      setup();
+      store.actions.incrementOne(null);
+      var stateChange = await store.stream.first;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 2);
+    });
+
+    test('ActionDispatcher<SomeTypeDef>', () async {
+      setup();
+      store.actions.foo((MiddlewareApi api) {
+        (api.actions as BaseCounterActions).incrementOne(null);
+      });
+      var stateChange = await store.stream.first;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 2);
     });
   });
 }
