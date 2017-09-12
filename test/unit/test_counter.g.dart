@@ -194,6 +194,13 @@ class NestedCounterBuilder
 class _$BaseCounterActions extends BaseCounterActions {
   final MiddlewareActions middlewareActions = new MiddlewareActions();
   final NestedCounterActions nestedCounterActions = new NestedCounterActions();
+  final ActionDispatcher<Map<String, List<int>>> genericAction2 =
+      new ActionDispatcher<Map<String, List<int>>>(
+          'BaseCounterActions-genericAction2');
+
+  final ActionDispatcher<List<int>> genericAction1 =
+      new ActionDispatcher<List<int>>('BaseCounterActions-genericAction1');
+
   final ActionDispatcher<FooTypedef> foo =
       new ActionDispatcher<FooTypedef>('BaseCounterActions-foo');
 
@@ -213,6 +220,8 @@ class _$BaseCounterActions extends BaseCounterActions {
   void syncWithStore(Dispatcher dispatcher) {
     middlewareActions.syncWithStore(dispatcher);
     nestedCounterActions.syncWithStore(dispatcher);
+    genericAction2.syncWithStore(dispatcher);
+    genericAction1.syncWithStore(dispatcher);
     foo.syncWithStore(dispatcher);
     incrementOne.syncWithStore(dispatcher);
     decrement.syncWithStore(dispatcher);
@@ -221,6 +230,11 @@ class _$BaseCounterActions extends BaseCounterActions {
 }
 
 class BaseCounterActionsNames {
+  static final ActionName<Map<String, List<int>>> genericAction2 =
+      new ActionName<Map<String, List<int>>>(
+          'BaseCounterActions-genericAction2');
+  static final ActionName<List<int>> genericAction1 =
+      new ActionName<List<int>>('BaseCounterActions-genericAction1');
   static final ActionName<FooTypedef> foo =
       new ActionName<FooTypedef>('BaseCounterActions-foo');
   static final ActionName<Null> incrementOne =

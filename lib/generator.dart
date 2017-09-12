@@ -108,8 +108,16 @@ class _\$${element.name} extends ${element.name}{
   return '$initializerCode\n\n$nameCode';
 }
 
-String _getActionDispatcherGenericType(FieldElement e) =>
-    (e.type as InterfaceType).typeArguments.first.name;
+String _getActionDispatcherGenericType(FieldElement e) {
+  var typeArgument =
+      (e.type as InterfaceType).typeArguments.first as ParameterizedType;
+  // generic type has generic type parameters?
+  if (typeArgument.typeArguments.isEmpty ||
+      typeArgument.typeArguments.every((ta) => ta.name == 'dynamic')) {
+    return typeArgument.name;
+  }
+  return '${typeArgument.name}<${typeArgument.typeArguments.join(',')}>';
+}
 
 String _generateReducer(ClassElement element) {
   const reduceChildrenMatcher = '**reduceChildrenMatcher**';

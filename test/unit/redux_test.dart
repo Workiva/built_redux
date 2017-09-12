@@ -186,5 +186,20 @@ main() {
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 2);
     });
+
+    test('payload with generic type', () async {
+      setup();
+      store.actions.genericAction1(<int>[1, 2, 3]);
+      var stateChange = await store.stream.first;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 7);
+
+      store.actions.genericAction2(<String, List<int>>{
+        'add': [1, 2, 3]
+      });
+      stateChange = await store.stream.first;
+      expect(stateChange.prev.count, 7);
+      expect(stateChange.next.count, 13);
+    });
   });
 }

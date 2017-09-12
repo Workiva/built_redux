@@ -19,6 +19,8 @@ abstract class BaseCounterActions extends ReduxActions {
   ActionDispatcher<int> decrement;
   ActionDispatcher<Null> incrementOne;
   ActionDispatcher<FooTypedef> foo;
+  ActionDispatcher<List<int>> genericAction1;
+  ActionDispatcher<Map<String, List<int>>> genericAction2;
 
   NestedCounterActions nestedCounterActions;
   MiddlewareActions middlewareActions;
@@ -39,10 +41,24 @@ _baseIncrementOne(
         BaseCounter state, Action<Null> action, BaseCounterBuilder builder) =>
     builder..count = state.count + 1;
 
+_baseGenericAction1(BaseCounter state, Action<List<int>> action,
+        BaseCounterBuilder builder) =>
+    builder
+      ..count = state.count +
+          action.payload.reduce((value, element) => value + element);
+
+_baseGenericAction2(BaseCounter state, Action<Map<String, List<int>>> action,
+        BaseCounterBuilder builder) =>
+    builder
+      ..count = state.count +
+          action.payload['add'].reduce((value, element) => value + element);
+
 final _baseReducer = (new ReducerBuilder<BaseCounter, BaseCounterBuilder>()
       ..add(BaseCounterActionsNames.increment, _baseIncrement)
       ..add(BaseCounterActionsNames.decrement, _baseDecrement)
-      ..add(BaseCounterActionsNames.incrementOne, _baseIncrementOne))
+      ..add(BaseCounterActionsNames.incrementOne, _baseIncrementOne)
+      ..add(BaseCounterActionsNames.genericAction1, _baseGenericAction1)
+      ..add(BaseCounterActionsNames.genericAction2, _baseGenericAction2))
     .build();
 
 // Built Reducer
