@@ -101,7 +101,7 @@ class ActionDispatcher<P> {
 /// }
 /// ```
 abstract class ReduxActions {
-  void syncWithStore(dispatcher);
+  void syncWithStore(Dispatcher dispatcher);
 }
 
 /// [ActionName] is an object that simply contains the action name but is typed with a generic that

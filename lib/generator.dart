@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -44,25 +45,35 @@ bool _isGeneratedDispatcherFinal(String dispatcherCode) =>
     dispatcherCode.startsWith('\nfinal') || dispatcherCode.startsWith('final');
 
 String _generateActions(ClassElement element) {
-  var initializerCode =
-      "class _\$${element.name} extends ${element.name}{\nfactory _\$${element.name}() => new _\$${element.name}._();\n_\$${element.name}._() : super._();\nsyncWithStore(dispatcher);\n}";
-  var nameCode = "class ${element.name}Names {\n\n}";
-  var syncWithStoreCode = 'syncWithStore(dispatcher) {\n\n}';
+  var defaultFunctionDeclaration =
+      '@override void syncWithStore(Dispatcher dispatcher)';
+  var initializerCode = '''
+class _\$${element.name} extends ${element.name}{
+  factory _\$${element.name}() => new _\$${element.name}._();
+  
+  _\$${element.name}._() : super._();
+  
+  $defaultFunctionDeclaration;
+}''';
+
+  var nameCode = 'class ${element.name}Names {\n}';
+  var syncWithStoreCode = '$defaultFunctionDeclaration{\n}';
   for (var e in element.fields) {
     var fieldName = e.name;
     var ele = e.type.element;
     var typeName = ele.name;
 
     if (_isActionDispatcher(ele)) {
+      var genericType = _getActionDispatcherGenericType(e);
       // generate the action name
       nameCode = _appendCode(
         nameCode,
-        'static final ActionName<${_getActionDispatcherGenericType(e)}> $fieldName = new ActionName<${_getActionDispatcherGenericType(e)}>(\'${element.name}-$fieldName\');\n',
+        'static final ActionName<${genericType}> $fieldName = new ActionName<${genericType}>(\'${element.name}-$fieldName\');\n',
       );
 
       // generate the dispatcher
       var actionDispatcher =
-          '\n${e.toString()} = new ActionDispatcher<${_getActionDispatcherGenericType(e)}>(\'${element.name}-$fieldName\');\n';
+          '\n${e.type.name}<${genericType}> ${e.name} = new ActionDispatcher<${genericType}>(\'${element.name}-$fieldName\');\n';
 
       // if it was not declared final make it final
       if (!_isGeneratedDispatcherFinal(actionDispatcher))
@@ -81,7 +92,7 @@ String _generateActions(ClassElement element) {
       // generate the instantiation
       initializerCode = _appendCode(
         initializerCode,
-        'final ${e.toString()} = new $typeName();',
+        'final $e = new $typeName();',
       );
 
       // append the sync function for this set of actions
@@ -93,37 +104,44 @@ String _generateActions(ClassElement element) {
   }
 
   initializerCode = initializerCode.replaceFirst(
-      'syncWithStore(dispatcher);', syncWithStoreCode);
+      '$defaultFunctionDeclaration;', syncWithStoreCode);
   return '$initializerCode\n\n$nameCode';
 }
 
-// TODO: find a better way
-String _getActionDispatcherGenericType(FieldElement e) =>
-    e.toString().substring(
-          e.toString().indexOf('<') + 1,
-          e.toString().lastIndexOf('>'),
-        );
+String _getActionDispatcherGenericType(FieldElement e) {
+  var typeArgument =
+      (e.type as InterfaceType).typeArguments.first as ParameterizedType;
+  // generic type has generic type parameters?
+  if (typeArgument.typeArguments.isEmpty ||
+      typeArgument.typeArguments.every((ta) => ta.name == 'dynamic')) {
+    return typeArgument.name;
+  }
+  return '${typeArgument.name}<${typeArgument.typeArguments.join(',')}>';
+}
 
 String _generateReducer(ClassElement element) {
   const reduceChildrenMatcher = '**reduceChildrenMatcher**';
   var builtName = element.name;
   var builderName = '${element.name}Builder';
-  var nameCode =
-      """abstract class ${builtName}Reducer implements BuiltReducer<$builtName, $builderName> {
-        Map<String, Reducer<dynamic, $builtName, $builderName>>
-            get reducer => null;
+  var nameCode = '''
+abstract class ${builtName}Reducer implements BuiltReducer<$builtName, $builderName> {
+  Map<String, Reducer<dynamic, $builtName, $builderName>>
+      get reducer => null;
 
-        void reduce(
-            $builtName state, Action<dynamic> a, $builderName builder) {
-          if (reducer != null) {
-            var handler = reducer[a.name];
-            if (handler != null) handler(state, a, builder);
-          }
-          reduceChildren(state, a, builder);
-        }
+  void reduce(
+      $builtName state, Action<dynamic> a, $builderName builder) {
+    if (reducer != null) {
+      final handler = reducer[a.name];
+      if (handler != null) handler(state, a, builder);
+    }
+    reduceChildren(state, a, builder);
+  }
 
-        reduceChildren($builtName state, Action<dynamic> a, $builderName builder) { $reduceChildrenMatcher }
-      }""";
+  void reduceChildren($builtName state, Action<dynamic> a, $builderName builder) { 
+    $reduceChildrenMatcher 
+  }
+}
+''';
 
   var reduceChildrenContent = '';
   for (var e in element.fields) {
