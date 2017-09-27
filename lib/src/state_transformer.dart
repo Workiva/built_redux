@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:built_value/built_value.dart';
-import 'built_reducer.dart';
 import 'store_change.dart';
 
 /// [SubStateChange] is the payload for `StateChangeTransformer`'s stream. It contains
@@ -12,12 +11,12 @@ class SubStateChange<SubState> {
 }
 
 /// [StateMapper] takes a state model and maps it to the values one cares about
-typedef SubState StateMapper<State extends BuiltReducer<State, StateBuilder>,
+typedef SubState StateMapper<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, SubState>(State state);
 
 /// [StateChangeTransformer] transforms the store's stream to emit an event only when the state resulting from the
 /// mapper provided changes
-class StateChangeTransformer<State extends BuiltReducer<State, StateBuilder>,
+class StateChangeTransformer<State extends Built<State, StateBuilder>,
         StateBuilder extends Builder<State, StateBuilder>, SubState>
     implements
         StreamTransformer<StoreChange<State, StateBuilder, dynamic>,
@@ -36,7 +35,7 @@ class StateChangeTransformer<State extends BuiltReducer<State, StateBuilder>,
   static StreamTransformer<StoreChange<State, StateBuilder, dynamic>,
           SubStateChange<SubState>>
       _buildTransformer<
-          State extends BuiltReducer<State, StateBuilder>,
+          State extends Built<State, StateBuilder>,
           StateBuilder extends Builder<State, StateBuilder>,
           SubState>(StateMapper<State, StateBuilder, SubState> mapper) {
     return new StreamTransformer<StoreChange<State, StateBuilder, dynamic>,

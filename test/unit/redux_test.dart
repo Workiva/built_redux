@@ -19,6 +19,7 @@ main() {
       }
 
       store = new Store(
+        reducer,
         defaultValue,
         actions,
         middleware: middleware,

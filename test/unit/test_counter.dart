@@ -29,23 +29,18 @@ _baseDecrement(
         BaseCounter state, Action<int> action, BaseCounterBuilder builder) =>
     builder..count = state.count - action.payload;
 
-final _baseReducer = (new ReducerBuilder<BaseCounter, BaseCounterBuilder>()
+final reducer = (new ReducerBuilder<BaseCounter, BaseCounterBuilder>()
       ..add(BaseCounterActionsNames.increment, _baseIncrement)
-      ..add(BaseCounterActionsNames.decrement, _baseDecrement))
+      ..add(BaseCounterActionsNames.decrement, _baseDecrement)
+      ..addNestedReducer(_nestedReducer))
     .build();
 
-// Built Reducer
-abstract class BaseCounter extends Object
-    with BaseCounterReducer
-    implements Built<BaseCounter, BaseCounterBuilder> {
+abstract class BaseCounter implements Built<BaseCounter, BaseCounterBuilder> {
   int get count;
 
   BuiltList<int> get indexOutOfRangeList;
 
   NestedCounter get nestedCounter;
-
-  @override
-  get reducer => _baseReducer;
 
   // Built value constructor
   BaseCounter._();
@@ -74,18 +69,17 @@ _nestedDecrement(NestedCounter state, Action<int> action,
         NestedCounterBuilder builder) =>
     builder..count = state.count - action.payload;
 
-final _nestedReducer =
-    (new ReducerBuilder<NestedCounter, NestedCounterBuilder>()
-          ..add(NestedCounterActionsNames.increment, _nestedIncrement)
-          ..add(NestedCounterActionsNames.decrement, _nestedDecrement))
-        .build();
+final _nestedReducer = new NestedReducerBuilder<BaseCounter, BaseCounterBuilder,
+    NestedCounter, NestedCounterBuilder>(
+  (state) => state.nestedCounter,
+  (builder) => builder.nestedCounter,
+)
+  ..add(NestedCounterActionsNames.increment, _nestedIncrement)
+  ..add(NestedCounterActionsNames.decrement, _nestedDecrement);
 
-abstract class NestedCounter extends Object
-    with NestedCounterReducer
+abstract class NestedCounter
     implements Built<NestedCounter, NestedCounterBuilder> {
   int get count;
-
-  get reducer => _nestedReducer;
 
   // Built value constructor
   NestedCounter._();

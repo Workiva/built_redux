@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:built_value/built_value.dart';
 
 import 'action.dart';
-import 'built_reducer.dart';
 import 'store.dart';
 
 /// [StoreChange] is the payload for the [Store] subscription
-class StoreChange<State extends BuiltReducer<State, StateBuilder>,
+class StoreChange<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, P> {
   final State next;
   final State prev;
@@ -20,9 +19,7 @@ class StoreChange<State extends BuiltReducer<State, StateBuilder>,
 }
 
 /// [StoreChangeHandler] handles a change the store after an action of type Action<T>
-typedef void StoreChangeHandler<
-    P,
-    State extends BuiltReducer<State, StateBuilder>,
+typedef void StoreChangeHandler<P, State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>>(
   StoreChange<State, StateBuilder, P> storeChange,
 );
@@ -32,7 +29,7 @@ typedef void StoreChangeHandler<
 /// Each [StoreChangeHandler] added with add<T> must take a [StoreChange] with prev and next of type
 /// <State, StateBuilder> an Action of typ Action<T>,
 class StoreChangeHandlerBuilder<
-    State extends BuiltReducer<State, StateBuilder>,
+    State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
   final _map =

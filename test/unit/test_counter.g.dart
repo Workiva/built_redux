@@ -6,7 +6,14 @@ part of test_counter;
 // Generator: BuiltValueGenerator
 // **************************************************************************
 
+// ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
+// ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_returning_this
+// ignore_for_file: omit_local_variable_types
+// ignore_for_file: prefer_expression_function_bodies
+// ignore_for_file: sort_constructors_first
+
 class _$BaseCounter extends BaseCounter {
   @override
   final int count;
@@ -112,7 +119,6 @@ class BaseCounterBuilder implements Builder<BaseCounter, BaseCounterBuilder> {
   }
 }
 
-// ignore_for_file: annotate_overrides
 class _$NestedCounter extends NestedCounter {
   @override
   final int count;
@@ -216,26 +222,6 @@ class BaseCounterActionsNames {
       new ActionName<int>('BaseCounterActions-increment');
 }
 
-abstract class BaseCounterReducer
-    implements BuiltReducer<BaseCounter, BaseCounterBuilder> {
-  Map<String, Reducer<dynamic, BaseCounter, BaseCounterBuilder>> get reducer =>
-      null;
-
-  void reduce(
-      BaseCounter state, Action<dynamic> a, BaseCounterBuilder builder) {
-    if (reducer != null) {
-      var handler = reducer[a.name];
-      if (handler != null) handler(state, a, builder);
-    }
-    reduceChildren(state, a, builder);
-  }
-
-  reduceChildren(
-      BaseCounter state, Action<dynamic> a, BaseCounterBuilder builder) {
-    state.nestedCounter.reduce(state.nestedCounter, a, builder.nestedCounter);
-  }
-}
-
 class _$NestedCounterActions extends NestedCounterActions {
   final ActionDispatcher<int> decrement =
       new ActionDispatcher<int>('NestedCounterActions-decrement');
@@ -255,24 +241,6 @@ class NestedCounterActionsNames {
       new ActionName<int>('NestedCounterActions-decrement');
   static final ActionName<int> increment =
       new ActionName<int>('NestedCounterActions-increment');
-}
-
-abstract class NestedCounterReducer
-    implements BuiltReducer<NestedCounter, NestedCounterBuilder> {
-  Map<String, Reducer<dynamic, NestedCounter, NestedCounterBuilder>>
-      get reducer => null;
-
-  void reduce(
-      NestedCounter state, Action<dynamic> a, NestedCounterBuilder builder) {
-    if (reducer != null) {
-      var handler = reducer[a.name];
-      if (handler != null) handler(state, a, builder);
-    }
-    reduceChildren(state, a, builder);
-  }
-
-  reduceChildren(
-      NestedCounter state, Action<dynamic> a, NestedCounterBuilder builder) {}
 }
 
 class _$MiddlewareActions extends MiddlewareActions {

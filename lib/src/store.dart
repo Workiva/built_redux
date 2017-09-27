@@ -4,7 +4,6 @@ import 'dart:core';
 import 'package:built_value/built_value.dart';
 
 import 'action.dart';
-import 'built_reducer.dart';
 import 'middleware.dart';
 import 'typedefs.dart';
 import 'store_change.dart';
@@ -13,7 +12,7 @@ import 'state_transformer.dart';
 /// [Store] is the container of your state. It listens for actions, invokes reducers,
 /// and publishes changes to the state
 class Store<
-    State extends BuiltReducer<State, StateBuilder>,
+    State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
   // stream used for dispatching actions
@@ -28,6 +27,7 @@ class Store<
   Actions _actions;
 
   Store(
+    Reducer<State, StateBuilder, dynamic> reducer,
     State defaultState,
     Actions actions, {
     Iterable<Middleware<State, StateBuilder, Actions>> middleware: const [],
@@ -42,7 +42,7 @@ class Store<
 
     // setup the middleware dispatch chain
     ActionHandler handler = (action) {
-      var state = _state.rebuild((b) => _state.reduce(_state, action, b));
+      var state = _state.rebuild((b) => reducer(_state, action, b));
 
       // if the hashcode did not change bail
       if (_state == state) return;
@@ -97,6 +97,10 @@ class Store<
   /// [actions] returns the synced actions
   Actions get actions => _actions;
 
+  /// [nextState] is a stream which has a payload of the next state value, rather than the StoreChange event
+  Stream<State> get nextState => stream
+      .map((StoreChange<State, StateBuilder, dynamic> change) => change.next);
+
   /// [substateStream] returns a stream to the state that is returned by the mapper function.
   /// For example: say my state object had a property count, then store.substateStream((state) => state.count),
   /// would return a stream that fires whenever count changes.
@@ -104,4 +108,11 @@ class Store<
     StateMapper<State, StateBuilder, SubState> mapper,
   ) =>
       _stateController.stream.transform(new StateChangeTransformer(mapper));
+
+  /// [nextSubState] is a stream which has a payload of the next subState value, rather than the SubStateChange event
+  Stream<SubState> nextSubState<SubState>(
+    StateMapper<State, StateBuilder, SubState> mapper,
+  ) =>
+      substateStream(mapper)
+          .map((SubStateChange<SubState> change) => change.next);
 }

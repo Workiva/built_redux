@@ -2,27 +2,50 @@ import 'package:built_value/built_value.dart';
 import 'action.dart';
 import 'typedefs.dart';
 
-/// [BuiltReducer] can be extended by a built value to give the model a reducer function
-abstract class BuiltReducer<State extends Built<State, StateBuilder>,
-        StateBuilder extends Builder<State, StateBuilder>>
-    implements Built<State, StateBuilder> {
-  /// [reduce] describes how an action transforms the state into the next state by applying changes to the builder supplied.
-  /// You are required to builder passed, calling state.rebuild will NOT update the state in your redux store.
-  void reduce(State state, Action<dynamic> a, StateBuilder builder);
+typedef NestedState Mapper<State, NestedState>(State state);
+
+class NestedReducerBuilder<
+    State extends Built<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>,
+    NestedState,
+    NestedStateBuilder> {
+  var _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+
+  Mapper<State, NestedState> _stateMapper;
+  Mapper<StateBuilder, NestedStateBuilder> _builderMapper;
+
+  NestedReducerBuilder(this._stateMapper, this._builderMapper);
+
+  void add<Payload>(ActionName<Payload> aName,
+      Reducer<NestedState, NestedStateBuilder, Payload> reducer) {
+    _map[aName.name] = (state, action, builder) => reducer(
+          _stateMapper(state),
+          action,
+          _builderMapper(builder),
+        );
+  }
 }
 
 /// [ReducerBuilder] allows you to build a reducer that handles many different actions
 /// with many different payload types, while maintaining type safety.
 /// Each [Reducer] added with add<T> must take a state of type State, an Action of type
 /// Action<T>, and a builder of type B
-class ReducerBuilder<State extends BuiltReducer<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>> {
-  var _map = new Map<String, Reducer<dynamic, State, StateBuilder>>();
+class ReducerBuilder<V extends Built<V, B>, B extends Builder<V, B>> {
+  var _map = new Map<String, Reducer<V, B, dynamic>>();
 
-  void add<Payload>(ActionName<Payload> aName,
-      Reducer<Payload, State, StateBuilder> reducer) {
+  ReducerBuilder();
+
+  void add<Payload>(ActionName<Payload> aName, Reducer<V, B, Payload> reducer) {
     _map[aName.name] = reducer;
   }
 
-  Map<String, Reducer<dynamic, State, StateBuilder>> build() => _map;
+  void addNestedReducer(NestedReducerBuilder<V, B, dynamic, dynamic> nested) {
+    _map.addAll(nested._map);
+  }
+
+  Reducer<V, B, dynamic> build() =>
+      (V state, Action<dynamic> action, B builder) {
+        final reducer = _map[action.name];
+        if (reducer != null) reducer(state, action, builder);
+      };
 }
