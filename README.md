@@ -81,7 +81,7 @@ import 'package:built_redux/built_redux.dart';
 
   // This is a built value. It is an immutable model that implements the Built interface.
   // All of the state in your redux store is contained in a single built value model.
-  abstract class Counter {
+  abstract class Counter implements Built<Counter, CounterBuilder> {
    /// [count] value of the counter
    int get count;
 
@@ -104,7 +104,7 @@ decrement(Counter state, Action<int> action, CounterBuilder builder) =>
  // is strongly recommended as it gives you static type checking to make sure
  // the payload for action name provided is the same as the expected payload
  // for the action provided to your reducer. Calling .build() returns a reducer function
- // that can be passed to our store.
+ // that can be passed to the store's constructor.
  var reducer =  (new ReducerBuilder<Counter, CounterBuilder>()
       ..add(CounterActionsNames.increment, increment)
       ..add(CounterActionsNames.decrement, decrement)).build();
@@ -132,7 +132,7 @@ store.actions.decrement(1);
 ### Nested Reducers
 
 Nested reducers can be built to handle rebuilding built values that are
-nesting within the main model. This is nice for organization and scoping actions to a specific peice of your application's state.
+nested within the main model. This is nice for organization and scoping actions to a specific peice of your application's state.
 
 ```dart
 // the main model
