@@ -55,11 +55,14 @@ _baseGenericAction2(BaseCounter state, Action<Map<String, List<int>>> action,
 final reducer = (new ReducerBuilder<BaseCounter, BaseCounterBuilder>()
       ..add(BaseCounterActionsNames.increment, _baseIncrement)
       ..add(BaseCounterActionsNames.decrement, _baseDecrement)
-      ..add(BaseCounterActionsNames.incrementOne, _baseIncrementOne)
-      ..add(BaseCounterActionsNames.genericAction1, _baseGenericAction1)
-      ..add(BaseCounterActionsNames.genericAction2, _baseGenericAction2)
+      ..combineReducer(_otherReducer)
       ..addNestedReducer(_nestedReducer))
     .build();
+
+final _otherReducer = (new ReducerBuilder<BaseCounter, BaseCounterBuilder>()
+  ..add(BaseCounterActionsNames.incrementOne, _baseIncrementOne)
+  ..add(BaseCounterActionsNames.genericAction1, _baseGenericAction1)
+  ..add(BaseCounterActionsNames.genericAction2, _baseGenericAction2));
 
 abstract class BaseCounter implements Built<BaseCounter, BaseCounterBuilder> {
   int get count;
@@ -102,10 +105,8 @@ _nestedIncrementOne(NestedCounter state, Action<Null> action,
     builder.count = state.count + 1;
 
 final _nestedReducer = new NestedReducerBuilder<BaseCounter, BaseCounterBuilder,
-    NestedCounter, NestedCounterBuilder>(
-  (state) => state.nestedCounter,
-  (builder) => builder.nestedCounter,
-)
+        NestedCounter, NestedCounterBuilder>(
+    (state) => state.nestedCounter, (builder) => builder.nestedCounter)
   ..add(NestedCounterActionsNames.increment, _nestedIncrement)
   ..add(NestedCounterActionsNames.decrement, _nestedDecrement)
   ..add(NestedCounterActionsNames.incrementOne, _nestedIncrementOne);

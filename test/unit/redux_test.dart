@@ -170,6 +170,26 @@ main() {
       sub.cancel();
     });
 
+    test('nextState stream', () async {
+      setup();
+      store.actions.increment(4);
+      var stateChange = await store.nextState.first;
+      expect(stateChange.count, 5);
+    });
+
+    test('nextSubState stream', () async {
+      setup();
+
+      final sub = store.nextSubState<int>((BaseCounter state) => state.count);
+
+      store.actions.increment(4);
+      // would cause completer to complete twice and fail the test
+      store.actions.nestedCounterActions.increment(1);
+
+      var change = await sub.first;
+      expect(change, 5);
+    });
+
     test('ActionDispatcher<Null>', () async {
       setup();
       store.actions.incrementOne(null);
