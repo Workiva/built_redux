@@ -13,7 +13,10 @@ main() {
       var actions = new BaseCounterActions();
       var defaultValue = new BaseCounter();
 
-      var middleware = new List<Middleware>();
+      var middleware =
+          <Middleware<BaseCounter, BaseCounterBuilder, BaseCounterActions>>[
+        fooTypedefMiddleware
+      ];
       for (int i = 0; i < numMiddleware; i++) {
         middleware.add(counterMiddleware);
       }
@@ -38,7 +41,7 @@ main() {
       expect(stateChange.next.count, 5);
     });
 
-    test('nested action updates state', () async {
+    test('nested built value', () async {
       setup();
       store.actions.nestedCounterActions.increment(4);
       var stateChange = await store.stream.first;
@@ -165,6 +168,39 @@ main() {
       store.actions.increment(4);
       await onStreamError.future;
       sub.cancel();
+    });
+
+    test('ActionDispatcher<Null>', () async {
+      setup();
+      store.actions.incrementOne(null);
+      var stateChange = await store.stream.first;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 2);
+    });
+
+    test('ActionDispatcher<SomeTypeDef>', () async {
+      setup();
+      store.actions.foo((MiddlewareApi api) {
+        (api.actions as BaseCounterActions).incrementOne(null);
+      });
+      var stateChange = await store.stream.first;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 2);
+    });
+
+    test('payload with generic type', () async {
+      setup();
+      store.actions.genericAction1(<int>[1, 2, 3]);
+      var stateChange = await store.stream.first;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 7);
+
+      store.actions.genericAction2(<String, List<int>>{
+        'add': [1, 2, 3]
+      });
+      stateChange = await store.stream.first;
+      expect(stateChange.prev.count, 7);
+      expect(stateChange.next.count, 13);
     });
   });
 }
