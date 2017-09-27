@@ -105,7 +105,7 @@ decrement(Counter state, Action<int> action, CounterBuilder builder) =>
  // the payload for action name provided is the same as the expected payload
  // for the action provided to your reducer. Calling .build() returns a reducer function
  // that can be passed to the store's constructor.
- var reducer =  (new ReducerBuilder<Counter, CounterBuilder>()
+ var reducer = (new ReducerBuilder<Counter, CounterBuilder>()
       ..add(CounterActionsNames.increment, increment)
       ..add(CounterActionsNames.decrement, decrement)).build();
 
@@ -132,10 +132,10 @@ store.actions.decrement(1);
 ### Nested Reducers
 
 Nested reducers can be built to handle rebuilding built values that are
-nested within the main model. This is nice for organization and scoping actions to a specific peice of your application's state.
+nested within the state tree. This is nice for organization and scoping actions to a specific piece of your application's state.
 
 ```dart
-// the main model
+// the state model
 abstract class BaseCounter implements Built<BaseCounter, BaseCounterBuilder> {
   int get count;
 
