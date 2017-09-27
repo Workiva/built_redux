@@ -34,17 +34,20 @@ class Store<
   }) {
     // set the initial state
     _state = defaultState;
+
     _actions = actions;
-    _actions.syncWithStore(_dispatch.add);
+
+    // register the actions to dispatch onto this store's dispatcher
+    _actions.setDispatcher(_dispatch.add);
 
     final MiddlewareApi api =
         new MiddlewareApi<State, StateBuilder, Actions>(this);
 
-    // setup the middleware dispatch chain
+    // setup the dispatch chain
     ActionHandler handler = (action) {
       var state = _state.rebuild((b) => reducer(_state, action, b));
 
-      // if the hashcode did not change bail
+      // if the state did not change do not publish an event
       if (_state == state) return;
 
       // update the internal state and publish the change
@@ -66,6 +69,7 @@ class Store<
       handler = combinedMiddleware(handler);
     }
 
+    // call the handler when an action is dispatched
     _dispatch.stream.listen(handler);
   }
 

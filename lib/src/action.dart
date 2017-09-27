@@ -1,5 +1,5 @@
 /// [Action] is the object passed to your reducer to signify the state change that needs to take place.
-/// Action [name]s should always be unique!
+/// Action [name]s should always be unique. Uniqeness is guarenteed when using ReduxActions.
 class Action<Payload> {
   /// A unique action name.
   final String name;
@@ -14,7 +14,7 @@ class Action<Payload> {
 typedef void Dispatcher<P>(Action<P> action);
 
 /// [ActionDispatcher] dispatches an action with the name provided
-/// in the constructor and the payload supplied when called. You will notice
+/// to the constructor and the payload supplied when called. You will notice
 /// [ActionDispatcher] is an object, however it is to be used like a function.
 /// In the following example increment is an action dispatcher, that when called
 /// dispatches an action to the redux store with the name increment and the payload 3.
@@ -30,7 +30,7 @@ class ActionDispatcher<P> {
 
   ActionDispatcher(this._name);
 
-  void syncWithStore(dispatcher) {
+  void setDispatcher(dispatcher) {
     _dispatcher = dispatcher;
   }
 }
@@ -48,13 +48,13 @@ class ActionDispatcher<P> {
 /// as the [ActionDispatcher] payload generic. This allows you to build reducer handlers with type
 /// safety without having to instantiate your instance of [ReduxActions].
 ///
-/// One can also nest [ReduxActions] just like one can nest [BuiltReducer]s.
+/// One can also nest [ReduxActions] just like one can nest built_values.
 ///
 ///  Example:
 ///
-///  The following actions generate to
-///  ```dart
+///  The following actions
 ///
+///  ```dart
 ///  abstract class BaseActions {
 ///   ActionDispatcher<int> foo;
 ///   NestedActions nestedActions;
@@ -65,6 +65,8 @@ class ActionDispatcher<P> {
 ///  }
 ///  ```
 ///
+///  generate to
+///
 ///  ```dart
 ///  class _$BaseActions extends BaseActions {
 ///   final ActionDispatcher<int> foo = new ActionDispatcher<int>('BaseActions-foo');
@@ -73,9 +75,9 @@ class ActionDispatcher<P> {
 ///   factory _$BaseActions() => new _$BaseActions._();
 ///   _$BaseActions._() : super._();
 ///
-///   syncWithStore(dispatcher) {
-///     foo.syncWithStore(dispatcher);
-///     nestedActions.syncWithStore(dispatcher);
+///   setDispatcher(dispatcher) {
+///     foo.setDispatcher(dispatcher);
+///     nestedActions.setDispatcher(dispatcher);
 ///   }
 /// }
 ///
@@ -89,8 +91,8 @@ class ActionDispatcher<P> {
 ///   factory _$NestedActions() => new _$NestedActions._();
 ///   _$NestedActions._() : super._();
 ///
-///   syncWithStore(dispatcher) {
-///     bar.syncWithStore(dispatcher);
+///   setDispatcher(dispatcher) {
+///     bar.setDispatcher(dispatcher);
 ///   }
 /// }
 ///
@@ -99,7 +101,7 @@ class ActionDispatcher<P> {
 /// }
 /// ```
 abstract class ReduxActions {
-  void syncWithStore(Dispatcher dispatcher);
+  void setDispatcher(Dispatcher dispatcher);
 }
 
 /// [ActionName] is an object that simply contains the action name but is typed with a generic that

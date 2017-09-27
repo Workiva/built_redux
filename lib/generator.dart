@@ -35,7 +35,7 @@ bool _isGeneratedDispatcherFinal(String dispatcherCode) =>
 
 String _generateActions(ClassElement element) {
   var defaultFunctionDeclaration =
-      '@override void syncWithStore(Dispatcher dispatcher)';
+      '@override void setDispatcher(Dispatcher dispatcher)';
   var initializerCode = '''
 class _\$${element.name} extends ${element.name}{
   factory _\$${element.name}() => new _\$${element.name}._();
@@ -46,7 +46,7 @@ class _\$${element.name} extends ${element.name}{
 }''';
 
   var nameCode = 'class ${element.name}Names {\n}';
-  var syncWithStoreCode = '$defaultFunctionDeclaration{\n}';
+  var setDispatcherCode = '$defaultFunctionDeclaration{\n}';
   for (var e in element.fields) {
     var fieldName = e.name;
     var ele = e.type.element;
@@ -72,9 +72,9 @@ class _\$${element.name} extends ${element.name}{
       initializerCode = _appendCode(initializerCode, actionDispatcher);
 
       // append the sync function for this dispatcher
-      syncWithStoreCode = _appendCode(
-        syncWithStoreCode,
-        '$fieldName.syncWithStore(dispatcher);',
+      setDispatcherCode = _appendCode(
+        setDispatcherCode,
+        '$fieldName.setDispatcher(dispatcher);',
       );
     } else if (ele is ClassElement && _needsReduxActions(ele)) {
       // this is a nested instance of redux actions
@@ -85,15 +85,15 @@ class _\$${element.name} extends ${element.name}{
       );
 
       // append the sync function for this set of actions
-      syncWithStoreCode = _appendCode(
-        syncWithStoreCode,
-        '\n$fieldName.syncWithStore(dispatcher);',
+      setDispatcherCode = _appendCode(
+        setDispatcherCode,
+        '\n$fieldName.setDispatcher(dispatcher);',
       );
     }
   }
 
   initializerCode = initializerCode.replaceFirst(
-      '$defaultFunctionDeclaration;', syncWithStoreCode);
+      '$defaultFunctionDeclaration;', setDispatcherCode);
   return '$initializerCode\n\n$nameCode';
 }
 

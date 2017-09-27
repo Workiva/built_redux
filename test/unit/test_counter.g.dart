@@ -226,16 +226,16 @@ class _$BaseCounterActions extends BaseCounterActions {
   _$BaseCounterActions._() : super._();
 
   @override
-  void syncWithStore(Dispatcher dispatcher) {
-    middlewareActions.syncWithStore(dispatcher);
-    nestedCounterActions.syncWithStore(dispatcher);
-    appendToNestedList.syncWithStore(dispatcher);
-    genericAction2.syncWithStore(dispatcher);
-    genericAction1.syncWithStore(dispatcher);
-    foo.syncWithStore(dispatcher);
-    incrementOne.syncWithStore(dispatcher);
-    decrement.syncWithStore(dispatcher);
-    increment.syncWithStore(dispatcher);
+  void setDispatcher(Dispatcher dispatcher) {
+    middlewareActions.setDispatcher(dispatcher);
+    nestedCounterActions.setDispatcher(dispatcher);
+    appendToNestedList.setDispatcher(dispatcher);
+    genericAction2.setDispatcher(dispatcher);
+    genericAction1.setDispatcher(dispatcher);
+    foo.setDispatcher(dispatcher);
+    incrementOne.setDispatcher(dispatcher);
+    decrement.setDispatcher(dispatcher);
+    increment.setDispatcher(dispatcher);
   }
 }
 
@@ -274,11 +274,11 @@ class _$NestedCounterActions extends NestedCounterActions {
   _$NestedCounterActions._() : super._();
 
   @override
-  void syncWithStore(Dispatcher dispatcher) {
-    fooTypedef.syncWithStore(dispatcher);
-    incrementOne.syncWithStore(dispatcher);
-    decrement.syncWithStore(dispatcher);
-    increment.syncWithStore(dispatcher);
+  void setDispatcher(Dispatcher dispatcher) {
+    fooTypedef.setDispatcher(dispatcher);
+    incrementOne.setDispatcher(dispatcher);
+    decrement.setDispatcher(dispatcher);
+    increment.setDispatcher(dispatcher);
   }
 }
 
@@ -301,8 +301,8 @@ class _$MiddlewareActions extends MiddlewareActions {
   _$MiddlewareActions._() : super._();
 
   @override
-  void syncWithStore(Dispatcher dispatcher) {
-    increment.syncWithStore(dispatcher);
+  void setDispatcher(Dispatcher dispatcher) {
+    increment.setDispatcher(dispatcher);
   }
 }
 

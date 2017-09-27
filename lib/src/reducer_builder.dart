@@ -12,8 +12,10 @@ class ReducerBuilder<V extends Built<V, B>, B extends Builder<V, B>> {
 
   ReducerBuilder();
 
-  void add<Payload>(ActionName<Payload> aName, Reducer<V, B, Payload> reducer) {
-    _map[aName.name] = reducer;
+  /// Registers [reducer] function to the given [actionName]
+  void add<Payload>(
+      ActionName<Payload> actionName, Reducer<V, B, Payload> reducer) {
+    _map[actionName.name] = reducer;
   }
 
   /// [combineReducer] combines this ReducerBuilder with another ReducerBuilder
@@ -29,6 +31,7 @@ class ReducerBuilder<V extends Built<V, B>, B extends Builder<V, B>> {
     _map.addAll(nested._map);
   }
 
+  /// [build] returns a reducer function that can be passed to a [Store].
   Reducer<V, B, dynamic> build() =>
       (V state, Action<dynamic> action, B builder) {
         final reducer = _map[action.name];
@@ -36,10 +39,12 @@ class ReducerBuilder<V extends Built<V, B>, B extends Builder<V, B>> {
       };
 }
 
+/// [Mapper] is a function that takes an object and maps it to another object.
+/// Used for state and builder mappers passed to [NestedReducerBuilder].
 typedef NestedState Mapper<State, NestedState>(State state);
 
-/// [ReducerBuilder] allows you to build a reducer that rebuilds built values and built collections
-/// nested within your main app state. For example, consider the following built value
+/// [NestedReducerBuilder] allows you to build a reducer that rebuilds built values
+/// nested within your main app state model. For example, consider the following built value
 ///
 /// ```dart
 /// abstract class BaseState implements Built<BaseState, BaseStateBuilder> {
@@ -82,9 +87,10 @@ class NestedReducerBuilder<
 
   NestedReducerBuilder(this._stateMapper, this._builderMapper);
 
-  void add<Payload>(ActionName<Payload> aName,
+  /// Registers [reducer] function to the given [actionName]
+  void add<Payload>(ActionName<Payload> actionName,
       Reducer<NestedState, NestedStateBuilder, Payload> reducer) {
-    _map[aName.name] = (state, action, builder) => reducer(
+    _map[actionName.name] = (state, action, builder) => reducer(
           _stateMapper(state),
           action,
           _builderMapper(builder),
