@@ -2,62 +2,62 @@ import 'dart:async';
 import 'package:built_value/built_value.dart';
 import 'store_change.dart';
 
-/// [SubStateChange] is the payload for `StateChangeTransformer`'s stream. It contains
+/// [SubstateChange] is the payload for `StateChangeTransformer`'s stream. It contains
 /// the previous and next value of the state resulting from the mapper provided to `StateChangeTransformer`
-class SubStateChange<SubState> {
-  SubState prev;
-  SubState next;
-  SubStateChange(this.prev, this.next);
+class SubstateChange<Substate> {
+  Substate prev;
+  Substate next;
+  SubstateChange(this.prev, this.next);
 }
 
 /// [StateMapper] takes a state model and maps it to the values one cares about
-typedef SubState StateMapper<State extends Built<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>, SubState>(State state);
+typedef Substate StateMapper<State extends Built<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>, Substate>(State state);
 
 /// [StateChangeTransformer] transforms the store's stream to emit an event only when the state resulting from the
 /// mapper provided changes
 class StateChangeTransformer<State extends Built<State, StateBuilder>,
-        StateBuilder extends Builder<State, StateBuilder>, SubState>
+        StateBuilder extends Builder<State, StateBuilder>, Substate>
     implements
         StreamTransformer<StoreChange<State, StateBuilder, dynamic>,
-            SubStateChange<SubState>> {
+            SubstateChange<Substate>> {
   final StreamTransformer<StoreChange<State, StateBuilder, dynamic>,
-      SubStateChange<SubState>> transformer;
+      SubstateChange<Substate>> transformer;
 
-  StateChangeTransformer(StateMapper<State, StateBuilder, SubState> mapper)
+  StateChangeTransformer(StateMapper<State, StateBuilder, Substate> mapper)
       : transformer = _buildTransformer(mapper);
 
   @override
-  Stream<SubStateChange<SubState>> bind(
+  Stream<SubstateChange<Substate>> bind(
           Stream<StoreChange<State, StateBuilder, dynamic>> stream) =>
       transformer.bind(stream);
 
   static StreamTransformer<StoreChange<State, StateBuilder, dynamic>,
-          SubStateChange<SubState>>
+          SubstateChange<Substate>>
       _buildTransformer<
           State extends Built<State, StateBuilder>,
           StateBuilder extends Builder<State, StateBuilder>,
-          SubState>(StateMapper<State, StateBuilder, SubState> mapper) {
+          Substate>(StateMapper<State, StateBuilder, Substate> mapper) {
     return new StreamTransformer<StoreChange<State, StateBuilder, dynamic>,
-            SubStateChange<SubState>>(
+            SubstateChange<Substate>>(
         (Stream<StoreChange<State, StateBuilder, dynamic>> input,
             bool cancelOnError) {
-      StreamController<SubStateChange<SubState>> controller;
+      StreamController<SubstateChange<Substate>> controller;
       StreamSubscription<StoreChange<State, StateBuilder, dynamic>>
           subscription;
 
-      controller = new StreamController<SubStateChange<SubState>>(
+      controller = new StreamController<SubstateChange<Substate>>(
           sync: true,
           onListen: () {
             subscription = input.listen(
               (StoreChange<State, StateBuilder, dynamic> value) {
                 try {
-                  final nextSubState = mapper(value.next);
-                  final prevSubState = mapper(value.prev);
-                  if (nextSubState != prevSubState)
-                    controller.add(new SubStateChange(
-                      prevSubState,
-                      nextSubState,
+                  final nextSubstate = mapper(value.next);
+                  final prevSubstate = mapper(value.prev);
+                  if (nextSubstate != prevSubstate)
+                    controller.add(new SubstateChange(
+                      prevSubstate,
+                      nextSubstate,
                     ));
                 } catch (e, s) {
                   controller.addError(e, s);

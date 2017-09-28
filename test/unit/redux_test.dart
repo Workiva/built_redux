@@ -139,10 +139,10 @@ main() {
 
     test('state transformer pause / resume', () async {
       setup();
-      StreamSubscription<SubStateChange<int>> sub;
+      StreamSubscription<SubstateChange<int>> sub;
       sub =
           store.substateStream<int>((BaseCounter state) => state.count).listen(
-        expectAsync1((SubStateChange<int> change) {
+        expectAsync1((SubstateChange<int> change) {
           expect(change.prev, 1);
           expect(change.next, 5);
           sub.cancel();
@@ -177,10 +177,10 @@ main() {
       expect(stateChange.count, 5);
     });
 
-    test('nextSubState stream', () async {
+    test('nextSubstate stream', () async {
       setup();
 
-      final sub = store.nextSubState<int>((BaseCounter state) => state.count);
+      final sub = store.nextSubstate<int>((BaseCounter state) => state.count);
 
       store.actions.increment(4);
       // would cause completer to complete twice and fail the test

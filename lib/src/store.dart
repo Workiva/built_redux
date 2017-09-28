@@ -91,12 +91,12 @@ class Store<
     }
   }
 
+  /// [state] returns the current state
+  State get state => _state;
+
   /// [subscribe] returns a stream that will be dispatched whenever the state changes
   Stream<StoreChange<State, StateBuilder, dynamic>> get stream =>
       _stateController.stream;
-
-  /// [state] returns the current state
-  State get state => _state;
 
   /// [actions] returns the synced actions
   Actions get actions => _actions;
@@ -108,15 +108,15 @@ class Store<
   /// [substateStream] returns a stream to the state that is returned by the mapper function.
   /// For example: say my state object had a property count, then store.substateStream((state) => state.count),
   /// would return a stream that fires whenever count changes.
-  Stream<SubStateChange<SubState>> substateStream<SubState>(
-    StateMapper<State, StateBuilder, SubState> mapper,
+  Stream<SubstateChange<Substate>> substateStream<Substate>(
+    StateMapper<State, StateBuilder, Substate> mapper,
   ) =>
       _stateController.stream.transform(new StateChangeTransformer(mapper));
 
-  /// [nextSubState] is a stream which has a payload of the next subState value, rather than the SubStateChange event
-  Stream<SubState> nextSubState<SubState>(
-    StateMapper<State, StateBuilder, SubState> mapper,
+  /// [nextSubstate] is a stream which has a payload of the next subState value, rather than the SubstateChange event
+  Stream<Substate> nextSubstate<Substate>(
+    StateMapper<State, StateBuilder, Substate> mapper,
   ) =>
       substateStream(mapper)
-          .map((SubStateChange<SubState> change) => change.next);
+          .map((SubstateChange<Substate> change) => change.next);
 }

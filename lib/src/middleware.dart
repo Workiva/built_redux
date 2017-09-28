@@ -36,7 +36,7 @@ class MiddlewareBuilder<
     _map[aMgr.name] = handler;
   }
 
-  /// build returns a [Middleware] function that handles all actions added with [add]
+  /// [build] returns a [Middleware] function that handles all actions added with [add]
   Middleware<State, StateBuilder, Actions> build() =>
       (MiddlewareApi<State, StateBuilder, Actions> api) =>
           (ActionHandler next) => (Action<dynamic> action) {
