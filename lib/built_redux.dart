@@ -1,7 +1,7 @@
 library built_redux;
 
 export 'src/action.dart';
-export 'src/built_reducer.dart';
+export 'src/reducer_builder.dart';
 export 'src/middleware.dart';
 export 'src/state_transformer.dart';
 export 'src/store.dart';

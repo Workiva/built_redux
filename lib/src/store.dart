@@ -4,7 +4,6 @@ import 'dart:core';
 import 'package:built_value/built_value.dart';
 
 import 'action.dart';
-import 'built_reducer.dart';
 import 'middleware.dart';
 import 'typedefs.dart';
 import 'store_change.dart';
@@ -13,7 +12,7 @@ import 'state_transformer.dart';
 /// [Store] is the container of your state. It listens for actions, invokes reducers,
 /// and publishes changes to the state
 class Store<
-    State extends BuiltReducer<State, StateBuilder>,
+    State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
   // stream used for dispatching actions
@@ -28,23 +27,27 @@ class Store<
   Actions _actions;
 
   Store(
+    Reducer<State, StateBuilder, dynamic> reducer,
     State defaultState,
     Actions actions, {
     Iterable<Middleware<State, StateBuilder, Actions>> middleware: const [],
   }) {
     // set the initial state
     _state = defaultState;
+
     _actions = actions;
-    _actions.syncWithStore(_dispatch.add);
+
+    // register the actions to dispatch onto this store's dispatcher
+    _actions.setDispatcher(_dispatch.add);
 
     final MiddlewareApi api =
         new MiddlewareApi<State, StateBuilder, Actions>(this);
 
-    // setup the middleware dispatch chain
+    // setup the dispatch chain
     ActionHandler handler = (action) {
-      var state = _state.rebuild((b) => _state.reduce(_state, action, b));
+      var state = _state.rebuild((b) => reducer(_state, action, b));
 
-      // if the hashcode did not change bail
+      // if the state did not change do not publish an event
       if (_state == state) return;
 
       // update the internal state and publish the change
@@ -66,6 +69,7 @@ class Store<
       handler = combinedMiddleware(handler);
     }
 
+    // call the handler when an action is dispatched
     _dispatch.stream.listen(handler);
   }
 
@@ -87,21 +91,32 @@ class Store<
     }
   }
 
+  /// [state] returns the current state
+  State get state => _state;
+
   /// [subscribe] returns a stream that will be dispatched whenever the state changes
   Stream<StoreChange<State, StateBuilder, dynamic>> get stream =>
       _stateController.stream;
 
-  /// [state] returns the current state
-  State get state => _state;
-
   /// [actions] returns the synced actions
   Actions get actions => _actions;
+
+  /// [nextState] is a stream which has a payload of the next state value, rather than the StoreChange event
+  Stream<State> get nextState => stream
+      .map((StoreChange<State, StateBuilder, dynamic> change) => change.next);
 
   /// [substateStream] returns a stream to the state that is returned by the mapper function.
   /// For example: say my state object had a property count, then store.substateStream((state) => state.count),
   /// would return a stream that fires whenever count changes.
-  Stream<SubStateChange<SubState>> substateStream<SubState>(
-    StateMapper<State, StateBuilder, SubState> mapper,
+  Stream<SubstateChange<Substate>> substateStream<Substate>(
+    StateMapper<State, StateBuilder, Substate> mapper,
   ) =>
       _stateController.stream.transform(new StateChangeTransformer(mapper));
+
+  /// [nextSubstate] is a stream which has a payload of the next subState value, rather than the SubstateChange event
+  Stream<Substate> nextSubstate<Substate>(
+    StateMapper<State, StateBuilder, Substate> mapper,
+  ) =>
+      substateStream(mapper)
+          .map((SubstateChange<Substate> change) => change.next);
 }

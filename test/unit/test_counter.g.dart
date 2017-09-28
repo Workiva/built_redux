@@ -6,7 +6,14 @@ part of test_counter;
 // Generator: BuiltValueGenerator
 // **************************************************************************
 
+// ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
+// ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_returning_this
+// ignore_for_file: omit_local_variable_types
+// ignore_for_file: prefer_expression_function_bodies
+// ignore_for_file: sort_constructors_first
+
 class _$BaseCounter extends BaseCounter {
   @override
   final int count;
@@ -112,7 +119,6 @@ class BaseCounterBuilder implements Builder<BaseCounter, BaseCounterBuilder> {
   }
 }
 
-// ignore_for_file: annotate_overrides
 class _$NestedCounter extends NestedCounter {
   @override
   final int count;
@@ -194,6 +200,9 @@ class NestedCounterBuilder
 class _$BaseCounterActions extends BaseCounterActions {
   final MiddlewareActions middlewareActions = new MiddlewareActions();
   final NestedCounterActions nestedCounterActions = new NestedCounterActions();
+  final ActionDispatcher<int> appendToNestedList =
+      new ActionDispatcher<int>('BaseCounterActions-appendToNestedList');
+
   final ActionDispatcher<Map<String, List<int>>> genericAction2 =
       new ActionDispatcher<Map<String, List<int>>>(
           'BaseCounterActions-genericAction2');
@@ -217,19 +226,22 @@ class _$BaseCounterActions extends BaseCounterActions {
   _$BaseCounterActions._() : super._();
 
   @override
-  void syncWithStore(Dispatcher dispatcher) {
-    middlewareActions.syncWithStore(dispatcher);
-    nestedCounterActions.syncWithStore(dispatcher);
-    genericAction2.syncWithStore(dispatcher);
-    genericAction1.syncWithStore(dispatcher);
-    foo.syncWithStore(dispatcher);
-    incrementOne.syncWithStore(dispatcher);
-    decrement.syncWithStore(dispatcher);
-    increment.syncWithStore(dispatcher);
+  void setDispatcher(Dispatcher dispatcher) {
+    middlewareActions.setDispatcher(dispatcher);
+    nestedCounterActions.setDispatcher(dispatcher);
+    appendToNestedList.setDispatcher(dispatcher);
+    genericAction2.setDispatcher(dispatcher);
+    genericAction1.setDispatcher(dispatcher);
+    foo.setDispatcher(dispatcher);
+    incrementOne.setDispatcher(dispatcher);
+    decrement.setDispatcher(dispatcher);
+    increment.setDispatcher(dispatcher);
   }
 }
 
 class BaseCounterActionsNames {
+  static final ActionName<int> appendToNestedList =
+      new ActionName<int>('BaseCounterActions-appendToNestedList');
   static final ActionName<Map<String, List<int>>> genericAction2 =
       new ActionName<Map<String, List<int>>>(
           'BaseCounterActions-genericAction2');
@@ -243,26 +255,6 @@ class BaseCounterActionsNames {
       new ActionName<int>('BaseCounterActions-decrement');
   static final ActionName<int> increment =
       new ActionName<int>('BaseCounterActions-increment');
-}
-
-abstract class BaseCounterReducer
-    implements BuiltReducer<BaseCounter, BaseCounterBuilder> {
-  Map<String, Reducer<dynamic, BaseCounter, BaseCounterBuilder>> get reducer =>
-      null;
-
-  void reduce(
-      BaseCounter state, Action<dynamic> a, BaseCounterBuilder builder) {
-    if (reducer != null) {
-      final handler = reducer[a.name];
-      if (handler != null) handler(state, a, builder);
-    }
-    reduceChildren(state, a, builder);
-  }
-
-  void reduceChildren(
-      BaseCounter state, Action<dynamic> a, BaseCounterBuilder builder) {
-    state.nestedCounter.reduce(state.nestedCounter, a, builder.nestedCounter);
-  }
 }
 
 class _$NestedCounterActions extends NestedCounterActions {
@@ -282,11 +274,11 @@ class _$NestedCounterActions extends NestedCounterActions {
   _$NestedCounterActions._() : super._();
 
   @override
-  void syncWithStore(Dispatcher dispatcher) {
-    fooTypedef.syncWithStore(dispatcher);
-    incrementOne.syncWithStore(dispatcher);
-    decrement.syncWithStore(dispatcher);
-    increment.syncWithStore(dispatcher);
+  void setDispatcher(Dispatcher dispatcher) {
+    fooTypedef.setDispatcher(dispatcher);
+    incrementOne.setDispatcher(dispatcher);
+    decrement.setDispatcher(dispatcher);
+    increment.setDispatcher(dispatcher);
   }
 }
 
@@ -301,24 +293,6 @@ class NestedCounterActionsNames {
       new ActionName<int>('NestedCounterActions-increment');
 }
 
-abstract class NestedCounterReducer
-    implements BuiltReducer<NestedCounter, NestedCounterBuilder> {
-  Map<String, Reducer<dynamic, NestedCounter, NestedCounterBuilder>>
-      get reducer => null;
-
-  void reduce(
-      NestedCounter state, Action<dynamic> a, NestedCounterBuilder builder) {
-    if (reducer != null) {
-      final handler = reducer[a.name];
-      if (handler != null) handler(state, a, builder);
-    }
-    reduceChildren(state, a, builder);
-  }
-
-  void reduceChildren(
-      NestedCounter state, Action<dynamic> a, NestedCounterBuilder builder) {}
-}
-
 class _$MiddlewareActions extends MiddlewareActions {
   final ActionDispatcher<int> increment =
       new ActionDispatcher<int>('MiddlewareActions-increment');
@@ -327,8 +301,8 @@ class _$MiddlewareActions extends MiddlewareActions {
   _$MiddlewareActions._() : super._();
 
   @override
-  void syncWithStore(Dispatcher dispatcher) {
-    increment.syncWithStore(dispatcher);
+  void setDispatcher(Dispatcher dispatcher) {
+    increment.setDispatcher(dispatcher);
   }
 }
 

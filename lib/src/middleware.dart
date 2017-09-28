@@ -1,14 +1,13 @@
 import 'package:built_value/built_value.dart';
 
 import 'action.dart';
-import 'built_reducer.dart';
 import 'store.dart';
 import 'typedefs.dart';
 
 /// [MiddlewareApi] put in scope to your [Middleware] function by redux.
 /// When using [MiddlewareBuilder] (recommended) [MiddlewareApi] is passed to your [MiddlewareHandler]
 class MiddlewareApi<
-    State extends BuiltReducer<State, StateBuilder>,
+    State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
   Store<State, StateBuilder, Actions> _store;
@@ -26,7 +25,7 @@ class MiddlewareApi<
 /// Each [MiddlewareHandler] added with add<T> must take a state of type State, an Action of type
 /// Action<T>, and a builder of type StateBuilder
 class MiddlewareBuilder<
-    State extends BuiltReducer<State, StateBuilder>,
+    State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
   var _map = new Map<String,
@@ -37,7 +36,7 @@ class MiddlewareBuilder<
     _map[aMgr.name] = handler;
   }
 
-  /// build returns a [Middleware] function that handles all actions added with [add]
+  /// [build] returns a [Middleware] function that handles all actions added with [add]
   Middleware<State, StateBuilder, Actions> build() =>
       (MiddlewareApi<State, StateBuilder, Actions> api) =>
           (ActionHandler next) => (Action<dynamic> action) {
@@ -55,7 +54,7 @@ class MiddlewareBuilder<
 /// use with [MiddlewareBuilder]. If you are not using [MiddlewareBuilder] middleware must be
 /// decalred as a [Middleware] function.
 typedef void MiddlewareHandler<
-    State extends BuiltReducer<State, StateBuilder>,
+    State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions,
     Payload>(MiddlewareApi<State, StateBuilder, Actions> api, ActionHandler next, Action<Payload> action);

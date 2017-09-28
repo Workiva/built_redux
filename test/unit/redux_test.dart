@@ -22,6 +22,7 @@ main() {
       }
 
       store = new Store(
+        reducer,
         defaultValue,
         actions,
         middleware: middleware,
@@ -40,7 +41,7 @@ main() {
       expect(stateChange.next.count, 5);
     });
 
-    test('nested action updates state', () async {
+    test('nested built value', () async {
       setup();
       store.actions.nestedCounterActions.increment(4);
       var stateChange = await store.stream.first;
@@ -138,10 +139,10 @@ main() {
 
     test('state transformer pause / resume', () async {
       setup();
-      StreamSubscription<SubStateChange<int>> sub;
+      StreamSubscription<SubstateChange<int>> sub;
       sub =
           store.substateStream<int>((BaseCounter state) => state.count).listen(
-        expectAsync1((SubStateChange<int> change) {
+        expectAsync1((SubstateChange<int> change) {
           expect(change.prev, 1);
           expect(change.next, 5);
           sub.cancel();
@@ -167,6 +168,26 @@ main() {
       store.actions.increment(4);
       await onStreamError.future;
       sub.cancel();
+    });
+
+    test('nextState stream', () async {
+      setup();
+      store.actions.increment(4);
+      var stateChange = await store.nextState.first;
+      expect(stateChange.count, 5);
+    });
+
+    test('nextSubstate stream', () async {
+      setup();
+
+      final sub = store.nextSubstate<int>((BaseCounter state) => state.count);
+
+      store.actions.increment(4);
+      // would cause completer to complete twice and fail the test
+      store.actions.nestedCounterActions.increment(1);
+
+      var change = await sub.first;
+      expect(change, 5);
     });
 
     test('ActionDispatcher<Null>', () async {

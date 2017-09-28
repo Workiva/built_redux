@@ -1,25 +1,24 @@
+# built_redux
+
 [![Pub](https://img.shields.io/pub/v/built_redux.svg)](https://pub.dartlang.org/packages/built_redux)
 [![codecov.io](http://codecov.io/github/davidmarne/built_redux/coverage.svg?branch=master)](http://codecov.io/github/davidmarne/built_redux?branch=master)
 
-### built_redux
-
 built_redux is a state management library written in dart that enforces immutability.
-built_redux stores can be built with middleware and nested reducers.
+built_redux is not only an implementation of [redux][redux_git], but also a framework for building middleware and reducers in a type safe manner.
 
 Inspired by [redux][redux_git]
 
 Built using [built_value][built_value_git]
 
-### Framework bindings & examples
-
-[react-dart][react-dart]
+## Framework bindings & examples
 
 [flutter][flutter]
 
+[react-dart][react-dart]
+
 [angular2][angular2]
 
-
-### Using it in your project
+## Using it in your project
 
 > __If you are not familiar with Redux or built_value__
 >
@@ -31,33 +30,36 @@ Built using [built_value][built_value_git]
 
 1. Add the `built_redux` package as a dependency in your `pubspec.yaml`.
 
-    ```yaml
-    dependencies:
-      built_redux: "^5.0.0"
-    ```
+  ```yaml
+  dependencies:
+    built_redux: "^6.0.0"
+  ```
 
-2. Create a script to run generators for generating built_values and additional built_redux classes.
-    ```dart
-    import 'dart:async';
+2. Create a script to run generators for generating built_values and built_redux action classes.
+  ```dart
+  import 'dart:async';
 
-    import 'package:build_runner/build_runner.dart';
-    import 'package:built_value_generator/built_value_generator.dart';
-    import 'package:source_gen/source_gen.dart';
-    import 'package:built_redux/generator.dart';
+  import 'package:build_runner/build_runner.dart';
+  import 'package:built_value_generator/built_value_generator.dart';
+  import 'package:source_gen/source_gen.dart';
+  import 'package:built_redux/generator.dart';
 
-    /// Build the generated files in the built_value chat example.
-    Future main(List<String> args) async {
-      await build([
-        new BuildAction(
-            new PartBuilder([
-              new BuiltValueGenerator(),
-              new BuiltReduxGenerator(),
-            ]),
-            'built_redux',
-            inputs: const ['test/unit/test_counter.dart'])
-      ], deleteFilesByDefault: true);
-    }
-    ```
+  /// Build the generated files in the built_value chat example.
+  Future main(List<String> args) async {
+    await build([
+      new BuildAction(
+          new PartBuilder([
+            new BuiltValueGenerator(),
+            new BuiltReduxGenerator(),
+          ]),
+          'built_redux',
+          inputs: const ['test/unit/test_counter.dart'])
+    ], deleteFilesByDefault: true);
+  }
+  ```
+
+3. Run the build script from the command line to generate your built_values and built_redux action classes
+  ```dart tool/build.dart```
 
 ### Writing a built_redux store
 
@@ -77,18 +79,11 @@ import 'package:built_redux/built_redux.dart';
    factory CounterActions() => new _$CounterActions();
  }
 
- // This is a BuiltReducer. It is an implementation of the Built and BuiltReducer
- // interfaces.
-  abstract class Counter extends Object
-     with CounterReducer
-     implements Built<Counter, CounterBuilder> {
+  // This is a built value. It is an immutable model that implements the Built interface.
+  // All of the state in your redux store is contained in a single built value model.
+  abstract class Counter implements Built<Counter, CounterBuilder> {
    /// [count] value of the counter
    int get count;
-
-   /// reducer returns a map of actions to reducer functions. 
-   /// the generated implementation of reduce will find a reducer function for an action in this map
-   /// then call the reducer function to rebuild the state.
-   get reducer => _reducer;
 
    // Built value constructor. The factory is returning the default state
    Counter._();
@@ -98,25 +93,26 @@ import 'package:built_redux/built_redux.dart';
 
 // These are reducer functions. They have a (state, action, builder) => void signature.
 // They describes how an action transforms the state into the next state by applying changes to the builder supplied.
-// You are required to builder passed, calling state.rebuild will NOT update the state in your redux store.
+// You are required to use the builder passed, calling state.rebuild will NOT update the state in your redux store.
 increment(Counter state, Action<int> action, CounterBuilder builder) =>
-  builder..count = state.count + action.payload;
+  builder.count = state.count + action.payload;
 
 decrement(Counter state, Action<int> action, CounterBuilder builder) =>
-  builder..count = state.count - action.payload;
+  builder.count = state.count - action.payload;
 
  // This is a reducer builder. Use of ReducerBuilder is not required, however it
  // is strongly recommended as it gives you static type checking to make sure
  // the payload for action name provided is the same as the expected payload
- // for the action provided to your reducer. Calling .build() returns the map
- // of action names to reducer functions.
- var _reducer =  (new ReducerBuilder<Counter, CounterBuilder>()
+ // for the action provided to your reducer. Calling .build() returns a reducer function
+ // that can be passed to the store's constructor.
+ var reducer = (new ReducerBuilder<Counter, CounterBuilder>()
       ..add(CounterActionsNames.increment, increment)
       ..add(CounterActionsNames.decrement, decrement)).build();
 
 // Create a Redux store holding the state of your app.
 // Its API contains three getters: stream, state, and actions.
 var store = new Store<Counter, CounterBuilder, CounterActions>(
+  reducer,
   new Counter(),
   new CounterActions(),
 );
@@ -133,29 +129,18 @@ store.actions.decrement(1);
 // 2
 ```
 
-### Generated Reducer Mixin
-
-A generated implementation of the BuiltReducer interface will be created for every built value that includes
-an extends clause that mixes in a class with the naming scheme {ModelName}Reducer.
-(For now this must be the first mixin after the extends clause).
-Once the generator is run you can check the .g.dart files for a mixin called {ModelName}Reducer.
-In the example above CounterReducer is generated.
-
 ### Nested Reducers
 
-A reducer can include vaules that also implement BuiltReducer. In this case NestedCounter
-also implements BuiltReducer. This means BaseCounter can handle a different set of actions
-than NestedCounter.
+Nested reducers can be built to handle rebuilding built values that are
+nested within the state tree. This is nice for organization and scoping actions to a specific piece of your application's state.
 
 ```dart
-abstract class BaseCounter extends Object
-    with BaseCounterReducer
-    implements Built<BaseCounter, BaseCounterBuilder> {
+// the state model
+abstract class BaseCounter implements Built<BaseCounter, BaseCounterBuilder> {
   int get count;
 
+  // Also a built_value
   NestedCounter get nestedCounter;
-
-  get reducer => _baseReducer;
 
   // Built value constructor. The factory is returning the default state
   BaseCounter._();
@@ -165,9 +150,38 @@ abstract class BaseCounter extends Object
   );
 }
 
+// the nested model
+abstract class NestedCounter implements Built<NestedCounter, NestedCounterBuilder> {
+  int get count;
+
+  // Built value constructor. The factory is returning the default state
+  NestedCounter._();
+  factory NestedCounter() => new _$NestedCounter._(
+    count: 1,
+  );
+}
+
+// create a nested reducer builder
+final nestedReducer = new NestedReducerBuilder<BaseCounter, BaseCounterBuilder,
+    NestedCounter, NestedCounterBuilder>(
+  (state) => state.nestedCounter, // maps the app state to the nested state
+  (builder) => builder.nestedCounter, // maps the app builder to the nested builder
+)..add(NestedCounterActionsNames.increment, _nestedIncrement);
+
+// actions registered only rebuild the nested state
+// notice the state and builder types are of NestedCounter and NestedCounterBuilder
+_nestedIncrement(NestedCounter state, Action<int> action, NestedCounterBuilder builder) =>
+  builder.count = state.count + action.payload;
+
+// now use ReducerBuilder.combineNested to add it to your main reducer
+var reducer = (new ReducerBuilder<Counter, CounterBuilder>()
+      ..add(CounterActionsNames.increment, increment)
+      ..add(CounterActionsNames.decrement, decrement)
+      ..combineNested(nestedReducer)).build();
+
 ```
 
-Nested actions can also be used to help organize actions for given reducers. First define your actions:
+Nested actions can also be used to help organize actions for nested reducers. First define your actions:
 
 ```dart
 abstract class NestedActions extends ReduxActions {
@@ -179,7 +193,9 @@ abstract class NestedActions extends ReduxActions {
   factory NestedActions() => new _$NestedActions();
 }
 ```
+
 Then add them to your main action class like so:
+
 ```dart
 abstract class CounterActions extends ReduxActions {
   ActionDispatcher<int> increment;
@@ -194,7 +210,9 @@ abstract class CounterActions extends ReduxActions {
 ```
 
 Check the usage:
+
 ```dart
+// only print the nested counter's count
 store.stream.listen((_) => print(store.state.nestedCounter.count));
 
 // The only way to mutate the internal state is to dispatch an action.
@@ -205,6 +223,7 @@ store.actions.increment(2);
 ```
 
 ### Writing middleware
+
 ```dart
  // Define specific actions to be handled by this middleware
  // A middleware can also listen to and perform side effects on any actions defined elsewhere
@@ -248,6 +267,7 @@ abstract class CounterActions extends ReduxActions {
 ```
 
 Check the usage after adding this middleware
+
 ```dart
 // Create a Redux store holding the state of your app.
 // Its API is subscribe, state, actions.
@@ -269,6 +289,7 @@ store.actions.decrement(1);
 ```
 
 A middleware can also be defined without using a MiddlewareBuilder to execute a function for all actions. For example, the following middleware logs every action dispatched as well the the state after the action was handled:
+
 ```dart
 NextActionHandler loggingMiddleware(MiddlewareApi<Counter, CounterBuilder, CounterActions> api) =>
     (ActionHandler next) => (Action action) {
@@ -280,10 +301,12 @@ NextActionHandler loggingMiddleware(MiddlewareApi<Counter, CounterBuilder, Count
 ```
 
 ### Observing substate
+
 Streams can easily be accessed to observe any piece of your state tree by passing a mapper the store's
 substateStream function. For example, say I only care about BaseCounter.count
 in the previous example and I do not want to be notified when BaseCounter.nestedCounter changes.
 I can create a stream that will only emit an event when BaseCounter.count changes, as so:
+
 ```dart
 final countStream = store.substateStream<int>((BaseCounter state) => state.count);
 
@@ -295,7 +318,6 @@ store.actions.nestedCounter.increment(2);
 // nothing logged
 
 ```
-
 
 [built_value_blog]: https://medium.com/dartlang/darts-built-value-for-immutable-object-models-83e2497922d4
 
