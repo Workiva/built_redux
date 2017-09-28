@@ -55,8 +55,8 @@ _baseGenericAction2(BaseCounter state, Action<Map<String, List<int>>> action,
 final reducer = (new ReducerBuilder<BaseCounter, BaseCounterBuilder>()
       ..add(BaseCounterActionsNames.increment, _baseIncrement)
       ..add(BaseCounterActionsNames.decrement, _baseDecrement)
-      ..combineReducer(_otherReducer)
-      ..addNestedReducer(_nestedReducer))
+      ..combine(_otherReducer)
+      ..combineNested(_nestedReducer))
     .build();
 
 final _otherReducer = (new ReducerBuilder<BaseCounter, BaseCounterBuilder>()

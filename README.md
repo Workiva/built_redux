@@ -173,11 +173,11 @@ final nestedReducer = new NestedReducerBuilder<BaseCounter, BaseCounterBuilder,
 _nestedIncrement(NestedCounter state, Action<int> action, NestedCounterBuilder builder) =>
   builder.count = state.count + action.payload;
 
-// now use ReducerBuilder.addNestedReducer to add it to your main reducer
+// now use ReducerBuilder.combineNested to add it to your main reducer
 var reducer = (new ReducerBuilder<Counter, CounterBuilder>()
       ..add(CounterActionsNames.increment, increment)
       ..add(CounterActionsNames.decrement, decrement)
-      ..addNestedReducer(nestedReducer)).build();
+      ..combineNested(nestedReducer)).build();
 
 ```
 

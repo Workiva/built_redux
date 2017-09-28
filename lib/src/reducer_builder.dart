@@ -6,7 +6,7 @@ import 'typedefs.dart';
 /// with many different payload types, while maintaining type safety.
 /// Each [Reducer] added with add<T> must take a state of type State, an Action of type
 /// Action<T>, and a builder of type B.
-/// Nested reducers can be added with [addNestedReducer]
+/// Nested reducers can be added with [combineNested]
 class ReducerBuilder<V extends Built<V, B>, B extends Builder<V, B>> {
   var _map = new Map<String, Reducer<V, B, dynamic>>();
 
@@ -18,15 +18,15 @@ class ReducerBuilder<V extends Built<V, B>, B extends Builder<V, B>> {
     _map[actionName.name] = reducer;
   }
 
-  /// [combineReducer] combines this ReducerBuilder with another ReducerBuilder
+  /// [combine] combines this ReducerBuilder with another ReducerBuilder
   /// for the same type
-  void combineReducer(ReducerBuilder<V, B> other) {
+  void combine(ReducerBuilder<V, B> other) {
     _map.addAll(other._map);
   }
 
-  /// [addNestedReducer] combines this ReducerBuilder with a NestedReducerBuilder
+  /// [combineNested] combines this ReducerBuilder with a NestedReducerBuilder
   /// for the same base state
-  void addNestedReducer<N extends Built<N, NB>, NB extends Builder<N, NB>>(
+  void combineNested<N extends Built<N, NB>, NB extends Builder<N, NB>>(
       NestedReducerBuilder<V, B, N, NB> nested) {
     _map.addAll(nested._map);
   }
