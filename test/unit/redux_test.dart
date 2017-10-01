@@ -200,7 +200,7 @@ main() {
 
     test('ActionDispatcher<Null> with null payload', () async {
       setup();
-      store.actions.incrementOne();
+      store.actions.incrementOne(null);
       var stateChange = await store.stream.first;
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 2);
