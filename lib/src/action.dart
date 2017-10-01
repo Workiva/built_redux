@@ -26,7 +26,7 @@ class ActionDispatcher<P> {
   Dispatcher _dispatcher;
   final String _name;
 
-  void call(P payload) => _dispatcher(new Action<P>(_name, payload));
+  void call([P payload]) => _dispatcher(new Action<P>(_name, payload));
 
   ActionDispatcher(this._name);
 

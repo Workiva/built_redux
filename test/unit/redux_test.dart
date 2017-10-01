@@ -192,7 +192,15 @@ main() {
 
     test('ActionDispatcher<Null>', () async {
       setup();
-      store.actions.incrementOne(null);
+      store.actions.incrementOne();
+      var stateChange = await store.stream.first;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 2);
+    });
+
+    test('ActionDispatcher<Null> with null payload', () async {
+      setup();
+      store.actions.incrementOne();
       var stateChange = await store.stream.first;
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 2);
@@ -201,7 +209,7 @@ main() {
     test('ActionDispatcher<SomeTypeDef>', () async {
       setup();
       store.actions.foo((MiddlewareApi api) {
-        (api.actions as BaseCounterActions).incrementOne(null);
+        (api.actions as BaseCounterActions).incrementOne();
       });
       var stateChange = await store.stream.first;
       expect(stateChange.prev.count, 1);
