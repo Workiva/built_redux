@@ -64,6 +64,7 @@ Built using [built_value][built_value_git]
 ### Writing a built_redux store
 
 ```dart
+import 'package:built_value/built_value.dart';
 import 'package:built_redux/built_redux.dart';
 
  // This is a an implementation of ReduxActions. Actions are what middleware and ui
@@ -87,7 +88,7 @@ import 'package:built_redux/built_redux.dart';
 
    // Built value constructor. The factory is returning the default state
    Counter._();
-   factory BaseCounter() => new _$BaseCounter._(count: 1);
+   factory Counter() => new _$Counter._(count: 1);
  }
 
 
