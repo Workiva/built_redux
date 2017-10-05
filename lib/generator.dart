@@ -39,9 +39,9 @@ String _generateActions(ClassElement element) {
   var initializerCode = '''
 class _\$${element.name} extends ${element.name}{
   factory _\$${element.name}() => new _\$${element.name}._();
-  
+
   _\$${element.name}._() : super._();
-  
+
   $defaultFunctionDeclaration;
 }''';
 
@@ -126,7 +126,11 @@ String _getActionDispatcherGenericType(FieldElement e) {
         b.name.startsWith('Built') &&
         i != boundParams.length - 1) {
       final next = boundParams.elementAt(i + 1);
-      if (next != null && next.name.startsWith('Builder')) {
+      if (next != null &&
+          next.name.startsWith('Builder') &&
+          typeArguments.elementAt(i + 1) == 'dynamic') {
+        log.info(
+            "replacing unresolved builder name ${typeArguments.elementAt(i)}Builder");
         // if it is a builder replace typeArguments at this location as
         // the Built's name + Builder
         typeArguments.replaceRange(
