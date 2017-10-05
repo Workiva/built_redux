@@ -10,7 +10,8 @@ part 'test_counter.g.dart';
 
 /// Used to test code generation when the generic type of an action is a
 /// `typedef`
-typedef dynamic FooTypedef(MiddlewareApi api);
+typedef dynamic ThunkTypedef<V extends Built<V, B>, B extends Builder<V, B>,
+    A extends ReduxActions>(MiddlewareApi<V, B, A> api);
 
 // BaseCounter
 
@@ -18,7 +19,9 @@ abstract class BaseCounterActions extends ReduxActions {
   ActionDispatcher<int> increment;
   ActionDispatcher<int> decrement;
   ActionDispatcher<Null> incrementOne;
-  ActionDispatcher<FooTypedef> foo;
+  ActionDispatcher<
+          ThunkTypedef<BaseCounter, BaseCounterBuilder, BaseCounterActions>>
+      thunkDispatcher;
   ActionDispatcher<List<int>> genericAction1;
   ActionDispatcher<Map<String, List<int>>> genericAction2;
   ActionDispatcher<int> appendToNestedList;
@@ -86,7 +89,9 @@ abstract class NestedCounterActions extends ReduxActions {
   ActionDispatcher<int> increment;
   ActionDispatcher<int> decrement;
   ActionDispatcher<Null> incrementOne;
-  ActionDispatcher<FooTypedef> fooTypedef;
+  ActionDispatcher<
+          ThunkTypedef<BaseCounter, BaseCounterBuilder, BaseCounterActions>>
+      thunkDispatcher;
 
   NestedCounterActions._();
   factory NestedCounterActions() => new _$NestedCounterActions();
@@ -148,7 +153,7 @@ NextActionHandler fooTypedefMiddleware(
         MiddlewareApi<BaseCounter, BaseCounterBuilder, BaseCounterActions>
             api) =>
     (ActionHandler next) => (Action a) {
-          if (a.payload is FooTypedef) {
+          if (a.payload is ThunkTypedef) {
             a.payload(api);
           }
 

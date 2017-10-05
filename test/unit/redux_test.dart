@@ -208,8 +208,10 @@ main() {
 
     test('ActionDispatcher<SomeTypeDef>', () async {
       setup();
-      store.actions.foo((MiddlewareApi api) {
-        (api.actions as BaseCounterActions).incrementOne();
+      store.actions.thunkDispatcher(
+          (MiddlewareApi<BaseCounter, BaseCounterBuilder, BaseCounterActions>
+              api) {
+        api.actions.incrementOne();
       });
       var stateChange = await store.stream.first;
       expect(stateChange.prev.count, 1);
