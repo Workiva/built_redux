@@ -210,8 +210,11 @@ class _$BaseCounterActions extends BaseCounterActions {
   final ActionDispatcher<List<int>> genericAction1 =
       new ActionDispatcher<List<int>>('BaseCounterActions-genericAction1');
 
-  final ActionDispatcher<FooTypedef> foo =
-      new ActionDispatcher<FooTypedef>('BaseCounterActions-foo');
+  final ActionDispatcher<
+          ThunkTypedef<BaseCounter, BaseCounterBuilder, BaseCounterActions>>
+      thunkDispatcher = new ActionDispatcher<
+          ThunkTypedef<BaseCounter, BaseCounterBuilder,
+              BaseCounterActions>>('BaseCounterActions-thunkDispatcher');
 
   final ActionDispatcher<Null> incrementOne =
       new ActionDispatcher<Null>('BaseCounterActions-incrementOne');
@@ -232,7 +235,7 @@ class _$BaseCounterActions extends BaseCounterActions {
     appendToNestedList.setDispatcher(dispatcher);
     genericAction2.setDispatcher(dispatcher);
     genericAction1.setDispatcher(dispatcher);
-    foo.setDispatcher(dispatcher);
+    thunkDispatcher.setDispatcher(dispatcher);
     incrementOne.setDispatcher(dispatcher);
     decrement.setDispatcher(dispatcher);
     increment.setDispatcher(dispatcher);
@@ -247,8 +250,11 @@ class BaseCounterActionsNames {
           'BaseCounterActions-genericAction2');
   static final ActionName<List<int>> genericAction1 =
       new ActionName<List<int>>('BaseCounterActions-genericAction1');
-  static final ActionName<FooTypedef> foo =
-      new ActionName<FooTypedef>('BaseCounterActions-foo');
+  static final ActionName<
+          ThunkTypedef<BaseCounter, BaseCounterBuilder, BaseCounterActions>>
+      thunkDispatcher = new ActionName<
+          ThunkTypedef<BaseCounter, BaseCounterBuilder,
+              BaseCounterActions>>('BaseCounterActions-thunkDispatcher');
   static final ActionName<Null> incrementOne =
       new ActionName<Null>('BaseCounterActions-incrementOne');
   static final ActionName<int> decrement =
@@ -258,8 +264,11 @@ class BaseCounterActionsNames {
 }
 
 class _$NestedCounterActions extends NestedCounterActions {
-  final ActionDispatcher<FooTypedef> fooTypedef =
-      new ActionDispatcher<FooTypedef>('NestedCounterActions-fooTypedef');
+  final ActionDispatcher<
+          ThunkTypedef<BaseCounter, BaseCounterBuilder, BaseCounterActions>>
+      thunkDispatcher = new ActionDispatcher<
+          ThunkTypedef<BaseCounter, BaseCounterBuilder,
+              BaseCounterActions>>('NestedCounterActions-thunkDispatcher');
 
   final ActionDispatcher<Null> incrementOne =
       new ActionDispatcher<Null>('NestedCounterActions-incrementOne');
@@ -275,7 +284,7 @@ class _$NestedCounterActions extends NestedCounterActions {
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
-    fooTypedef.setDispatcher(dispatcher);
+    thunkDispatcher.setDispatcher(dispatcher);
     incrementOne.setDispatcher(dispatcher);
     decrement.setDispatcher(dispatcher);
     increment.setDispatcher(dispatcher);
@@ -283,8 +292,11 @@ class _$NestedCounterActions extends NestedCounterActions {
 }
 
 class NestedCounterActionsNames {
-  static final ActionName<FooTypedef> fooTypedef =
-      new ActionName<FooTypedef>('NestedCounterActions-fooTypedef');
+  static final ActionName<
+          ThunkTypedef<BaseCounter, BaseCounterBuilder, BaseCounterActions>>
+      thunkDispatcher = new ActionName<
+          ThunkTypedef<BaseCounter, BaseCounterBuilder,
+              BaseCounterActions>>('NestedCounterActions-thunkDispatcher');
   static final ActionName<Null> incrementOne =
       new ActionName<Null>('NestedCounterActions-incrementOne');
   static final ActionName<int> decrement =
