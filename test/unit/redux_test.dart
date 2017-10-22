@@ -35,26 +35,23 @@ main() {
 
     test('base action updates state', () async {
       setup();
+      expect(store.state.count, 1);
       store.actions.increment(4);
-      var stateChange = await store.stream.first;
-      expect(stateChange.prev.count, 1);
-      expect(stateChange.next.count, 5);
+      expect(store.state.count, 5);
     });
 
     test('nested built value', () async {
       setup();
+      expect(store.state.nestedCounter.count, 1);
       store.actions.nestedCounterActions.increment(4);
-      var stateChange = await store.stream.first;
-      expect(stateChange.prev.nestedCounter.count, 1);
-      expect(stateChange.next.nestedCounter.count, 5);
+      expect(store.state.nestedCounter.count, 5);
     });
 
     test('middleware action doubles count and updates state', () async {
       setup();
+      expect(store.state.count, 1);
       store.actions.middlewareActions.increment(0);
-      var stateChange = await store.stream.first;
-      expect(stateChange.prev.count, 1);
-      expect(stateChange.next.count, 3);
+      expect(store.state.count, 3);
     });
 
     test('2 middlewares doubles count twice and updates state', () async {
@@ -70,14 +67,15 @@ main() {
         else
           onStateChangeCompleter2.complete(state);
       });
-      // should add 2 twice
+
+      // should add double the current state twice
       store.actions.middlewareActions.increment(0);
-      var stateChange = await store.stream.first;
+      var stateChange = await onStateChangeCompleter.future;
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 3);
-      stateChange = await store.stream.first;
+      stateChange = await onStateChangeCompleter2.future;
       expect(stateChange.prev.count, 3);
-      expect(stateChange.next.count, 5);
+      expect(stateChange.next.count, 9);
     });
 
     test('store change handler', () async {
@@ -125,14 +123,15 @@ main() {
 
     test('state transformer', () async {
       setup();
-
+      final completer = new Completer<SubstateChange<int>>();
       final sub = store.substateStream<int>((BaseCounter state) => state.count);
+      sub.first.then(completer.complete);
 
       store.actions.increment(4);
       // would cause completer to complete twice and fail the test
       store.actions.nestedCounterActions.increment(1);
 
-      var change = await sub.first;
+      var change = await completer.future;
       expect(change.prev, 1);
       expect(change.next, 5);
     });
@@ -172,8 +171,10 @@ main() {
 
     test('nextState stream', () async {
       setup();
+      final completer = new Completer<BaseCounter>();
+      store.nextState.first.then(completer.complete);
       store.actions.increment(4);
-      var stateChange = await store.nextState.first;
+      var stateChange = await completer.future;
       expect(stateChange.count, 5);
     });
 
@@ -181,56 +182,51 @@ main() {
       setup();
 
       final sub = store.nextSubstate<int>((BaseCounter state) => state.count);
+      final completer = new Completer<int>();
+      sub.first.then(completer.complete);
 
       store.actions.increment(4);
       // would cause completer to complete twice and fail the test
       store.actions.nestedCounterActions.increment(1);
 
-      var change = await sub.first;
+      var change = await completer.future;
       expect(change, 5);
     });
 
     test('ActionDispatcher<Null>', () async {
       setup();
+      expect(store.state.count, 1);
       store.actions.incrementOne();
-      var stateChange = await store.stream.first;
-      expect(stateChange.prev.count, 1);
-      expect(stateChange.next.count, 2);
+      expect(store.state.count, 2);
     });
 
     test('ActionDispatcher<Null> with null payload', () async {
       setup();
+      expect(store.state.count, 1);
       store.actions.incrementOne(null);
-      var stateChange = await store.stream.first;
-      expect(stateChange.prev.count, 1);
-      expect(stateChange.next.count, 2);
+      expect(store.state.count, 2);
     });
 
     test('ActionDispatcher<SomeTypeDef>', () async {
       setup();
+      expect(store.state.count, 1);
       store.actions.thunkDispatcher(
           (MiddlewareApi<BaseCounter, BaseCounterBuilder, BaseCounterActions>
               api) {
         api.actions.incrementOne();
       });
-      var stateChange = await store.stream.first;
-      expect(stateChange.prev.count, 1);
-      expect(stateChange.next.count, 2);
+      expect(store.state.count, 2);
     });
 
     test('payload with generic type', () async {
       setup();
+      expect(store.state.count, 1);
       store.actions.genericAction1(<int>[1, 2, 3]);
-      var stateChange = await store.stream.first;
-      expect(stateChange.prev.count, 1);
-      expect(stateChange.next.count, 7);
-
+      expect(store.state.count, 7);
       store.actions.genericAction2(<String, List<int>>{
         'add': [1, 2, 3]
       });
-      stateChange = await store.stream.first;
-      expect(stateChange.prev.count, 7);
-      expect(stateChange.next.count, 13);
+      expect(store.state.count, 13);
     });
   });
 }

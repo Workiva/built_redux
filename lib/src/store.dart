@@ -15,9 +15,6 @@ class Store<
     State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
-  // stream used for dispatching actions
-  final StreamController<Action<dynamic>> _dispatch = new StreamController();
-
   // stream used to dispatch changes to the state
   final StreamController<StoreChange<State, StateBuilder, dynamic>>
       _stateController = new StreamController.broadcast();
@@ -36,9 +33,6 @@ class Store<
     _state = defaultState;
 
     _actions = actions;
-
-    // register the actions to dispatch onto this store's dispatcher
-    _actions.setDispatcher(_dispatch.add);
 
     final MiddlewareApi api =
         new MiddlewareApi<State, StateBuilder, Actions>(this);
@@ -70,13 +64,12 @@ class Store<
     }
 
     // call the handler when an action is dispatched
-    _dispatch.stream.listen(handler);
+    actions.setDispatcher(handler);
   }
 
   /// [dispose] removes closes both the dispatch and subscription stream
   dispose() {
     _stateController.close();
-    _dispatch.close();
     _state = null;
     _actions = null;
   }
