@@ -162,3 +162,15 @@ class ChildActionsNames {
   static final ActionName<Null> grandparentAction =
       new ActionName<Null>('GrandparentActions-grandparentAction');
 }
+
+class ParentActionsNames {
+  static final ActionName<Null> parentAction =
+      new ActionName<Null>('ParentActions-parentAction');
+  static final ActionName<Null> grandparentAction =
+      new ActionName<Null>('GrandparentActions-grandparentAction');
+}
+
+class GrandparentActionsNames {
+  static final ActionName<Null> grandparentAction =
+      new ActionName<Null>('GrandparentActions-grandparentAction');
+}

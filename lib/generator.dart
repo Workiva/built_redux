@@ -9,9 +9,7 @@ class BuiltReduxGenerator extends Generator {
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     final result = new StringBuffer();
     for (final element in library.allElements) {
-      if (_needsReduxActions(element) &&
-          element is ClassElement &&
-          element.constructors.length > 1) {
+      if (_needsReduxActions(element) && element is ClassElement) {
         log.info('Generating action classes for ${element.name}');
         result.writeln(_generateActions(element));
       }
@@ -22,8 +20,12 @@ class BuiltReduxGenerator extends Generator {
 }
 
 String _generateActions(ClassElement element) =>
-    _actionDispatcherClassTemplate(element) +
-    _actionNamesClassTemplate(element);
+    _generateDispatchersIfNeeded(element) + _actionNamesClassTemplate(element);
+
+String _generateDispatchersIfNeeded(ClassElement element) =>
+    element.constructors.length > 1
+        ? _actionDispatcherClassTemplate(element)
+        : '';
 
 /*
 
