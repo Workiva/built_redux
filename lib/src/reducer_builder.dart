@@ -1,4 +1,5 @@
 import 'package:built_value/built_value.dart';
+import 'package:built_collection/built_collection.dart';
 import 'action.dart';
 import 'typedefs.dart';
 
@@ -7,33 +8,71 @@ import 'typedefs.dart';
 /// Each [Reducer] added with add<T> must take a state of type State, an Action of type
 /// Action<T>, and a builder of type B.
 /// Nested reducers can be added with [combineNested]
-class ReducerBuilder<V extends Built<V, B>, B extends Builder<V, B>> {
-  var _map = new Map<String, Reducer<V, B, dynamic>>();
+class ReducerBuilder<State extends Built<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>> {
+  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
 
   ReducerBuilder();
 
   /// Registers [reducer] function to the given [actionName]
-  void add<Payload>(
-      ActionName<Payload> actionName, Reducer<V, B, Payload> reducer) {
+  void add<Payload>(ActionName<Payload> actionName,
+      Reducer<State, StateBuilder, Payload> reducer) {
     _map[actionName.name] = reducer;
   }
 
   /// [combine] combines this ReducerBuilder with another ReducerBuilder
   /// for the same type
-  void combine(ReducerBuilder<V, B> other) {
+  void combine(ReducerBuilder<State, StateBuilder> other) {
     _map.addAll(other._map);
   }
 
+  /// [combineAbstract] combines this ReducerBuilder with an AbstractReducerBuilder.
+  /// Be aware that there is no way for static analysis to know
+  /// if your concrete model implements the abstract peice. Use at your own
+  /// risk, if [State] not implement [AState] or [StateBuilder]
+  /// does not implement [AStateBuilder] runtime errors will be thrown.
+  void combineAbstract<AState, AStateBuilder>(
+      AbstractReducerBuilder<AState, AStateBuilder> other) {
+    _map.addAll(
+        other._map as Map<String, Reducer<State, StateBuilder, dynamic>>);
+  }
+
   /// [combineNested] combines this ReducerBuilder with a NestedReducerBuilder
-  /// for the same base state
   void combineNested<N extends Built<N, NB>, NB extends Builder<N, NB>>(
-      NestedReducerBuilder<V, B, N, NB> nested) {
+      NestedReducerBuilder<State, StateBuilder, N, NB> nested) {
     _map.addAll(nested._map);
   }
 
+  /// [combineList] combines this ReducerBuilder with a ListReducerBuilder
+  void combineList<T>(ListReducerBuilder<State, StateBuilder, T> other) {
+    _map.addAll(other._map);
+  }
+
+  /// [combineListMultimap] combines this ReducerBuilder with a ListMultimapReducerBuilder
+  void combineListMultimap<K, V>(
+      ListMultimapReducerBuilder<State, StateBuilder, K, V> other) {
+    _map.addAll(other._map);
+  }
+
+  /// [combineMap] combines this ReducerBuilder with a MapReducerBuilder
+  void combineMap<K, V>(MapReducerBuilder<State, StateBuilder, K, V> other) {
+    _map.addAll(other._map);
+  }
+
+  /// [combineSet] combines this ReducerBuilder with a SetReducerBuilder
+  void combineSet<T>(SetReducerBuilder<State, StateBuilder, T> other) {
+    _map.addAll(other._map);
+  }
+
+  /// [combineSetMultimap] combines this ReducerBuilder with a SetMultimapReducerBuilder
+  void combineSetMultimap<K, V>(
+      SetMultimapReducerBuilder<State, StateBuilder, K, V> other) {
+    _map.addAll(other._map);
+  }
+
   /// [build] returns a reducer function that can be passed to a [Store].
-  Reducer<V, B, dynamic> build() =>
-      (V state, Action<dynamic> action, B builder) {
+  Reducer<State, StateBuilder, dynamic> build() =>
+      (State state, Action<dynamic> action, StateBuilder builder) {
         final reducer = _map[action.name];
         if (reducer != null) reducer(state, action, builder);
       };
@@ -80,8 +119,7 @@ class NestedReducerBuilder<
     StateBuilder extends Builder<State, StateBuilder>,
     NestedState extends Built<NestedState, NestedStateBuilder>,
     NestedStateBuilder extends Builder<NestedState, NestedStateBuilder>> {
-  var _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
-
+  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
   Mapper<State, NestedState> _stateMapper;
   Mapper<StateBuilder, NestedStateBuilder> _builderMapper;
 
@@ -90,6 +128,142 @@ class NestedReducerBuilder<
   /// Registers [reducer] function to the given [actionName]
   void add<Payload>(ActionName<Payload> actionName,
       Reducer<NestedState, NestedStateBuilder, Payload> reducer) {
+    _map[actionName.name] = (state, action, builder) => reducer(
+          _stateMapper(state),
+          action,
+          _builderMapper(builder),
+        );
+  }
+}
+
+/// This is the Reducer typedef without the Built/Builder constraints
+/// Used for built_collections since they do not implement Built/Builder
+/// but follow the same patter. This is also used in [AbstractReducerBuilder]
+/// because Dart2JS does not allow inheritance of other Builts
+/// so abstract state cannot implement Built.
+typedef void CReducer<AState, AStateBuilder, P>(
+    AState state, Action<P> action, AStateBuilder builder);
+
+/// [AbstractReducerBuilder] returns a reducer builder that
+/// rebuilds an abstract, or mixed in, piece of state. For most cases
+/// AbstractReducerBuilder is not recommended. When defining your state
+/// model favor composition over inheritance. However, this may be
+/// useful when trying to share functionaity between two separate redux stores.
+/// Be aware that there is no way for static analysis to know
+/// if your concrete model implements the abstract peice. Use at your own risk,
+/// if the concrete model does not implement AState or the concrete builder
+/// does not implement AStateBuilder runtime errors will be thrown.
+class AbstractReducerBuilder<AState, AStateBuilder> {
+  final _map = new Map<String, CReducer<AState, AStateBuilder, dynamic>>();
+
+  /// Registers [reducer] function to the given [actionName]
+  void add<Payload>(ActionName<Payload> actionName,
+      CReducer<AState, AStateBuilder, Payload> reducer) {
+    _map[actionName.name] = reducer;
+  }
+}
+
+/// [ListReducerBuilder] returns a reducer builder that
+/// rebuilds a List nested within the state tree
+class ListReducerBuilder<State extends Built<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>, T> {
+  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  Mapper<State, BuiltList<T>> _stateMapper;
+  Mapper<StateBuilder, ListBuilder<T>> _builderMapper;
+
+  ListReducerBuilder(this._stateMapper, this._builderMapper);
+
+  /// Registers [reducer] function to the given [actionName]
+  void add<Payload>(ActionName<Payload> actionName,
+      CReducer<BuiltList<T>, ListBuilder<T>, Payload> reducer) {
+    _map[actionName.name] = (state, action, builder) => reducer(
+          _stateMapper(state),
+          action,
+          _builderMapper(builder),
+        );
+  }
+}
+
+/// [ListMultimapReducerBuilder] returns a reducer builder that
+/// rebuilds a ListMultimap nested within the state tree
+class ListMultimapReducerBuilder<State extends Built<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>, K, V> {
+  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  Mapper<State, BuiltListMultimap<K, V>> _stateMapper;
+  Mapper<StateBuilder, ListMultimapBuilder<K, V>> _builderMapper;
+
+  ListMultimapReducerBuilder(this._stateMapper, this._builderMapper);
+
+  /// Registers [reducer] function to the given [actionName]
+  void add<Payload>(
+      ActionName<Payload> actionName,
+      CReducer<BuiltListMultimap<K, V>, ListMultimapBuilder<K, V>, Payload>
+          reducer) {
+    _map[actionName.name] = (state, action, builder) => reducer(
+          _stateMapper(state),
+          action,
+          _builderMapper(builder),
+        );
+  }
+}
+
+/// [MapReducerBuilder] returns a reducer builder that
+/// rebuilds a Map nested within the state tree
+class MapReducerBuilder<State extends Built<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>, K, V> {
+  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  Mapper<State, BuiltMap<K, V>> _stateMapper;
+  Mapper<StateBuilder, MapBuilder<K, V>> _builderMapper;
+
+  MapReducerBuilder(this._stateMapper, this._builderMapper);
+
+  /// Registers [reducer] function to the given [actionName]
+  void add<Payload>(ActionName<Payload> actionName,
+      CReducer<BuiltMap<K, V>, MapBuilder<K, V>, Payload> reducer) {
+    _map[actionName.name] = (state, action, builder) => reducer(
+          _stateMapper(state),
+          action,
+          _builderMapper(builder),
+        );
+  }
+}
+
+/// [SetReducerBuilder] returns a reducer builder that
+/// rebuilds a Set nested within the state tree
+class SetReducerBuilder<State extends Built<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>, T> {
+  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  Mapper<State, BuiltSet<T>> _stateMapper;
+  Mapper<StateBuilder, SetBuilder<T>> _builderMapper;
+
+  SetReducerBuilder(this._stateMapper, this._builderMapper);
+
+  /// Registers [reducer] function to the given [actionName]
+  void add<Payload>(ActionName<Payload> actionName,
+      CReducer<BuiltSet<T>, SetBuilder<T>, Payload> reducer) {
+    _map[actionName.name] = (state, action, builder) => reducer(
+          _stateMapper(state),
+          action,
+          _builderMapper(builder),
+        );
+  }
+}
+
+/// [SetMultimapReducerBuilder] returns a reducer builder that
+/// rebuilds a SetMultimap nested within the state tree
+class SetMultimapReducerBuilder<State extends Built<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>, K, V> {
+  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  Mapper<State, BuiltSetMultimap<K, V>> _stateMapper;
+  Mapper<StateBuilder, SetMultimapBuilder<K, V>> _builderMapper;
+
+  SetMultimapReducerBuilder(this._stateMapper, this._builderMapper);
+
+  /// Registers [reducer] function to the given [actionName]
+  void add<Payload>(
+      ActionName<Payload> actionName,
+      CReducer<BuiltSetMultimap<K, V>, SetMultimapBuilder<K, V>, Payload>
+          reducer) {
     _map[actionName.name] = (state, action, builder) => reducer(
           _stateMapper(state),
           action,

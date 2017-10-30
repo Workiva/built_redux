@@ -9,7 +9,9 @@ class BuiltReduxGenerator extends Generator {
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     final result = new StringBuffer();
     for (final element in library.allElements) {
-      if (element is ClassElement && _needsReduxActions(element)) {
+      if (_needsReduxActions(element) &&
+          element is ClassElement &&
+          element.constructors.length > 1) {
         log.info('Generating action classes for ${element.name}');
         result.writeln(_generateActions(element));
       }
@@ -19,85 +21,121 @@ class BuiltReduxGenerator extends Generator {
   }
 }
 
-bool _needsReduxActions(ClassElement classElement) =>
-    _hasSuperType(classElement, 'ReduxActions');
+String _generateActions(ClassElement element) =>
+    _actionDispatcherClassTemplate(element) +
+    _actionNamesClassTemplate(element);
+
+/*
+
+  Action Dispatcher
+
+*/
+
+String _actionDispatcherClassTemplate(ClassElement element) => '''
+  class _\$${element.name} extends ${element.name}{
+    factory _\$${element.name}() => new _\$${element.name}._();
+    _\$${element.name}._() : super._();
+
+    ${_allActionDispatcherFieldsTemplate(element)}
+
+    @override
+    void setDispatcher(Dispatcher dispatcher) {
+      ${_allSetDispatchersTemplate(element)}
+    }
+  }
+''';
+
+String _allActionDispatcherFieldsTemplate(ClassElement element) =>
+    _forEachFieldWithInherited(
+        element, _actionDispatcherFieldTemplate, _isActionDispatcher) +
+    _forEachFieldWithInherited(
+        element, _reduxActionFieldTemplate, _needsReduxActions);
+
+String _actionDispatcherFieldTemplate(ClassElement e, FieldElement f) {
+  final genericType = _getActionGenericType(f);
+  return 'final ActionDispatcher<${genericType}> ${f.name} = new ActionDispatcher<${genericType}>(\'${e.name}-${f.name}\');';
+}
+
+String _reduxActionFieldTemplate(ClassElement e, FieldElement f) {
+  final typeName = f.type.element.name;
+  return 'final $typeName ${f.name} = new $typeName();';
+}
+
+String _allSetDispatchersTemplate(ClassElement element) =>
+    _forEachFieldWithInherited(
+        element, _setDispatcheTemplate, _isActionDispatcher) +
+    _forEachFieldWithInherited(
+        element, _setDispatcheTemplate, _needsReduxActions);
+
+String _setDispatcheTemplate(ClassElement e, FieldElement f) =>
+    '${f.name}.setDispatcher(dispatcher);';
+
+/*
+
+  Action Names
+
+*/
+
+String _actionNamesClassTemplate(ClassElement element) => '''
+  class ${element.name}Names {
+    ${_allActionNamesFieldsTemplate(element)}
+  }
+''';
+
+String _allActionNamesFieldsTemplate(ClassElement element) =>
+    _forEachFieldWithInherited(
+        element, _actionNameTemplate, _isActionDispatcher);
+
+String _actionNameTemplate(ClassElement e, FieldElement f) {
+  final genericType = _getActionGenericType(f);
+  return 'static final ActionName<${genericType}> ${f.name} = new ActionName<${genericType}>(\'${e.name}-${f.name}\');';
+}
+
+/*
+
+  Util
+
+*/
+String _forEachField(
+  ClassElement element,
+  String fieldTemplate(ClassElement e, FieldElement f),
+  bool fieldTest(Element e),
+) =>
+    element.fields
+        .where(
+          (f) => fieldTest(f.type.element),
+        )
+        .fold(
+          '',
+          (combined, next) => '$combined${fieldTemplate(element, next)}',
+        );
+
+String _forEachFieldWithInherited(
+  ClassElement element,
+  String fieldTemplate(ClassElement e, FieldElement f),
+  bool fieldTest(Element e),
+) =>
+    element.allSupertypes
+        .map(
+          (s) => _forEachField(s.element, fieldTemplate, fieldTest),
+        )
+        .fold(
+          _forEachField(element, fieldTemplate, fieldTest),
+          (combined, next) => '$combined$next',
+        );
+
+bool _needsReduxActions(Element element) =>
+    element is ClassElement && _hasSuperType(element, 'ReduxActions');
+
+bool _isActionDispatcher(Element element) =>
+    element is ClassElement && element.name == 'ActionDispatcher';
 
 bool _hasSuperType(ClassElement classElement, String type) =>
     classElement.allSupertypes
         .any((interfaceType) => interfaceType.name == type) &&
     !classElement.displayName.startsWith('_\$');
 
-bool _isActionDispatcher(Element element) =>
-    element is ClassElement && element.name == 'ActionDispatcher';
-
-bool _isGeneratedDispatcherFinal(String dispatcherCode) =>
-    dispatcherCode.startsWith('\nfinal') || dispatcherCode.startsWith('final');
-
-String _generateActions(ClassElement element) {
-  var defaultFunctionDeclaration =
-      '@override void setDispatcher(Dispatcher dispatcher)';
-  var initializerCode = '''
-class _\$${element.name} extends ${element.name}{
-  factory _\$${element.name}() => new _\$${element.name}._();
-
-  _\$${element.name}._() : super._();
-
-  $defaultFunctionDeclaration;
-}''';
-
-  var nameCode = 'class ${element.name}Names {\n}';
-  var setDispatcherCode = '$defaultFunctionDeclaration{\n}';
-  for (var e in element.fields) {
-    var fieldName = e.name;
-    var ele = e.type.element;
-    var typeName = ele.name;
-
-    if (_isActionDispatcher(ele)) {
-      var genericType = _getActionDispatcherGenericType(e);
-      // generate the action name
-      nameCode = _appendCode(
-        nameCode,
-        'static final ActionName<${genericType}> $fieldName = new ActionName<${genericType}>(\'${element.name}-$fieldName\');\n',
-      );
-
-      // generate the dispatcher
-      var actionDispatcher =
-          '\n${e.type.name}<${genericType}> ${e.name} = new ActionDispatcher<${genericType}>(\'${element.name}-$fieldName\');\n';
-
-      // if it was not declared final make it final
-      if (!_isGeneratedDispatcherFinal(actionDispatcher))
-        actionDispatcher = '\nfinal $actionDispatcher';
-
-      // append the action dispatcher to the class definition
-      initializerCode = _appendCode(initializerCode, actionDispatcher);
-
-      // append the sync function for this dispatcher
-      setDispatcherCode = _appendCode(
-        setDispatcherCode,
-        '$fieldName.setDispatcher(dispatcher);',
-      );
-    } else if (ele is ClassElement && _needsReduxActions(ele)) {
-      // this is a nested instance of redux actions
-      // generate the instantiation
-      initializerCode = _appendCode(
-        initializerCode,
-        'final $e = new $typeName();',
-      );
-
-      // append the sync function for this set of actions
-      setDispatcherCode = _appendCode(
-        setDispatcherCode,
-        '\n$fieldName.setDispatcher(dispatcher);',
-      );
-    }
-  }
-
-  initializerCode = initializerCode.replaceFirst(
-      '$defaultFunctionDeclaration;', setDispatcherCode);
-  return '$initializerCode\n\n$nameCode';
-}
-
-String _getActionDispatcherGenericType(FieldElement e) {
+String _getActionGenericType(FieldElement e) {
   var typeArgument =
       (e.type as InterfaceType).typeArguments.first as ParameterizedType;
   // generic type has generic type parameters?
@@ -144,6 +182,3 @@ String _getActionDispatcherGenericType(FieldElement e) {
 
   return '${typeArgument.name}<${typeArguments.join(',')}>';
 }
-
-String _appendCode(String before, String newCode) =>
-    before.replaceFirst('\n', '\n$newCode');
