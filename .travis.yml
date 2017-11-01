@@ -6,7 +6,5 @@ script:
   - pub run dart_dev format --check
   - pub run dart_dev analyze
   - pub run dart_dev test -p vm
-  - pub run dart_dev test --web-compiler=dart2js -p firefox
-  - pub run dart_dev test --web-compiler=dartdevc -p firefox
   - pub run dart_dev coverage --no-html
   - bash <(curl -s https://codecov.io/bash) -f coverage/coverage.lcov
