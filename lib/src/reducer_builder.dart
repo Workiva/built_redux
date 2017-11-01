@@ -32,6 +32,14 @@ class ReducerBuilder<State extends Built<State, StateBuilder>,
     _map.addAll(nested._map);
   }
 
+  /// [combineAbstract] combines this ReducerBuilder with an AbstractReducerBuilder.
+  /// This function takes the result of AbstractReducerBuilder's .build() function,
+  /// which is a map. It does not take an AbstractReducerBuilder directly.
+  void combineAbstract(
+      Map<String, Reducer<State, StateBuilder, dynamic>> other) {
+    _map.addAll(other);
+  }
+
   /// [combineList] combines this ReducerBuilder with a ListReducerBuilder
   void combineList<T>(ListReducerBuilder<State, StateBuilder, T> other) {
     _map.addAll(other._map);
@@ -125,11 +133,26 @@ class NestedReducerBuilder<
   }
 }
 
+/// [AbstractReducerBuilder] returns a reducer builder that
+/// rebuilds an abstract, or mixed in, piece of state. For most cases
+/// AbstractReducerBuilder is not recommended. When defining your state
+/// model favor composition over inheritance. However, this may be
+/// useful when trying to share functionaity between two separate redux stores.
+class AbstractReducerBuilder<AState, AStateBuilder> {
+  final _map = new Map<String, CReducer<AState, AStateBuilder, dynamic>>();
+
+  /// Registers [reducer] function to the given [actionName]
+  void add<Payload>(ActionName<Payload> actionName,
+      CReducer<AState, AStateBuilder, Payload> reducer) {
+    _map[actionName.name] = reducer;
+  }
+
+  Map<String, CReducer<AState, AStateBuilder, dynamic>> build() => _map;
+}
+
 /// This is the Reducer typedef without the Built/Builder constraints
 /// Used for built_collections since they do not implement Built/Builder
-/// but follow the same patter. This is also used in [AbstractReducerBuilder]
-/// because Dart2JS does not allow inheritance of other Builts
-/// so abstract state cannot implement Built.
+/// but follow the same pattern.
 typedef void CReducer<AState, AStateBuilder, P>(
     AState state, Action<P> action, AStateBuilder builder);
 
