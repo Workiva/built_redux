@@ -22,6 +22,14 @@ Built using [built_value][built_value_git]
 
 [inheritence in state & actions][inheritence]
 
+## libraries
+
+[thunk][built_redux_thunk]
+
+[rx][built_redux_rx]
+
+[repatch][built_redux_repatch]
+
 ## Using it in your project
 
 > __If you are not familiar with Redux or built_value__
@@ -283,11 +291,13 @@ store.actions.increment(3);
 
 [redux_docs]: http://redux.js.org/
 
-[react-dart]: https://github.com/davidmarne/react_built_redux
-
 [flutter]: https://github.com/davidmarne/flutter_built_redux
 
-[angular2]: https://github.com/davidmarne/angular_built_redux
+[built_redux_thunk]: https://github.com/davidmarne/built_redux_thunk
+
+[built_redux_rx]: https://github.com/davidmarne/built_redux_rx
+
+[built_redux_repatch]: https://github.com/davidmarne/built_redux_repatch
 
 [flutter_built_redux]: https://github.com/davidmarne/flutter_built_redux
 

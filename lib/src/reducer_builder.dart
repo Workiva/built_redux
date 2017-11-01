@@ -26,17 +26,6 @@ class ReducerBuilder<State extends Built<State, StateBuilder>,
     _map.addAll(other._map);
   }
 
-  /// [combineAbstract] combines this ReducerBuilder with an AbstractReducerBuilder.
-  /// Be aware that there is no way for static analysis to know
-  /// if your concrete model implements the abstract peice. Use at your own
-  /// risk, if [State] not implement [AState] or [StateBuilder]
-  /// does not implement [AStateBuilder] runtime errors will be thrown.
-  void combineAbstract<AState, AStateBuilder>(
-      AbstractReducerBuilder<AState, AStateBuilder> other) {
-    _map.addAll(
-        other._map as Map<String, Reducer<State, StateBuilder, dynamic>>);
-  }
-
   /// [combineNested] combines this ReducerBuilder with a NestedReducerBuilder
   void combineNested<N extends Built<N, NB>, NB extends Builder<N, NB>>(
       NestedReducerBuilder<State, StateBuilder, N, NB> nested) {
@@ -143,25 +132,6 @@ class NestedReducerBuilder<
 /// so abstract state cannot implement Built.
 typedef void CReducer<AState, AStateBuilder, P>(
     AState state, Action<P> action, AStateBuilder builder);
-
-/// [AbstractReducerBuilder] returns a reducer builder that
-/// rebuilds an abstract, or mixed in, piece of state. For most cases
-/// AbstractReducerBuilder is not recommended. When defining your state
-/// model favor composition over inheritance. However, this may be
-/// useful when trying to share functionaity between two separate redux stores.
-/// Be aware that there is no way for static analysis to know
-/// if your concrete model implements the abstract peice. Use at your own risk,
-/// if the concrete model does not implement AState or the concrete builder
-/// does not implement AStateBuilder runtime errors will be thrown.
-class AbstractReducerBuilder<AState, AStateBuilder> {
-  final _map = new Map<String, CReducer<AState, AStateBuilder, dynamic>>();
-
-  /// Registers [reducer] function to the given [actionName]
-  void add<Payload>(ActionName<Payload> actionName,
-      CReducer<AState, AStateBuilder, Payload> reducer) {
-    _map[actionName.name] = reducer;
-  }
-}
 
 /// [ListReducerBuilder] returns a reducer builder that
 /// rebuilds a List nested within the state tree
