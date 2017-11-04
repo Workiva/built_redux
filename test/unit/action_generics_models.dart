@@ -36,12 +36,14 @@ Reducer<ActionGenerics, ActionGenericsBuilder, dynamic>
                   (s, a, b) => b.count = s.count + a.payload)
               ..add<Null>(
                   ActionGenericsActionsNames.nullAction, (s, a, b) => b.count++)
-              ..add<List<int>>(ActionGenericsActionsNames.listIntAction,
-                  (s, a, b) => b.count += a.payload.fold(0, (c, n) => c + n))
+              ..add<List<int>>(
+                  ActionGenericsActionsNames.listIntAction,
+                  (s, a, b) =>
+                      b.count += a.payload.fold<int>(0, (c, n) => c + n))
               ..add<Map<String, List<int>>>(
                   ActionGenericsActionsNames.mapStringToListIntAction,
                   (s, a, b) =>
-                      b.count += a.payload['k'].fold(0, (c, n) => c + n)))
+                      b.count += a.payload['k'].fold<int>(0, (c, n) => c + n)))
             .build();
 
 /// Used to test code generation when the generic type of an action is a

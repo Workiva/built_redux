@@ -5,12 +5,13 @@ import 'package:test/test.dart';
 
 import 'test_counter.dart';
 
-main() {
+void main() {
   group('state transformer', () {
     Store<BaseCounter, BaseCounterBuilder, BaseCounterActions> store;
 
     setUp(() {
-      store = new Store(reducer, new BaseCounter(), new BaseCounterActions());
+      store = new Store<BaseCounter, BaseCounterBuilder, BaseCounterActions>(
+          reducer, new BaseCounter(), new BaseCounterActions());
     });
 
     tearDown(() {

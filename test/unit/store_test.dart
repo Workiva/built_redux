@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 
 import 'test_counter.dart';
 
-main() {
+void main() {
   group('store', () {
     Store<BaseCounter, BaseCounterBuilder, BaseCounterActions> store;
 
@@ -13,7 +13,8 @@ main() {
       var actions = new BaseCounterActions();
       var defaultValue = new BaseCounter();
 
-      store = new Store(reducer, defaultValue, actions);
+      store = new Store<BaseCounter, BaseCounterBuilder, BaseCounterActions>(
+          reducer, defaultValue, actions);
     });
 
     tearDown(() {
@@ -21,37 +22,37 @@ main() {
     });
 
     test('basic action fires stream', () async {
-      Completer onStateChangeCompleter = new Completer<
-          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      final onStateChangeCompleter = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, dynamic>>();
       store.stream.listen(onStateChangeCompleter.complete);
       store.actions.increment(2);
-      var stateChange = await onStateChangeCompleter.future;
+      final stateChange = await onStateChangeCompleter.future;
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 3);
     });
 
     test('store change handler', () async {
-      Completer onStateChangeCompleter = new Completer<
-          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      final onStateChangeCompleter = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, dynamic>>();
 
-      var storeChagneHandler = createChangeHandler(onStateChangeCompleter);
+      final storeChagneHandler = createChangeHandler(onStateChangeCompleter);
       storeChagneHandler.build(store);
       // dipatch 2 different actions, since the handler is only set to listen to base.increment
       // if both are handled by the handler the completer with throw an error
       store.actions.decrement(1);
       store.actions.increment(4);
 
-      var stateChange = await onStateChangeCompleter.future;
+      final stateChange = await onStateChangeCompleter.future;
       expect(stateChange.prev.count, 0);
       expect(stateChange.next.count, 4);
       storeChagneHandler.dispose();
     });
 
     test('replaceState', () async {
-      Completer onStateChangeCompleter = new Completer<
-          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
-      Completer onStateChangeCompleter2 = new Completer<
-          StoreChange<BaseCounter, BaseCounterBuilder, BaseCounterActions>>();
+      final onStateChangeCompleter = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, dynamic>>();
+      final onStateChangeCompleter2 = new Completer<
+          StoreChange<BaseCounter, BaseCounterBuilder, dynamic>>();
 
       store.stream.listen((state) {
         if (!onStateChangeCompleter.isCompleted)

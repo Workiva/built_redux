@@ -60,7 +60,7 @@ var counterMiddleware = (new MiddlewareBuilder<BaseCounter, BaseCounterBuilder,
       ..add(MiddlewareActionsNames.increment, _doubleIt))
     .build();
 
-_doubleIt(
+void _doubleIt(
     MiddlewareApi<BaseCounter, BaseCounterBuilder, BaseCounterActions> api,
     ActionHandler next,
     Action<int> action) {
@@ -70,6 +70,8 @@ _doubleIt(
 
 // Change handler
 
-createChangeHandler(Completer comp) => (new StoreChangeHandlerBuilder<
-    BaseCounter, BaseCounterBuilder, BaseCounterActions>()
-  ..add(BaseCounterActionsNames.increment, (change) => comp.complete(change)));
+StoreChangeHandlerBuilder<BaseCounter, BaseCounterBuilder, BaseCounterActions>
+    createChangeHandler(Completer comp) => (new StoreChangeHandlerBuilder<
+        BaseCounter, BaseCounterBuilder, BaseCounterActions>()
+      ..add(BaseCounterActionsNames.increment,
+          (change) => comp.complete(change)));

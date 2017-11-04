@@ -3,12 +3,12 @@ import 'package:test/test.dart';
 
 import 'collection_models.dart';
 
-main() {
+void main() {
   group('collection reducer builders', () {
     Store<Collection, CollectionBuilder, CollectionActions> store;
 
     setUp(() {
-      store = new Store(
+      store = new Store<Collection, CollectionBuilder, CollectionActions>(
         getCollectionReducer(),
         new Collection(),
         new CollectionActions(),

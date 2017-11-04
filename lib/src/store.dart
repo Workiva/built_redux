@@ -34,8 +34,7 @@ class Store<
 
     _actions = actions;
 
-    final MiddlewareApi api =
-        new MiddlewareApi<State, StateBuilder, Actions>(this);
+    final api = new MiddlewareApi<State, StateBuilder, Actions>(this);
 
     // setup the dispatch chain
     ActionHandler handler = (action) {
@@ -68,7 +67,7 @@ class Store<
   }
 
   /// [dispose] removes closes both the dispatch and subscription stream
-  dispose() {
+  void dispose() {
     _stateController.close();
     _state = null;
     _actions = null;
@@ -79,7 +78,7 @@ class Store<
   void replaceState(State state) {
     if (_state != state) {
       _stateController.add(new StoreChange<State, StateBuilder, dynamic>(
-          state, _state, new Action('replaceState', null)));
+          state, _state, new Action<Null>('replaceState', null)));
       _state = state;
     }
   }

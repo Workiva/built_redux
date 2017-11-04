@@ -30,7 +30,7 @@ class ActionDispatcher<P> {
 
   ActionDispatcher(this._name);
 
-  void setDispatcher(dispatcher) {
+  void setDispatcher(Dispatcher dispatcher) {
     _dispatcher = dispatcher;
   }
 }

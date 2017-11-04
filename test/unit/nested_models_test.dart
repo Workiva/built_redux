@@ -3,12 +3,12 @@ import 'package:test/test.dart';
 
 import 'nested_models.dart';
 
-main() {
+void main() {
   group('nested builts and actions', () {
     Store<Base, BaseBuilder, BaseActions> store;
 
     setUp(() {
-      store = new Store(
+      store = new Store<Base, BaseBuilder, BaseActions>(
         getBaseReducer(),
         new Base(),
         new BaseActions(),

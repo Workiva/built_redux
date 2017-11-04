@@ -3,12 +3,13 @@ import 'package:test/test.dart';
 
 import 'action_generics_models.dart';
 
-main() {
+void main() {
   group('action generics', () {
     Store<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions> store;
 
     setUp(() {
-      store = new Store(
+      store = new Store<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>(
         getActionGenericsReducer(),
         new ActionGenerics(),
         new ActionGenericsActions(),
