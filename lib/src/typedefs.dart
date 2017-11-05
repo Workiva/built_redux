@@ -22,3 +22,15 @@ typedef NextActionHandler Middleware<
     State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions>(MiddlewareApi<State, StateBuilder, Actions> api);
+
+/// [SubstateChange] is the payload for `StateChangeTransformer`'s stream. It contains
+/// the previous and next value of the state resulting from the mapper provided to `StateChangeTransformer`
+class SubstateChange<Substate> {
+  Substate prev;
+  Substate next;
+  SubstateChange(this.prev, this.next);
+}
+
+/// [StateMapper] takes a state model and maps it to the values one cares about
+typedef Substate StateMapper<State extends Built<State, StateBuilder>,
+    StateBuilder extends Builder<State, StateBuilder>, Substate>(State state);

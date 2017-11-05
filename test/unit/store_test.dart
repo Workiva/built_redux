@@ -72,6 +72,20 @@ void main() {
       expect(stateChange.next.count, 1);
     });
 
+    test('substateStream', () async {
+      final completer = new Completer<SubstateChange<int>>();
+      final sub = store.substateStream<int>((BaseCounter state) => state.count);
+      sub.first.then(completer.complete);
+
+      store.actions.increment(4);
+      // would cause completer to complete twice and fail the test
+      store.actions.decrement(1);
+
+      var change = await completer.future;
+      expect(change.prev, 1);
+      expect(change.next, 5);
+    });
+
     test('nextState stream', () async {
       final completer = new Completer<BaseCounter>();
       store.nextState.first.then(completer.complete);

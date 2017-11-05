@@ -7,7 +7,6 @@ import 'action.dart';
 import 'middleware.dart';
 import 'typedefs.dart';
 import 'store_change.dart';
-import 'state_transformer.dart';
 
 /// [Store] is the container of your state. It listens for actions, invokes reducers,
 /// and publishes changes to the state
@@ -103,7 +102,12 @@ class Store<
   Stream<SubstateChange<Substate>> substateStream<Substate>(
     StateMapper<State, StateBuilder, Substate> mapper,
   ) =>
-      _stateController.stream.transform(new StateChangeTransformer(mapper));
+      stream
+          .map((c) => new SubstateChange<Substate>(
+                mapper(c.prev),
+                mapper(c.next),
+              ))
+          .where((c) => c.prev != c.next);
 
   /// [nextSubstate] is a stream which has a payload of the next subState value, rather than the SubstateChange event
   Stream<Substate> nextSubstate<Substate>(
