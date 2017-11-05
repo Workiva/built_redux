@@ -7,7 +7,6 @@ import 'action.dart';
 import 'middleware.dart';
 import 'typedefs.dart';
 import 'store_change.dart';
-import 'state_transformer.dart';
 
 /// [Store] is the container of your state. It listens for actions, invokes reducers,
 /// and publishes changes to the state
@@ -34,8 +33,7 @@ class Store<
 
     _actions = actions;
 
-    final MiddlewareApi api =
-        new MiddlewareApi<State, StateBuilder, Actions>(this);
+    final api = new MiddlewareApi<State, StateBuilder, Actions>(this);
 
     // setup the dispatch chain
     ActionHandler handler = (action) {
@@ -68,7 +66,7 @@ class Store<
   }
 
   /// [dispose] removes closes both the dispatch and subscription stream
-  dispose() {
+  void dispose() {
     _stateController.close();
     _state = null;
     _actions = null;
@@ -79,7 +77,7 @@ class Store<
   void replaceState(State state) {
     if (_state != state) {
       _stateController.add(new StoreChange<State, StateBuilder, dynamic>(
-          state, _state, new Action('replaceState', null)));
+          state, _state, new Action<Null>('replaceState', null)));
       _state = state;
     }
   }
@@ -104,7 +102,12 @@ class Store<
   Stream<SubstateChange<Substate>> substateStream<Substate>(
     StateMapper<State, StateBuilder, Substate> mapper,
   ) =>
-      _stateController.stream.transform(new StateChangeTransformer(mapper));
+      stream
+          .map((c) => new SubstateChange<Substate>(
+                mapper(c.prev),
+                mapper(c.next),
+              ))
+          .where((c) => c.prev != c.next);
 
   /// [nextSubstate] is a stream which has a payload of the next subState value, rather than the SubstateChange event
   Stream<Substate> nextSubstate<Substate>(
@@ -112,4 +115,13 @@ class Store<
   ) =>
       substateStream(mapper)
           .map((SubstateChange<Substate> change) => change.next);
+
+  /// [actionStream] returns a stream the fires when a state change is caused by the action
+  /// with the name provided. Check out built_redux_rx if you are looking for streams to actions that do not
+  /// necessarily result in state changes.
+  Stream<StoreChange<State, StateBuilder, Payload>> actionStream<Payload>(
+          ActionName<Payload> actionName) =>
+      stream
+          .where((c) => c.action.name == actionName.name)
+          .map((c) => c as StoreChange<State, StateBuilder, Payload>);
 }

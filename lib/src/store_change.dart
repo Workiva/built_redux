@@ -39,11 +39,13 @@ class StoreChangeHandlerBuilder<
   /// Registers [handler] function to the given [actionName]
   void add<Payload>(ActionName<Payload> actionName,
       StoreChangeHandler<Payload, State, StateBuilder> handler) {
-    _map[actionName.name] = handler;
+    _map[actionName.name] = (change) {
+      handler(change as StoreChange<State, StateBuilder, Payload>);
+    };
   }
 
   /// [build] sets up a subscription to the registered actions
-  build(Store<State, StateBuilder, Actions> store) {
+  void build(Store<State, StateBuilder, Actions> store) {
     _subscription = store.stream
         .listen((StoreChange<State, StateBuilder, dynamic> storeChange) {
       var handler = _map[storeChange.action.name];
@@ -52,7 +54,7 @@ class StoreChangeHandlerBuilder<
   }
 
   /// [dispose] cancels the subscription to the store
-  dispose() {
+  void dispose() {
     _subscription.cancel();
   }
 }

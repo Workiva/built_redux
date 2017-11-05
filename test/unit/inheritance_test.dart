@@ -3,13 +3,13 @@ import 'package:test/test.dart';
 
 import 'inheritance_test_models.dart';
 
-main() {
+void main() {
   group('inheritence', () {
     Store<Child, ChildBuilder, ChildActions> store;
 
     setUp(() {
-      store =
-          new Store(getInheritanceReducer(), new Child(), new ChildActions());
+      store = new Store<Child, ChildBuilder, ChildActions>(
+          getInheritanceReducer(), new Child(), new ChildActions());
     });
 
     tearDown(() {

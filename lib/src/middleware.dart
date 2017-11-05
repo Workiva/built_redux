@@ -31,9 +31,11 @@ class MiddlewareBuilder<
   var _map = new Map<String,
       MiddlewareHandler<State, StateBuilder, Actions, dynamic>>();
 
-  void add<T>(ActionName<T> aMgr,
-      MiddlewareHandler<State, StateBuilder, Actions, T> handler) {
-    _map[aMgr.name] = handler;
+  void add<Payload>(ActionName<Payload> aMgr,
+      MiddlewareHandler<State, StateBuilder, Actions, Payload> handler) {
+    _map[aMgr.name] = (api, next, action) {
+      handler(api, next, action as Action<Payload>);
+    };
   }
 
   /// [build] returns a [Middleware] function that handles all actions added with [add]
