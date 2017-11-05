@@ -92,5 +92,18 @@ void main() {
       var change = await completer.future;
       expect(change, 5);
     });
+
+    test('actionStream', () async {
+      final onStateChangeCompleter =
+          new Completer<StoreChange<BaseCounter, BaseCounterBuilder, int>>();
+      store
+          .actionStream(BaseCounterActionsNames.increment)
+          .listen(onStateChangeCompleter.complete);
+      store.actions.increment(2);
+      final stateChange = await onStateChangeCompleter.future;
+      expect(stateChange.prev.count, 1);
+      expect(stateChange.next.count, 3);
+      expect(stateChange.action.payload, 2);
+    });
   });
 }

@@ -111,4 +111,13 @@ class Store<
   ) =>
       substateStream(mapper)
           .map((SubstateChange<Substate> change) => change.next);
+
+  /// [actionStream] returns a stream the fires when a state change is caused by the action
+  /// with the name provided. Check out built_redux_rx if you are looking for streams to actions that do not
+  /// necessarily result in state changes.
+  Stream<StoreChange<State, StateBuilder, Payload>> actionStream<Payload>(
+          ActionName<Payload> actionName) =>
+      stream
+          .where((c) => c.action.name == actionName.name)
+          .map((c) => c as StoreChange<State, StateBuilder, Payload>);
 }

@@ -146,8 +146,7 @@ class AbstractReducerBuilder<AState, AStateBuilder> {
   /// Registers [reducer] function to the given [actionName]
   void add<Payload>(ActionName<Payload> actionName,
       CReducer<AState, AStateBuilder, Payload> reducer) {
-    _map[actionName.name] =
-        (AState state, Action<dynamic> action, AStateBuilder builder) {
+    _map[actionName.name] = (state, action, builder) {
       reducer(state, action as Action<Payload>, builder);
     };
   }
