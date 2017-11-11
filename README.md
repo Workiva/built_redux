@@ -16,6 +16,8 @@ Built using [built_value][built_value_git]
 
 ## examples
 
+flutter [todo_mvc], written by [Brian Egan]
+
 [nested state & actions][nesting]
 
 [building reducers for built collections][collection_reducers]
@@ -306,3 +308,7 @@ store.actions.increment(3);
 [collection_reducers]: test/unit/collection_models.dart
 
 [inheritence]: test/unit/inheritance_test_models.dart
+
+[todo_mvc]: https://gitlab.com/brianegan/flutter_architecture_samples/tree/master/example/built_redux
+
+[Brian Egan]: https://gitlab.com/brianegan
