@@ -66,8 +66,8 @@ class Store<
   }
 
   /// [dispose] removes closes both the dispatch and subscription stream
-  void dispose() {
-    _stateController.close();
+  Future<Null> dispose() async {
+    await _stateController.close();
     _state = null;
     _actions = null;
   }
