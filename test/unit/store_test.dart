@@ -35,9 +35,9 @@ void main() {
       final onStateChangeCompleter = new Completer<
           StoreChange<BaseCounter, BaseCounterBuilder, dynamic>>();
 
-      final storeChagneHandler = createChangeHandler(onStateChangeCompleter);
-      storeChagneHandler.build(store);
-      // dipatch 2 different actions, since the handler is only set to listen to base.increment
+      final storeChangeHandler = createChangeHandler(onStateChangeCompleter);
+      storeChangeHandler.build(store);
+      // dispatch 2 different actions, since the handler is only set to listen to base.increment
       // if both are handled by the handler the completer with throw an error
       store.actions.decrement(1);
       store.actions.increment(4);
@@ -45,7 +45,7 @@ void main() {
       final stateChange = await onStateChangeCompleter.future;
       expect(stateChange.prev.count, 0);
       expect(stateChange.next.count, 4);
-      storeChagneHandler.dispose();
+      storeChangeHandler.dispose();
     });
 
     test('replaceState', () async {
@@ -118,6 +118,17 @@ void main() {
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 3);
       expect(stateChange.action.payload, 2);
+    });
+
+    test('should not reset state and actions before closing', () async {
+      store
+          .substateStream((s) => s)
+          .listen((_) => expect(store.actions, isNotNull));
+
+      // intentionally don't wait
+      store.dispose();
+
+      store.actions.increment(1);
     });
   });
 }
