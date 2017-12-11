@@ -208,14 +208,14 @@ var store = new Store<Counter, CounterBuilder, CounterActions>(
   middleware: [doubleMiddleware],
 );
 
-store.stream.listen((_) => print(store.state.count));
+store.stream.listen((change) => print(change.next.count));
 
 // The only way to mutate the internal state is to dispatch an action.
 store.actions.increment(1);
-// 1
 store.actions.doublerActions.increment(2);
-// 5
 store.actions.decrement(1);
+// 1
+// 5
 // 4
 ```
 
@@ -264,9 +264,9 @@ final countStream = store.substateStream<int>((BaseCounter state) => state.count
 countStream.listen((change) => print('prev: ${change.prev}, next: ${change.next}'));
 
 store.actions.increment(1);
-// prev: 1, next: 2
 store.actions.nestedCounter.increment(2);
-// nothing logged
+
+// prev: 1, next: 2
 
 ```
 
