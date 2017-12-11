@@ -133,15 +133,20 @@ var store = new Store<Counter, CounterBuilder, CounterActions>(
 );
 
 // You can use stream.listen() to update the UI in response to state changes.
-store.stream.listen((_) => print(store.state.count));
+store.stream.listen((change) => print('prev: ${change.prev.count} next ${change.next.count}'));
 
 // The only way to mutate the internal state is to dispatch an action.
 store.actions.increment(1);
-// 1
+print(store.state.count); // 1
 store.actions.increment(2);
-// 3
+print(store.state.count); // 3
 store.actions.decrement(1);
-// 2
+print(store.state.count); // 2
+
+// when the event dispatching actions finishes and the stream handlers process, the following will be printed:
+// prev: 0 next: 1
+// prev: 1 next 3
+// prev: 3 next: 2
 ```
 
 ### Writing middleware
