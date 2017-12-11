@@ -239,15 +239,14 @@ like to set up a stream thats payload is simply the next state, use store.nexSta
 
 ```dart
 
-print(store.state.count);
-// 1
+print(store.state.count); // 1
 
 store.nextState.listen(print);
 
 store.actions.increment(1);
-// 2
-
 store.actions.increment(3);
+
+// 2
 // 5
 
 ```
@@ -276,8 +275,7 @@ like to set up a stream thats payload is simply the next subState, use store.nex
 
 ```dart
 
-print(store.state.count);
-// 1
+print(store.state.count); // 1
 
 store.nextSubstate((BaseCounter state) => state.count)
   .listen(print);
