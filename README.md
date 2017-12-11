@@ -283,9 +283,9 @@ store.nextSubstate((BaseCounter state) => state.count)
   .listen(print);
 
 store.actions.increment(1);
-// 2
-
 store.actions.increment(3);
+
+// 2
 // 5
 
 ```
