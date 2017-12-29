@@ -18,6 +18,8 @@ Built using [built_value][built_value_git]
 
 flutter [todo_mvc], written by [Brian Egan]
 
+vanilla dart, angular, and wui_builder [todoMVCs]
+
 [nested state & actions][nesting]
 
 [building reducers for built collections][collection_reducers]
@@ -295,6 +297,8 @@ store.actions.increment(3);
 [redux_git]: https://github.com/reactjs/redux
 
 [redux_docs]: http://redux.js.org/
+
+[todoMVCs]: https://github.com/davidmarne/built_redux_todos
 
 [flutter]: https://github.com/davidmarne/flutter_built_redux
 
