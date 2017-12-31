@@ -7,18 +7,18 @@ import 'test_counter.dart';
 
 void main() {
   group('middleware', () {
-    Store<BaseCounter, BaseCounterBuilder, BaseCounterActions> store;
+    Store<Counter, CounterBuilder, CounterActions> store;
 
     setup({int numMiddleware: 1}) {
-      var actions = new BaseCounterActions();
-      var defaultValue = new BaseCounter();
+      var actions = new CounterActions();
+      var defaultValue = new Counter();
       final middleware =
-          <Middleware<BaseCounter, BaseCounterBuilder, BaseCounterActions>>[];
+          <Middleware<Counter, CounterBuilder, CounterActions>>[];
       for (int i = 0; i < numMiddleware; i++) {
         middleware.add(counterMiddleware);
       }
 
-      store = new Store<BaseCounter, BaseCounterBuilder, BaseCounterActions>(
+      store = new Store<Counter, CounterBuilder, CounterActions>(
         reducer,
         defaultValue,
         actions,
@@ -39,10 +39,10 @@ void main() {
 
     test('2 middlewares doubles count twice and updates state', () async {
       setup(numMiddleware: 2);
-      final onStateChangeCompleter = new Completer<
-          StoreChange<BaseCounter, BaseCounterBuilder, dynamic>>();
-      final onStateChangeCompleter2 = new Completer<
-          StoreChange<BaseCounter, BaseCounterBuilder, dynamic>>();
+      final onStateChangeCompleter =
+          new Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
+      final onStateChangeCompleter2 =
+          new Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
 
       store.stream.listen((state) {
         if (!onStateChangeCompleter.isCompleted)
