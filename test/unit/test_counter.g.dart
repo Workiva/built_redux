@@ -14,90 +14,85 @@ part of test_counter;
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
 
-class _$BaseCounter extends BaseCounter {
+class _$Counter extends Counter {
   @override
   final int count;
   @override
-  final BuiltList<int> indexOutOfRangeList;
+  final int otherCount;
 
-  factory _$BaseCounter([void updates(BaseCounterBuilder b)]) =>
-      (new BaseCounterBuilder()..update(updates)).build();
+  factory _$Counter([void updates(CounterBuilder b)]) =>
+      (new CounterBuilder()..update(updates)).build();
 
-  _$BaseCounter._({this.count, this.indexOutOfRangeList}) : super._() {
+  _$Counter._({this.count, this.otherCount}) : super._() {
     if (count == null) throw new ArgumentError.notNull('count');
-    if (indexOutOfRangeList == null)
-      throw new ArgumentError.notNull('indexOutOfRangeList');
+    if (otherCount == null) throw new ArgumentError.notNull('otherCount');
   }
 
   @override
-  BaseCounter rebuild(void updates(BaseCounterBuilder b)) =>
+  Counter rebuild(void updates(CounterBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  BaseCounterBuilder toBuilder() => new BaseCounterBuilder()..replace(this);
+  CounterBuilder toBuilder() => new CounterBuilder()..replace(this);
 
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! BaseCounter) return false;
-    return count == other.count &&
-        indexOutOfRangeList == other.indexOutOfRangeList;
+    if (other is! Counter) return false;
+    return count == other.count && otherCount == other.otherCount;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, count.hashCode), indexOutOfRangeList.hashCode));
+    return $jf($jc($jc(0, count.hashCode), otherCount.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('BaseCounter')
+    return (newBuiltValueToStringHelper('Counter')
           ..add('count', count)
-          ..add('indexOutOfRangeList', indexOutOfRangeList))
+          ..add('otherCount', otherCount))
         .toString();
   }
 }
 
-class BaseCounterBuilder implements Builder<BaseCounter, BaseCounterBuilder> {
-  _$BaseCounter _$v;
+class CounterBuilder implements Builder<Counter, CounterBuilder> {
+  _$Counter _$v;
 
   int _count;
   int get count => _$this._count;
   set count(int count) => _$this._count = count;
 
-  ListBuilder<int> _indexOutOfRangeList;
-  ListBuilder<int> get indexOutOfRangeList =>
-      _$this._indexOutOfRangeList ??= new ListBuilder<int>();
-  set indexOutOfRangeList(ListBuilder<int> indexOutOfRangeList) =>
-      _$this._indexOutOfRangeList = indexOutOfRangeList;
+  int _otherCount;
+  int get otherCount => _$this._otherCount;
+  set otherCount(int otherCount) => _$this._otherCount = otherCount;
 
-  BaseCounterBuilder();
+  CounterBuilder();
 
-  BaseCounterBuilder get _$this {
+  CounterBuilder get _$this {
     if (_$v != null) {
       _count = _$v.count;
-      _indexOutOfRangeList = _$v.indexOutOfRangeList?.toBuilder();
+      _otherCount = _$v.otherCount;
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(BaseCounter other) {
+  void replace(Counter other) {
     if (other == null) throw new ArgumentError.notNull('other');
-    _$v = other as _$BaseCounter;
+    _$v = other as _$Counter;
   }
 
   @override
-  void update(void updates(BaseCounterBuilder b)) {
+  void update(void updates(CounterBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$BaseCounter build() {
-    final _$result = _$v ??
-        new _$BaseCounter._(
-            count: count, indexOutOfRangeList: indexOutOfRangeList?.build());
+  _$Counter build() {
+    final _$result =
+        _$v ?? new _$Counter._(count: count, otherCount: otherCount);
     replace(_$result);
     return _$result;
   }
@@ -107,29 +102,29 @@ class BaseCounterBuilder implements Builder<BaseCounter, BaseCounterBuilder> {
 // Generator: BuiltReduxGenerator
 // **************************************************************************
 
-class _$BaseCounterActions extends BaseCounterActions {
-  factory _$BaseCounterActions() => new _$BaseCounterActions._();
-  _$BaseCounterActions._() : super._();
+class _$CounterActions extends CounterActions {
+  factory _$CounterActions() => new _$CounterActions._();
+  _$CounterActions._() : super._();
 
   final ActionDispatcher<int> increment =
-      new ActionDispatcher<int>('BaseCounterActions-increment');
-  final ActionDispatcher<int> decrement =
-      new ActionDispatcher<int>('BaseCounterActions-decrement');
+      new ActionDispatcher<int>('CounterActions-increment');
+  final ActionDispatcher<int> incrementOther =
+      new ActionDispatcher<int>('CounterActions-incrementOther');
   final MiddlewareActions middlewareActions = new MiddlewareActions();
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
     increment.setDispatcher(dispatcher);
-    decrement.setDispatcher(dispatcher);
+    incrementOther.setDispatcher(dispatcher);
     middlewareActions.setDispatcher(dispatcher);
   }
 }
 
-class BaseCounterActionsNames {
+class CounterActionsNames {
   static final ActionName<int> increment =
-      new ActionName<int>('BaseCounterActions-increment');
-  static final ActionName<int> decrement =
-      new ActionName<int>('BaseCounterActions-decrement');
+      new ActionName<int>('CounterActions-increment');
+  static final ActionName<int> incrementOther =
+      new ActionName<int>('CounterActions-incrementOther');
 }
 
 class _$MiddlewareActions extends MiddlewareActions {
