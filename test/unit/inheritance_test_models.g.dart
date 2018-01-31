@@ -41,10 +41,12 @@ class _$Child extends Child {
 
   _$Child._({this.childCount, this.parentCount, this.grandparentCount})
       : super._() {
-    if (childCount == null) throw new ArgumentError.notNull('childCount');
-    if (parentCount == null) throw new ArgumentError.notNull('parentCount');
+    if (childCount == null)
+      throw new BuiltValueNullFieldError('Child', 'childCount');
+    if (parentCount == null)
+      throw new BuiltValueNullFieldError('Child', 'parentCount');
     if (grandparentCount == null)
-      throw new ArgumentError.notNull('grandparentCount');
+      throw new BuiltValueNullFieldError('Child', 'grandparentCount');
   }
 
   @override

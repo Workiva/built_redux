@@ -36,13 +36,16 @@ class _$Collection extends Collection {
       this.builtSet,
       this.builtSetMultimap})
       : super._() {
-    if (builtList == null) throw new ArgumentError.notNull('builtList');
+    if (builtList == null)
+      throw new BuiltValueNullFieldError('Collection', 'builtList');
     if (builtListMultimap == null)
-      throw new ArgumentError.notNull('builtListMultimap');
-    if (builtMap == null) throw new ArgumentError.notNull('builtMap');
-    if (builtSet == null) throw new ArgumentError.notNull('builtSet');
+      throw new BuiltValueNullFieldError('Collection', 'builtListMultimap');
+    if (builtMap == null)
+      throw new BuiltValueNullFieldError('Collection', 'builtMap');
+    if (builtSet == null)
+      throw new BuiltValueNullFieldError('Collection', 'builtSet');
     if (builtSetMultimap == null)
-      throw new ArgumentError.notNull('builtSetMultimap');
+      throw new BuiltValueNullFieldError('Collection', 'builtSetMultimap');
   }
 
   @override
@@ -141,13 +144,34 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
 
   @override
   _$Collection build() {
-    final _$result = _$v ??
-        new _$Collection._(
-            builtList: builtList?.build(),
-            builtListMultimap: builtListMultimap?.build(),
-            builtMap: builtMap?.build(),
-            builtSet: builtSet?.build(),
-            builtSetMultimap: builtSetMultimap?.build());
+    _$Collection _$result;
+    try {
+      _$result = _$v ??
+          new _$Collection._(
+              builtList: builtList.build(),
+              builtListMultimap: builtListMultimap.build(),
+              builtMap: builtMap.build(),
+              builtSet: builtSet.build(),
+              builtSetMultimap: builtSetMultimap.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'builtList';
+        builtList.build();
+        _$failedField = 'builtListMultimap';
+        builtListMultimap.build();
+        _$failedField = 'builtMap';
+        builtMap.build();
+        _$failedField = 'builtSet';
+        builtSet.build();
+        _$failedField = 'builtSetMultimap';
+        builtSetMultimap.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Collection', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

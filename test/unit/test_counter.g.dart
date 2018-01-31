@@ -24,8 +24,9 @@ class _$Counter extends Counter {
       (new CounterBuilder()..update(updates)).build();
 
   _$Counter._({this.count, this.otherCount}) : super._() {
-    if (count == null) throw new ArgumentError.notNull('count');
-    if (otherCount == null) throw new ArgumentError.notNull('otherCount');
+    if (count == null) throw new BuiltValueNullFieldError('Counter', 'count');
+    if (otherCount == null)
+      throw new BuiltValueNullFieldError('Counter', 'otherCount');
   }
 
   @override

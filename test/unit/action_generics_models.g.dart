@@ -22,7 +22,8 @@ class _$ActionGenerics extends ActionGenerics {
       (new ActionGenericsBuilder()..update(updates)).build();
 
   _$ActionGenerics._({this.count}) : super._() {
-    if (count == null) throw new ArgumentError.notNull('count');
+    if (count == null)
+      throw new BuiltValueNullFieldError('ActionGenerics', 'count');
   }
 
   @override

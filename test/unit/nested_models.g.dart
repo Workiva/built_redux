@@ -24,8 +24,8 @@ class _$Base extends Base {
       (new BaseBuilder()..update(updates)).build();
 
   _$Base._({this.count, this.child}) : super._() {
-    if (count == null) throw new ArgumentError.notNull('count');
-    if (child == null) throw new ArgumentError.notNull('child');
+    if (count == null) throw new BuiltValueNullFieldError('Base', 'count');
+    if (child == null) throw new BuiltValueNullFieldError('Base', 'child');
   }
 
   @override
@@ -91,7 +91,20 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
 
   @override
   _$Base build() {
-    final _$result = _$v ?? new _$Base._(count: count, child: child?.build());
+    _$Base _$result;
+    try {
+      _$result = _$v ?? new _$Base._(count: count, child: child.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'child';
+        child.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Base', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
@@ -107,8 +120,9 @@ class _$Child extends Child {
       (new ChildBuilder()..update(updates)).build();
 
   _$Child._({this.count, this.grandchild}) : super._() {
-    if (count == null) throw new ArgumentError.notNull('count');
-    if (grandchild == null) throw new ArgumentError.notNull('grandchild');
+    if (count == null) throw new BuiltValueNullFieldError('Child', 'count');
+    if (grandchild == null)
+      throw new BuiltValueNullFieldError('Child', 'grandchild');
   }
 
   @override
@@ -176,8 +190,21 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
 
   @override
   _$Child build() {
-    final _$result =
-        _$v ?? new _$Child._(count: count, grandchild: grandchild?.build());
+    _$Child _$result;
+    try {
+      _$result =
+          _$v ?? new _$Child._(count: count, grandchild: grandchild.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'grandchild';
+        grandchild.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Child', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
@@ -191,7 +218,8 @@ class _$Grandchild extends Grandchild {
       (new GrandchildBuilder()..update(updates)).build();
 
   _$Grandchild._({this.count}) : super._() {
-    if (count == null) throw new ArgumentError.notNull('count');
+    if (count == null)
+      throw new BuiltValueNullFieldError('Grandchild', 'count');
   }
 
   @override
