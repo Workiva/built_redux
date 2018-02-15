@@ -1,9 +1,8 @@
-library action_generics_models;
-
 import 'package:built_redux/built_redux.dart';
 import 'package:built_value/built_value.dart';
 
 part 'action_generics_models.g.dart';
+part 'action_generics_models.built_redux.dart';
 
 // ActionGenerics contains actions that have payload
 // of different generic types. This is mainly to test the generation of
