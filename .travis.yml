@@ -1,8 +1,6 @@
 language: dart
-dart:
-  - 1.24.2
+dart: dev
 script:
-  - dart tool/build.dart
   - pub run dart_dev format --check
   - pub run dart_dev analyze
   - pub run dart_dev test -p vm

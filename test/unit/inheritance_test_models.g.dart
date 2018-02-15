@@ -111,6 +111,7 @@ class ChildBuilder
   }
 
   @override
+// ignore: override_on_non_overriding_method
   void replace(covariant Child other) {
     if (other == null) throw new ArgumentError.notNull('other');
     _$v = other as _$Child;
@@ -131,48 +132,4 @@ class ChildBuilder
     replace(_$result);
     return _$result;
   }
-}
-
-// **************************************************************************
-// Generator: BuiltReduxGenerator
-// **************************************************************************
-
-class _$ChildActions extends ChildActions {
-  factory _$ChildActions() => new _$ChildActions._();
-  _$ChildActions._() : super._();
-
-  final ActionDispatcher<Null> childAction =
-      new ActionDispatcher<Null>('ChildActions-childAction');
-  final ActionDispatcher<Null> parentAction =
-      new ActionDispatcher<Null>('ParentActions-parentAction');
-  final ActionDispatcher<Null> grandparentAction =
-      new ActionDispatcher<Null>('GrandparentActions-grandparentAction');
-
-  @override
-  void setDispatcher(Dispatcher dispatcher) {
-    childAction.setDispatcher(dispatcher);
-    parentAction.setDispatcher(dispatcher);
-    grandparentAction.setDispatcher(dispatcher);
-  }
-}
-
-class ChildActionsNames {
-  static final ActionName<Null> childAction =
-      new ActionName<Null>('ChildActions-childAction');
-  static final ActionName<Null> parentAction =
-      new ActionName<Null>('ParentActions-parentAction');
-  static final ActionName<Null> grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
-}
-
-class ParentActionsNames {
-  static final ActionName<Null> parentAction =
-      new ActionName<Null>('ParentActions-parentAction');
-  static final ActionName<Null> grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
-}
-
-class GrandparentActionsNames {
-  static final ActionName<Null> grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
 }
