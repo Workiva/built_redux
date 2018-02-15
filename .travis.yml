@@ -1,4 +1,5 @@
 language: dart
+dart: dev
 dart:
   - 1.24.2
 script:
