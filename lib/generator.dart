@@ -7,7 +7,6 @@ import 'package:source_gen/source_gen.dart';
 class BuiltReduxGenerator extends Generator {
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
-    log.severe('hiii');
     final result = new StringBuffer();
     for (final element in library.allElements) {
       if (_needsReduxActions(element) && element is ClassElement) {
