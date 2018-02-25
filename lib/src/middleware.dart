@@ -38,6 +38,12 @@ class MiddlewareBuilder<
     };
   }
 
+  /// [combine] combines this MiddlewareBuilder with another MiddlewareBuilder
+  /// for the same type
+  void combine(MiddlewareBuilder<State, StateBuilder, Actions> other) {
+    _map.addAll(other._map);
+  }
+
   /// [build] returns a [Middleware] function that handles all actions added with [add]
   Middleware<State, StateBuilder, Actions> build() =>
       (MiddlewareApi<State, StateBuilder, Actions> api) =>
