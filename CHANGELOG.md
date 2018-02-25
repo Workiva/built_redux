@@ -1,3 +1,10 @@
+## 7.4.0
+
+* add built_redux_test_utils library
+* add toString to Action class
+* add example
+* add docs
+
 ## 7.3.3
 
 * add changelog

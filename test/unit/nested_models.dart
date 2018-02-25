@@ -35,6 +35,11 @@ abstract class GrandchildActions extends ReduxActions {
   ActionDispatcher<Null> get grandchildAction;
 }
 
+NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder> getChildReducer =
+    new NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>(
+        (s) => s.child, (b) => b.child)
+      ..add<Null>(ChildActionsNames.childAction, (s, a, b) => b.count++);
+
 // Base is the main built class that contains all of the state
 // for your store. It is passed to the store at instantiation.
 // It contains an count and a reference to an instance of Child.

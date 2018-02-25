@@ -14,6 +14,6 @@ Future main(List<String> args) async {
           new BuiltReduxGenerator(),
         ]),
         'built_redux',
-        inputs: const ['test/unit/*.dart'])
+        inputs: const ['test/unit/*.dart', 'example/*.dart'])
   ], deleteFilesByDefault: true);
 }
