@@ -11,6 +11,7 @@ In redux.dart each action is defined as its own type. This means an action can b
 built_redux requires you define action dispatchers, which all dispatch an object of type Action. An Action object contains an action name and a generically type payload. A given action dispatcher can only be called with a single argument that matches its generic payload type. This action object is based on the [flux-standard-action](https://github.com/reduxactions/flux-standard-action).
 
 Before we dive into the reasoning behind all of this, lets take a quick look at some example code that defines some actions for a todo application in both redux.dart and built_redux.
+
 redux.dart:
 
 ```dart
