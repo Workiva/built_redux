@@ -41,7 +41,7 @@ void counterReducer(App prevState, Action<dynamic> action, AppBuilder builder) {
 
 When this reducer is run it will either increase or decrease the count value conditionally based on the action that was dispatched. Unlike redux.js or redux.dart, it does not return anything. It simply uses the builder provided to make changes.
 
-Notice the action parameter is dynamic and action.payload has to be casted to an integer. This is no good, and can be avoided by using a [ReducerBuilder](building_reducers.md)
+Notice the action parameter is dynamic and action.payload has to be casted to an integer. This is no good, and can be avoided by using a [ReducerBuilder](../advanced/building_reducers.md)
 
 ## More on the differences from redux.js and redux.dart
 
