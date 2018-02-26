@@ -31,7 +31,7 @@ abstract class Child implements Built<Child, ChildBuilder> {
 // actions that could rebuild any peice of state within the Base object.
 // Reducers added to the ReducerBuilder must have the signature:
 // (Base, Action<T>, BaseBuilder)
-ReducerBuilder<Base, BaseBuilder> baseReducerBuilder = new ReducerBuilder<Base, BaseBuilder>()
+final baseReducerBuilder = new ReducerBuilder<Base, BaseBuilder>()
   ..add<Null>(BaseActionsNames.baseAction, (s, a, b) => b.count++)
   ..combineNested(childReducerBuilder);
 
@@ -40,8 +40,7 @@ ReducerBuilder<Base, BaseBuilder> baseReducerBuilder = new ReducerBuilder<Base, 
 // could be modified to handle more actions that rebuild Child.
 // Reducers added to the NestedReducerBuilder must have the signature:
 // (Child, Action<T>, ChildBuilder)
-NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder> childReducerBuilder =
-    new NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>(
+final childReducerBuilder = new NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>(
         (s) => s.child, (b) => b.child) // maps from the main state object to the nested state
       ..add<Null>(ChildActionsNames.childAction, (s, a, b) => b.count++);
 
@@ -71,7 +70,7 @@ abstract class Base implements Built<Base, BaseBuilder> {
 // actions that could rebuild any peice of state within the Base object.
 // Reducers added to the ReducerBuilder must have the signature:
 // (Base, Action<T>, BaseBuilder)
-ReducerBuilder<Base, BaseBuilder> baseReducerBuilder = new ReducerBuilder<Base, BaseBuilder>()
+final baseReducerBuilder = new ReducerBuilder<Base, BaseBuilder>()
   ..add<Null>(BaseActionsNames.baseAction, (s, a, b) => b.count++)
   ..combineList(listReducerBuilder);
 
@@ -80,8 +79,7 @@ ReducerBuilder<Base, BaseBuilder> baseReducerBuilder = new ReducerBuilder<Base, 
 // could be modified to handle more actions that rebuild builtList.
 // Reducers added to the ListReducerBuilder must have the signature:
 // (BuiltList<int>, Action<T>, ListBuilder<int>)
-ListReducerBuilder<Collection, CollectionBuilder, int> listReducerBuilder =
-    new ListReducerBuilder<Collection, CollectionBuilder, int>(
+final listReducerBuilder = new ListReducerBuilder<Collection, CollectionBuilder, int>(
         (s) => s.builtList, (b) => b.builtList) // maps from the main state object to the nested collection
       ..add<Null>(
           CollectionActionsNames.builtListAction, (s, a, b) => b.add(0));
