@@ -30,6 +30,7 @@ void main() {
     });
   });
 }
+```
 
 ## Verifying actions are dispatched
 
