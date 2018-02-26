@@ -10,12 +10,7 @@ class Action<Payload> {
   Action(this.name, this.payload);
 
   @override
-  String toString() => '''
-    Action {
-      name: $name,
-      payload: $payload,
-    }
-  ''';
+  String toString() => 'Action {\n  name: $name,\n  payload: $payload,\n}';
 }
 
 // Dispatches an action to the store

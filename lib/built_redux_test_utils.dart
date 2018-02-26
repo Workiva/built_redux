@@ -14,8 +14,6 @@ void expectDispatched<T>(
   String reason,
 }) {
   actionDispatcher.setDispatcher(expectAsync1((Action<dynamic> action) {
-    if (action.payload is! T)
-      fail('expectDispatched: Invalid payload type on action $action');
     if (verfier != null) verfier(action as Action<T>);
   }, count: count, max: max, id: id, reason: reason));
 }

@@ -136,5 +136,12 @@ void main() {
       expect(store.state, null);
       expect(store.actions, null);
     });
+
+    test('action toString', () async {
+      final action = new Action('foo', 1);
+      final expectedString = 'Action {\n  name: foo,\n  payload: 1,\n}';
+
+      expect('$action', expectedString);
+    });
   });
 }

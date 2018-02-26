@@ -132,16 +132,21 @@ class _$MiddlewareActions extends MiddlewareActions {
   factory _$MiddlewareActions() => new _$MiddlewareActions._();
   _$MiddlewareActions._() : super._();
 
-  final ActionDispatcher<int> increment =
-      new ActionDispatcher<int>('MiddlewareActions-increment');
+  final ActionDispatcher<int> doubleIt =
+      new ActionDispatcher<int>('MiddlewareActions-doubleIt');
+  final ActionDispatcher<int> tripleIt =
+      new ActionDispatcher<int>('MiddlewareActions-tripleIt');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
-    increment.setDispatcher(dispatcher);
+    doubleIt.setDispatcher(dispatcher);
+    tripleIt.setDispatcher(dispatcher);
   }
 }
 
 class MiddlewareActionsNames {
-  static final ActionName<int> increment =
-      new ActionName<int>('MiddlewareActions-increment');
+  static final ActionName<int> doubleIt =
+      new ActionName<int>('MiddlewareActions-doubleIt');
+  static final ActionName<int> tripleIt =
+      new ActionName<int>('MiddlewareActions-tripleIt');
 }
