@@ -81,7 +81,6 @@ final baseReducerBuilder = new ReducerBuilder<Base, BaseBuilder>()
 // (BuiltList<int>, Action<T>, ListBuilder<int>)
 final listReducerBuilder = new ListReducerBuilder<Collection, CollectionBuilder, int>(
         (s) => s.builtList, (b) => b.builtList) // maps from the main state object to the nested collection
-      ..add<Null>(
-          CollectionActionsNames.builtListAction, (s, a, b) => b.add(0));
+      ..add<Null>(CollectionActionsNames.builtListAction, (s, a, b) => b.add(0));
 
 ```
