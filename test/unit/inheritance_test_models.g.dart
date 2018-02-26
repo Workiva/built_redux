@@ -111,6 +111,7 @@ class ChildBuilder
   }
 
   @override
+// ignore: override_on_non_overriding_method
   void replace(covariant Child other) {
     if (other == null) throw new ArgumentError.notNull('other');
     _$v = other as _$Child;

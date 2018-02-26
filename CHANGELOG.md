@@ -1,3 +1,11 @@
+## 7.4.0
+
+* add built_redux_test_utils library - exposes an expectDispatched function for expecting a given action gets dispatched asynchronously
+* add combine to MiddlewareBuilder class - lets you combine middleware builders
+* add toString to Action class
+* add example
+* add docs
+
 ## 7.3.3
 
 * add changelog

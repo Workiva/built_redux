@@ -33,7 +33,7 @@ void main() {
     test('1 middleware doubles count and updates state', () async {
       setup();
       expect(store.state.count, 1);
-      store.actions.middlewareActions.increment(0);
+      store.actions.middlewareActions.doubleIt(0);
       expect(store.state.count, 3);
     });
 
@@ -52,13 +52,20 @@ void main() {
       });
 
       // should add double the current state twice
-      store.actions.middlewareActions.increment(0);
+      store.actions.middlewareActions.doubleIt(0);
       var stateChange = await onStateChangeCompleter.future;
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 3);
       stateChange = await onStateChangeCompleter2.future;
       expect(stateChange.prev.count, 3);
       expect(stateChange.next.count, 9);
+    });
+
+    test('combine works with tripleIt', () async {
+      setup();
+      expect(store.state.count, 1);
+      store.actions.middlewareActions.tripleIt(0);
+      expect(store.state.count, 4);
     });
   });
 }

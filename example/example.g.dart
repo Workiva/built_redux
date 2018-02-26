@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of test_counter;
+part of example;
 
 // **************************************************************************
 // Generator: BuiltValueGenerator
@@ -17,16 +17,12 @@ part of test_counter;
 class _$Counter extends Counter {
   @override
   final int count;
-  @override
-  final int otherCount;
 
   factory _$Counter([void updates(CounterBuilder b)]) =>
       (new CounterBuilder()..update(updates)).build();
 
-  _$Counter._({this.count, this.otherCount}) : super._() {
+  _$Counter._({this.count}) : super._() {
     if (count == null) throw new BuiltValueNullFieldError('Counter', 'count');
-    if (otherCount == null)
-      throw new BuiltValueNullFieldError('Counter', 'otherCount');
   }
 
   @override
@@ -40,19 +36,17 @@ class _$Counter extends Counter {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! Counter) return false;
-    return count == other.count && otherCount == other.otherCount;
+    return count == other.count;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, count.hashCode), otherCount.hashCode));
+    return $jf($jc(0, count.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Counter')
-          ..add('count', count)
-          ..add('otherCount', otherCount))
+    return (newBuiltValueToStringHelper('Counter')..add('count', count))
         .toString();
   }
 }
@@ -64,16 +58,11 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
   int get count => _$this._count;
   set count(int count) => _$this._count = count;
 
-  int _otherCount;
-  int get otherCount => _$this._otherCount;
-  set otherCount(int otherCount) => _$this._otherCount = otherCount;
-
   CounterBuilder();
 
   CounterBuilder get _$this {
     if (_$v != null) {
       _count = _$v.count;
-      _otherCount = _$v.otherCount;
       _$v = null;
     }
     return this;
@@ -92,8 +81,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   @override
   _$Counter build() {
-    final _$result =
-        _$v ?? new _$Counter._(count: count, otherCount: otherCount);
+    final _$result = _$v ?? new _$Counter._(count: count);
     replace(_$result);
     return _$result;
   }
@@ -109,44 +97,19 @@ class _$CounterActions extends CounterActions {
 
   final ActionDispatcher<int> increment =
       new ActionDispatcher<int>('CounterActions-increment');
-  final ActionDispatcher<int> incrementOther =
-      new ActionDispatcher<int>('CounterActions-incrementOther');
-  final MiddlewareActions middlewareActions = new MiddlewareActions();
+  final ActionDispatcher<int> decrement =
+      new ActionDispatcher<int>('CounterActions-decrement');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
     increment.setDispatcher(dispatcher);
-    incrementOther.setDispatcher(dispatcher);
-    middlewareActions.setDispatcher(dispatcher);
+    decrement.setDispatcher(dispatcher);
   }
 }
 
 class CounterActionsNames {
   static final ActionName<int> increment =
       new ActionName<int>('CounterActions-increment');
-  static final ActionName<int> incrementOther =
-      new ActionName<int>('CounterActions-incrementOther');
-}
-
-class _$MiddlewareActions extends MiddlewareActions {
-  factory _$MiddlewareActions() => new _$MiddlewareActions._();
-  _$MiddlewareActions._() : super._();
-
-  final ActionDispatcher<int> doubleIt =
-      new ActionDispatcher<int>('MiddlewareActions-doubleIt');
-  final ActionDispatcher<int> tripleIt =
-      new ActionDispatcher<int>('MiddlewareActions-tripleIt');
-
-  @override
-  void setDispatcher(Dispatcher dispatcher) {
-    doubleIt.setDispatcher(dispatcher);
-    tripleIt.setDispatcher(dispatcher);
-  }
-}
-
-class MiddlewareActionsNames {
-  static final ActionName<int> doubleIt =
-      new ActionName<int>('MiddlewareActions-doubleIt');
-  static final ActionName<int> tripleIt =
-      new ActionName<int>('MiddlewareActions-tripleIt');
+  static final ActionName<int> decrement =
+      new ActionName<int>('CounterActions-decrement');
 }
