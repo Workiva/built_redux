@@ -7,5 +7,5 @@ This contents of this section will further elaborate on the principles of redux,
 
 * [Three Principles Revised](three_principles_revised.md)
 * [built_value](built_value.md)
-* [redux.dart vs built_redux](built_value_with_redux.md)
+* [Using built_value with redux.dart vs built_redux](built_value_with_redux.md)
 * [ReduxActions](redux_actions.md)

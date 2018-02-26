@@ -1,4 +1,4 @@
-# built_value with redux.dart vs built_redux
+# Using built_value with redux.dart vs built_redux
 
 ## Eliminate unneccessary garbage
 
@@ -40,4 +40,4 @@ State reducer(State state, dynamic a) => state.rebuild((builder, a) => builder
 
 However, now I cannot use redux.dart’s combineTypedReducers for my nested reducers since (state, action, builder) doesn’t match the Reducer typedef. Plus what if nestedAReducer doesn’t even handle an action? I created an instance of NestedABuilder just to pass to a function that doesn’t use it. (This is because StateBuilder will not instantiate an instance of NestedABuilder until nestedA is accessed.)
 
-Behind the scenes, the built_redux library calls rebuild on your main state object once, and lets you define reducer & nested reducer functions that have the signature void (state, action, builder). By design, built_redux will only create nested builders if they are used in the reducer function that is mapped to the action being handled. built_redux also lets you create nested said reducer functions for built_collections. More documentation on nested reducer functions exists [here](TODO).
+Behind the scenes, the built_redux library calls rebuild on your main state object once, and lets you define reducer & nested reducer functions that have the signature void (state, action, builder). By design, built_redux will only create nested builders if they are used in the reducer function that is mapped to the action being handled. built_redux also lets you create nested said reducer functions for built_collections. More documentation on nested reducer functions exists [here](../advanced/nested_reducers.md).
