@@ -82,6 +82,7 @@ abstract class FilterActions extends ReduxActions {
 ## Dispatching Actions
 
 Now that we have an idea of how actions are defined in the two different libraries, lets take a quick look at the differences in how actions are dispatched.
+
 redux.dart:
 
 ```dart
