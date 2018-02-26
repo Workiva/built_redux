@@ -16,21 +16,16 @@ Built using [built_value][built_value_git]
 
 ## Examples
 
-[counter app](example/example.dart)
-
-flutter [todo_mvc], written by [Brian Egan]
-
-vanilla dart, angular, and wui_builder [todoMVCs]
-
-[retro] - firebase and angular
+- [counter app](example/example.dart)
+- flutter [todo_mvc], written by [Brian Egan]
+- vanilla dart, angular, and wui_builder [todoMVCs]
+- [retro] - firebase and angular
 
 ## Libraries
 
-[thunk][built_redux_thunk]
-
-[rx][built_redux_rx]
-
-[repatch][built_redux_repatch]
+- [thunk][built_redux_thunk]
+- [rx][built_redux_rx]
+- [repatch][built_redux_repatch]
 
 ## Documentation
 
