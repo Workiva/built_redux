@@ -4,7 +4,7 @@ Without middleware, built_redux store only supports synchronous data flow.
 
 You may pass middleware to the store upon construction. It is not required, but it lets you express asynchronous actions in a convenient way.
 
-Asynchronous middleware like built_redux_thunk or built_redux_rx provide middleware to help asynchronous flow easy. However, you can easily write your own middleware to perform async actions.
+Asynchronous middleware like [built_redux_thunk](https://github.com/davidmarne/built_redux_thunk) or [built_redux_rx](https://github.com/davidmarne/built_redux_rx) provide middleware to help asynchronous flow easy. However, you can easily write your own middleware to perform async actions.
 
 Note that is best practice to dispatch a new action after an async process resolves rather than calling next after an await or .then.
 
