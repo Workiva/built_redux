@@ -4,9 +4,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_redux/built_redux.dart';
 import 'package:built_value/built_value.dart';
 
-enum SubscriptionAction { subscribe, unsubscribe }
+enum StreamAction { subscribe, unsubscribe }
 
-/// To use this middleware, in your [ReduxActions] class, add an action with [SubscriptionAction] as the [Action.payload] of
+/// To use this middleware, in your [ReduxActions] class, add an action with [StreamAction] as the [Action.payload] of
 /// the action. Then you can call that action to subscribe or unsubscribe from the desired stream.
 /// Example:
 ///
@@ -59,8 +59,8 @@ class MiddlewareStreamBuilder<State extends Built<State, StateBuilder>, StateBui
             final dynamic subscriptionAction = action.payload;
             final String actionName = action.name;
 
-            if (action.payload is SubscriptionAction) {
-              if (subscriptionAction == SubscriptionAction.unsubscribe) {
+            if (action.payload is StreamAction) {
+              if (subscriptionAction == StreamAction.unsubscribe) {
                 final StreamSubscription<dynamic> streamSubscription = _streams[actionName];
                 streamSubscription.cancel();
 
