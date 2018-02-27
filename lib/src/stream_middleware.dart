@@ -6,6 +6,33 @@ import 'package:built_value/built_value.dart';
 
 enum SubscriptionAction { subscribe, unsubscribe }
 
+/// To use this middleware, in your [ReduxActions] class, add an action with [SubscriptionAction] as the [Action.payload] of
+/// the action. Then you can call that action to subscribe or unsubscribe from the desired stream.
+/// Example:
+///
+///  The following actions
+///
+///  ```dart
+///  abstract class AppActions extends ReduxActions {
+///     factory AppActions() => new _$AppActions();
+///
+///     AppActions._();
+///
+///     ActionDispatcher<SubscriptionAction> get fooStream;
+///  }
+///  ```
+///
+/// Them in your lifecycle callback you can:
+/// ```dart
+/// store.actions.fooStream(SubscriptionAction.subscribe);
+/// ```
+///
+/// or
+///
+/// ```dart
+/// store.actions.fooStream(SubscriptionAction.unsubscribe);
+/// ```
+///
 class MiddlewareStreamBuilder<State extends Built<State, StateBuilder>, StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
   BuiltMap<String, StreamSubscription<dynamic>> _streams = new BuiltMap<String, StreamSubscription<dynamic>>();
@@ -77,7 +104,29 @@ class MiddlewareStreamBuilder<State extends Built<State, StateBuilder>, StateBui
 }
 
 /// This class should only be used in [MiddlewareStreamBuilder]. This provide all the need callback for
-/// [Stream.listen] method
+/// [Stream.listen] method.
+///
+/// Example:
+/// ```dart
+/// class ChatHandler extends MiddlewareStreamHandler<AppState, AppStateBuilder, AppActions, Event> {
+/// static final Log log = new Log('ChatHandler');
+///
+/// @override
+/// Stream<Event> get stream => FirebaseDatabase.instance.reference().child('chats');
+///
+/// @override
+/// void onData(MiddlewareApi<AppState, AppStateBuilder, AppActions> api, ActionHandler next, Action action, Event event) {
+///   log.d(event.snapshot.value);
+///   api.actions.setChats(event.snapshot.value);
+/// }
+///
+/// @override
+/// void onDone() => log.d('onDone');
+///
+/// @override
+///   void onError(dynamic error, StackTrace stackTrace) => log.e('onError called with: error:[$error], stackTrace:[$stackTrace]');
+/// }
+/// ```
 abstract class MiddlewareStreamHandler<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, Actions extends ReduxActions, T> {
   /// The stream you want to listen for events.
