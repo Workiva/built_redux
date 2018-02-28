@@ -8,7 +8,11 @@ import 'package:meta/meta.dart';
 enum StreamAction { subscribe, unsubscribe }
 
 class PayloadAction<P> {
-  PayloadAction({@required this.action, this.payload}) : assert(action != null);
+  const PayloadAction({@required this.action, this.payload}) : assert(action != null);
+
+  static PayloadAction unsubscribe = const PayloadAction<Null>(action: StreamAction.unsubscribe);
+
+  static PayloadAction subscribe<P>(P payload) => new PayloadAction<P>(action: StreamAction.subscribe, payload: payload);
 
   final StreamAction action;
 
@@ -77,9 +81,8 @@ class MiddlewareStreamBuilder<State extends Built<State, StateBuilder>, StateBui
                 mapBuilder.remove(actionName);
                 _streams = (mapBuilder).build();
               } else {
-                if (!_streams.containsKey(actionName)) {
-                  final MiddlewareStreamHandler<State, StateBuilder, Actions, dynamic, dynamic> handler = _map[actionName];
-
+                final MiddlewareStreamHandler<State, StateBuilder, Actions, dynamic, dynamic> handler = _map[actionName];
+                if (!_streams.containsKey(actionName) && handler != null) {
                   final MapBuilder<String, StreamSubscription<dynamic>> mapBuilder = _streams.toBuilder();
 
                   mapBuilder[actionName] = handler.getStream(subscriptionAction.payload).listen(
