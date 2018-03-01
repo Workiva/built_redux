@@ -26,6 +26,7 @@ Built using [built_value][built_value_git]
 - [thunk][built_redux_thunk]
 - [rx][built_redux_rx]
 - [repatch][built_redux_repatch]
+- [flutter_stream_redux][https://github.com/long1eu/flutter_stream_redux]
 
 ## Documentation
 
