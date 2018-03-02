@@ -3,7 +3,7 @@ library nested_models;
 import 'package:built_redux/built_redux.dart';
 import 'package:built_value/built_value.dart';
 
-part 'nested_models.built_redux.dart';
+part 'nested_models.built_redux.g.dart';
 part 'nested_models.g.dart';
 
 // BaseActions is the main action class that contains

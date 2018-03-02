@@ -5,7 +5,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_collection/built_collection.dart';
 
 part 'collection_models.g.dart';
-part 'collection_models.built_redux.dart';
+part 'collection_models.built_redux.g.dart';
 
 // CollectionActions contains actions that mutate the different
 // built collections contained inside Collection

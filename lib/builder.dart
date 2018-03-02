@@ -5,4 +5,6 @@ import 'generator.dart';
 
 Builder builtRedux(BuilderOptions options) => new PartBuilder([
       new BuiltReduxGenerator(),
-    ], generatedExtension: '.built_redux.dart', requireLibraryDirective: false);
+    ],
+        generatedExtension: '.built_redux.g.dart',
+        requireLibraryDirective: false);

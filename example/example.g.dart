@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of action_generics_models;
+part of example;
 
 // **************************************************************************
 // Generator: BuiltValueGenerator
@@ -14,30 +14,28 @@ part of action_generics_models;
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
 
-class _$ActionGenerics extends ActionGenerics {
+class _$Counter extends Counter {
   @override
   final int count;
 
-  factory _$ActionGenerics([void updates(ActionGenericsBuilder b)]) =>
-      (new ActionGenericsBuilder()..update(updates)).build();
+  factory _$Counter([void updates(CounterBuilder b)]) =>
+      (new CounterBuilder()..update(updates)).build();
 
-  _$ActionGenerics._({this.count}) : super._() {
-    if (count == null)
-      throw new BuiltValueNullFieldError('ActionGenerics', 'count');
+  _$Counter._({this.count}) : super._() {
+    if (count == null) throw new BuiltValueNullFieldError('Counter', 'count');
   }
 
   @override
-  ActionGenerics rebuild(void updates(ActionGenericsBuilder b)) =>
+  Counter rebuild(void updates(CounterBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ActionGenericsBuilder toBuilder() =>
-      new ActionGenericsBuilder()..replace(this);
+  CounterBuilder toBuilder() => new CounterBuilder()..replace(this);
 
   @override
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
-    if (other is! ActionGenerics) return false;
+    if (other is! Counter) return false;
     return count == other.count;
   }
 
@@ -48,22 +46,21 @@ class _$ActionGenerics extends ActionGenerics {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ActionGenerics')..add('count', count))
+    return (newBuiltValueToStringHelper('Counter')..add('count', count))
         .toString();
   }
 }
 
-class ActionGenericsBuilder
-    implements Builder<ActionGenerics, ActionGenericsBuilder> {
-  _$ActionGenerics _$v;
+class CounterBuilder implements Builder<Counter, CounterBuilder> {
+  _$Counter _$v;
 
   int _count;
   int get count => _$this._count;
   set count(int count) => _$this._count = count;
 
-  ActionGenericsBuilder();
+  CounterBuilder();
 
-  ActionGenericsBuilder get _$this {
+  CounterBuilder get _$this {
     if (_$v != null) {
       _count = _$v.count;
       _$v = null;
@@ -72,19 +69,19 @@ class ActionGenericsBuilder
   }
 
   @override
-  void replace(ActionGenerics other) {
+  void replace(Counter other) {
     if (other == null) throw new ArgumentError.notNull('other');
-    _$v = other as _$ActionGenerics;
+    _$v = other as _$Counter;
   }
 
   @override
-  void update(void updates(ActionGenericsBuilder b)) {
+  void update(void updates(CounterBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$ActionGenerics build() {
-    final _$result = _$v ?? new _$ActionGenerics._(count: count);
+  _$Counter build() {
+    final _$result = _$v ?? new _$Counter._(count: count);
     replace(_$result);
     return _$result;
   }

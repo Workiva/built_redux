@@ -8,6 +8,9 @@ class Action<Payload> {
   final Payload payload;
 
   Action(this.name, this.payload);
+
+  @override
+  String toString() => 'Action {\n  name: $name,\n  payload: $payload,\n}';
 }
 
 // Dispatches an action to the store

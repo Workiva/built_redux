@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:built_redux/built_redux.dart';
 import 'package:built_value/built_value.dart';
 
-part 'test_counter.built_redux.dart';
+part 'test_counter.built_redux.g.dart';
 part 'test_counter.g.dart';
 
 // Counter
@@ -47,7 +47,8 @@ abstract class Counter implements Built<Counter, CounterBuilder> {
 // Middleware
 
 abstract class MiddlewareActions extends ReduxActions {
-  ActionDispatcher<int> increment;
+  ActionDispatcher<int> doubleIt;
+  ActionDispatcher<int> tripleIt;
 
   MiddlewareActions._();
   factory MiddlewareActions() => new _$MiddlewareActions();
@@ -55,12 +56,23 @@ abstract class MiddlewareActions extends ReduxActions {
 
 var counterMiddleware =
     (new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
-          ..add(MiddlewareActionsNames.increment, _doubleIt))
+          ..add(MiddlewareActionsNames.doubleIt, _doubleIt)
+          ..combine(tripleItMiddlewareBuilder))
         .build();
 
 void _doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
     ActionHandler next, Action<int> action) {
   api.actions.increment(api.state.count * 2);
+  next(action);
+}
+
+var tripleItMiddlewareBuilder =
+    new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
+      ..add(MiddlewareActionsNames.tripleIt, _tripleIt);
+
+void _tripleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
+    ActionHandler next, Action<int> action) {
+  api.actions.increment(api.state.count * 3);
   next(action);
 }
 
