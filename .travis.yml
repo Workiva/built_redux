@@ -1,7 +1,7 @@
 language: dart
 dart: dev
 script:
-  - pub run build_runner build
+  - pub run build_runner build -delete-conflicting-outputs
   - pub run dart_dev format --check
   - pub run dart_dev analyze
   - pub run dart_dev test -p vm
