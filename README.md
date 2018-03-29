@@ -13,7 +13,12 @@ In order to migrate:
 * update your pubspec to include
 
 ```yaml
-  build_runner: ^0.7.9
+  dependencies:
+    built_redux: 7.4.0-dev
+    built_value: ^5.2.0
+  dev_dependencies:
+    build_runner: ^0.7.9
+    built_value_generator: ^5.2.0
 ```
 
 * add a build.yaml to the root of your repo that contains the following:
