@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:built_redux/built_redux.dart';
 import 'package:built_value/built_value.dart';
 
-part 'test_counter.built_redux.g.dart';
 part 'test_counter.g.dart';
 
 // Counter

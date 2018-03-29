@@ -1,6 +1,32 @@
-## 8.0.0-dev.0
+## 7.4.0-dev
 
 * add build.yaml and build.dart to comply with build_runner 0.7.x
+
+With the dev tag you can consume the latest versions of built_value, build, and build_runner that are only compatable with dart 2.
+
+In order to migrate:
+
+* remove your old build scripts
+* update your pubspec to include
+
+```yaml
+  build_runner: ^0.7.9
+```
+
+* add a build.yaml to the root of your repo that contains the following:
+
+```yaml
+targets:
+  $default:
+    builders:
+      built_value_generator|built_value:
+        enabled: false
+```
+
+* run `pub run build_runner build`.
+
+The build script is only a temporary measure until https://github.com/dart-lang/source_gen/issues/319 is resolved.
+
 
 ## 7.4.0
 

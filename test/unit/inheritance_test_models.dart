@@ -4,7 +4,6 @@ import 'package:built_redux/built_redux.dart';
 import 'package:built_value/built_value.dart';
 
 part 'inheritance_test_models.g.dart';
-part 'inheritance_test_models.built_redux.g.dart';
 
 // ChildActions is the only of the three that yield the generated classes
 abstract class ChildActions extends ParentActions {

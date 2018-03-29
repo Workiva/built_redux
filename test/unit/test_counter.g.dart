@@ -3,6 +3,58 @@
 part of test_counter;
 
 // **************************************************************************
+// Generator: BuiltReduxGenerator
+// **************************************************************************
+
+class _$CounterActions extends CounterActions {
+  factory _$CounterActions() => new _$CounterActions._();
+  _$CounterActions._() : super._();
+
+  final ActionDispatcher<int> increment =
+      new ActionDispatcher<int>('CounterActions-increment');
+  final ActionDispatcher<int> incrementOther =
+      new ActionDispatcher<int>('CounterActions-incrementOther');
+  final MiddlewareActions middlewareActions = new MiddlewareActions();
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    increment.setDispatcher(dispatcher);
+    incrementOther.setDispatcher(dispatcher);
+    middlewareActions.setDispatcher(dispatcher);
+  }
+}
+
+class CounterActionsNames {
+  static final ActionName<int> increment =
+      new ActionName<int>('CounterActions-increment');
+  static final ActionName<int> incrementOther =
+      new ActionName<int>('CounterActions-incrementOther');
+}
+
+class _$MiddlewareActions extends MiddlewareActions {
+  factory _$MiddlewareActions() => new _$MiddlewareActions._();
+  _$MiddlewareActions._() : super._();
+
+  final ActionDispatcher<int> doubleIt =
+      new ActionDispatcher<int>('MiddlewareActions-doubleIt');
+  final ActionDispatcher<int> tripleIt =
+      new ActionDispatcher<int>('MiddlewareActions-tripleIt');
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    doubleIt.setDispatcher(dispatcher);
+    tripleIt.setDispatcher(dispatcher);
+  }
+}
+
+class MiddlewareActionsNames {
+  static final ActionName<int> doubleIt =
+      new ActionName<int>('MiddlewareActions-doubleIt');
+  static final ActionName<int> tripleIt =
+      new ActionName<int>('MiddlewareActions-tripleIt');
+}
+
+// **************************************************************************
 // Generator: BuiltValueGenerator
 // **************************************************************************
 

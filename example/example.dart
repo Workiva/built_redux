@@ -4,7 +4,6 @@ import 'package:built_value/built_value.dart';
 import 'package:built_redux/built_redux.dart';
 
 part 'example.g.dart';
-part 'example.built_redux.g.dart';
 
 void main() {
 // Create a redux store holding the state of your app.

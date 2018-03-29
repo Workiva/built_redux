@@ -3,6 +3,33 @@
 part of example;
 
 // **************************************************************************
+// Generator: BuiltReduxGenerator
+// **************************************************************************
+
+class _$CounterActions extends CounterActions {
+  factory _$CounterActions() => new _$CounterActions._();
+  _$CounterActions._() : super._();
+
+  final ActionDispatcher<int> increment =
+      new ActionDispatcher<int>('CounterActions-increment');
+  final ActionDispatcher<int> decrement =
+      new ActionDispatcher<int>('CounterActions-decrement');
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    increment.setDispatcher(dispatcher);
+    decrement.setDispatcher(dispatcher);
+  }
+}
+
+class CounterActionsNames {
+  static final ActionName<int> increment =
+      new ActionName<int>('CounterActions-increment');
+  static final ActionName<int> decrement =
+      new ActionName<int>('CounterActions-decrement');
+}
+
+// **************************************************************************
 // Generator: BuiltValueGenerator
 // **************************************************************************
 
