@@ -6,7 +6,7 @@ built_value and built_redux both rely on build_runner for code generation.
   
   ```yaml
   dependencies:
-    built_redux: 8.0.0-dev.0
+    built_redux: 7.4.0-dev
     built_value: ^5.2.0
   dev_dependencies:
     build_runner: ^0.7.9
