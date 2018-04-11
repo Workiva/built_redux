@@ -1,3 +1,7 @@
+## 7.4.1
+
+* fix cast issues around store changes in dart 2
+
 ## 7.4.0
 
 * add built_redux_test_utils library - exposes an expectDispatched function for expecting a given action gets dispatched asynchronously
