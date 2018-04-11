@@ -123,5 +123,9 @@ class Store<
           ActionName<Payload> actionName) =>
       stream
           .where((c) => c.action.name == actionName.name)
-          .map((c) => c as StoreChange<State, StateBuilder, Payload>);
+          .map((c) => new StoreChange<State, StateBuilder, Payload>(
+                c.next,
+                c.prev,
+                c.action as Action<Payload>,
+              ));
 }

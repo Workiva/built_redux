@@ -1,3 +1,7 @@
+## 7.4.1 / 7.4.1-dev
+
+* fix cast issues around store changes in dart 2
+
 ## 7.4.0-dev
 
 * add build.yaml and build.dart to comply with build_runner 0.7.x

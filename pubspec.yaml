@@ -1,5 +1,5 @@
 name: built_redux
-version: 7.4.0-dev
+version: 7.4.1-dev
 description:
   A state management library written in dart that enforces immutability
 authors:
@@ -21,8 +21,8 @@ dev_dependencies:
   coverage: ^0.9.0
 
 environment:
-  sdk: '>=2-0-0-dev <2.0.0'
-
+  sdk: '>=2.0.0-dev.9 <2.0.0'
+  
 transformers:
 - test/pub_serve:
     $include: test/**_test{.*,}.dart
