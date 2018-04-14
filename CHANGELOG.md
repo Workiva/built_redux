@@ -1,6 +1,7 @@
 ## 7.4.1
 
 * fix cast issues around store changes in dart 2
+* open analyzer version range
 
 ## 7.4.0
 
