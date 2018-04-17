@@ -14,7 +14,7 @@ In order to migrate:
 
 ```yaml
   dependencies:
-    built_redux: 7.4.0-dev
+    built_redux: 7.4.1-dev
     built_value: ^5.2.0
   dev_dependencies:
     build_runner: ^0.8.0
