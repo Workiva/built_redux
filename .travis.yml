@@ -1,5 +1,6 @@
 language: dart
 dart: dev
+sudo: required
 addons:
   chrome: stable
 before_install:
