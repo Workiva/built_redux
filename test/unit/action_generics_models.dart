@@ -1,9 +1,21 @@
 library action_generics_models;
 
+import 'dart:async';
 import 'package:built_redux/built_redux.dart';
 import 'package:built_value/built_value.dart';
 
 part 'action_generics_models.g.dart';
+
+/// Used to test code generation when the generic type of an action is a
+/// `typedef`
+typedef FutureOr<void> ThunkTypedef<
+    V extends Built<V, B>,
+    B extends Builder<V, B>,
+    A extends ReduxActions>(MiddlewareApi<V, B, A> api);
+
+class Foo<T> {}
+
+class ClassWithBuilt<V extends Built<V, B>, B extends Builder<V, B>> {}
 
 // ActionGenerics contains actions that have payload
 // of different generic types. This is mainly to test the generation of
@@ -19,6 +31,9 @@ abstract class ActionGenericsActions extends ReduxActions {
   ActionDispatcher<
       ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
           ActionGenericsActions>> get typdefAction;
+  ActionDispatcher<Foo<int>> get fooAction;
+  ActionDispatcher<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
+      get classWithBuiltAction;
 }
 
 abstract class ActionGenerics
@@ -46,17 +61,13 @@ Reducer<ActionGenerics, ActionGenericsBuilder, dynamic>
                       b.count += a.payload['k'].fold<int>(0, (c, n) => c + n)))
             .build();
 
-/// Used to test code generation when the generic type of an action is a
-/// `typedef`
-typedef dynamic ThunkTypedef<V extends Built<V, B>, B extends Builder<V, B>,
-    A extends ReduxActions>(MiddlewareApi<V, B, A> api);
-
 NextActionHandler thunkMiddleware(
   MiddlewareApi<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
       api,
 ) =>
     (ActionHandler next) => (Action a) {
-          if (a.payload is ThunkTypedef)
+          if (a.payload is ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+              ActionGenericsActions>)
             a.payload(api);
           else
             next(a);

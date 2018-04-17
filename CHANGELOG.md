@@ -1,3 +1,13 @@
+## 7.4.1-dev
+
+* open sourc-gen range
+* run tests on the dev compiler
+
+## 7.4.1
+
+* fix cast issues around store changes in dart 2
+* open analyzer version range
+
 ## 7.4.0-dev
 
 * add build.yaml and build.dart to comply with build_runner 0.7.x

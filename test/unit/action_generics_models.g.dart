@@ -20,10 +20,18 @@ class _$ActionGenericsActions extends ActionGenericsActions {
       new ActionDispatcher<Map<String, List<int>>>(
           'ActionGenericsActions-mapStringToListIntAction');
   final ActionDispatcher<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>> typdefAction = new ActionDispatcher<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
+      FutureOr<void> Function(
+          MiddlewareApi<ActionGenerics, ActionGenericsBuilder,
+              ActionGenericsActions>)> typdefAction = new ActionDispatcher<
+      FutureOr<void> Function(
+          MiddlewareApi<ActionGenerics, ActionGenericsBuilder,
+              ActionGenericsActions>)>('ActionGenericsActions-typdefAction');
+  final ActionDispatcher<Foo<int>> fooAction =
+      new ActionDispatcher<Foo<int>>('ActionGenericsActions-fooAction');
+  final ActionDispatcher<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
+      classWithBuiltAction = new ActionDispatcher<
+              ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
+          'ActionGenericsActions-classWithBuiltAction');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -32,6 +40,8 @@ class _$ActionGenericsActions extends ActionGenericsActions {
     listIntAction.setDispatcher(dispatcher);
     mapStringToListIntAction.setDispatcher(dispatcher);
     typdefAction.setDispatcher(dispatcher);
+    fooAction.setDispatcher(dispatcher);
+    classWithBuiltAction.setDispatcher(dispatcher);
   }
 }
 
@@ -46,10 +56,18 @@ class ActionGenericsActionsNames {
       new ActionName<Map<String, List<int>>>(
           'ActionGenericsActions-mapStringToListIntAction');
   static final ActionName<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>> typdefAction = new ActionName<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
+      FutureOr<void> Function(
+          MiddlewareApi<ActionGenerics, ActionGenericsBuilder,
+              ActionGenericsActions>)> typdefAction = new ActionName<
+      FutureOr<void> Function(
+          MiddlewareApi<ActionGenerics, ActionGenericsBuilder,
+              ActionGenericsActions>)>('ActionGenericsActions-typdefAction');
+  static final ActionName<Foo<int>> fooAction =
+      new ActionName<Foo<int>>('ActionGenericsActions-fooAction');
+  static final ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
+      classWithBuiltAction =
+      new ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
+          'ActionGenericsActions-classWithBuiltAction');
 }
 
 // **************************************************************************

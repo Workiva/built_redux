@@ -40,7 +40,11 @@ class StoreChangeHandlerBuilder<
   void add<Payload>(ActionName<Payload> actionName,
       StoreChangeHandler<Payload, State, StateBuilder> handler) {
     _map[actionName.name] = (change) {
-      handler(change as StoreChange<State, StateBuilder, Payload>);
+      handler(new StoreChange<State, StateBuilder, Payload>(
+        change.next,
+        change.prev,
+        change.action as Action<Payload>,
+      ));
     };
   }
 

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:built_redux/built_redux.dart';
 import 'package:test/test.dart';
 
@@ -21,7 +22,7 @@ void main() {
       store.dispose();
     });
 
-    test('all generic types', () {
+    test('all generic types', () async {
       expect(store.state.count, 0);
       store.actions.intAction(3);
       expect(store.state.count, 3);
@@ -35,14 +36,23 @@ void main() {
         'k': [1, 2, 3],
       });
       expect(store.state.count, 17);
-      store.actions.typdefAction((
-        MiddlewareApi<ActionGenerics, ActionGenericsBuilder,
-                ActionGenericsActions>
-            api,
-      ) {
-        api.actions.intAction(4);
-      });
+      store.actions.typdefAction(testThunk);
       expect(store.state.count, 21);
+      store.actions.typdefAction(testThunkAsync);
+      await new Future<void>.delayed(const Duration(microseconds: 0));
+      expect(store.state.count, 29);
     });
   });
+}
+
+void testThunk(
+    MiddlewareApi<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
+        api) {
+  api.actions.intAction(4);
+}
+
+Future<void> testThunkAsync(
+    MiddlewareApi<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
+        api) async {
+  api.actions.intAction(8);
 }
