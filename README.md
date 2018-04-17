@@ -10,6 +10,9 @@ Inspired by [redux][redux_git]
 
 Built using [built_value][built_value_git]
 
+## Using dart 2?
+Check out the [dart 2 dev branch](https://github.com/davidmarne/built_redux/tree/dart-2-dev), which works with the latest versions of build, build_runner, and built_value.
+
 ## Framework bindings
 
 [flutter]
