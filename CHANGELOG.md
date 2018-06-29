@@ -1,3 +1,7 @@
+## 7.4.2
+
+* add lint ignores to generated files
+
 ## 7.4.1
 
 * fix cast issues around store changes in dart 2

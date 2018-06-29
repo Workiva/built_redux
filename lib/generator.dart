@@ -8,8 +8,13 @@ class BuiltReduxGenerator extends Generator {
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     final result = new StringBuffer();
+    var hasWrittenHeaders = false;
     for (final element in library.allElements) {
       if (_needsReduxActions(element) && element is ClassElement) {
+        if (!hasWrittenHeaders) {
+          hasWrittenHeaders = true;
+          result.writeln(_lintIgnores);
+        }
         log.info('Generating action classes for ${element.name}');
         result.writeln(_generateActions(element));
       }
@@ -18,6 +23,11 @@ class BuiltReduxGenerator extends Generator {
     return result.toString();
   }
 }
+
+const _lintIgnores = """
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
+""";
 
 String _generateActions(ClassElement element) =>
     _generateDispatchersIfNeeded(element) + _actionNamesClassTemplate(element);

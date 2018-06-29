@@ -94,6 +94,9 @@ class ActionGenericsBuilder
 // Generator: BuiltReduxGenerator
 // **************************************************************************
 
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
+
 class _$ActionGenericsActions extends ActionGenericsActions {
   factory _$ActionGenericsActions() => new _$ActionGenericsActions._();
   _$ActionGenericsActions._() : super._();
