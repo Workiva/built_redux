@@ -32,9 +32,9 @@ I can define a simple reducer function as follows:
 
 ```dart
 void counterReducer(App prevState, Action<dynamic> action, AppBuilder builder) {
-  if (action.name == AppActionNames.increment.name)
+  if (action.name == AppActionsNames.increment.name)
     builder.count += action.payload as int;
-  else if (action.name == AppActionNames.decrement.name)
+  else if (action.name == AppActionsNames.decrement.name)
     builder.count -= action.payload as int;
 }
 ```
