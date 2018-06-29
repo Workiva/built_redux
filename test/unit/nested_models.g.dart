@@ -288,6 +288,9 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
 // Generator: BuiltReduxGenerator
 // **************************************************************************
 
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
+
 class _$BaseActions extends BaseActions {
   factory _$BaseActions() => new _$BaseActions._();
   _$BaseActions._() : super._();

@@ -138,6 +138,9 @@ class ChildBuilder
 // Generator: BuiltReduxGenerator
 // **************************************************************************
 
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
+
 class _$ChildActions extends ChildActions {
   factory _$ChildActions() => new _$ChildActions._();
   _$ChildActions._() : super._();
