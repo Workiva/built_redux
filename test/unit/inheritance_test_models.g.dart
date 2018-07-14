@@ -3,8 +3,11 @@
 part of inheritance_test_models;
 
 // **************************************************************************
-// Generator: BuiltReduxGenerator
+// BuiltReduxGenerator
 // **************************************************************************
+
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
 
 class _$ChildActions extends ChildActions {
   factory _$ChildActions() => new _$ChildActions._();
@@ -47,7 +50,7 @@ class GrandparentActionsNames {
 }
 
 // **************************************************************************
-// Generator: BuiltValueGenerator
+// BuiltValueGenerator
 // **************************************************************************
 
 // ignore_for_file: always_put_control_body_on_new_line

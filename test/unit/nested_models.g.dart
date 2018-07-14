@@ -3,8 +3,11 @@
 part of nested_models;
 
 // **************************************************************************
-// Generator: BuiltReduxGenerator
+// BuiltReduxGenerator
 // **************************************************************************
+
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
 
 class _$BaseActions extends BaseActions {
   factory _$BaseActions() => new _$BaseActions._();
@@ -65,7 +68,7 @@ class GrandchildActionsNames {
 }
 
 // **************************************************************************
-// Generator: BuiltValueGenerator
+// BuiltValueGenerator
 // **************************************************************************
 
 // ignore_for_file: always_put_control_body_on_new_line

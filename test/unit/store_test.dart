@@ -131,6 +131,17 @@ void main() {
       store.actions.increment(1);
     });
 
+    test('should not publish pending events if disposed', () async {
+      store.nextState.listen(expectAsync1((Counter _) {
+        expect(store.actions, isNotNull);
+      }));
+
+      store.actions.increment(1);
+
+      // intentionally don't wait
+      store.dispose();
+    });
+
     test('awaiting dispose', () async {
       await store.dispose();
       expect(store.state, null);

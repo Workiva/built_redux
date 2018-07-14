@@ -3,8 +3,11 @@
 part of example;
 
 // **************************************************************************
-// Generator: BuiltReduxGenerator
+// BuiltReduxGenerator
 // **************************************************************************
+
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
 
 class _$CounterActions extends CounterActions {
   factory _$CounterActions() => new _$CounterActions._();
@@ -30,7 +33,7 @@ class CounterActionsNames {
 }
 
 // **************************************************************************
-// Generator: BuiltValueGenerator
+// BuiltValueGenerator
 // **************************************************************************
 
 // ignore_for_file: always_put_control_body_on_new_line

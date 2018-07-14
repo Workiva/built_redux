@@ -3,8 +3,11 @@
 part of collection_models;
 
 // **************************************************************************
-// Generator: BuiltReduxGenerator
+// BuiltReduxGenerator
 // **************************************************************************
+
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
 
 class _$CollectionActions extends CollectionActions {
   factory _$CollectionActions() => new _$CollectionActions._();
@@ -45,7 +48,7 @@ class CollectionActionsNames {
 }
 
 // **************************************************************************
-// Generator: BuiltValueGenerator
+// BuiltValueGenerator
 // **************************************************************************
 
 // ignore_for_file: always_put_control_body_on_new_line

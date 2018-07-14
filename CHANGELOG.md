@@ -1,3 +1,13 @@
+
+## 7.4.3-dev
+
+* update dependency range on analyzer
+* fix broken test caused by dart 2's new asyc behavior
+
+## 7.4.2
+
+* add lint ignores to generated files
+
 ## 7.4.1-dev
 
 * open sourc-gen range
