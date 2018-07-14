@@ -2,6 +2,7 @@
 ## 7.4.3-dev
 
 * update dependency range on analyzer
+* update dependency range on test
 * fix broken test caused by dart 2's new asyc behavior
 
 ## 7.4.2
