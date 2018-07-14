@@ -10,9 +10,7 @@ before_install:
 
 script:
   - pub run build_runner build --delete-conflicting-outputs
-  - pub run dart_dev format --check
-  - pub run dart_dev analyze
-  - pub run dart_dev test -p vm
-  - pub run dart_dev coverage --no-html
-  - bash <(curl -s https://codecov.io/bash) -f coverage/coverage.lcov
+  - dartfmt -n --set-exit-if-changed lib/
+  - dartanalyzer --fatal-warnings --fatal-infos lib/
+  - pub run build_runner test --delete-conflicting-outputs
   - pub run build_runner test --delete-conflicting-outputs -- -p chrome
