@@ -151,10 +151,10 @@ bool _hasSuperType(ClassElement classElement, String type) =>
 
 String _getActionGenericType(DartType type) {
   if (type is FunctionType) {
-    return _getActionGenericType(type.returnType) +
-        ' Function(' +
-        type.parameters.map((p) => _getActionGenericType(p.type)).join(', ') +
-        ')';
+    final generics =
+        _correctUnresolvedGenerics(type.typeArguments, type.typeParameters);
+    if (generics.isEmpty) return typeNameOf(type);
+    return typeNameOf(type) + '<${generics.join(',')}>';
   }
 
   if (type is ParameterizedType) {
@@ -163,6 +163,8 @@ String _getActionGenericType(DartType type) {
     if (generics.isEmpty) return type.name;
     return type.name + '<${generics.join(',')}>';
   }
+
+  if (type.isVoid) return 'void';
 
   return 'dynamic';
 }

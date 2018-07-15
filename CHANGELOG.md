@@ -1,4 +1,8 @@
 
+## 7.4.4-dev
+
+* use typedef names in action generator
+
 ## 7.4.3-dev
 
 * update dependency range on analyzer
