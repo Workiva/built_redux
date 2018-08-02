@@ -1,3 +1,8 @@
+## 7.4.5
+
+* open sdk range to dart 2!
+* update built_value and source_gen dependencies
+* use SharedPartBuilder rather than PartBuilder in the generator
 
 ## 7.4.4-dev
 

@@ -3,34 +3,6 @@
 [![Pub](https://img.shields.io/pub/v/built_redux.svg)](https://pub.dartlang.org/packages/built_redux)
 [![codecov.io](http://codecov.io/github/davidmarne/built_redux/coverage.svg?branch=master)](http://codecov.io/github/davidmarne/built_redux?branch=master)
 
-## Developer branch
-
-With the dev tag you can consume the latest versions of built_value, build, and build_runner that are only compatable with dart 2.
-
-In order to migrate:
-
-* remove your old build scripts
-* update your pubspec to include
-
-```yaml
-  dependencies:
-    built_redux: 7.4.1-dev
-    built_value: ^5.2.0
-  dev_dependencies:
-    build_runner: ^0.8.0
-    built_value_generator: ^5.2.0
-```
-
-* add a build.yaml to the root of your repo that contains the following:
-
-```yaml
-targets:
-  $default:
-    builders:
-      built_value_generator|built_value:
-        enabled: false
-```
-
 ----
 
 built_redux is a state management library written in dart that enforces immutability.
@@ -39,9 +11,6 @@ built_redux is not only an implementation of [redux][redux_git], but also a fram
 Inspired by [redux][redux_git]
 
 Built using [built_value][built_value_git]
-
-## Using dart 2?
-Check out the [dart 2 dev branch](https://github.com/davidmarne/built_redux/tree/dart-2-dev), which works with the latest versions of build, build_runner, and built_value.
 
 ## Framework bindings
 

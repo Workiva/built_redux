@@ -23,12 +23,10 @@ class _$ActionGenericsActions extends ActionGenericsActions {
       new ActionDispatcher<Map<String, List<int>>>(
           'ActionGenericsActions-mapStringToListIntAction');
   final ActionDispatcher<
-      FutureOr<void> Function(
-          MiddlewareApi<ActionGenerics, ActionGenericsBuilder,
-              ActionGenericsActions>)> typdefAction = new ActionDispatcher<
-      FutureOr<void> Function(
-          MiddlewareApi<ActionGenerics, ActionGenericsBuilder,
-              ActionGenericsActions>)>('ActionGenericsActions-typdefAction');
+      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>> typdefAction = new ActionDispatcher<
+      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
   final ActionDispatcher<Foo<int>> fooAction =
       new ActionDispatcher<Foo<int>>('ActionGenericsActions-fooAction');
   final ActionDispatcher<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
@@ -59,12 +57,10 @@ class ActionGenericsActionsNames {
       new ActionName<Map<String, List<int>>>(
           'ActionGenericsActions-mapStringToListIntAction');
   static final ActionName<
-      FutureOr<void> Function(
-          MiddlewareApi<ActionGenerics, ActionGenericsBuilder,
-              ActionGenericsActions>)> typdefAction = new ActionName<
-      FutureOr<void> Function(
-          MiddlewareApi<ActionGenerics, ActionGenericsBuilder,
-              ActionGenericsActions>)>('ActionGenericsActions-typdefAction');
+      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>> typdefAction = new ActionName<
+      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
   static final ActionName<Foo<int>> fooAction =
       new ActionName<Foo<int>>('ActionGenericsActions-fooAction');
   static final ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
@@ -80,7 +76,9 @@ class ActionGenericsActionsNames {
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
