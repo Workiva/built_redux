@@ -3,15 +3,14 @@
 [![Pub](https://img.shields.io/pub/v/built_redux.svg)](https://pub.dartlang.org/packages/built_redux)
 [![codecov.io](http://codecov.io/github/davidmarne/built_redux/coverage.svg?branch=master)](http://codecov.io/github/davidmarne/built_redux?branch=master)
 
+----
+
 built_redux is a state management library written in dart that enforces immutability.
 built_redux is not only an implementation of [redux][redux_git], but also a framework for building middleware and reducers in a type safe manner.
 
 Inspired by [redux][redux_git]
 
 Built using [built_value][built_value_git]
-
-## Using dart 2?
-Check out the [dart 2 dev branch](https://github.com/davidmarne/built_redux/tree/dart-2-dev), which works with the latest versions of build, build_runner, and built_value.
 
 ## Framework bindings
 

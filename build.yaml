@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      built_redux|built_redux:
+        enabled: true
+
+builders:
+  built_redux:
+    target: ":built_redux"
+    import: "package:built_redux/builder.dart"
+    builder_factories: ["builtRedux"]
+    build_extensions: {".dart": [".built_redux.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

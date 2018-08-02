@@ -3,13 +3,60 @@
 part of collection_models;
 
 // **************************************************************************
-// Generator: BuiltValueGenerator
+// BuiltReduxGenerator
+// **************************************************************************
+
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
+
+class _$CollectionActions extends CollectionActions {
+  factory _$CollectionActions() => new _$CollectionActions._();
+  _$CollectionActions._() : super._();
+
+  final ActionDispatcher<Null> builtListAction =
+      new ActionDispatcher<Null>('CollectionActions-builtListAction');
+  final ActionDispatcher<Null> builtListMultimapAction =
+      new ActionDispatcher<Null>('CollectionActions-builtListMultimapAction');
+  final ActionDispatcher<Null> builtMapAction =
+      new ActionDispatcher<Null>('CollectionActions-builtMapAction');
+  final ActionDispatcher<Null> builtSetAction =
+      new ActionDispatcher<Null>('CollectionActions-builtSetAction');
+  final ActionDispatcher<Null> builtSetMultimapAction =
+      new ActionDispatcher<Null>('CollectionActions-builtSetMultimapAction');
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    builtListAction.setDispatcher(dispatcher);
+    builtListMultimapAction.setDispatcher(dispatcher);
+    builtMapAction.setDispatcher(dispatcher);
+    builtSetAction.setDispatcher(dispatcher);
+    builtSetMultimapAction.setDispatcher(dispatcher);
+  }
+}
+
+class CollectionActionsNames {
+  static final ActionName<Null> builtListAction =
+      new ActionName<Null>('CollectionActions-builtListAction');
+  static final ActionName<Null> builtListMultimapAction =
+      new ActionName<Null>('CollectionActions-builtListMultimapAction');
+  static final ActionName<Null> builtMapAction =
+      new ActionName<Null>('CollectionActions-builtMapAction');
+  static final ActionName<Null> builtSetAction =
+      new ActionName<Null>('CollectionActions-builtSetAction');
+  static final ActionName<Null> builtSetMultimapAction =
+      new ActionName<Null>('CollectionActions-builtSetMultimapAction');
+}
+
+// **************************************************************************
+// BuiltValueGenerator
 // **************************************************************************
 
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -175,49 +222,4 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
     replace(_$result);
     return _$result;
   }
-}
-
-// **************************************************************************
-// Generator: BuiltReduxGenerator
-// **************************************************************************
-
-// ignore_for_file: avoid_classes_with_only_static_members
-// ignore_for_file: annotate_overrides
-
-class _$CollectionActions extends CollectionActions {
-  factory _$CollectionActions() => new _$CollectionActions._();
-  _$CollectionActions._() : super._();
-
-  final ActionDispatcher<Null> builtListAction =
-      new ActionDispatcher<Null>('CollectionActions-builtListAction');
-  final ActionDispatcher<Null> builtListMultimapAction =
-      new ActionDispatcher<Null>('CollectionActions-builtListMultimapAction');
-  final ActionDispatcher<Null> builtMapAction =
-      new ActionDispatcher<Null>('CollectionActions-builtMapAction');
-  final ActionDispatcher<Null> builtSetAction =
-      new ActionDispatcher<Null>('CollectionActions-builtSetAction');
-  final ActionDispatcher<Null> builtSetMultimapAction =
-      new ActionDispatcher<Null>('CollectionActions-builtSetMultimapAction');
-
-  @override
-  void setDispatcher(Dispatcher dispatcher) {
-    builtListAction.setDispatcher(dispatcher);
-    builtListMultimapAction.setDispatcher(dispatcher);
-    builtMapAction.setDispatcher(dispatcher);
-    builtSetAction.setDispatcher(dispatcher);
-    builtSetMultimapAction.setDispatcher(dispatcher);
-  }
-}
-
-class CollectionActionsNames {
-  static final ActionName<Null> builtListAction =
-      new ActionName<Null>('CollectionActions-builtListAction');
-  static final ActionName<Null> builtListMultimapAction =
-      new ActionName<Null>('CollectionActions-builtListMultimapAction');
-  static final ActionName<Null> builtMapAction =
-      new ActionName<Null>('CollectionActions-builtMapAction');
-  static final ActionName<Null> builtSetAction =
-      new ActionName<Null>('CollectionActions-builtSetAction');
-  static final ActionName<Null> builtSetMultimapAction =
-      new ActionName<Null>('CollectionActions-builtSetMultimapAction');
 }

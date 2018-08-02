@@ -3,13 +3,80 @@
 part of nested_models;
 
 // **************************************************************************
-// Generator: BuiltValueGenerator
+// BuiltReduxGenerator
+// **************************************************************************
+
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
+
+class _$BaseActions extends BaseActions {
+  factory _$BaseActions() => new _$BaseActions._();
+  _$BaseActions._() : super._();
+
+  final ActionDispatcher<Null> baseAction =
+      new ActionDispatcher<Null>('BaseActions-baseAction');
+  final ChildActions child = new ChildActions();
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    baseAction.setDispatcher(dispatcher);
+    child.setDispatcher(dispatcher);
+  }
+}
+
+class BaseActionsNames {
+  static final ActionName<Null> baseAction =
+      new ActionName<Null>('BaseActions-baseAction');
+}
+
+class _$ChildActions extends ChildActions {
+  factory _$ChildActions() => new _$ChildActions._();
+  _$ChildActions._() : super._();
+
+  final ActionDispatcher<Null> childAction =
+      new ActionDispatcher<Null>('ChildActions-childAction');
+  final GrandchildActions grandchild = new GrandchildActions();
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    childAction.setDispatcher(dispatcher);
+    grandchild.setDispatcher(dispatcher);
+  }
+}
+
+class ChildActionsNames {
+  static final ActionName<Null> childAction =
+      new ActionName<Null>('ChildActions-childAction');
+}
+
+class _$GrandchildActions extends GrandchildActions {
+  factory _$GrandchildActions() => new _$GrandchildActions._();
+  _$GrandchildActions._() : super._();
+
+  final ActionDispatcher<Null> grandchildAction =
+      new ActionDispatcher<Null>('GrandchildActions-grandchildAction');
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    grandchildAction.setDispatcher(dispatcher);
+  }
+}
+
+class GrandchildActionsNames {
+  static final ActionName<Null> grandchildAction =
+      new ActionName<Null>('GrandchildActions-grandchildAction');
+}
+
+// **************************************************************************
+// BuiltValueGenerator
 // **************************************************************************
 
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -282,69 +349,4 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
     replace(_$result);
     return _$result;
   }
-}
-
-// **************************************************************************
-// Generator: BuiltReduxGenerator
-// **************************************************************************
-
-// ignore_for_file: avoid_classes_with_only_static_members
-// ignore_for_file: annotate_overrides
-
-class _$BaseActions extends BaseActions {
-  factory _$BaseActions() => new _$BaseActions._();
-  _$BaseActions._() : super._();
-
-  final ActionDispatcher<Null> baseAction =
-      new ActionDispatcher<Null>('BaseActions-baseAction');
-  final ChildActions child = new ChildActions();
-
-  @override
-  void setDispatcher(Dispatcher dispatcher) {
-    baseAction.setDispatcher(dispatcher);
-    child.setDispatcher(dispatcher);
-  }
-}
-
-class BaseActionsNames {
-  static final ActionName<Null> baseAction =
-      new ActionName<Null>('BaseActions-baseAction');
-}
-
-class _$ChildActions extends ChildActions {
-  factory _$ChildActions() => new _$ChildActions._();
-  _$ChildActions._() : super._();
-
-  final ActionDispatcher<Null> childAction =
-      new ActionDispatcher<Null>('ChildActions-childAction');
-  final GrandchildActions grandchild = new GrandchildActions();
-
-  @override
-  void setDispatcher(Dispatcher dispatcher) {
-    childAction.setDispatcher(dispatcher);
-    grandchild.setDispatcher(dispatcher);
-  }
-}
-
-class ChildActionsNames {
-  static final ActionName<Null> childAction =
-      new ActionName<Null>('ChildActions-childAction');
-}
-
-class _$GrandchildActions extends GrandchildActions {
-  factory _$GrandchildActions() => new _$GrandchildActions._();
-  _$GrandchildActions._() : super._();
-
-  final ActionDispatcher<Null> grandchildAction =
-      new ActionDispatcher<Null>('GrandchildActions-grandchildAction');
-
-  @override
-  void setDispatcher(Dispatcher dispatcher) {
-    grandchildAction.setDispatcher(dispatcher);
-  }
-}
-
-class GrandchildActionsNames {
-  static final ActionName<Null> grandchildAction =
-      new ActionName<Null>('GrandchildActions-grandchildAction');
 }

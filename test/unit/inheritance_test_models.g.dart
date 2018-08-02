@@ -3,13 +3,62 @@
 part of inheritance_test_models;
 
 // **************************************************************************
-// Generator: BuiltValueGenerator
+// BuiltReduxGenerator
+// **************************************************************************
+
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
+
+class _$ChildActions extends ChildActions {
+  factory _$ChildActions() => new _$ChildActions._();
+  _$ChildActions._() : super._();
+
+  final ActionDispatcher<Null> childAction =
+      new ActionDispatcher<Null>('ChildActions-childAction');
+  final ActionDispatcher<Null> parentAction =
+      new ActionDispatcher<Null>('ParentActions-parentAction');
+  final ActionDispatcher<Null> grandparentAction =
+      new ActionDispatcher<Null>('GrandparentActions-grandparentAction');
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    childAction.setDispatcher(dispatcher);
+    parentAction.setDispatcher(dispatcher);
+    grandparentAction.setDispatcher(dispatcher);
+  }
+}
+
+class ChildActionsNames {
+  static final ActionName<Null> childAction =
+      new ActionName<Null>('ChildActions-childAction');
+  static final ActionName<Null> parentAction =
+      new ActionName<Null>('ParentActions-parentAction');
+  static final ActionName<Null> grandparentAction =
+      new ActionName<Null>('GrandparentActions-grandparentAction');
+}
+
+class ParentActionsNames {
+  static final ActionName<Null> parentAction =
+      new ActionName<Null>('ParentActions-parentAction');
+  static final ActionName<Null> grandparentAction =
+      new ActionName<Null>('GrandparentActions-grandparentAction');
+}
+
+class GrandparentActionsNames {
+  static final ActionName<Null> grandparentAction =
+      new ActionName<Null>('GrandparentActions-grandparentAction');
+}
+
+// **************************************************************************
+// BuiltValueGenerator
 // **************************************************************************
 
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -132,51 +181,4 @@ class ChildBuilder
     replace(_$result);
     return _$result;
   }
-}
-
-// **************************************************************************
-// Generator: BuiltReduxGenerator
-// **************************************************************************
-
-// ignore_for_file: avoid_classes_with_only_static_members
-// ignore_for_file: annotate_overrides
-
-class _$ChildActions extends ChildActions {
-  factory _$ChildActions() => new _$ChildActions._();
-  _$ChildActions._() : super._();
-
-  final ActionDispatcher<Null> childAction =
-      new ActionDispatcher<Null>('ChildActions-childAction');
-  final ActionDispatcher<Null> parentAction =
-      new ActionDispatcher<Null>('ParentActions-parentAction');
-  final ActionDispatcher<Null> grandparentAction =
-      new ActionDispatcher<Null>('GrandparentActions-grandparentAction');
-
-  @override
-  void setDispatcher(Dispatcher dispatcher) {
-    childAction.setDispatcher(dispatcher);
-    parentAction.setDispatcher(dispatcher);
-    grandparentAction.setDispatcher(dispatcher);
-  }
-}
-
-class ChildActionsNames {
-  static final ActionName<Null> childAction =
-      new ActionName<Null>('ChildActions-childAction');
-  static final ActionName<Null> parentAction =
-      new ActionName<Null>('ParentActions-parentAction');
-  static final ActionName<Null> grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
-}
-
-class ParentActionsNames {
-  static final ActionName<Null> parentAction =
-      new ActionName<Null>('ParentActions-parentAction');
-  static final ActionName<Null> grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
-}
-
-class GrandparentActionsNames {
-  static final ActionName<Null> grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
 }

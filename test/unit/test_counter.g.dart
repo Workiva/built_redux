@@ -3,13 +3,70 @@
 part of test_counter;
 
 // **************************************************************************
-// Generator: BuiltValueGenerator
+// BuiltReduxGenerator
+// **************************************************************************
+
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
+
+class _$CounterActions extends CounterActions {
+  factory _$CounterActions() => new _$CounterActions._();
+  _$CounterActions._() : super._();
+
+  final ActionDispatcher<int> increment =
+      new ActionDispatcher<int>('CounterActions-increment');
+  final ActionDispatcher<int> incrementOther =
+      new ActionDispatcher<int>('CounterActions-incrementOther');
+  final MiddlewareActions middlewareActions = new MiddlewareActions();
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    increment.setDispatcher(dispatcher);
+    incrementOther.setDispatcher(dispatcher);
+    middlewareActions.setDispatcher(dispatcher);
+  }
+}
+
+class CounterActionsNames {
+  static final ActionName<int> increment =
+      new ActionName<int>('CounterActions-increment');
+  static final ActionName<int> incrementOther =
+      new ActionName<int>('CounterActions-incrementOther');
+}
+
+class _$MiddlewareActions extends MiddlewareActions {
+  factory _$MiddlewareActions() => new _$MiddlewareActions._();
+  _$MiddlewareActions._() : super._();
+
+  final ActionDispatcher<int> doubleIt =
+      new ActionDispatcher<int>('MiddlewareActions-doubleIt');
+  final ActionDispatcher<int> tripleIt =
+      new ActionDispatcher<int>('MiddlewareActions-tripleIt');
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    doubleIt.setDispatcher(dispatcher);
+    tripleIt.setDispatcher(dispatcher);
+  }
+}
+
+class MiddlewareActionsNames {
+  static final ActionName<int> doubleIt =
+      new ActionName<int>('MiddlewareActions-doubleIt');
+  static final ActionName<int> tripleIt =
+      new ActionName<int>('MiddlewareActions-tripleIt');
+}
+
+// **************************************************************************
+// BuiltValueGenerator
 // **************************************************************************
 
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -97,59 +154,4 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
     replace(_$result);
     return _$result;
   }
-}
-
-// **************************************************************************
-// Generator: BuiltReduxGenerator
-// **************************************************************************
-
-// ignore_for_file: avoid_classes_with_only_static_members
-// ignore_for_file: annotate_overrides
-
-class _$CounterActions extends CounterActions {
-  factory _$CounterActions() => new _$CounterActions._();
-  _$CounterActions._() : super._();
-
-  final ActionDispatcher<int> increment =
-      new ActionDispatcher<int>('CounterActions-increment');
-  final ActionDispatcher<int> incrementOther =
-      new ActionDispatcher<int>('CounterActions-incrementOther');
-  final MiddlewareActions middlewareActions = new MiddlewareActions();
-
-  @override
-  void setDispatcher(Dispatcher dispatcher) {
-    increment.setDispatcher(dispatcher);
-    incrementOther.setDispatcher(dispatcher);
-    middlewareActions.setDispatcher(dispatcher);
-  }
-}
-
-class CounterActionsNames {
-  static final ActionName<int> increment =
-      new ActionName<int>('CounterActions-increment');
-  static final ActionName<int> incrementOther =
-      new ActionName<int>('CounterActions-incrementOther');
-}
-
-class _$MiddlewareActions extends MiddlewareActions {
-  factory _$MiddlewareActions() => new _$MiddlewareActions._();
-  _$MiddlewareActions._() : super._();
-
-  final ActionDispatcher<int> doubleIt =
-      new ActionDispatcher<int>('MiddlewareActions-doubleIt');
-  final ActionDispatcher<int> tripleIt =
-      new ActionDispatcher<int>('MiddlewareActions-tripleIt');
-
-  @override
-  void setDispatcher(Dispatcher dispatcher) {
-    doubleIt.setDispatcher(dispatcher);
-    tripleIt.setDispatcher(dispatcher);
-  }
-}
-
-class MiddlewareActionsNames {
-  static final ActionName<int> doubleIt =
-      new ActionName<int>('MiddlewareActions-doubleIt');
-  static final ActionName<int> tripleIt =
-      new ActionName<int>('MiddlewareActions-tripleIt');
 }

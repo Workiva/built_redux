@@ -1,11 +1,62 @@
+## 7.4.5
+
+* open sdk range to dart 2!
+* update built_value and source_gen dependencies
+* use SharedPartBuilder rather than PartBuilder in the generator
+
+## 7.4.4-dev
+
+* use typedef names in action generator
+
+## 7.4.3-dev
+
+* update dependency range on analyzer
+* update dependency range on test
+* fix broken test caused by dart 2's new asyc behavior
+
 ## 7.4.2
 
 * add lint ignores to generated files
+
+## 7.4.1-dev
+
+* open sourc-gen range
+* run tests on the dev compiler
 
 ## 7.4.1
 
 * fix cast issues around store changes in dart 2
 * open analyzer version range
+
+## 7.4.0-dev
+
+* add build.yaml and build.dart to comply with build_runner 0.7.x
+
+With the dev tag you can consume the latest versions of built_value, build, and build_runner that are only compatable with dart 2.
+
+In order to migrate:
+
+* remove your old build scripts
+* update your pubspec to include
+
+```yaml
+  build_runner: ^0.7.9
+```
+
+* add a build.yaml to the root of your repo that contains the following:
+
+```yaml
+targets:
+  $default:
+    builders:
+      built_value_generator|built_value:
+        enabled: false
+```
+
+* run `pub run build_runner build`.
+
+The build script is only a temporary measure until https://github.com/dart-lang/source_gen/issues/319 is resolved.
+
 
 ## 7.4.0
 

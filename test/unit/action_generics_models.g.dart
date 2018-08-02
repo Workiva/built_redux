@@ -3,13 +3,82 @@
 part of action_generics_models;
 
 // **************************************************************************
-// Generator: BuiltValueGenerator
+// BuiltReduxGenerator
+// **************************************************************************
+
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: annotate_overrides
+
+class _$ActionGenericsActions extends ActionGenericsActions {
+  factory _$ActionGenericsActions() => new _$ActionGenericsActions._();
+  _$ActionGenericsActions._() : super._();
+
+  final ActionDispatcher<int> intAction =
+      new ActionDispatcher<int>('ActionGenericsActions-intAction');
+  final ActionDispatcher<Null> nullAction =
+      new ActionDispatcher<Null>('ActionGenericsActions-nullAction');
+  final ActionDispatcher<List<int>> listIntAction =
+      new ActionDispatcher<List<int>>('ActionGenericsActions-listIntAction');
+  final ActionDispatcher<Map<String, List<int>>> mapStringToListIntAction =
+      new ActionDispatcher<Map<String, List<int>>>(
+          'ActionGenericsActions-mapStringToListIntAction');
+  final ActionDispatcher<
+      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>> typdefAction = new ActionDispatcher<
+      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
+  final ActionDispatcher<Foo<int>> fooAction =
+      new ActionDispatcher<Foo<int>>('ActionGenericsActions-fooAction');
+  final ActionDispatcher<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
+      classWithBuiltAction = new ActionDispatcher<
+              ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
+          'ActionGenericsActions-classWithBuiltAction');
+
+  @override
+  void setDispatcher(Dispatcher dispatcher) {
+    intAction.setDispatcher(dispatcher);
+    nullAction.setDispatcher(dispatcher);
+    listIntAction.setDispatcher(dispatcher);
+    mapStringToListIntAction.setDispatcher(dispatcher);
+    typdefAction.setDispatcher(dispatcher);
+    fooAction.setDispatcher(dispatcher);
+    classWithBuiltAction.setDispatcher(dispatcher);
+  }
+}
+
+class ActionGenericsActionsNames {
+  static final ActionName<int> intAction =
+      new ActionName<int>('ActionGenericsActions-intAction');
+  static final ActionName<Null> nullAction =
+      new ActionName<Null>('ActionGenericsActions-nullAction');
+  static final ActionName<List<int>> listIntAction =
+      new ActionName<List<int>>('ActionGenericsActions-listIntAction');
+  static final ActionName<Map<String, List<int>>> mapStringToListIntAction =
+      new ActionName<Map<String, List<int>>>(
+          'ActionGenericsActions-mapStringToListIntAction');
+  static final ActionName<
+      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>> typdefAction = new ActionName<
+      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
+  static final ActionName<Foo<int>> fooAction =
+      new ActionName<Foo<int>>('ActionGenericsActions-fooAction');
+  static final ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
+      classWithBuiltAction =
+      new ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
+          'ActionGenericsActions-classWithBuiltAction');
+}
+
+// **************************************************************************
+// BuiltValueGenerator
 // **************************************************************************
 
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -88,57 +157,4 @@ class ActionGenericsBuilder
     replace(_$result);
     return _$result;
   }
-}
-
-// **************************************************************************
-// Generator: BuiltReduxGenerator
-// **************************************************************************
-
-// ignore_for_file: avoid_classes_with_only_static_members
-// ignore_for_file: annotate_overrides
-
-class _$ActionGenericsActions extends ActionGenericsActions {
-  factory _$ActionGenericsActions() => new _$ActionGenericsActions._();
-  _$ActionGenericsActions._() : super._();
-
-  final ActionDispatcher<int> intAction =
-      new ActionDispatcher<int>('ActionGenericsActions-intAction');
-  final ActionDispatcher<Null> nullAction =
-      new ActionDispatcher<Null>('ActionGenericsActions-nullAction');
-  final ActionDispatcher<List<int>> listIntAction =
-      new ActionDispatcher<List<int>>('ActionGenericsActions-listIntAction');
-  final ActionDispatcher<Map<String, List<int>>> mapStringToListIntAction =
-      new ActionDispatcher<Map<String, List<int>>>(
-          'ActionGenericsActions-mapStringToListIntAction');
-  final ActionDispatcher<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>> typdefAction = new ActionDispatcher<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
-
-  @override
-  void setDispatcher(Dispatcher dispatcher) {
-    intAction.setDispatcher(dispatcher);
-    nullAction.setDispatcher(dispatcher);
-    listIntAction.setDispatcher(dispatcher);
-    mapStringToListIntAction.setDispatcher(dispatcher);
-    typdefAction.setDispatcher(dispatcher);
-  }
-}
-
-class ActionGenericsActionsNames {
-  static final ActionName<int> intAction =
-      new ActionName<int>('ActionGenericsActions-intAction');
-  static final ActionName<Null> nullAction =
-      new ActionName<Null>('ActionGenericsActions-nullAction');
-  static final ActionName<List<int>> listIntAction =
-      new ActionName<List<int>>('ActionGenericsActions-listIntAction');
-  static final ActionName<Map<String, List<int>>> mapStringToListIntAction =
-      new ActionName<Map<String, List<int>>>(
-          'ActionGenericsActions-mapStringToListIntAction');
-  static final ActionName<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>> typdefAction = new ActionName<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
 }

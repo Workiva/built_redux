@@ -1,10 +1,16 @@
 language: dart
-dart:
-  - stable
+dart: dev
+sudo: required
+addons:
+  chrome: stable
+before_install:
+ - export DISPLAY=:99.0
+ - sh -e /etc/init.d/xvfb start
+ - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
+
 script:
-  - dart tool/build.dart
-  - pub run dart_dev format --check
-  - pub run dart_dev analyze
-  - pub run dart_dev test -p vm
-  - pub run dart_dev coverage --no-html
-  - bash <(curl -s https://codecov.io/bash) -f coverage/coverage.lcov
+  - pub run build_runner build --delete-conflicting-outputs
+  - dartfmt -n --set-exit-if-changed lib/
+  - dartanalyzer --fatal-warnings --fatal-infos lib/
+  - pub run build_runner test --delete-conflicting-outputs
+  - pub run build_runner test --delete-conflicting-outputs -- -p chrome

@@ -64,7 +64,8 @@ String _allActionDispatcherFieldsTemplate(ClassElement element) =>
         element, _reduxActionFieldTemplate, _needsReduxActions);
 
 String _actionDispatcherFieldTemplate(ClassElement e, FieldElement f) {
-  final genericType = _getActionGenericType(f);
+  final genericType =
+      _getActionGenericType((f.type as InterfaceType).typeArguments.first);
   return 'final ActionDispatcher<${genericType}> ${f.name} = new ActionDispatcher<${genericType}>(\'${e.name}-${f.name}\');';
 }
 
@@ -99,7 +100,8 @@ String _allActionNamesFieldsTemplate(ClassElement element) =>
         element, _actionNameTemplate, _isActionDispatcher);
 
 String _actionNameTemplate(ClassElement e, FieldElement f) {
-  final genericType = _getActionGenericType(f);
+  final genericType =
+      _getActionGenericType((f.type as InterfaceType).typeArguments.first);
   return 'static final ActionName<${genericType}> ${f.name} = new ActionName<${genericType}>(\'${e.name}-${f.name}\');';
 }
 
@@ -147,25 +149,36 @@ bool _hasSuperType(ClassElement classElement, String type) =>
         .any((interfaceType) => interfaceType.name == type) &&
     !classElement.displayName.startsWith('_\$');
 
-String _getActionGenericType(FieldElement e) {
-  var typeArgument =
-      (e.type as InterfaceType).typeArguments.first as ParameterizedType;
-  // generic type has generic type parameters?
-  if (typeArgument.typeArguments.isEmpty ||
-      typeArgument.typeArguments.every((ta) => ta.name == 'dynamic')) {
-    return typeArgument.name;
+String _getActionGenericType(DartType type) {
+  if (type is FunctionType) {
+    final generics =
+        _correctUnresolvedGenerics(type.typeArguments, type.typeParameters);
+    if (generics.isEmpty) return typeNameOf(type);
+    return typeNameOf(type) + '<${generics.join(',')}>';
   }
 
-  final typeArguments =
-      typeArgument.typeArguments.map((ta) => ta.toString()).toList();
+  if (type is ParameterizedType) {
+    final generics =
+        _correctUnresolvedGenerics(type.typeArguments, type.typeParameters);
+    if (generics.isEmpty) return type.name;
+    return type.name + '<${generics.join(',')}>';
+  }
 
+  if (type.isVoid) return 'void';
+
+  return 'dynamic';
+}
+
+List<String> _correctUnresolvedGenerics(
+    List<DartType> args, List<TypeParameterElement> params) {
   // hack for thunks/repatches or any other type argument list where
   // any given argument is a Built and the proceding is a Builder
   // and the builder is dynamic in the typeArguments list becauses it is
   // yet to be generated. This is complex and a bit awkward but
   // it is written this way to be very careful not to make any unintended
   // changes the the typeArguments list.
-  final boundParams = typeArgument.typeParameters.map((e) => e.bound);
+  final typeArguments = args.map((ta) => ta.toString()).toList();
+  final boundParams = params.map((e) => e.bound);
   for (int i = 0; i < boundParams.length; i++) {
     // get the bound param at this spot
     final b = boundParams.elementAt(i);
@@ -192,5 +205,5 @@ String _getActionGenericType(FieldElement e) {
     }
   }
 
-  return '${typeArgument.name}<${typeArguments.join(',')}>';
+  return typeArguments;
 }
