@@ -73,7 +73,7 @@ Reducer<Base, BaseBuilder, dynamic> getBaseReducer() =>
     (new ReducerBuilder<Base, BaseBuilder>()
           ..add<Null>(BaseActionsNames.baseAction, (s, a, b) => b.count++)
           ..combineNested(getChildReducer())
-          ..combineNested(getGrandchildReducer()))
+          ..combineNested(getNestedGrandchildReducer()))
         .build();
 
 // getChildReducer returns a nested reducer builder that rebuilds the
@@ -93,10 +93,16 @@ NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>
 // Reducers added to the NestedReducerBuilder must have the signature:
 // (Grandchild, Action<T>, GrandchildBuilder)
 NestedReducerBuilder<Base, BaseBuilder, Grandchild, GrandchildBuilder>
-    getGrandchildReducer() => new NestedReducerBuilder<
+    getNestedGrandchildReducer() => new NestedReducerBuilder<
         Base,
         BaseBuilder,
         Grandchild,
         GrandchildBuilder>((s) => s.child.grandchild, (b) => b.child.grandchild)
+      ..addAll(getGrandchildReducer());
+
+ReducerBuilder<Grandchild, GrandchildBuilder> getGrandchildReducer() =>
+    new ReducerBuilder<
+        Grandchild,
+        GrandchildBuilder>()
       ..add<Null>(
           GrandchildActionsNames.grandchildAction, (s, a, b) => b.count++);
