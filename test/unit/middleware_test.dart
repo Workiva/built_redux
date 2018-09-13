@@ -67,5 +67,12 @@ void main() {
       store.actions.middlewareActions.tripleIt(0);
       expect(store.state.count, 4);
     });
+
+    test('combineNested works with SubCounter doubleIt', () async {
+      setup();
+      expect(store.state.subCounter.subCount, 1);
+      store.actions.subCounterActions.doubleIt(0);
+      expect(store.state.subCounter.subCount, 3);
+    });
   });
 }
