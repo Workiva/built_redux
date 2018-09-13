@@ -1,3 +1,9 @@
+## 7.5.0
+
+* allow 4.x.x of built_collection
+* added combineReducerBuilder to NestedReducerBuilder
+* added a NestedMiddlewareBuilder
+
 ## 7.4.5
 
 * open sdk range to dart 2!

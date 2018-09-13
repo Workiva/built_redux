@@ -4,7 +4,7 @@
 
 Reducers specify how the application's state changes in response to actions sent to the store. Remember that actions only describe the fact that something happened, but don't describe how the application's state changes.
 
-## Writing a reducer 
+## Writing a reducer
 
 Say I'm working on the counter app discussed in the [Actions](actions.md) section. This means I've defined my apps actions as:
 
@@ -20,9 +20,9 @@ abstract class AppActions extends ReduxActions {
 and my state object as so:
 
 ```dart
-abstract class Counter implements Built<Counter, CounterBuilder> {
-  Counter._();
-  factory Counter() => new _$Counter._(count: 0);
+abstract class App implements Built<App, AppBuilder> {
+  App._();
+  factory App() => new _$App._(count: 0);
 
   int get count;
 }
