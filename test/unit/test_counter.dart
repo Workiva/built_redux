@@ -109,7 +109,7 @@ var subCountNested = NestedMiddlewareBuilder<
     SubCounter,
     SubCounterBuilder,
     SubCounterActions>((c) => c.subCounter, (a) => a.subCounterActions)
-  ..combineMiddlwareBuilder(subCountMiddlewareBuilder);
+  ..combineMiddlewareBuilder(subCountMiddlewareBuilder);
 
 var subCountMiddlewareBuilder =
     new MiddlewareBuilder<SubCounter, SubCounterBuilder, SubCounterActions>()

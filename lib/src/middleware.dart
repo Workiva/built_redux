@@ -101,10 +101,10 @@ class NestedMiddlewareBuilder<
     };
   }
 
-  /// [combineMiddleware] takes a `MiddlewareBuilder` with the type arguments
+  /// [combineMiddlewareBuilder] takes a `MiddlewareBuilder` with the type arguments
   /// `NestedState`, `NestedStateBuilder`, `NestedActions` and combines it with
   /// this `NestedMiddlewareBuilder`.
-  void combineMiddlwareBuilder(
+  void combineMiddlewareBuilder(
       MiddlewareBuilder<NestedState, NestedStateBuilder, NestedActions> other) {
     var adapted = other._map.map((name, handler) => MapEntry(
         name,
