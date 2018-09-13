@@ -124,17 +124,6 @@ class NestedReducerBuilder<
 
   NestedReducerBuilder(this._stateMapper, this._builderMapper);
 
-  void addAll(ReducerBuilder<NestedState, NestedStateBuilder> other) {
-    final adapted = other._map.map((name, reducer) => MapEntry(
-        name,
-        (State state, Action<dynamic> action, StateBuilder builder) => reducer(
-              _stateMapper(state),
-              action,
-              _builderMapper(builder),
-            )));
-    _map.addAll(adapted);
-  }
-
   /// Registers [reducer] function to the given [actionName]
   void add<Payload>(ActionName<Payload> actionName,
       Reducer<NestedState, NestedStateBuilder, Payload> reducer) {
@@ -143,6 +132,20 @@ class NestedReducerBuilder<
           action as Action<Payload>,
           _builderMapper(builder),
         );
+  }
+
+  /// [combineReducerBuilder] takes a `ReducerBuilder` with the type arguments
+  /// `NestedState`, `NestedStateBuilder`, and combines it with this `NestedReducerBuilder`.
+  void combineReducerBuilder(
+      ReducerBuilder<NestedState, NestedStateBuilder> other) {
+    final adapted = other._map.map((name, reducer) => MapEntry(
+        name,
+        (State state, Action<dynamic> action, StateBuilder builder) => reducer(
+              _stateMapper(state),
+              action,
+              _builderMapper(builder),
+            )));
+    _map.addAll(adapted);
   }
 }
 
