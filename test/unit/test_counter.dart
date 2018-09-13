@@ -41,8 +41,8 @@ void _incrementSubCount(
 final reducer = (new ReducerBuilder<Counter, CounterBuilder>()
       ..add(CounterActionsNames.increment, _increment)
       ..combine(_otherReducer)
-      ..add(SubCounterActionsNames.increment, _incrementSubCount)
-    ).build();
+      ..add(SubCounterActionsNames.increment, _incrementSubCount))
+    .build();
 
 final _otherReducer = (new ReducerBuilder<Counter, CounterBuilder>()
   ..add(CounterActionsNames.incrementOther, _incrementOther));
@@ -80,11 +80,11 @@ abstract class MiddlewareActions extends ReduxActions {
 }
 
 var counterMiddleware =
-(new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
-  ..add(MiddlewareActionsNames.doubleIt, _doubleIt)
-  ..combine(tripleItMiddlewareBuilder)
-  ..combineNested(subCountNested)
-).build();
+    (new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
+          ..add(MiddlewareActionsNames.doubleIt, _doubleIt)
+          ..combine(tripleItMiddlewareBuilder)
+          ..combineNested(subCountNested))
+        .build();
 
 void _doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
     ActionHandler next, Action<int> action) {
@@ -102,16 +102,23 @@ void _tripleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
   next(action);
 }
 
-var subCountNested = NestedMiddlewareBuilder<Counter, CounterBuilder,
-    CounterActions, SubCounter, SubCounterBuilder, SubCounterActions>(
-    (c) => c.subCounter, (a) => a.subCounterActions)
-  ..addAll(subCountMiddlewareBuilder);
+var subCountNested = NestedMiddlewareBuilder<
+    Counter,
+    CounterBuilder,
+    CounterActions,
+    SubCounter,
+    SubCounterBuilder,
+    SubCounterActions>((c) => c.subCounter, (a) => a.subCounterActions)
+  ..combineMiddlwareBuilder(subCountMiddlewareBuilder);
 
-var subCountMiddlewareBuilder = new MiddlewareBuilder<SubCounter, SubCounterBuilder, SubCounterActions>()
-  ..add(SubCounterActionsNames.doubleIt, _subCounterDoubleIt);
+var subCountMiddlewareBuilder =
+    new MiddlewareBuilder<SubCounter, SubCounterBuilder, SubCounterActions>()
+      ..add(SubCounterActionsNames.doubleIt, _subCounterDoubleIt);
 
-void _subCounterDoubleIt(MiddlewareApi<SubCounter, SubCounterBuilder, SubCounterActions> api,
-    ActionHandler next, Action<int> action) {
+void _subCounterDoubleIt(
+    MiddlewareApi<SubCounter, SubCounterBuilder, SubCounterActions> api,
+    ActionHandler next,
+    Action<int> action) {
   api.actions.increment(api.state.subCount * 2);
   next(action);
 }

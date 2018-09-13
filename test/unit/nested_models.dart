@@ -98,11 +98,9 @@ NestedReducerBuilder<Base, BaseBuilder, Grandchild, GrandchildBuilder>
         BaseBuilder,
         Grandchild,
         GrandchildBuilder>((s) => s.child.grandchild, (b) => b.child.grandchild)
-      ..addAll(getGrandchildReducer());
+      ..combineReducerBuilder(getGrandchildReducer());
 
 ReducerBuilder<Grandchild, GrandchildBuilder> getGrandchildReducer() =>
-    new ReducerBuilder<
-        Grandchild,
-        GrandchildBuilder>()
+    new ReducerBuilder<Grandchild, GrandchildBuilder>()
       ..add<Null>(
           GrandchildActionsNames.grandchildAction, (s, a, b) => b.count++);
