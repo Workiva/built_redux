@@ -60,6 +60,9 @@ class CollectionActionsNames {
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 class _$Collection extends Collection {
   @override
@@ -83,16 +86,21 @@ class _$Collection extends Collection {
       this.builtSet,
       this.builtSetMultimap})
       : super._() {
-    if (builtList == null)
+    if (builtList == null) {
       throw new BuiltValueNullFieldError('Collection', 'builtList');
-    if (builtListMultimap == null)
+    }
+    if (builtListMultimap == null) {
       throw new BuiltValueNullFieldError('Collection', 'builtListMultimap');
-    if (builtMap == null)
+    }
+    if (builtMap == null) {
       throw new BuiltValueNullFieldError('Collection', 'builtMap');
-    if (builtSet == null)
+    }
+    if (builtSet == null) {
       throw new BuiltValueNullFieldError('Collection', 'builtSet');
-    if (builtSetMultimap == null)
+    }
+    if (builtSetMultimap == null) {
       throw new BuiltValueNullFieldError('Collection', 'builtSetMultimap');
+    }
   }
 
   @override
@@ -103,10 +111,10 @@ class _$Collection extends Collection {
   CollectionBuilder toBuilder() => new CollectionBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Collection) return false;
-    return builtList == other.builtList &&
+    return other is Collection &&
+        builtList == other.builtList &&
         builtListMultimap == other.builtListMultimap &&
         builtMap == other.builtMap &&
         builtSet == other.builtSet &&
@@ -180,7 +188,9 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
 
   @override
   void replace(Collection other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Collection;
   }
 

@@ -1,3 +1,8 @@
+## 7.6.0
+
+* update packages and open ranges
+* regenerate built values
+
 ## 7.5.0
 
 * allow 4.x.x of built_collection

@@ -95,6 +95,9 @@ class MiddlewareActionsNames {
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 class _$Counter extends Counter {
   @override
@@ -108,11 +111,15 @@ class _$Counter extends Counter {
       (new CounterBuilder()..update(updates)).build();
 
   _$Counter._({this.count, this.otherCount, this.subCounter}) : super._() {
-    if (count == null) throw new BuiltValueNullFieldError('Counter', 'count');
-    if (otherCount == null)
+    if (count == null) {
+      throw new BuiltValueNullFieldError('Counter', 'count');
+    }
+    if (otherCount == null) {
       throw new BuiltValueNullFieldError('Counter', 'otherCount');
-    if (subCounter == null)
+    }
+    if (subCounter == null) {
       throw new BuiltValueNullFieldError('Counter', 'subCounter');
+    }
   }
 
   @override
@@ -123,10 +130,10 @@ class _$Counter extends Counter {
   CounterBuilder toBuilder() => new CounterBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Counter) return false;
-    return count == other.count &&
+    return other is Counter &&
+        count == other.count &&
         otherCount == other.otherCount &&
         subCounter == other.subCounter;
   }
@@ -178,7 +185,9 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   @override
   void replace(Counter other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Counter;
   }
 
@@ -220,8 +229,9 @@ class _$SubCounter extends SubCounter {
       (new SubCounterBuilder()..update(updates)).build();
 
   _$SubCounter._({this.subCount}) : super._() {
-    if (subCount == null)
+    if (subCount == null) {
       throw new BuiltValueNullFieldError('SubCounter', 'subCount');
+    }
   }
 
   @override
@@ -232,10 +242,9 @@ class _$SubCounter extends SubCounter {
   SubCounterBuilder toBuilder() => new SubCounterBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! SubCounter) return false;
-    return subCount == other.subCount;
+    return other is SubCounter && subCount == other.subCount;
   }
 
   @override
@@ -270,7 +279,9 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
 
   @override
   void replace(SubCounter other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$SubCounter;
   }
 

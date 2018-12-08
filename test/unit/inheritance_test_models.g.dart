@@ -62,6 +62,9 @@ class GrandparentActionsNames {
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 abstract class ParentBuilder {
   void replace(Parent other);
@@ -90,12 +93,15 @@ class _$Child extends Child {
 
   _$Child._({this.childCount, this.parentCount, this.grandparentCount})
       : super._() {
-    if (childCount == null)
+    if (childCount == null) {
       throw new BuiltValueNullFieldError('Child', 'childCount');
-    if (parentCount == null)
+    }
+    if (parentCount == null) {
       throw new BuiltValueNullFieldError('Child', 'parentCount');
-    if (grandparentCount == null)
+    }
+    if (grandparentCount == null) {
       throw new BuiltValueNullFieldError('Child', 'grandparentCount');
+    }
   }
 
   @override
@@ -106,10 +112,10 @@ class _$Child extends Child {
   ChildBuilder toBuilder() => new ChildBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Child) return false;
-    return childCount == other.childCount &&
+    return other is Child &&
+        childCount == other.childCount &&
         parentCount == other.parentCount &&
         grandparentCount == other.grandparentCount;
   }
@@ -162,7 +168,9 @@ class ChildBuilder
   @override
 // ignore: override_on_non_overriding_method
   void replace(covariant Child other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Child;
   }
 
