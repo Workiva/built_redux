@@ -1,3 +1,6 @@
+## 7.5.2
+update analyzer dependencies
+
 ## 7.5.1
 update build dependencies
 
