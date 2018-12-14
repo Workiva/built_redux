@@ -45,6 +45,9 @@ class CounterActionsNames {
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 class _$Counter extends Counter {
   @override
@@ -54,7 +57,9 @@ class _$Counter extends Counter {
       (new CounterBuilder()..update(updates)).build();
 
   _$Counter._({this.count}) : super._() {
-    if (count == null) throw new BuiltValueNullFieldError('Counter', 'count');
+    if (count == null) {
+      throw new BuiltValueNullFieldError('Counter', 'count');
+    }
   }
 
   @override
@@ -65,10 +70,9 @@ class _$Counter extends Counter {
   CounterBuilder toBuilder() => new CounterBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Counter) return false;
-    return count == other.count;
+    return other is Counter && count == other.count;
   }
 
   @override
@@ -102,7 +106,9 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   @override
   void replace(Counter other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Counter;
   }
 

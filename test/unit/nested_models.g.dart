@@ -80,6 +80,9 @@ class GrandchildActionsNames {
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 class _$Base extends Base {
   @override
@@ -91,8 +94,12 @@ class _$Base extends Base {
       (new BaseBuilder()..update(updates)).build();
 
   _$Base._({this.count, this.child}) : super._() {
-    if (count == null) throw new BuiltValueNullFieldError('Base', 'count');
-    if (child == null) throw new BuiltValueNullFieldError('Base', 'child');
+    if (count == null) {
+      throw new BuiltValueNullFieldError('Base', 'count');
+    }
+    if (child == null) {
+      throw new BuiltValueNullFieldError('Base', 'child');
+    }
   }
 
   @override
@@ -103,10 +110,9 @@ class _$Base extends Base {
   BaseBuilder toBuilder() => new BaseBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Base) return false;
-    return count == other.count && child == other.child;
+    return other is Base && count == other.count && child == other.child;
   }
 
   @override
@@ -147,7 +153,9 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
 
   @override
   void replace(Base other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Base;
   }
 
@@ -187,9 +195,12 @@ class _$Child extends Child {
       (new ChildBuilder()..update(updates)).build();
 
   _$Child._({this.count, this.grandchild}) : super._() {
-    if (count == null) throw new BuiltValueNullFieldError('Child', 'count');
-    if (grandchild == null)
+    if (count == null) {
+      throw new BuiltValueNullFieldError('Child', 'count');
+    }
+    if (grandchild == null) {
       throw new BuiltValueNullFieldError('Child', 'grandchild');
+    }
   }
 
   @override
@@ -200,10 +211,11 @@ class _$Child extends Child {
   ChildBuilder toBuilder() => new ChildBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Child) return false;
-    return count == other.count && grandchild == other.grandchild;
+    return other is Child &&
+        count == other.count &&
+        grandchild == other.grandchild;
   }
 
   @override
@@ -246,7 +258,9 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
 
   @override
   void replace(Child other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Child;
   }
 
@@ -285,8 +299,9 @@ class _$Grandchild extends Grandchild {
       (new GrandchildBuilder()..update(updates)).build();
 
   _$Grandchild._({this.count}) : super._() {
-    if (count == null)
+    if (count == null) {
       throw new BuiltValueNullFieldError('Grandchild', 'count');
+    }
   }
 
   @override
@@ -297,10 +312,9 @@ class _$Grandchild extends Grandchild {
   GrandchildBuilder toBuilder() => new GrandchildBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Grandchild) return false;
-    return count == other.count;
+    return other is Grandchild && count == other.count;
   }
 
   @override
@@ -334,7 +348,9 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
 
   @override
   void replace(Grandchild other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Grandchild;
   }
 

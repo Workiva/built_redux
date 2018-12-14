@@ -1,3 +1,6 @@
+## 7.5.1
+update build dependencies
+
 ## 7.5.0
 
 * allow 4.x.x of built_collection
