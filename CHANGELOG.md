@@ -1,5 +1,8 @@
+## 7.5.3
+update analyzer dependency to allow '>=0.33.0 <0.36.0'
+
 ## 7.5.2
-update analyzer dependencies
+update analyzer dependency to allow ^0.33.0
 
 ## 7.5.1
 update build dependencies
