@@ -51,7 +51,7 @@ void main() {
     });
 
     test('handles increment and decrement', () async {
-      expectDispatched(actions.increment, verfier: (action) {
+      expectDispatched(actions.increment, verifier: (action) {
           expect(action.payload, 5);
       });
 
