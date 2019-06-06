@@ -8,6 +8,7 @@ import 'built_redux.dart';
 void expectDispatched<T>(
   ActionDispatcher<T> actionDispatcher, {
   void verifier(Action<T> action),
+  @deprecated void verfier(Action<T> action),
   int count: 1,
   int max: 0,
   String id,
@@ -15,5 +16,6 @@ void expectDispatched<T>(
 }) {
   actionDispatcher.setDispatcher(expectAsync1((Action<dynamic> action) {
     if (verifier != null) verifier(action as Action<T>);
+    if (verfier != null) verfier(action as Action<T>);
   }, count: count, max: max, id: id, reason: reason));
 }
