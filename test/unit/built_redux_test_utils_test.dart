@@ -17,7 +17,7 @@ void main() {
     });
 
     test('expectDispatch verifier', () {
-      expectDispatched<int>(actions.increment, verfier: (action) {
+      expectDispatched<int>(actions.increment, verifier: (action) {
         expect(action.payload, 1);
       });
 
@@ -25,7 +25,7 @@ void main() {
     });
 
     test('expectDispatch verifier count 2', () {
-      expectDispatched<int>(actions.increment, count: 2, verfier: (action) {
+      expectDispatched<int>(actions.increment, count: 2, verifier: (action) {
         expect(action.payload, 1);
       });
 
