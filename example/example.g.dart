@@ -40,7 +40,7 @@ class _$Counter extends Counter {
   @override
   final int count;
 
-  factory _$Counter([void updates(CounterBuilder b)]) =>
+  factory _$Counter([void Function(CounterBuilder) updates]) =>
       (new CounterBuilder()..update(updates)).build();
 
   _$Counter._({this.count}) : super._() {
@@ -50,7 +50,7 @@ class _$Counter extends Counter {
   }
 
   @override
-  Counter rebuild(void updates(CounterBuilder b)) =>
+  Counter rebuild(void Function(CounterBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -100,7 +100,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
   }
 
   @override
-  void update(void updates(CounterBuilder b)) {
+  void update(void Function(CounterBuilder) updates) {
     if (updates != null) updates(this);
   }
 

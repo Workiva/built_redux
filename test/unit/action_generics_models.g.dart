@@ -77,7 +77,7 @@ class _$ActionGenerics extends ActionGenerics {
   @override
   final int count;
 
-  factory _$ActionGenerics([void updates(ActionGenericsBuilder b)]) =>
+  factory _$ActionGenerics([void Function(ActionGenericsBuilder) updates]) =>
       (new ActionGenericsBuilder()..update(updates)).build();
 
   _$ActionGenerics._({this.count}) : super._() {
@@ -87,7 +87,7 @@ class _$ActionGenerics extends ActionGenerics {
   }
 
   @override
-  ActionGenerics rebuild(void updates(ActionGenericsBuilder b)) =>
+  ActionGenerics rebuild(void Function(ActionGenericsBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -139,7 +139,7 @@ class ActionGenericsBuilder
   }
 
   @override
-  void update(void updates(ActionGenericsBuilder b)) {
+  void update(void Function(ActionGenericsBuilder) updates) {
     if (updates != null) updates(this);
   }
 
