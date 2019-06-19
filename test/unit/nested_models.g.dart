@@ -77,7 +77,7 @@ class _$Base extends Base {
   @override
   final Child child;
 
-  factory _$Base([void updates(BaseBuilder b)]) =>
+  factory _$Base([void Function(BaseBuilder) updates]) =>
       (new BaseBuilder()..update(updates)).build();
 
   _$Base._({this.count, this.child}) : super._() {
@@ -90,7 +90,7 @@ class _$Base extends Base {
   }
 
   @override
-  Base rebuild(void updates(BaseBuilder b)) =>
+  Base rebuild(void Function(BaseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -147,7 +147,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   }
 
   @override
-  void update(void updates(BaseBuilder b)) {
+  void update(void Function(BaseBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -178,7 +178,7 @@ class _$Child extends Child {
   @override
   final Grandchild grandchild;
 
-  factory _$Child([void updates(ChildBuilder b)]) =>
+  factory _$Child([void Function(ChildBuilder) updates]) =>
       (new ChildBuilder()..update(updates)).build();
 
   _$Child._({this.count, this.grandchild}) : super._() {
@@ -191,7 +191,7 @@ class _$Child extends Child {
   }
 
   @override
-  Child rebuild(void updates(ChildBuilder b)) =>
+  Child rebuild(void Function(ChildBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -252,7 +252,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
   }
 
   @override
-  void update(void updates(ChildBuilder b)) {
+  void update(void Function(ChildBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -282,7 +282,7 @@ class _$Grandchild extends Grandchild {
   @override
   final int count;
 
-  factory _$Grandchild([void updates(GrandchildBuilder b)]) =>
+  factory _$Grandchild([void Function(GrandchildBuilder) updates]) =>
       (new GrandchildBuilder()..update(updates)).build();
 
   _$Grandchild._({this.count}) : super._() {
@@ -292,7 +292,7 @@ class _$Grandchild extends Grandchild {
   }
 
   @override
-  Grandchild rebuild(void updates(GrandchildBuilder b)) =>
+  Grandchild rebuild(void Function(GrandchildBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -342,7 +342,7 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
   }
 
   @override
-  void update(void updates(GrandchildBuilder b)) {
+  void update(void Function(GrandchildBuilder) updates) {
     if (updates != null) updates(this);
   }
 

@@ -63,7 +63,7 @@ class _$Collection extends Collection {
   @override
   final BuiltSetMultimap<int, int> builtSetMultimap;
 
-  factory _$Collection([void updates(CollectionBuilder b)]) =>
+  factory _$Collection([void Function(CollectionBuilder) updates]) =>
       (new CollectionBuilder()..update(updates)).build();
 
   _$Collection._(
@@ -91,7 +91,7 @@ class _$Collection extends Collection {
   }
 
   @override
-  Collection rebuild(void updates(CollectionBuilder b)) =>
+  Collection rebuild(void Function(CollectionBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -182,7 +182,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
   }
 
   @override
-  void update(void updates(CollectionBuilder b)) {
+  void update(void Function(CollectionBuilder) updates) {
     if (updates != null) updates(this);
   }
 

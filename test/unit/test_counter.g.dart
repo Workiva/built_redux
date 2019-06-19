@@ -94,7 +94,7 @@ class _$Counter extends Counter {
   @override
   final SubCounter subCounter;
 
-  factory _$Counter([void updates(CounterBuilder b)]) =>
+  factory _$Counter([void Function(CounterBuilder) updates]) =>
       (new CounterBuilder()..update(updates)).build();
 
   _$Counter._({this.count, this.otherCount, this.subCounter}) : super._() {
@@ -110,7 +110,7 @@ class _$Counter extends Counter {
   }
 
   @override
-  Counter rebuild(void updates(CounterBuilder b)) =>
+  Counter rebuild(void Function(CounterBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -179,7 +179,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
   }
 
   @override
-  void update(void updates(CounterBuilder b)) {
+  void update(void Function(CounterBuilder) updates) {
     if (updates != null) updates(this);
   }
 
@@ -212,7 +212,7 @@ class _$SubCounter extends SubCounter {
   @override
   final int subCount;
 
-  factory _$SubCounter([void updates(SubCounterBuilder b)]) =>
+  factory _$SubCounter([void Function(SubCounterBuilder) updates]) =>
       (new SubCounterBuilder()..update(updates)).build();
 
   _$SubCounter._({this.subCount}) : super._() {
@@ -222,7 +222,7 @@ class _$SubCounter extends SubCounter {
   }
 
   @override
-  SubCounter rebuild(void updates(SubCounterBuilder b)) =>
+  SubCounter rebuild(void Function(SubCounterBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -273,7 +273,7 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
   }
 
   @override
-  void update(void updates(SubCounterBuilder b)) {
+  void update(void Function(SubCounterBuilder) updates) {
     if (updates != null) updates(this);
   }
 

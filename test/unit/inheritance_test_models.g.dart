@@ -55,14 +55,14 @@ class GrandparentActionsNames {
 
 abstract class ParentBuilder {
   void replace(Parent other);
-  void update(void updates(ParentBuilder b));
+  void update(void Function(ParentBuilder) updates);
   int get parentCount;
   set parentCount(int parentCount);
 }
 
 abstract class GrandparentBuilder {
   void replace(Grandparent other);
-  void update(void updates(GrandparentBuilder b));
+  void update(void Function(GrandparentBuilder) updates);
   int get grandparentCount;
   set grandparentCount(int grandparentCount);
 }
@@ -75,7 +75,7 @@ class _$Child extends Child {
   @override
   final int grandparentCount;
 
-  factory _$Child([void updates(ChildBuilder b)]) =>
+  factory _$Child([void Function(ChildBuilder) updates]) =>
       (new ChildBuilder()..update(updates)).build();
 
   _$Child._({this.childCount, this.parentCount, this.grandparentCount})
@@ -92,7 +92,7 @@ class _$Child extends Child {
   }
 
   @override
-  Child rebuild(void updates(ChildBuilder b)) =>
+  Child rebuild(void Function(ChildBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -162,7 +162,7 @@ class ChildBuilder
   }
 
   @override
-  void update(void updates(ChildBuilder b)) {
+  void update(void Function(ChildBuilder) updates) {
     if (updates != null) updates(this);
   }
 
