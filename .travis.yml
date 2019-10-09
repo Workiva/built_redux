@@ -1,13 +1,8 @@
 language: dart
-dart: dev
+dart: stable
 sudo: required
 addons:
   chrome: stable
-before_install:
- - export DISPLAY=:99.0
- - sh -e /etc/init.d/xvfb start
- - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"
-
 script:
   - pub run build_runner build --delete-conflicting-outputs
   - dartfmt -n --set-exit-if-changed lib/
