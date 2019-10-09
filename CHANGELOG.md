@@ -1,3 +1,6 @@
+## 7.5.5
+update analyzer dependency to allow '>=0.33.0 <0.39.0'
+
 ## 7.5.4
 update analyzer dependency to allow '>=0.33.0 <0.37.0'
 fix type in built_redux_test_utils.dart
