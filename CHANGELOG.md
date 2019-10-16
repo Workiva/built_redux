@@ -1,3 +1,6 @@
+## 7.5.6
+add dart2js:noInline annotations
+
 ## 7.5.5
 update analyzer dependency to allow '>=0.33.0 <0.39.0'
 
