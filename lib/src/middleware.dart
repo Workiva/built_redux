@@ -49,6 +49,7 @@ class MiddlewareBuilder<
     _map.addAll(other._map);
   }
 
+  @pragma('dart2js:noInline')
   void combineNested<
           NestedState extends Built<NestedState, NestedStateBuilder>,
           NestedStateBuilder extends Builder<NestedState, NestedStateBuilder>,

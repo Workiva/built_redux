@@ -29,6 +29,7 @@ class ReducerBuilder<State extends Built<State, StateBuilder>,
   }
 
   /// [combineNested] combines this ReducerBuilder with a NestedReducerBuilder
+  @pragma('dart2js:noInline')
   void combineNested<N extends Built<N, NB>, NB extends Builder<N, NB>>(
       NestedReducerBuilder<State, StateBuilder, N, NB> nested) {
     _map.addAll(nested._map);
