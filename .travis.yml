@@ -9,3 +9,4 @@ script:
   - dartanalyzer --fatal-warnings --fatal-infos lib/
   - pub run build_runner test --delete-conflicting-outputs
   - pub run build_runner test --delete-conflicting-outputs -- -p chrome
+  - pub run build_runner test --release --delete-conflicting-outputs -- -p chrome
