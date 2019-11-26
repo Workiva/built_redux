@@ -1,3 +1,7 @@
+## 7.5.7
+open built value range
+restrict analyzer to less than 0.38.3, issue was introduced in 0.38.3 patch
+
 ## 7.5.6
 add dart2js:noInline annotations
 
