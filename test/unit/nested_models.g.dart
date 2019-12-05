@@ -8,6 +8,7 @@ part of nested_models;
 
 // ignore_for_file: avoid_classes_with_only_static_members
 // ignore_for_file: annotate_overrides
+// ignore_for_file: overridden_fields
 
 class _$BaseActions extends BaseActions {
   factory _$BaseActions() => new _$BaseActions._();

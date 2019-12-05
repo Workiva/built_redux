@@ -8,6 +8,7 @@ part of action_generics_models;
 
 // ignore_for_file: avoid_classes_with_only_static_members
 // ignore_for_file: annotate_overrides
+// ignore_for_file: overridden_fields
 
 class _$ActionGenericsActions extends ActionGenericsActions {
   factory _$ActionGenericsActions() => new _$ActionGenericsActions._();

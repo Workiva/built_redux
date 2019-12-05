@@ -8,6 +8,7 @@ part of inheritance_test_models;
 
 // ignore_for_file: avoid_classes_with_only_static_members
 // ignore_for_file: annotate_overrides
+// ignore_for_file: overridden_fields
 
 class _$ChildActions extends ChildActions {
   factory _$ChildActions() => new _$ChildActions._();
