@@ -13,15 +13,15 @@ class _$CollectionActions extends CollectionActions {
   factory _$CollectionActions() => new _$CollectionActions._();
   _$CollectionActions._() : super._();
 
-  final ActionDispatcher<Null> builtListAction =
+  final builtListAction =
       new ActionDispatcher<Null>('CollectionActions-builtListAction');
-  final ActionDispatcher<Null> builtListMultimapAction =
+  final builtListMultimapAction =
       new ActionDispatcher<Null>('CollectionActions-builtListMultimapAction');
-  final ActionDispatcher<Null> builtMapAction =
+  final builtMapAction =
       new ActionDispatcher<Null>('CollectionActions-builtMapAction');
-  final ActionDispatcher<Null> builtSetAction =
+  final builtSetAction =
       new ActionDispatcher<Null>('CollectionActions-builtSetAction');
-  final ActionDispatcher<Null> builtSetMultimapAction =
+  final builtSetMultimapAction =
       new ActionDispatcher<Null>('CollectionActions-builtSetMultimapAction');
 
   @override
@@ -36,15 +36,15 @@ class _$CollectionActions extends CollectionActions {
 
 class CollectionActionsNames {
   static final ActionName<Null> builtListAction =
-      new ActionName<Null>('CollectionActions-builtListAction');
+      new ActionName('CollectionActions-builtListAction');
   static final ActionName<Null> builtListMultimapAction =
-      new ActionName<Null>('CollectionActions-builtListMultimapAction');
+      new ActionName('CollectionActions-builtListMultimapAction');
   static final ActionName<Null> builtMapAction =
-      new ActionName<Null>('CollectionActions-builtMapAction');
+      new ActionName('CollectionActions-builtMapAction');
   static final ActionName<Null> builtSetAction =
-      new ActionName<Null>('CollectionActions-builtSetAction');
+      new ActionName('CollectionActions-builtSetAction');
   static final ActionName<Null> builtSetMultimapAction =
-      new ActionName<Null>('CollectionActions-builtSetMultimapAction');
+      new ActionName('CollectionActions-builtSetMultimapAction');
 }
 
 // **************************************************************************

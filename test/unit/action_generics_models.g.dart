@@ -13,31 +13,30 @@ class _$ActionGenericsActions extends ActionGenericsActions {
   factory _$ActionGenericsActions() => new _$ActionGenericsActions._();
   _$ActionGenericsActions._() : super._();
 
-  final ActionDispatcher<int> intAction =
+  final intAction =
       new ActionDispatcher<int>('ActionGenericsActions-intAction');
-  final ActionDispatcher<Null> nullAction =
+  final nullAction =
       new ActionDispatcher<Null>('ActionGenericsActions-nullAction');
-  final ActionDispatcher<List<int>> listIntAction =
+  final setIntAction =
+      new ActionDispatcher<Set<int>>('ActionGenericsActions-setIntAction');
+  final listIntAction =
       new ActionDispatcher<List<int>>('ActionGenericsActions-listIntAction');
-  final ActionDispatcher<Map<String, List<int>>> mapStringToListIntAction =
-      new ActionDispatcher<Map<String, List<int>>>(
-          'ActionGenericsActions-mapStringToListIntAction');
-  final ActionDispatcher<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>> typdefAction = new ActionDispatcher<
+  final mapStringToListIntAction = new ActionDispatcher<Map<String, List<int>>>(
+      'ActionGenericsActions-mapStringToListIntAction');
+  final typdefAction = new ActionDispatcher<
       ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
           ActionGenericsActions>>('ActionGenericsActions-typdefAction');
-  final ActionDispatcher<Foo<int>> fooAction =
+  final fooAction =
       new ActionDispatcher<Foo<int>>('ActionGenericsActions-fooAction');
-  final ActionDispatcher<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
-      classWithBuiltAction = new ActionDispatcher<
-              ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
-          'ActionGenericsActions-classWithBuiltAction');
+  final classWithBuiltAction = new ActionDispatcher<
+          ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
+      'ActionGenericsActions-classWithBuiltAction');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
     intAction.setDispatcher(dispatcher);
     nullAction.setDispatcher(dispatcher);
+    setIntAction.setDispatcher(dispatcher);
     listIntAction.setDispatcher(dispatcher);
     mapStringToListIntAction.setDispatcher(dispatcher);
     typdefAction.setDispatcher(dispatcher);
@@ -48,25 +47,24 @@ class _$ActionGenericsActions extends ActionGenericsActions {
 
 class ActionGenericsActionsNames {
   static final ActionName<int> intAction =
-      new ActionName<int>('ActionGenericsActions-intAction');
+      new ActionName('ActionGenericsActions-intAction');
   static final ActionName<Null> nullAction =
-      new ActionName<Null>('ActionGenericsActions-nullAction');
+      new ActionName('ActionGenericsActions-nullAction');
+  static final ActionName<Set<int>> setIntAction =
+      new ActionName('ActionGenericsActions-setIntAction');
   static final ActionName<List<int>> listIntAction =
-      new ActionName<List<int>>('ActionGenericsActions-listIntAction');
+      new ActionName('ActionGenericsActions-listIntAction');
   static final ActionName<Map<String, List<int>>> mapStringToListIntAction =
-      new ActionName<Map<String, List<int>>>(
-          'ActionGenericsActions-mapStringToListIntAction');
+      new ActionName('ActionGenericsActions-mapStringToListIntAction');
   static final ActionName<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>> typdefAction = new ActionName<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
+          ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+              ActionGenericsActions>> typdefAction =
+      new ActionName('ActionGenericsActions-typdefAction');
   static final ActionName<Foo<int>> fooAction =
-      new ActionName<Foo<int>>('ActionGenericsActions-fooAction');
+      new ActionName('ActionGenericsActions-fooAction');
   static final ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
       classWithBuiltAction =
-      new ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
-          'ActionGenericsActions-classWithBuiltAction');
+      new ActionName('ActionGenericsActions-classWithBuiltAction');
 }
 
 // **************************************************************************

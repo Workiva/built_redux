@@ -13,11 +13,9 @@ class _$ChildActions extends ChildActions {
   factory _$ChildActions() => new _$ChildActions._();
   _$ChildActions._() : super._();
 
-  final ActionDispatcher<Null> childAction =
-      new ActionDispatcher<Null>('ChildActions-childAction');
-  final ActionDispatcher<Null> parentAction =
-      new ActionDispatcher<Null>('ParentActions-parentAction');
-  final ActionDispatcher<Null> grandparentAction =
+  final childAction = new ActionDispatcher<Null>('ChildActions-childAction');
+  final parentAction = new ActionDispatcher<Null>('ParentActions-parentAction');
+  final grandparentAction =
       new ActionDispatcher<Null>('GrandparentActions-grandparentAction');
 
   @override
@@ -30,23 +28,23 @@ class _$ChildActions extends ChildActions {
 
 class ChildActionsNames {
   static final ActionName<Null> childAction =
-      new ActionName<Null>('ChildActions-childAction');
+      new ActionName('ChildActions-childAction');
   static final ActionName<Null> parentAction =
-      new ActionName<Null>('ParentActions-parentAction');
+      new ActionName('ParentActions-parentAction');
   static final ActionName<Null> grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
+      new ActionName('GrandparentActions-grandparentAction');
 }
 
 class ParentActionsNames {
   static final ActionName<Null> parentAction =
-      new ActionName<Null>('ParentActions-parentAction');
+      new ActionName('ParentActions-parentAction');
   static final ActionName<Null> grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
+      new ActionName('GrandparentActions-grandparentAction');
 }
 
 class GrandparentActionsNames {
   static final ActionName<Null> grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
+      new ActionName('GrandparentActions-grandparentAction');
 }
 
 // **************************************************************************

@@ -26,6 +26,7 @@ abstract class ActionGenericsActions extends ReduxActions {
 
   ActionDispatcher<int> get intAction;
   ActionDispatcher<Null> get nullAction;
+  ActionDispatcher<Set<int>> get setIntAction;
   ActionDispatcher<List<int>> get listIntAction;
   ActionDispatcher<Map<String, List<int>>> get mapStringToListIntAction;
   ActionDispatcher<
