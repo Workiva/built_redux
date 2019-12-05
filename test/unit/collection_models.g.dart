@@ -35,16 +35,16 @@ class _$CollectionActions extends CollectionActions {
 }
 
 class CollectionActionsNames {
-  static final ActionName<Null> builtListAction =
-      new ActionName('CollectionActions-builtListAction');
-  static final ActionName<Null> builtListMultimapAction =
-      new ActionName('CollectionActions-builtListMultimapAction');
-  static final ActionName<Null> builtMapAction =
-      new ActionName('CollectionActions-builtMapAction');
-  static final ActionName<Null> builtSetAction =
-      new ActionName('CollectionActions-builtSetAction');
-  static final ActionName<Null> builtSetMultimapAction =
-      new ActionName('CollectionActions-builtSetMultimapAction');
+  static final builtListAction =
+      new ActionName<Null>('CollectionActions-builtListAction');
+  static final builtListMultimapAction =
+      new ActionName<Null>('CollectionActions-builtListMultimapAction');
+  static final builtMapAction =
+      new ActionName<Null>('CollectionActions-builtMapAction');
+  static final builtSetAction =
+      new ActionName<Null>('CollectionActions-builtSetAction');
+  static final builtSetMultimapAction =
+      new ActionName<Null>('CollectionActions-builtSetMultimapAction');
 }
 
 // **************************************************************************

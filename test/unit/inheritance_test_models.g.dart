@@ -27,24 +27,23 @@ class _$ChildActions extends ChildActions {
 }
 
 class ChildActionsNames {
-  static final ActionName<Null> childAction =
-      new ActionName('ChildActions-childAction');
-  static final ActionName<Null> parentAction =
-      new ActionName('ParentActions-parentAction');
-  static final ActionName<Null> grandparentAction =
-      new ActionName('GrandparentActions-grandparentAction');
+  static final childAction = new ActionName<Null>('ChildActions-childAction');
+  static final parentAction =
+      new ActionName<Null>('ParentActions-parentAction');
+  static final grandparentAction =
+      new ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 class ParentActionsNames {
-  static final ActionName<Null> parentAction =
-      new ActionName('ParentActions-parentAction');
-  static final ActionName<Null> grandparentAction =
-      new ActionName('GrandparentActions-grandparentAction');
+  static final parentAction =
+      new ActionName<Null>('ParentActions-parentAction');
+  static final grandparentAction =
+      new ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 class GrandparentActionsNames {
-  static final ActionName<Null> grandparentAction =
-      new ActionName('GrandparentActions-grandparentAction');
+  static final grandparentAction =
+      new ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 // **************************************************************************

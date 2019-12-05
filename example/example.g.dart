@@ -24,10 +24,8 @@ class _$CounterActions extends CounterActions {
 }
 
 class CounterActionsNames {
-  static final ActionName<int> increment =
-      new ActionName('CounterActions-increment');
-  static final ActionName<int> decrement =
-      new ActionName('CounterActions-decrement');
+  static final increment = new ActionName<int>('CounterActions-increment');
+  static final decrement = new ActionName<int>('CounterActions-decrement');
 }
 
 // **************************************************************************

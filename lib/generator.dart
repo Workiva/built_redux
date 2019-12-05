@@ -168,7 +168,7 @@ String _allActionNamesFieldsTemplate(ActionsClass actionsClass) =>
         .fold('', (comb, next) => '$comb\n${_actionNameTemplate(next)}');
 
 String _actionNameTemplate(Action action) =>
-    'static final ActionName<${action.type}> ${action.fieldName} = new ActionName(\'${action.actionName}\');';
+    'static final ${action.fieldName} = new ActionName<${action.type}>(\'${action.actionName}\');';
 
 class ActionsClass {
   final String className;

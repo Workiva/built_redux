@@ -31,10 +31,9 @@ class _$CounterActions extends CounterActions {
 }
 
 class CounterActionsNames {
-  static final ActionName<int> increment =
-      new ActionName('CounterActions-increment');
-  static final ActionName<int> incrementOther =
-      new ActionName('CounterActions-incrementOther');
+  static final increment = new ActionName<int>('CounterActions-increment');
+  static final incrementOther =
+      new ActionName<int>('CounterActions-incrementOther');
 }
 
 class _$SubCounterActions extends SubCounterActions {
@@ -52,10 +51,8 @@ class _$SubCounterActions extends SubCounterActions {
 }
 
 class SubCounterActionsNames {
-  static final ActionName<int> increment =
-      new ActionName('SubCounterActions-increment');
-  static final ActionName<int> doubleIt =
-      new ActionName('SubCounterActions-doubleIt');
+  static final increment = new ActionName<int>('SubCounterActions-increment');
+  static final doubleIt = new ActionName<int>('SubCounterActions-doubleIt');
 }
 
 class _$MiddlewareActions extends MiddlewareActions {
@@ -73,10 +70,8 @@ class _$MiddlewareActions extends MiddlewareActions {
 }
 
 class MiddlewareActionsNames {
-  static final ActionName<int> doubleIt =
-      new ActionName('MiddlewareActions-doubleIt');
-  static final ActionName<int> tripleIt =
-      new ActionName('MiddlewareActions-tripleIt');
+  static final doubleIt = new ActionName<int>('MiddlewareActions-doubleIt');
+  static final tripleIt = new ActionName<int>('MiddlewareActions-tripleIt');
 }
 
 // **************************************************************************

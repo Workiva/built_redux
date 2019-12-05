@@ -46,25 +46,25 @@ class _$ActionGenericsActions extends ActionGenericsActions {
 }
 
 class ActionGenericsActionsNames {
-  static final ActionName<int> intAction =
-      new ActionName('ActionGenericsActions-intAction');
-  static final ActionName<Null> nullAction =
-      new ActionName('ActionGenericsActions-nullAction');
-  static final ActionName<Set<int>> setIntAction =
-      new ActionName('ActionGenericsActions-setIntAction');
-  static final ActionName<List<int>> listIntAction =
-      new ActionName('ActionGenericsActions-listIntAction');
-  static final ActionName<Map<String, List<int>>> mapStringToListIntAction =
-      new ActionName('ActionGenericsActions-mapStringToListIntAction');
-  static final ActionName<
-          ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-              ActionGenericsActions>> typdefAction =
-      new ActionName('ActionGenericsActions-typdefAction');
-  static final ActionName<Foo<int>> fooAction =
-      new ActionName('ActionGenericsActions-fooAction');
-  static final ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
-      classWithBuiltAction =
-      new ActionName('ActionGenericsActions-classWithBuiltAction');
+  static final intAction =
+      new ActionName<int>('ActionGenericsActions-intAction');
+  static final nullAction =
+      new ActionName<Null>('ActionGenericsActions-nullAction');
+  static final setIntAction =
+      new ActionName<Set<int>>('ActionGenericsActions-setIntAction');
+  static final listIntAction =
+      new ActionName<List<int>>('ActionGenericsActions-listIntAction');
+  static final mapStringToListIntAction =
+      new ActionName<Map<String, List<int>>>(
+          'ActionGenericsActions-mapStringToListIntAction');
+  static final typdefAction = new ActionName<
+      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
+  static final fooAction =
+      new ActionName<Foo<int>>('ActionGenericsActions-fooAction');
+  static final classWithBuiltAction =
+      new ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
+          'ActionGenericsActions-classWithBuiltAction');
 }
 
 // **************************************************************************

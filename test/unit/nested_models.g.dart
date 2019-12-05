@@ -26,8 +26,7 @@ class _$BaseActions extends BaseActions {
 }
 
 class BaseActionsNames {
-  static final ActionName<Null> baseAction =
-      new ActionName('BaseActions-baseAction');
+  static final baseAction = new ActionName<Null>('BaseActions-baseAction');
 }
 
 class _$ChildActions extends ChildActions {
@@ -47,8 +46,7 @@ class _$ChildActions extends ChildActions {
 }
 
 class ChildActionsNames {
-  static final ActionName<Null> childAction =
-      new ActionName('ChildActions-childAction');
+  static final childAction = new ActionName<Null>('ChildActions-childAction');
 }
 
 class _$GrandchildActions extends GrandchildActions {
@@ -65,8 +63,8 @@ class _$GrandchildActions extends GrandchildActions {
 }
 
 class GrandchildActionsNames {
-  static final ActionName<Null> grandchildAction =
-      new ActionName('GrandchildActions-grandchildAction');
+  static final grandchildAction =
+      new ActionName<Null>('GrandchildActions-grandchildAction');
 }
 
 // **************************************************************************
