@@ -8,15 +8,14 @@ part of example;
 
 // ignore_for_file: avoid_classes_with_only_static_members
 // ignore_for_file: annotate_overrides
+// ignore_for_file: overridden_fields
 
 class _$CounterActions extends CounterActions {
   factory _$CounterActions() => new _$CounterActions._();
   _$CounterActions._() : super._();
 
-  final ActionDispatcher<int> increment =
-      new ActionDispatcher<int>('CounterActions-increment');
-  final ActionDispatcher<int> decrement =
-      new ActionDispatcher<int>('CounterActions-decrement');
+  final increment = new ActionDispatcher<int>('CounterActions-increment');
+  final decrement = new ActionDispatcher<int>('CounterActions-decrement');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -26,10 +25,8 @@ class _$CounterActions extends CounterActions {
 }
 
 class CounterActionsNames {
-  static final ActionName<int> increment =
-      new ActionName<int>('CounterActions-increment');
-  static final ActionName<int> decrement =
-      new ActionName<int>('CounterActions-decrement');
+  static final increment = new ActionName<int>('CounterActions-increment');
+  static final decrement = new ActionName<int>('CounterActions-decrement');
 }
 
 // **************************************************************************

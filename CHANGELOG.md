@@ -1,3 +1,11 @@
+## 7.5.8
+
+* rework generator to lift analyzer version constraint.
+* open analyzer range
+* generator now uses source parsing to resolve action generic types which allows any unresolved type to be used as an action payload.
+* generated actions classes now use type inference.
+* bump built_value lower bound to 6.1.4 since it is impossible for pub to resolve to anything lower due to the build dependency constraint.
+
 ## 7.5.7
 open built value range
 restrict analyzer to less than 0.38.3, issue was introduced in 0.38.3 patch

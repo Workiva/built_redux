@@ -8,31 +8,32 @@ part of test_counter;
 
 // ignore_for_file: avoid_classes_with_only_static_members
 // ignore_for_file: annotate_overrides
+// ignore_for_file: overridden_fields
 
 class _$CounterActions extends CounterActions {
   factory _$CounterActions() => new _$CounterActions._();
   _$CounterActions._() : super._();
 
-  final ActionDispatcher<int> increment =
-      new ActionDispatcher<int>('CounterActions-increment');
-  final ActionDispatcher<int> incrementOther =
+  final increment = new ActionDispatcher<int>('CounterActions-increment');
+  final incrementOther =
       new ActionDispatcher<int>('CounterActions-incrementOther');
-  final SubCounterActions subCounterActions = new SubCounterActions();
-  final MiddlewareActions middlewareActions = new MiddlewareActions();
+
+  final subCounterActions = new SubCounterActions();
+  final middlewareActions = new MiddlewareActions();
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
     increment.setDispatcher(dispatcher);
     incrementOther.setDispatcher(dispatcher);
+
     subCounterActions.setDispatcher(dispatcher);
     middlewareActions.setDispatcher(dispatcher);
   }
 }
 
 class CounterActionsNames {
-  static final ActionName<int> increment =
-      new ActionName<int>('CounterActions-increment');
-  static final ActionName<int> incrementOther =
+  static final increment = new ActionName<int>('CounterActions-increment');
+  static final incrementOther =
       new ActionName<int>('CounterActions-incrementOther');
 }
 
@@ -40,10 +41,8 @@ class _$SubCounterActions extends SubCounterActions {
   factory _$SubCounterActions() => new _$SubCounterActions._();
   _$SubCounterActions._() : super._();
 
-  final ActionDispatcher<int> increment =
-      new ActionDispatcher<int>('SubCounterActions-increment');
-  final ActionDispatcher<int> doubleIt =
-      new ActionDispatcher<int>('SubCounterActions-doubleIt');
+  final increment = new ActionDispatcher<int>('SubCounterActions-increment');
+  final doubleIt = new ActionDispatcher<int>('SubCounterActions-doubleIt');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -53,20 +52,16 @@ class _$SubCounterActions extends SubCounterActions {
 }
 
 class SubCounterActionsNames {
-  static final ActionName<int> increment =
-      new ActionName<int>('SubCounterActions-increment');
-  static final ActionName<int> doubleIt =
-      new ActionName<int>('SubCounterActions-doubleIt');
+  static final increment = new ActionName<int>('SubCounterActions-increment');
+  static final doubleIt = new ActionName<int>('SubCounterActions-doubleIt');
 }
 
 class _$MiddlewareActions extends MiddlewareActions {
   factory _$MiddlewareActions() => new _$MiddlewareActions._();
   _$MiddlewareActions._() : super._();
 
-  final ActionDispatcher<int> doubleIt =
-      new ActionDispatcher<int>('MiddlewareActions-doubleIt');
-  final ActionDispatcher<int> tripleIt =
-      new ActionDispatcher<int>('MiddlewareActions-tripleIt');
+  final doubleIt = new ActionDispatcher<int>('MiddlewareActions-doubleIt');
+  final tripleIt = new ActionDispatcher<int>('MiddlewareActions-tripleIt');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -76,10 +71,8 @@ class _$MiddlewareActions extends MiddlewareActions {
 }
 
 class MiddlewareActionsNames {
-  static final ActionName<int> doubleIt =
-      new ActionName<int>('MiddlewareActions-doubleIt');
-  static final ActionName<int> tripleIt =
-      new ActionName<int>('MiddlewareActions-tripleIt');
+  static final doubleIt = new ActionName<int>('MiddlewareActions-doubleIt');
+  static final tripleIt = new ActionName<int>('MiddlewareActions-tripleIt');
 }
 
 // **************************************************************************

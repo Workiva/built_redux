@@ -8,16 +8,15 @@ part of inheritance_test_models;
 
 // ignore_for_file: avoid_classes_with_only_static_members
 // ignore_for_file: annotate_overrides
+// ignore_for_file: overridden_fields
 
 class _$ChildActions extends ChildActions {
   factory _$ChildActions() => new _$ChildActions._();
   _$ChildActions._() : super._();
 
-  final ActionDispatcher<Null> childAction =
-      new ActionDispatcher<Null>('ChildActions-childAction');
-  final ActionDispatcher<Null> parentAction =
-      new ActionDispatcher<Null>('ParentActions-parentAction');
-  final ActionDispatcher<Null> grandparentAction =
+  final childAction = new ActionDispatcher<Null>('ChildActions-childAction');
+  final parentAction = new ActionDispatcher<Null>('ParentActions-parentAction');
+  final grandparentAction =
       new ActionDispatcher<Null>('GrandparentActions-grandparentAction');
 
   @override
@@ -29,23 +28,22 @@ class _$ChildActions extends ChildActions {
 }
 
 class ChildActionsNames {
-  static final ActionName<Null> childAction =
-      new ActionName<Null>('ChildActions-childAction');
-  static final ActionName<Null> parentAction =
+  static final childAction = new ActionName<Null>('ChildActions-childAction');
+  static final parentAction =
       new ActionName<Null>('ParentActions-parentAction');
-  static final ActionName<Null> grandparentAction =
+  static final grandparentAction =
       new ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 class ParentActionsNames {
-  static final ActionName<Null> parentAction =
+  static final parentAction =
       new ActionName<Null>('ParentActions-parentAction');
-  static final ActionName<Null> grandparentAction =
+  static final grandparentAction =
       new ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 class GrandparentActionsNames {
-  static final ActionName<Null> grandparentAction =
+  static final grandparentAction =
       new ActionName<Null>('GrandparentActions-grandparentAction');
 }
 

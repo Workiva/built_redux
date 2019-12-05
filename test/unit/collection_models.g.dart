@@ -8,20 +8,21 @@ part of collection_models;
 
 // ignore_for_file: avoid_classes_with_only_static_members
 // ignore_for_file: annotate_overrides
+// ignore_for_file: overridden_fields
 
 class _$CollectionActions extends CollectionActions {
   factory _$CollectionActions() => new _$CollectionActions._();
   _$CollectionActions._() : super._();
 
-  final ActionDispatcher<Null> builtListAction =
+  final builtListAction =
       new ActionDispatcher<Null>('CollectionActions-builtListAction');
-  final ActionDispatcher<Null> builtListMultimapAction =
+  final builtListMultimapAction =
       new ActionDispatcher<Null>('CollectionActions-builtListMultimapAction');
-  final ActionDispatcher<Null> builtMapAction =
+  final builtMapAction =
       new ActionDispatcher<Null>('CollectionActions-builtMapAction');
-  final ActionDispatcher<Null> builtSetAction =
+  final builtSetAction =
       new ActionDispatcher<Null>('CollectionActions-builtSetAction');
-  final ActionDispatcher<Null> builtSetMultimapAction =
+  final builtSetMultimapAction =
       new ActionDispatcher<Null>('CollectionActions-builtSetMultimapAction');
 
   @override
@@ -35,15 +36,15 @@ class _$CollectionActions extends CollectionActions {
 }
 
 class CollectionActionsNames {
-  static final ActionName<Null> builtListAction =
+  static final builtListAction =
       new ActionName<Null>('CollectionActions-builtListAction');
-  static final ActionName<Null> builtListMultimapAction =
+  static final builtListMultimapAction =
       new ActionName<Null>('CollectionActions-builtListMultimapAction');
-  static final ActionName<Null> builtMapAction =
+  static final builtMapAction =
       new ActionName<Null>('CollectionActions-builtMapAction');
-  static final ActionName<Null> builtSetAction =
+  static final builtSetAction =
       new ActionName<Null>('CollectionActions-builtSetAction');
-  static final ActionName<Null> builtSetMultimapAction =
+  static final builtSetMultimapAction =
       new ActionName<Null>('CollectionActions-builtSetMultimapAction');
 }
 
