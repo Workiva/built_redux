@@ -38,7 +38,14 @@ class MiddlewareBuilder<
 
   void add<Payload>(ActionName<Payload> aMgr,
       MiddlewareHandler<State, StateBuilder, Actions, Payload> handler) {
-    _map[aMgr.name] = (api, next, action) {
+    _add(aMgr.name, handler);
+  }
+
+  void _add<Payload>(String name,
+      MiddlewareHandler<State, StateBuilder, Actions, Payload> handler) {
+    final oldMiddlware = _map[name];
+    _map[name] = (api, next, action) {
+      if (oldMiddlware != null) oldMiddlware(api, next, action);
       handler(api, next, action as Action<Payload>);
     };
   }
@@ -46,7 +53,9 @@ class MiddlewareBuilder<
   /// [combine] combines this MiddlewareBuilder with another MiddlewareBuilder
   /// for the same type
   void combine(MiddlewareBuilder<State, StateBuilder, Actions> other) {
-    _map.addAll(other._map);
+    for (final entry in other._map.entries) {
+      _add<dynamic>(entry.key, entry.value);
+    }
   }
 
   @pragma('dart2js:noInline')
@@ -57,7 +66,9 @@ class MiddlewareBuilder<
       NestedMiddlewareBuilder<State, StateBuilder, Actions, NestedState,
               NestedStateBuilder, NestedActions>
           other) {
-    _map.addAll(other._map);
+    for (final entry in other._map.entries) {
+      _add<dynamic>(entry.key, entry.value);
+    }
   }
 
   /// [build] returns a [Middleware] function that handles all actions added with [add]
@@ -93,12 +104,22 @@ class NestedMiddlewareBuilder<
       ActionName<Payload> aMgr,
       MiddlewareHandler<NestedState, NestedStateBuilder, NestedActions, Payload>
           handler) {
-    _map[aMgr.name] = (api, next, action) {
+    _add(aMgr.name, handler);
+  }
+
+  void _add<Payload>(
+      String name,
+      MiddlewareHandler<NestedState, NestedStateBuilder, NestedActions, Payload>
+          handler) {
+    final oldMiddlware = _map[name];
+    _map[name] = (api, next, action) {
+      if (oldMiddlware != null) oldMiddlware(api, next, action);
       handler(
-          MiddlewareApi._(
-              () => _stateMapper(api.state), () => _actionsMapper(api.actions)),
-          next,
-          action as Action<Payload>);
+        MiddlewareApi._(
+            () => _stateMapper(api.state), () => _actionsMapper(api.actions)),
+        next,
+        action as Action<Payload>,
+      );
     };
   }
 
@@ -107,16 +128,9 @@ class NestedMiddlewareBuilder<
   /// this `NestedMiddlewareBuilder`.
   void combineMiddlewareBuilder(
       MiddlewareBuilder<NestedState, NestedStateBuilder, NestedActions> other) {
-    var adapted = other._map.map((name, handler) => MapEntry(
-        name,
-        (MiddlewareApi<State, StateBuilder, Actions> api, ActionHandler next,
-                Action action) =>
-            handler(
-                MiddlewareApi._(() => _stateMapper(api.state),
-                    () => _actionsMapper(api.actions)),
-                next,
-                action)));
-    _map.addAll(adapted);
+    for (final entry in other._map.entries) {
+      _add<dynamic>(entry.key, entry.value);
+    }
   }
 }
 

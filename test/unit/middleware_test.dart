@@ -33,7 +33,7 @@ void main() {
     test('1 middleware doubles count and updates state', () async {
       setup();
       expect(store.state.count, 1);
-      store.actions.middlewareActions.doubleIt(0);
+      store.actions.middlewareActions.doubleIt();
       expect(store.state.count, 3);
     });
 
@@ -52,7 +52,7 @@ void main() {
       });
 
       // should add double the current state twice
-      store.actions.middlewareActions.doubleIt(0);
+      store.actions.middlewareActions.doubleIt();
       var stateChange = await onStateChangeCompleter.future;
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 3);
@@ -64,14 +64,21 @@ void main() {
     test('combine works with tripleIt', () async {
       setup();
       expect(store.state.count, 1);
-      store.actions.middlewareActions.tripleIt(0);
+      store.actions.middlewareActions.tripleIt();
       expect(store.state.count, 4);
+    });
+
+    test('adding multiple middleware for the same action works', () async {
+      setup();
+      expect(store.state.count, 1);
+      store.actions.middlewareActions.timesSix();
+      expect(store.state.count, 6);
     });
 
     test('combineNested works with SubCounter doubleIt', () async {
       setup();
       expect(store.state.subCounter.subCount, 1);
-      store.actions.subCounterActions.doubleIt(0);
+      store.actions.subCounterActions.doubleIt();
       expect(store.state.subCounter.subCount, 3);
     });
   });

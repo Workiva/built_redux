@@ -14,6 +14,7 @@ abstract class CounterActions extends ReduxActions {
   factory CounterActions() => _$CounterActions();
 
   ActionDispatcher<int> increment;
+  ActionDispatcher<int> doubleIncrement;
   ActionDispatcher<int> incrementOther;
   SubCounterActions subCounterActions;
   MiddlewareActions middlewareActions;
@@ -28,18 +29,20 @@ abstract class SubCounterActions extends ReduxActions {
 }
 
 void _increment(Counter state, Action<int> action, CounterBuilder builder) =>
-    builder.count = state.count + action.payload;
+    builder.count += action.payload;
 
 void _incrementOther(
         Counter state, Action<int> action, CounterBuilder builder) =>
-    builder.otherCount = state.otherCount + action.payload;
+    builder.otherCount += action.payload;
 
 void _incrementSubCount(
         Counter state, Action<int> action, CounterBuilder builder) =>
-    builder.subCounter.subCount = state.subCounter.subCount + action.payload;
+    builder.subCounter.subCount += action.payload;
 
 final reducer = (ReducerBuilder<Counter, CounterBuilder>()
       ..add(CounterActionsNames.increment, _increment)
+      ..add(CounterActionsNames.doubleIncrement, _increment)
+      ..add(CounterActionsNames.doubleIncrement, _increment)
       ..combine(_otherReducer)
       ..add(SubCounterActionsNames.increment, _incrementSubCount))
     .build();
@@ -72,8 +75,9 @@ abstract class SubCounter implements Built<SubCounter, SubCounterBuilder> {
 // Middleware
 
 abstract class MiddlewareActions extends ReduxActions {
-  ActionDispatcher<int> doubleIt;
-  ActionDispatcher<int> tripleIt;
+  ActionDispatcher<void> doubleIt;
+  ActionDispatcher<void> tripleIt;
+  ActionDispatcher<void> timesSix;
 
   MiddlewareActions._();
   factory MiddlewareActions() => _$MiddlewareActions();
@@ -83,11 +87,12 @@ var counterMiddleware =
     (MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
           ..add(MiddlewareActionsNames.doubleIt, _doubleIt)
           ..combine(tripleItMiddlewareBuilder)
+          ..combine(timesSixMiddlewareBuilder)
           ..combineNested(subCountNested))
         .build();
 
 void _doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
-    ActionHandler next, Action<int> action) {
+    ActionHandler next, Action<void> action) {
   api.actions.increment(api.state.count * 2);
   next(action);
 }
@@ -96,9 +101,20 @@ var tripleItMiddlewareBuilder =
     MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
       ..add(MiddlewareActionsNames.tripleIt, _tripleIt);
 
+var timesSixMiddlewareBuilder =
+    MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
+      ..add(MiddlewareActionsNames.timesSix, _tripleIt)
+      ..add(MiddlewareActionsNames.timesSix, _addAHalf);
+
 void _tripleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
-    ActionHandler next, Action<int> action) {
+    ActionHandler next, Action<void> action) {
   api.actions.increment(api.state.count * 3);
+  next(action);
+}
+
+void _addAHalf(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
+    ActionHandler next, Action<void> action) {
+  api.actions.increment(api.state.count ~/ 2);
   next(action);
 }
 
