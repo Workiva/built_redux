@@ -26,7 +26,7 @@ class Store<
     Reducer<State, StateBuilder, dynamic> reducer,
     State defaultState,
     Actions actions, {
-    Iterable<Middleware<State, StateBuilder, Actions>> middleware: const [],
+    Iterable<Middleware<State, StateBuilder, Actions>> middleware = const [],
   }) {
     // set the initial state
     _state = defaultState;

@@ -9,7 +9,7 @@ void main() {
   group('middleware', () {
     Store<Counter, CounterBuilder, CounterActions> store;
 
-    setup({int numMiddleware: 1}) {
+    setup({int numMiddleware = 1}) {
       var actions = CounterActions();
       var defaultValue = Counter();
       final middleware =
