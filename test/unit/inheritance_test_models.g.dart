@@ -72,18 +72,18 @@ class _$Child extends Child {
   final int grandparentCount;
 
   factory _$Child([void Function(ChildBuilder) updates]) =>
-      (ChildBuilder()..update(updates)).build();
+      (new ChildBuilder()..update(updates)).build();
 
   _$Child._({this.childCount, this.parentCount, this.grandparentCount})
       : super._() {
     if (childCount == null) {
-      throw BuiltValueNullFieldError('Child', 'childCount');
+      throw new BuiltValueNullFieldError('Child', 'childCount');
     }
     if (parentCount == null) {
-      throw BuiltValueNullFieldError('Child', 'parentCount');
+      throw new BuiltValueNullFieldError('Child', 'parentCount');
     }
     if (grandparentCount == null) {
-      throw BuiltValueNullFieldError('Child', 'grandparentCount');
+      throw new BuiltValueNullFieldError('Child', 'grandparentCount');
     }
   }
 
@@ -92,7 +92,7 @@ class _$Child extends Child {
       (toBuilder()..update(updates)).build();
 
   @override
-  ChildBuilder toBuilder() => ChildBuilder()..replace(this);
+  ChildBuilder toBuilder() => new ChildBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -152,7 +152,7 @@ class ChildBuilder
 // ignore: override_on_non_overriding_method
   void replace(covariant Child other) {
     if (other == null) {
-      throw ArgumentError.notNull('other');
+      throw new ArgumentError.notNull('other');
     }
     _$v = other as _$Child;
   }
@@ -165,7 +165,7 @@ class ChildBuilder
   @override
   _$Child build() {
     final _$result = _$v ??
-        _$Child._(
+        new _$Child._(
             childCount: childCount,
             parentCount: parentCount,
             grandparentCount: grandparentCount);

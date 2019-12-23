@@ -73,11 +73,11 @@ class _$ActionGenerics extends ActionGenerics {
   final int count;
 
   factory _$ActionGenerics([void Function(ActionGenericsBuilder) updates]) =>
-      (ActionGenericsBuilder()..update(updates)).build();
+      (new ActionGenericsBuilder()..update(updates)).build();
 
   _$ActionGenerics._({this.count}) : super._() {
     if (count == null) {
-      throw BuiltValueNullFieldError('ActionGenerics', 'count');
+      throw new BuiltValueNullFieldError('ActionGenerics', 'count');
     }
   }
 
@@ -86,7 +86,8 @@ class _$ActionGenerics extends ActionGenerics {
       (toBuilder()..update(updates)).build();
 
   @override
-  ActionGenericsBuilder toBuilder() => ActionGenericsBuilder()..replace(this);
+  ActionGenericsBuilder toBuilder() =>
+      new ActionGenericsBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -127,7 +128,7 @@ class ActionGenericsBuilder
   @override
   void replace(ActionGenerics other) {
     if (other == null) {
-      throw ArgumentError.notNull('other');
+      throw new ArgumentError.notNull('other');
     }
     _$v = other as _$ActionGenerics;
   }
@@ -139,7 +140,7 @@ class ActionGenericsBuilder
 
   @override
   _$ActionGenerics build() {
-    final _$result = _$v ?? _$ActionGenerics._(count: count);
+    final _$result = _$v ?? new _$ActionGenerics._(count: count);
     replace(_$result);
     return _$result;
   }

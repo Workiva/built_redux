@@ -38,11 +38,11 @@ class _$Counter extends Counter {
   final int count;
 
   factory _$Counter([void Function(CounterBuilder) updates]) =>
-      (CounterBuilder()..update(updates)).build();
+      (new CounterBuilder()..update(updates)).build();
 
   _$Counter._({this.count}) : super._() {
     if (count == null) {
-      throw BuiltValueNullFieldError('Counter', 'count');
+      throw new BuiltValueNullFieldError('Counter', 'count');
     }
   }
 
@@ -51,7 +51,7 @@ class _$Counter extends Counter {
       (toBuilder()..update(updates)).build();
 
   @override
-  CounterBuilder toBuilder() => CounterBuilder()..replace(this);
+  CounterBuilder toBuilder() => new CounterBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -91,7 +91,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
   @override
   void replace(Counter other) {
     if (other == null) {
-      throw ArgumentError.notNull('other');
+      throw new ArgumentError.notNull('other');
     }
     _$v = other as _$Counter;
   }
@@ -103,7 +103,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   @override
   _$Counter build() {
-    final _$result = _$v ?? _$Counter._(count: count);
+    final _$result = _$v ?? new _$Counter._(count: count);
     replace(_$result);
     return _$result;
   }

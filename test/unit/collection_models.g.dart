@@ -65,7 +65,7 @@ class _$Collection extends Collection {
   final BuiltSetMultimap<int, int> builtSetMultimap;
 
   factory _$Collection([void Function(CollectionBuilder) updates]) =>
-      (CollectionBuilder()..update(updates)).build();
+      (new CollectionBuilder()..update(updates)).build();
 
   _$Collection._(
       {this.builtList,
@@ -75,19 +75,19 @@ class _$Collection extends Collection {
       this.builtSetMultimap})
       : super._() {
     if (builtList == null) {
-      throw BuiltValueNullFieldError('Collection', 'builtList');
+      throw new BuiltValueNullFieldError('Collection', 'builtList');
     }
     if (builtListMultimap == null) {
-      throw BuiltValueNullFieldError('Collection', 'builtListMultimap');
+      throw new BuiltValueNullFieldError('Collection', 'builtListMultimap');
     }
     if (builtMap == null) {
-      throw BuiltValueNullFieldError('Collection', 'builtMap');
+      throw new BuiltValueNullFieldError('Collection', 'builtMap');
     }
     if (builtSet == null) {
-      throw BuiltValueNullFieldError('Collection', 'builtSet');
+      throw new BuiltValueNullFieldError('Collection', 'builtSet');
     }
     if (builtSetMultimap == null) {
-      throw BuiltValueNullFieldError('Collection', 'builtSetMultimap');
+      throw new BuiltValueNullFieldError('Collection', 'builtSetMultimap');
     }
   }
 
@@ -96,7 +96,7 @@ class _$Collection extends Collection {
       (toBuilder()..update(updates)).build();
 
   @override
-  CollectionBuilder toBuilder() => CollectionBuilder()..replace(this);
+  CollectionBuilder toBuilder() => new CollectionBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -135,27 +135,28 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
   _$Collection _$v;
 
   ListBuilder<int> _builtList;
-  ListBuilder<int> get builtList => _$this._builtList ??= ListBuilder<int>();
+  ListBuilder<int> get builtList =>
+      _$this._builtList ??= new ListBuilder<int>();
   set builtList(ListBuilder<int> builtList) => _$this._builtList = builtList;
 
   ListMultimapBuilder<int, int> _builtListMultimap;
   ListMultimapBuilder<int, int> get builtListMultimap =>
-      _$this._builtListMultimap ??= ListMultimapBuilder<int, int>();
+      _$this._builtListMultimap ??= new ListMultimapBuilder<int, int>();
   set builtListMultimap(ListMultimapBuilder<int, int> builtListMultimap) =>
       _$this._builtListMultimap = builtListMultimap;
 
   MapBuilder<int, int> _builtMap;
   MapBuilder<int, int> get builtMap =>
-      _$this._builtMap ??= MapBuilder<int, int>();
+      _$this._builtMap ??= new MapBuilder<int, int>();
   set builtMap(MapBuilder<int, int> builtMap) => _$this._builtMap = builtMap;
 
   SetBuilder<int> _builtSet;
-  SetBuilder<int> get builtSet => _$this._builtSet ??= SetBuilder<int>();
+  SetBuilder<int> get builtSet => _$this._builtSet ??= new SetBuilder<int>();
   set builtSet(SetBuilder<int> builtSet) => _$this._builtSet = builtSet;
 
   SetMultimapBuilder<int, int> _builtSetMultimap;
   SetMultimapBuilder<int, int> get builtSetMultimap =>
-      _$this._builtSetMultimap ??= SetMultimapBuilder<int, int>();
+      _$this._builtSetMultimap ??= new SetMultimapBuilder<int, int>();
   set builtSetMultimap(SetMultimapBuilder<int, int> builtSetMultimap) =>
       _$this._builtSetMultimap = builtSetMultimap;
 
@@ -176,7 +177,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
   @override
   void replace(Collection other) {
     if (other == null) {
-      throw ArgumentError.notNull('other');
+      throw new ArgumentError.notNull('other');
     }
     _$v = other as _$Collection;
   }
@@ -191,7 +192,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
     _$Collection _$result;
     try {
       _$result = _$v ??
-          _$Collection._(
+          new _$Collection._(
               builtList: builtList.build(),
               builtListMultimap: builtListMultimap.build(),
               builtMap: builtMap.build(),
@@ -211,7 +212,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
         _$failedField = 'builtSetMultimap';
         builtSetMultimap.build();
       } catch (e) {
-        throw BuiltValueNestedFieldError(
+        throw new BuiltValueNestedFieldError(
             'Collection', _$failedField, e.toString());
       }
       rethrow;
