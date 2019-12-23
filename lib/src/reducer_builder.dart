@@ -80,7 +80,7 @@ class ReducerBuilder<State extends Built<State, StateBuilder>,
 
 /// [Mapper] is a function that takes an object and maps it to another object.
 /// Used for state and builder mappers passed to [NestedReducerBuilder].
-typedef NestedState Mapper<State, NestedState>(State state);
+typedef Mapper<State, NestedState> = NestedState Function(State state);
 
 /// [NestedReducerBuilder] allows you to build a reducer that rebuilds built values
 /// nested within your main app state model. For example, consider the following built value
@@ -172,7 +172,7 @@ class AbstractReducerBuilder<AState, AStateBuilder> {
 /// This is the Reducer typedef without the Built/Builder constraints
 /// Used for built_collections since they do not implement Built/Builder
 /// but follow the same pattern.
-typedef void CReducer<AState, AStateBuilder, P>(
+typedef CReducer<AState, AStateBuilder, P> = void Function(
     AState state, Action<P> action, AStateBuilder builder);
 
 /// [ListReducerBuilder] returns a reducer builder that

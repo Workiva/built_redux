@@ -19,8 +19,9 @@ class StoreChange<State extends Built<State, StateBuilder>,
 }
 
 /// [StoreChangeHandler] handles a change the store after an action of type Action<T>
-typedef void StoreChangeHandler<P, State extends Built<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>>(
+typedef StoreChangeHandler<P, State extends Built<State, StateBuilder>,
+        StateBuilder extends Builder<State, StateBuilder>>
+    = void Function(
   StoreChange<State, StateBuilder, P> storeChange,
 );
 

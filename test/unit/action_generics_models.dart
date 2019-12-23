@@ -8,10 +8,9 @@ part 'action_generics_models.g.dart';
 
 /// Used to test code generation when the generic type of an action is a
 /// `typedef`
-typedef FutureOr<void> ThunkTypedef<
-    V extends Built<V, B>,
-    B extends Builder<V, B>,
-    A extends ReduxActions>(MiddlewareApi<V, B, A> api);
+typedef ThunkTypedef<V extends Built<V, B>, B extends Builder<V, B>,
+        A extends ReduxActions>
+    = FutureOr<void> Function(MiddlewareApi<V, B, A> api);
 
 class Foo<T> {}
 

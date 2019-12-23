@@ -14,7 +14,7 @@ class Action<Payload> {
 }
 
 // Dispatches an action to the store
-typedef void Dispatcher<P>(Action<P> action);
+typedef Dispatcher<P> = void Function(Action<P> action);
 
 /// [ActionDispatcher] dispatches an action with the name provided
 /// to the constructor and the payload supplied when called. You will notice
