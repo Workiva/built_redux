@@ -10,15 +10,15 @@ void main() {
     Store<Counter, CounterBuilder, CounterActions> store;
 
     setup({int numMiddleware: 1}) {
-      var actions = new CounterActions();
-      var defaultValue = new Counter();
+      var actions = CounterActions();
+      var defaultValue = Counter();
       final middleware =
           <Middleware<Counter, CounterBuilder, CounterActions>>[];
       for (int i = 0; i < numMiddleware; i++) {
         middleware.add(counterMiddleware);
       }
 
-      store = new Store<Counter, CounterBuilder, CounterActions>(
+      store = Store<Counter, CounterBuilder, CounterActions>(
         reducer,
         defaultValue,
         actions,
@@ -40,9 +40,9 @@ void main() {
     test('2 middlewares doubles count twice and updates state', () async {
       setup(numMiddleware: 2);
       final onStateChangeCompleter =
-          new Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
+          Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
       final onStateChangeCompleter2 =
-          new Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
+          Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
 
       store.stream.listen((state) {
         if (!onStateChangeCompleter.isCompleted)

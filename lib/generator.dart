@@ -6,7 +6,7 @@ import 'package:source_gen/source_gen.dart';
 class BuiltReduxGenerator extends Generator {
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
-    final result = new StringBuffer();
+    final result = StringBuffer();
     var hasWrittenHeaders = false;
     for (final element in library.allElements) {
       if (_isReduxActions(element) && element is ClassElement) {
@@ -29,7 +29,7 @@ const _lintIgnores = """
 // ignore_for_file: overridden_fields
 """;
 
-ActionsClass _actionsClassFromElement(ClassElement element) => new ActionsClass(
+ActionsClass _actionsClassFromElement(ClassElement element) => ActionsClass(
       element.name,
       _actionsFromElement(element).toSet(),
       _composedActionClasses(element).toSet(),
@@ -39,7 +39,7 @@ ActionsClass _actionsClassFromElement(ClassElement element) => new ActionsClass(
 Iterable<ComposedActionClass> _composedActionClasses(ClassElement element) =>
     element.fields
         .where((f) => _isReduxActions(f.type.element))
-        .map((f) => new ComposedActionClass(f.name, f.type.name));
+        .map((f) => ComposedActionClass(f.name, f.type.name));
 
 Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
     .where(_isActionDispatcher)
@@ -53,7 +53,7 @@ Iterable<ActionsClass> _actionsClassFromInheritedElements(
         .map(_actionsClassFromElement);
 
 Action _fieldElementToAction(ClassElement element, FieldElement field) =>
-    new Action('${element.name}-${field.name}', field.name,
+    Action('${element.name}-${field.name}', field.name,
         _fieldType(element, field));
 
 // hack to return the generics for the action
@@ -177,11 +177,11 @@ class ActionsClass {
   final Set<ComposedActionClass> composed;
   final Set<ActionsClass> inherited;
   ActionsClass(this.className, this.actions, this.composed, this.inherited);
-  Set<Action> get allActions => new Set<Action>.from(
+  Set<Action> get allActions => Set<Action>.from(
         actions.toList()
           ..addAll(inherited.map((ac) => ac.actions).expand((a) => a)),
       );
-  Set<ComposedActionClass> get allComposed => new Set<ComposedActionClass>.from(
+  Set<ComposedActionClass> get allComposed => Set<ComposedActionClass>.from(
         composed.toList()
           ..addAll(inherited.map((ac) => ac.composed).expand((c) => c)),
       );

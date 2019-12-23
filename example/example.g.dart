@@ -11,11 +11,11 @@ part of example;
 // ignore_for_file: overridden_fields
 
 class _$CounterActions extends CounterActions {
-  factory _$CounterActions() => new _$CounterActions._();
+  factory _$CounterActions() => _$CounterActions._();
   _$CounterActions._() : super._();
 
-  final increment = new ActionDispatcher<int>('CounterActions-increment');
-  final decrement = new ActionDispatcher<int>('CounterActions-decrement');
+  final increment = ActionDispatcher<int>('CounterActions-increment');
+  final decrement = ActionDispatcher<int>('CounterActions-decrement');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -25,8 +25,8 @@ class _$CounterActions extends CounterActions {
 }
 
 class CounterActionsNames {
-  static final increment = new ActionName<int>('CounterActions-increment');
-  static final decrement = new ActionName<int>('CounterActions-decrement');
+  static final increment = ActionName<int>('CounterActions-increment');
+  static final decrement = ActionName<int>('CounterActions-decrement');
 }
 
 // **************************************************************************
@@ -38,11 +38,11 @@ class _$Counter extends Counter {
   final int count;
 
   factory _$Counter([void Function(CounterBuilder) updates]) =>
-      (new CounterBuilder()..update(updates)).build();
+      (CounterBuilder()..update(updates)).build();
 
   _$Counter._({this.count}) : super._() {
     if (count == null) {
-      throw new BuiltValueNullFieldError('Counter', 'count');
+      throw BuiltValueNullFieldError('Counter', 'count');
     }
   }
 
@@ -51,7 +51,7 @@ class _$Counter extends Counter {
       (toBuilder()..update(updates)).build();
 
   @override
-  CounterBuilder toBuilder() => new CounterBuilder()..replace(this);
+  CounterBuilder toBuilder() => CounterBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -91,7 +91,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
   @override
   void replace(Counter other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$Counter;
   }
@@ -103,7 +103,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   @override
   _$Counter build() {
-    final _$result = _$v ?? new _$Counter._(count: count);
+    final _$result = _$v ?? _$Counter._(count: count);
     replace(_$result);
     return _$result;
   }

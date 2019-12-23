@@ -11,12 +11,12 @@ part of nested_models;
 // ignore_for_file: overridden_fields
 
 class _$BaseActions extends BaseActions {
-  factory _$BaseActions() => new _$BaseActions._();
+  factory _$BaseActions() => _$BaseActions._();
   _$BaseActions._() : super._();
 
-  final baseAction = new ActionDispatcher<Null>('BaseActions-baseAction');
+  final baseAction = ActionDispatcher<Null>('BaseActions-baseAction');
 
-  final child = new ChildActions();
+  final child = ChildActions();
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -27,16 +27,16 @@ class _$BaseActions extends BaseActions {
 }
 
 class BaseActionsNames {
-  static final baseAction = new ActionName<Null>('BaseActions-baseAction');
+  static final baseAction = ActionName<Null>('BaseActions-baseAction');
 }
 
 class _$ChildActions extends ChildActions {
-  factory _$ChildActions() => new _$ChildActions._();
+  factory _$ChildActions() => _$ChildActions._();
   _$ChildActions._() : super._();
 
-  final childAction = new ActionDispatcher<Null>('ChildActions-childAction');
+  final childAction = ActionDispatcher<Null>('ChildActions-childAction');
 
-  final grandchild = new GrandchildActions();
+  final grandchild = GrandchildActions();
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -47,15 +47,15 @@ class _$ChildActions extends ChildActions {
 }
 
 class ChildActionsNames {
-  static final childAction = new ActionName<Null>('ChildActions-childAction');
+  static final childAction = ActionName<Null>('ChildActions-childAction');
 }
 
 class _$GrandchildActions extends GrandchildActions {
-  factory _$GrandchildActions() => new _$GrandchildActions._();
+  factory _$GrandchildActions() => _$GrandchildActions._();
   _$GrandchildActions._() : super._();
 
   final grandchildAction =
-      new ActionDispatcher<Null>('GrandchildActions-grandchildAction');
+      ActionDispatcher<Null>('GrandchildActions-grandchildAction');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -65,7 +65,7 @@ class _$GrandchildActions extends GrandchildActions {
 
 class GrandchildActionsNames {
   static final grandchildAction =
-      new ActionName<Null>('GrandchildActions-grandchildAction');
+      ActionName<Null>('GrandchildActions-grandchildAction');
 }
 
 // **************************************************************************
@@ -79,14 +79,14 @@ class _$Base extends Base {
   final Child child;
 
   factory _$Base([void Function(BaseBuilder) updates]) =>
-      (new BaseBuilder()..update(updates)).build();
+      (BaseBuilder()..update(updates)).build();
 
   _$Base._({this.count, this.child}) : super._() {
     if (count == null) {
-      throw new BuiltValueNullFieldError('Base', 'count');
+      throw BuiltValueNullFieldError('Base', 'count');
     }
     if (child == null) {
-      throw new BuiltValueNullFieldError('Base', 'child');
+      throw BuiltValueNullFieldError('Base', 'child');
     }
   }
 
@@ -95,7 +95,7 @@ class _$Base extends Base {
       (toBuilder()..update(updates)).build();
 
   @override
-  BaseBuilder toBuilder() => new BaseBuilder()..replace(this);
+  BaseBuilder toBuilder() => BaseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -125,7 +125,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   set count(int count) => _$this._count = count;
 
   ChildBuilder _child;
-  ChildBuilder get child => _$this._child ??= new ChildBuilder();
+  ChildBuilder get child => _$this._child ??= ChildBuilder();
   set child(ChildBuilder child) => _$this._child = child;
 
   BaseBuilder();
@@ -142,7 +142,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   @override
   void replace(Base other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$Base;
   }
@@ -156,15 +156,14 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   _$Base build() {
     _$Base _$result;
     try {
-      _$result = _$v ?? new _$Base._(count: count, child: child.build());
+      _$result = _$v ?? _$Base._(count: count, child: child.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'child';
         child.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'Base', _$failedField, e.toString());
+        throw BuiltValueNestedFieldError('Base', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -180,14 +179,14 @@ class _$Child extends Child {
   final Grandchild grandchild;
 
   factory _$Child([void Function(ChildBuilder) updates]) =>
-      (new ChildBuilder()..update(updates)).build();
+      (ChildBuilder()..update(updates)).build();
 
   _$Child._({this.count, this.grandchild}) : super._() {
     if (count == null) {
-      throw new BuiltValueNullFieldError('Child', 'count');
+      throw BuiltValueNullFieldError('Child', 'count');
     }
     if (grandchild == null) {
-      throw new BuiltValueNullFieldError('Child', 'grandchild');
+      throw BuiltValueNullFieldError('Child', 'grandchild');
     }
   }
 
@@ -196,7 +195,7 @@ class _$Child extends Child {
       (toBuilder()..update(updates)).build();
 
   @override
-  ChildBuilder toBuilder() => new ChildBuilder()..replace(this);
+  ChildBuilder toBuilder() => ChildBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -229,7 +228,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
 
   GrandchildBuilder _grandchild;
   GrandchildBuilder get grandchild =>
-      _$this._grandchild ??= new GrandchildBuilder();
+      _$this._grandchild ??= GrandchildBuilder();
   set grandchild(GrandchildBuilder grandchild) =>
       _$this._grandchild = grandchild;
 
@@ -247,7 +246,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
   @override
   void replace(Child other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$Child;
   }
@@ -261,16 +260,14 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
   _$Child build() {
     _$Child _$result;
     try {
-      _$result =
-          _$v ?? new _$Child._(count: count, grandchild: grandchild.build());
+      _$result = _$v ?? _$Child._(count: count, grandchild: grandchild.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'grandchild';
         grandchild.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'Child', _$failedField, e.toString());
+        throw BuiltValueNestedFieldError('Child', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -284,11 +281,11 @@ class _$Grandchild extends Grandchild {
   final int count;
 
   factory _$Grandchild([void Function(GrandchildBuilder) updates]) =>
-      (new GrandchildBuilder()..update(updates)).build();
+      (GrandchildBuilder()..update(updates)).build();
 
   _$Grandchild._({this.count}) : super._() {
     if (count == null) {
-      throw new BuiltValueNullFieldError('Grandchild', 'count');
+      throw BuiltValueNullFieldError('Grandchild', 'count');
     }
   }
 
@@ -297,7 +294,7 @@ class _$Grandchild extends Grandchild {
       (toBuilder()..update(updates)).build();
 
   @override
-  GrandchildBuilder toBuilder() => new GrandchildBuilder()..replace(this);
+  GrandchildBuilder toBuilder() => GrandchildBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -337,7 +334,7 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
   @override
   void replace(Grandchild other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$Grandchild;
   }
@@ -349,7 +346,7 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
 
   @override
   _$Grandchild build() {
-    final _$result = _$v ?? new _$Grandchild._(count: count);
+    final _$result = _$v ?? _$Grandchild._(count: count);
     replace(_$result);
     return _$result;
   }

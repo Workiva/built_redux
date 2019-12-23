@@ -11,7 +11,7 @@ part 'nested_models.g.dart';
 // to an instance of ChildActions.
 abstract class BaseActions extends ReduxActions {
   BaseActions._();
-  factory BaseActions() => new _$BaseActions();
+  factory BaseActions() => _$BaseActions();
 
   ActionDispatcher<Null> get baseAction;
   ChildActions get child;
@@ -21,7 +21,7 @@ abstract class BaseActions extends ReduxActions {
 // to an instance of GrandchildActions.
 abstract class ChildActions extends ReduxActions {
   ChildActions._();
-  factory ChildActions() => new _$ChildActions();
+  factory ChildActions() => _$ChildActions();
 
   ActionDispatcher<Null> get childAction;
   GrandchildActions get grandchild;
@@ -30,7 +30,7 @@ abstract class ChildActions extends ReduxActions {
 // ChildActions contains an action dispatcher.
 abstract class GrandchildActions extends ReduxActions {
   GrandchildActions._();
-  factory GrandchildActions() => new _$GrandchildActions();
+  factory GrandchildActions() => _$GrandchildActions();
 
   ActionDispatcher<Null> get grandchildAction;
 }
@@ -43,7 +43,7 @@ abstract class Base implements Built<Base, BaseBuilder> {
   Child get child;
 
   Base._();
-  factory Base() => new _$Base._(count: 0, child: new Child());
+  factory Base() => _$Base._(count: 0, child: Child());
 }
 
 // Child contains an count and a reference to an instance of Grandchild.
@@ -52,7 +52,7 @@ abstract class Child implements Built<Child, ChildBuilder> {
   Grandchild get grandchild;
 
   Child._();
-  factory Child() => new _$Child._(count: 0, grandchild: new Grandchild());
+  factory Child() => _$Child._(count: 0, grandchild: Grandchild());
 }
 
 // Grandchild contains an count
@@ -60,7 +60,7 @@ abstract class Grandchild implements Built<Grandchild, GrandchildBuilder> {
   int get count;
 
   Grandchild._();
-  factory Grandchild() => new _$Grandchild._(count: 0);
+  factory Grandchild() => _$Grandchild._(count: 0);
 }
 
 // getBaseReducer returns a reducer that rebuilds Base when childAction is dispatched.
@@ -70,7 +70,7 @@ abstract class Grandchild implements Built<Grandchild, GrandchildBuilder> {
 // Reducers added to the ReducerBuilder must have the signature:
 // (Base, Action<T>, BaseBuilder)
 Reducer<Base, BaseBuilder, dynamic> getBaseReducer() =>
-    (new ReducerBuilder<Base, BaseBuilder>()
+    (ReducerBuilder<Base, BaseBuilder>()
           ..add<Null>(BaseActionsNames.baseAction, (s, a, b) => b.count++)
           ..combineNested(getChildReducer())
           ..combineNested(getNestedGrandchildReducer()))
@@ -83,7 +83,7 @@ Reducer<Base, BaseBuilder, dynamic> getBaseReducer() =>
 // (Child, Action<T>, ChildBuilder)
 NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>
     getChildReducer() =>
-        (new NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>(
+        (NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>(
             (s) => s.child, (b) => b.child)
           ..add<Null>(ChildActionsNames.childAction, (s, a, b) => b.count++));
 
@@ -93,14 +93,12 @@ NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>
 // Reducers added to the NestedReducerBuilder must have the signature:
 // (Grandchild, Action<T>, GrandchildBuilder)
 NestedReducerBuilder<Base, BaseBuilder, Grandchild, GrandchildBuilder>
-    getNestedGrandchildReducer() => new NestedReducerBuilder<
-        Base,
-        BaseBuilder,
-        Grandchild,
-        GrandchildBuilder>((s) => s.child.grandchild, (b) => b.child.grandchild)
-      ..combineReducerBuilder(getGrandchildReducer());
+    getNestedGrandchildReducer() =>
+        NestedReducerBuilder<Base, BaseBuilder, Grandchild, GrandchildBuilder>(
+            (s) => s.child.grandchild, (b) => b.child.grandchild)
+          ..combineReducerBuilder(getGrandchildReducer());
 
 ReducerBuilder<Grandchild, GrandchildBuilder> getGrandchildReducer() =>
-    new ReducerBuilder<Grandchild, GrandchildBuilder>()
+    ReducerBuilder<Grandchild, GrandchildBuilder>()
       ..add<Null>(
           GrandchildActionsNames.grandchildAction, (s, a, b) => b.count++);

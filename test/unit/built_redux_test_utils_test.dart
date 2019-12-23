@@ -8,7 +8,7 @@ void main() {
     CounterActions actions;
 
     setUp(() {
-      actions = new CounterActions();
+      actions = CounterActions();
     });
 
     test('expectDispatch no verifier', () {

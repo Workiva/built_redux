@@ -22,7 +22,7 @@ class ClassWithBuilt<V extends Built<V, B>, B extends Builder<V, B>> {}
 // the action classes.
 abstract class ActionGenericsActions extends ReduxActions {
   ActionGenericsActions._();
-  factory ActionGenericsActions() => new _$ActionGenericsActions();
+  factory ActionGenericsActions() => _$ActionGenericsActions();
 
   ActionDispatcher<int> get intAction;
   ActionDispatcher<Null> get nullAction;
@@ -42,12 +42,12 @@ abstract class ActionGenerics
   int get count;
 
   ActionGenerics._();
-  factory ActionGenerics() => new _$ActionGenerics._(count: 0);
+  factory ActionGenerics() => _$ActionGenerics._(count: 0);
 }
 
 Reducer<ActionGenerics, ActionGenericsBuilder, dynamic>
     getActionGenericsReducer() =>
-        (new ReducerBuilder<ActionGenerics, ActionGenericsBuilder>()
+        (ReducerBuilder<ActionGenerics, ActionGenericsBuilder>()
               ..add<int>(ActionGenericsActionsNames.intAction,
                   (s, a, b) => b.count = s.count + a.payload)
               ..add<Null>(

@@ -11,27 +11,25 @@ part of action_generics_models;
 // ignore_for_file: overridden_fields
 
 class _$ActionGenericsActions extends ActionGenericsActions {
-  factory _$ActionGenericsActions() => new _$ActionGenericsActions._();
+  factory _$ActionGenericsActions() => _$ActionGenericsActions._();
   _$ActionGenericsActions._() : super._();
 
-  final intAction =
-      new ActionDispatcher<int>('ActionGenericsActions-intAction');
-  final nullAction =
-      new ActionDispatcher<Null>('ActionGenericsActions-nullAction');
+  final intAction = ActionDispatcher<int>('ActionGenericsActions-intAction');
+  final nullAction = ActionDispatcher<Null>('ActionGenericsActions-nullAction');
   final setIntAction =
-      new ActionDispatcher<Set<int>>('ActionGenericsActions-setIntAction');
+      ActionDispatcher<Set<int>>('ActionGenericsActions-setIntAction');
   final listIntAction =
-      new ActionDispatcher<List<int>>('ActionGenericsActions-listIntAction');
-  final mapStringToListIntAction = new ActionDispatcher<Map<String, List<int>>>(
+      ActionDispatcher<List<int>>('ActionGenericsActions-listIntAction');
+  final mapStringToListIntAction = ActionDispatcher<Map<String, List<int>>>(
       'ActionGenericsActions-mapStringToListIntAction');
-  final typdefAction = new ActionDispatcher<
+  final typdefAction = ActionDispatcher<
       ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
           ActionGenericsActions>>('ActionGenericsActions-typdefAction');
   final fooAction =
-      new ActionDispatcher<Foo<int>>('ActionGenericsActions-fooAction');
-  final classWithBuiltAction = new ActionDispatcher<
-          ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
-      'ActionGenericsActions-classWithBuiltAction');
+      ActionDispatcher<Foo<int>>('ActionGenericsActions-fooAction');
+  final classWithBuiltAction =
+      ActionDispatcher<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
+          'ActionGenericsActions-classWithBuiltAction');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -47,24 +45,22 @@ class _$ActionGenericsActions extends ActionGenericsActions {
 }
 
 class ActionGenericsActionsNames {
-  static final intAction =
-      new ActionName<int>('ActionGenericsActions-intAction');
+  static final intAction = ActionName<int>('ActionGenericsActions-intAction');
   static final nullAction =
-      new ActionName<Null>('ActionGenericsActions-nullAction');
+      ActionName<Null>('ActionGenericsActions-nullAction');
   static final setIntAction =
-      new ActionName<Set<int>>('ActionGenericsActions-setIntAction');
+      ActionName<Set<int>>('ActionGenericsActions-setIntAction');
   static final listIntAction =
-      new ActionName<List<int>>('ActionGenericsActions-listIntAction');
-  static final mapStringToListIntAction =
-      new ActionName<Map<String, List<int>>>(
-          'ActionGenericsActions-mapStringToListIntAction');
-  static final typdefAction = new ActionName<
+      ActionName<List<int>>('ActionGenericsActions-listIntAction');
+  static final mapStringToListIntAction = ActionName<Map<String, List<int>>>(
+      'ActionGenericsActions-mapStringToListIntAction');
+  static final typdefAction = ActionName<
       ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
           ActionGenericsActions>>('ActionGenericsActions-typdefAction');
   static final fooAction =
-      new ActionName<Foo<int>>('ActionGenericsActions-fooAction');
+      ActionName<Foo<int>>('ActionGenericsActions-fooAction');
   static final classWithBuiltAction =
-      new ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
+      ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
           'ActionGenericsActions-classWithBuiltAction');
 }
 
@@ -77,11 +73,11 @@ class _$ActionGenerics extends ActionGenerics {
   final int count;
 
   factory _$ActionGenerics([void Function(ActionGenericsBuilder) updates]) =>
-      (new ActionGenericsBuilder()..update(updates)).build();
+      (ActionGenericsBuilder()..update(updates)).build();
 
   _$ActionGenerics._({this.count}) : super._() {
     if (count == null) {
-      throw new BuiltValueNullFieldError('ActionGenerics', 'count');
+      throw BuiltValueNullFieldError('ActionGenerics', 'count');
     }
   }
 
@@ -90,8 +86,7 @@ class _$ActionGenerics extends ActionGenerics {
       (toBuilder()..update(updates)).build();
 
   @override
-  ActionGenericsBuilder toBuilder() =>
-      new ActionGenericsBuilder()..replace(this);
+  ActionGenericsBuilder toBuilder() => ActionGenericsBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -132,7 +127,7 @@ class ActionGenericsBuilder
   @override
   void replace(ActionGenerics other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$ActionGenerics;
   }
@@ -144,7 +139,7 @@ class ActionGenericsBuilder
 
   @override
   _$ActionGenerics build() {
-    final _$result = _$v ?? new _$ActionGenerics._(count: count);
+    final _$result = _$v ?? _$ActionGenerics._(count: count);
     replace(_$result);
     return _$result;
   }

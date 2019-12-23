@@ -11,15 +11,14 @@ part of test_counter;
 // ignore_for_file: overridden_fields
 
 class _$CounterActions extends CounterActions {
-  factory _$CounterActions() => new _$CounterActions._();
+  factory _$CounterActions() => _$CounterActions._();
   _$CounterActions._() : super._();
 
-  final increment = new ActionDispatcher<int>('CounterActions-increment');
-  final incrementOther =
-      new ActionDispatcher<int>('CounterActions-incrementOther');
+  final increment = ActionDispatcher<int>('CounterActions-increment');
+  final incrementOther = ActionDispatcher<int>('CounterActions-incrementOther');
 
-  final subCounterActions = new SubCounterActions();
-  final middlewareActions = new MiddlewareActions();
+  final subCounterActions = SubCounterActions();
+  final middlewareActions = MiddlewareActions();
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -32,17 +31,17 @@ class _$CounterActions extends CounterActions {
 }
 
 class CounterActionsNames {
-  static final increment = new ActionName<int>('CounterActions-increment');
+  static final increment = ActionName<int>('CounterActions-increment');
   static final incrementOther =
-      new ActionName<int>('CounterActions-incrementOther');
+      ActionName<int>('CounterActions-incrementOther');
 }
 
 class _$SubCounterActions extends SubCounterActions {
-  factory _$SubCounterActions() => new _$SubCounterActions._();
+  factory _$SubCounterActions() => _$SubCounterActions._();
   _$SubCounterActions._() : super._();
 
-  final increment = new ActionDispatcher<int>('SubCounterActions-increment');
-  final doubleIt = new ActionDispatcher<int>('SubCounterActions-doubleIt');
+  final increment = ActionDispatcher<int>('SubCounterActions-increment');
+  final doubleIt = ActionDispatcher<int>('SubCounterActions-doubleIt');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -52,16 +51,16 @@ class _$SubCounterActions extends SubCounterActions {
 }
 
 class SubCounterActionsNames {
-  static final increment = new ActionName<int>('SubCounterActions-increment');
-  static final doubleIt = new ActionName<int>('SubCounterActions-doubleIt');
+  static final increment = ActionName<int>('SubCounterActions-increment');
+  static final doubleIt = ActionName<int>('SubCounterActions-doubleIt');
 }
 
 class _$MiddlewareActions extends MiddlewareActions {
-  factory _$MiddlewareActions() => new _$MiddlewareActions._();
+  factory _$MiddlewareActions() => _$MiddlewareActions._();
   _$MiddlewareActions._() : super._();
 
-  final doubleIt = new ActionDispatcher<int>('MiddlewareActions-doubleIt');
-  final tripleIt = new ActionDispatcher<int>('MiddlewareActions-tripleIt');
+  final doubleIt = ActionDispatcher<int>('MiddlewareActions-doubleIt');
+  final tripleIt = ActionDispatcher<int>('MiddlewareActions-tripleIt');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -71,8 +70,8 @@ class _$MiddlewareActions extends MiddlewareActions {
 }
 
 class MiddlewareActionsNames {
-  static final doubleIt = new ActionName<int>('MiddlewareActions-doubleIt');
-  static final tripleIt = new ActionName<int>('MiddlewareActions-tripleIt');
+  static final doubleIt = ActionName<int>('MiddlewareActions-doubleIt');
+  static final tripleIt = ActionName<int>('MiddlewareActions-tripleIt');
 }
 
 // **************************************************************************
@@ -88,17 +87,17 @@ class _$Counter extends Counter {
   final SubCounter subCounter;
 
   factory _$Counter([void Function(CounterBuilder) updates]) =>
-      (new CounterBuilder()..update(updates)).build();
+      (CounterBuilder()..update(updates)).build();
 
   _$Counter._({this.count, this.otherCount, this.subCounter}) : super._() {
     if (count == null) {
-      throw new BuiltValueNullFieldError('Counter', 'count');
+      throw BuiltValueNullFieldError('Counter', 'count');
     }
     if (otherCount == null) {
-      throw new BuiltValueNullFieldError('Counter', 'otherCount');
+      throw BuiltValueNullFieldError('Counter', 'otherCount');
     }
     if (subCounter == null) {
-      throw new BuiltValueNullFieldError('Counter', 'subCounter');
+      throw BuiltValueNullFieldError('Counter', 'subCounter');
     }
   }
 
@@ -107,7 +106,7 @@ class _$Counter extends Counter {
       (toBuilder()..update(updates)).build();
 
   @override
-  CounterBuilder toBuilder() => new CounterBuilder()..replace(this);
+  CounterBuilder toBuilder() => CounterBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -147,7 +146,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   SubCounterBuilder _subCounter;
   SubCounterBuilder get subCounter =>
-      _$this._subCounter ??= new SubCounterBuilder();
+      _$this._subCounter ??= SubCounterBuilder();
   set subCounter(SubCounterBuilder subCounter) =>
       _$this._subCounter = subCounter;
 
@@ -166,7 +165,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
   @override
   void replace(Counter other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$Counter;
   }
@@ -181,7 +180,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
     _$Counter _$result;
     try {
       _$result = _$v ??
-          new _$Counter._(
+          _$Counter._(
               count: count,
               otherCount: otherCount,
               subCounter: subCounter.build());
@@ -191,7 +190,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
         _$failedField = 'subCounter';
         subCounter.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             'Counter', _$failedField, e.toString());
       }
       rethrow;
@@ -206,11 +205,11 @@ class _$SubCounter extends SubCounter {
   final int subCount;
 
   factory _$SubCounter([void Function(SubCounterBuilder) updates]) =>
-      (new SubCounterBuilder()..update(updates)).build();
+      (SubCounterBuilder()..update(updates)).build();
 
   _$SubCounter._({this.subCount}) : super._() {
     if (subCount == null) {
-      throw new BuiltValueNullFieldError('SubCounter', 'subCount');
+      throw BuiltValueNullFieldError('SubCounter', 'subCount');
     }
   }
 
@@ -219,7 +218,7 @@ class _$SubCounter extends SubCounter {
       (toBuilder()..update(updates)).build();
 
   @override
-  SubCounterBuilder toBuilder() => new SubCounterBuilder()..replace(this);
+  SubCounterBuilder toBuilder() => SubCounterBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -260,7 +259,7 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
   @override
   void replace(SubCounter other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$SubCounter;
   }
@@ -272,7 +271,7 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
 
   @override
   _$SubCounter build() {
-    final _$result = _$v ?? new _$SubCounter._(subCount: subCount);
+    final _$result = _$v ?? _$SubCounter._(subCount: subCount);
     replace(_$result);
     return _$result;
   }

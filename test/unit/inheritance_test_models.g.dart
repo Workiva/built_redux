@@ -11,13 +11,13 @@ part of inheritance_test_models;
 // ignore_for_file: overridden_fields
 
 class _$ChildActions extends ChildActions {
-  factory _$ChildActions() => new _$ChildActions._();
+  factory _$ChildActions() => _$ChildActions._();
   _$ChildActions._() : super._();
 
-  final childAction = new ActionDispatcher<Null>('ChildActions-childAction');
-  final parentAction = new ActionDispatcher<Null>('ParentActions-parentAction');
+  final childAction = ActionDispatcher<Null>('ChildActions-childAction');
+  final parentAction = ActionDispatcher<Null>('ParentActions-parentAction');
   final grandparentAction =
-      new ActionDispatcher<Null>('GrandparentActions-grandparentAction');
+      ActionDispatcher<Null>('GrandparentActions-grandparentAction');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -28,23 +28,21 @@ class _$ChildActions extends ChildActions {
 }
 
 class ChildActionsNames {
-  static final childAction = new ActionName<Null>('ChildActions-childAction');
-  static final parentAction =
-      new ActionName<Null>('ParentActions-parentAction');
+  static final childAction = ActionName<Null>('ChildActions-childAction');
+  static final parentAction = ActionName<Null>('ParentActions-parentAction');
   static final grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
+      ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 class ParentActionsNames {
-  static final parentAction =
-      new ActionName<Null>('ParentActions-parentAction');
+  static final parentAction = ActionName<Null>('ParentActions-parentAction');
   static final grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
+      ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 class GrandparentActionsNames {
   static final grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
+      ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 // **************************************************************************
@@ -74,18 +72,18 @@ class _$Child extends Child {
   final int grandparentCount;
 
   factory _$Child([void Function(ChildBuilder) updates]) =>
-      (new ChildBuilder()..update(updates)).build();
+      (ChildBuilder()..update(updates)).build();
 
   _$Child._({this.childCount, this.parentCount, this.grandparentCount})
       : super._() {
     if (childCount == null) {
-      throw new BuiltValueNullFieldError('Child', 'childCount');
+      throw BuiltValueNullFieldError('Child', 'childCount');
     }
     if (parentCount == null) {
-      throw new BuiltValueNullFieldError('Child', 'parentCount');
+      throw BuiltValueNullFieldError('Child', 'parentCount');
     }
     if (grandparentCount == null) {
-      throw new BuiltValueNullFieldError('Child', 'grandparentCount');
+      throw BuiltValueNullFieldError('Child', 'grandparentCount');
     }
   }
 
@@ -94,7 +92,7 @@ class _$Child extends Child {
       (toBuilder()..update(updates)).build();
 
   @override
-  ChildBuilder toBuilder() => new ChildBuilder()..replace(this);
+  ChildBuilder toBuilder() => ChildBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -154,7 +152,7 @@ class ChildBuilder
 // ignore: override_on_non_overriding_method
   void replace(covariant Child other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$Child;
   }
@@ -167,7 +165,7 @@ class ChildBuilder
   @override
   _$Child build() {
     final _$result = _$v ??
-        new _$Child._(
+        _$Child._(
             childCount: childCount,
             parentCount: parentCount,
             grandparentCount: grandparentCount);

@@ -33,8 +33,8 @@ class MiddlewareBuilder<
     State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
-  var _map = new Map<String,
-      MiddlewareHandler<State, StateBuilder, Actions, dynamic>>();
+  var _map =
+      Map<String, MiddlewareHandler<State, StateBuilder, Actions, dynamic>>();
 
   void add<Payload>(ActionName<Payload> aMgr,
       MiddlewareHandler<State, StateBuilder, Actions, Payload> handler) {

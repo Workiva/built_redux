@@ -10,7 +10,7 @@ abstract class ChildActions extends ParentActions {
   ActionDispatcher<Null> get childAction;
 
   ChildActions._();
-  factory ChildActions() => new _$ChildActions();
+  factory ChildActions() => _$ChildActions();
 }
 
 // ParentActions will be inherited by ChildActions
@@ -41,7 +41,7 @@ abstract class Child
   int get childCount;
 
   Child._();
-  factory Child() => new _$Child._(
+  factory Child() => _$Child._(
         childCount: 0,
         parentCount: 0,
         grandparentCount: 0,
@@ -57,7 +57,7 @@ abstract class Child
 // (Parent, Action<T>, ParentBuilder)
 // (Grandparent, Action<T>, GrandparentBuilder)
 Reducer<Child, ChildBuilder, dynamic> getInheritanceReducer() =>
-    (new ReducerBuilder<Child, ChildBuilder>()
+    (ReducerBuilder<Child, ChildBuilder>()
           ..add<Null>(ChildActionsNames.childAction,
               (state, action, builder) => builder.childCount++)
           ..add<Null>(
@@ -73,6 +73,6 @@ Reducer<Child, ChildBuilder, dynamic> getInheritanceReducer() =>
 // Reducers added to the AbstractReducerBuilder must have the signature:
 // (Grandparent, Action<T>, GrandparentBuilder)
 AbstractReducerBuilder<Grandparent, GrandparentBuilder> grandparentBuilder =
-    new AbstractReducerBuilder<Grandparent, GrandparentBuilder>()
+    AbstractReducerBuilder<Grandparent, GrandparentBuilder>()
       ..add<Null>(ChildActionsNames.grandparentAction,
           (state, action, builder) => builder.grandparentCount += 3);

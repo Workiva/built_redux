@@ -11,19 +11,19 @@ part of collection_models;
 // ignore_for_file: overridden_fields
 
 class _$CollectionActions extends CollectionActions {
-  factory _$CollectionActions() => new _$CollectionActions._();
+  factory _$CollectionActions() => _$CollectionActions._();
   _$CollectionActions._() : super._();
 
   final builtListAction =
-      new ActionDispatcher<Null>('CollectionActions-builtListAction');
+      ActionDispatcher<Null>('CollectionActions-builtListAction');
   final builtListMultimapAction =
-      new ActionDispatcher<Null>('CollectionActions-builtListMultimapAction');
+      ActionDispatcher<Null>('CollectionActions-builtListMultimapAction');
   final builtMapAction =
-      new ActionDispatcher<Null>('CollectionActions-builtMapAction');
+      ActionDispatcher<Null>('CollectionActions-builtMapAction');
   final builtSetAction =
-      new ActionDispatcher<Null>('CollectionActions-builtSetAction');
+      ActionDispatcher<Null>('CollectionActions-builtSetAction');
   final builtSetMultimapAction =
-      new ActionDispatcher<Null>('CollectionActions-builtSetMultimapAction');
+      ActionDispatcher<Null>('CollectionActions-builtSetMultimapAction');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -37,15 +37,15 @@ class _$CollectionActions extends CollectionActions {
 
 class CollectionActionsNames {
   static final builtListAction =
-      new ActionName<Null>('CollectionActions-builtListAction');
+      ActionName<Null>('CollectionActions-builtListAction');
   static final builtListMultimapAction =
-      new ActionName<Null>('CollectionActions-builtListMultimapAction');
+      ActionName<Null>('CollectionActions-builtListMultimapAction');
   static final builtMapAction =
-      new ActionName<Null>('CollectionActions-builtMapAction');
+      ActionName<Null>('CollectionActions-builtMapAction');
   static final builtSetAction =
-      new ActionName<Null>('CollectionActions-builtSetAction');
+      ActionName<Null>('CollectionActions-builtSetAction');
   static final builtSetMultimapAction =
-      new ActionName<Null>('CollectionActions-builtSetMultimapAction');
+      ActionName<Null>('CollectionActions-builtSetMultimapAction');
 }
 
 // **************************************************************************
@@ -65,7 +65,7 @@ class _$Collection extends Collection {
   final BuiltSetMultimap<int, int> builtSetMultimap;
 
   factory _$Collection([void Function(CollectionBuilder) updates]) =>
-      (new CollectionBuilder()..update(updates)).build();
+      (CollectionBuilder()..update(updates)).build();
 
   _$Collection._(
       {this.builtList,
@@ -75,19 +75,19 @@ class _$Collection extends Collection {
       this.builtSetMultimap})
       : super._() {
     if (builtList == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtList');
+      throw BuiltValueNullFieldError('Collection', 'builtList');
     }
     if (builtListMultimap == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtListMultimap');
+      throw BuiltValueNullFieldError('Collection', 'builtListMultimap');
     }
     if (builtMap == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtMap');
+      throw BuiltValueNullFieldError('Collection', 'builtMap');
     }
     if (builtSet == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtSet');
+      throw BuiltValueNullFieldError('Collection', 'builtSet');
     }
     if (builtSetMultimap == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtSetMultimap');
+      throw BuiltValueNullFieldError('Collection', 'builtSetMultimap');
     }
   }
 
@@ -96,7 +96,7 @@ class _$Collection extends Collection {
       (toBuilder()..update(updates)).build();
 
   @override
-  CollectionBuilder toBuilder() => new CollectionBuilder()..replace(this);
+  CollectionBuilder toBuilder() => CollectionBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -135,28 +135,27 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
   _$Collection _$v;
 
   ListBuilder<int> _builtList;
-  ListBuilder<int> get builtList =>
-      _$this._builtList ??= new ListBuilder<int>();
+  ListBuilder<int> get builtList => _$this._builtList ??= ListBuilder<int>();
   set builtList(ListBuilder<int> builtList) => _$this._builtList = builtList;
 
   ListMultimapBuilder<int, int> _builtListMultimap;
   ListMultimapBuilder<int, int> get builtListMultimap =>
-      _$this._builtListMultimap ??= new ListMultimapBuilder<int, int>();
+      _$this._builtListMultimap ??= ListMultimapBuilder<int, int>();
   set builtListMultimap(ListMultimapBuilder<int, int> builtListMultimap) =>
       _$this._builtListMultimap = builtListMultimap;
 
   MapBuilder<int, int> _builtMap;
   MapBuilder<int, int> get builtMap =>
-      _$this._builtMap ??= new MapBuilder<int, int>();
+      _$this._builtMap ??= MapBuilder<int, int>();
   set builtMap(MapBuilder<int, int> builtMap) => _$this._builtMap = builtMap;
 
   SetBuilder<int> _builtSet;
-  SetBuilder<int> get builtSet => _$this._builtSet ??= new SetBuilder<int>();
+  SetBuilder<int> get builtSet => _$this._builtSet ??= SetBuilder<int>();
   set builtSet(SetBuilder<int> builtSet) => _$this._builtSet = builtSet;
 
   SetMultimapBuilder<int, int> _builtSetMultimap;
   SetMultimapBuilder<int, int> get builtSetMultimap =>
-      _$this._builtSetMultimap ??= new SetMultimapBuilder<int, int>();
+      _$this._builtSetMultimap ??= SetMultimapBuilder<int, int>();
   set builtSetMultimap(SetMultimapBuilder<int, int> builtSetMultimap) =>
       _$this._builtSetMultimap = builtSetMultimap;
 
@@ -177,7 +176,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
   @override
   void replace(Collection other) {
     if (other == null) {
-      throw new ArgumentError.notNull('other');
+      throw ArgumentError.notNull('other');
     }
     _$v = other as _$Collection;
   }
@@ -192,7 +191,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
     _$Collection _$result;
     try {
       _$result = _$v ??
-          new _$Collection._(
+          _$Collection._(
               builtList: builtList.build(),
               builtListMultimap: builtListMultimap.build(),
               builtMap: builtMap.build(),
@@ -212,7 +211,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
         _$failedField = 'builtSetMultimap';
         builtSetMultimap.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             'Collection', _$failedField, e.toString());
       }
       rethrow;
