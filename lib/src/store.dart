@@ -51,7 +51,7 @@ class Store<
     };
 
     // if middleware is give build the chain
-    if (middleware.length > 0) {
+    if (middleware.isNotEmpty) {
       // Scope each function with the store's api
       Iterable<NextActionHandler> chain = middleware.map((m) => m(api));
 
