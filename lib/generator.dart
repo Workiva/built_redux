@@ -111,7 +111,7 @@ String _generateDispatchersIfNeeded(
 
 String _actionDispatcherClassTemplate(ActionsClass actionsClass) => '''
   class _\$${actionsClass.className} extends ${actionsClass.className}{
-    factory _\$${actionsClass.className}() => new _\$${actionsClass.className}._();
+    factory _\$${actionsClass.className}() => _\$${actionsClass.className}._();
     _\$${actionsClass.className}._() : super._();
 
     ${_allActionDispatcherFieldsTemplate(actionsClass)}
@@ -134,11 +134,11 @@ String _allComposedActionClassesFieldsTemplate(ActionsClass actionsClass) =>
         (comb, next) => '$comb\n${_composedActionClassesFieldTemplate(next)}');
 
 String _actionDispatcherFieldTemplate(Action action) =>
-    'final ${action.fieldName} = new  ActionDispatcher<${action.type}>(\'${action.actionName}\');';
+    'final ${action.fieldName} =  ActionDispatcher<${action.type}>(\'${action.actionName}\');';
 
 String _composedActionClassesFieldTemplate(
         ComposedActionClass composedActionClass) =>
-    'final ${composedActionClass.fieldName} = new ${composedActionClass.type}();';
+    'final ${composedActionClass.fieldName} = ${composedActionClass.type}();';
 
 String _allActionDispatcherSetDispatchersTemplate(ActionsClass actionsClass) =>
     actionsClass.allActions.fold(
@@ -169,7 +169,7 @@ String _allActionNamesFieldsTemplate(ActionsClass actionsClass) =>
         .fold('', (comb, next) => '$comb\n${_actionNameTemplate(next)}');
 
 String _actionNameTemplate(Action action) =>
-    'static final ${action.fieldName} = new ActionName<${action.type}>(\'${action.actionName}\');';
+    'static final ${action.fieldName} = ActionName<${action.type}>(\'${action.actionName}\');';
 
 class ActionsClass {
   final String className;
