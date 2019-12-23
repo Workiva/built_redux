@@ -1,16 +1,10 @@
 .dart_tool/
-.pub
-packages
 .packages
 .dart_tool
 pubspec.lock
 
-example/.pub
-example/packages
 example/.packages
 example/.dart_tool
-
-coverage/
 
 # IntelliJ IDEA
 .idea/
