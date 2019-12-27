@@ -12,7 +12,7 @@ The following middleware is built to hit a server then update the store upon suc
 
 ``` dart
 
-final middlewareBuilder = new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
+final middlewareBuilder = MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
   ..add(CounterActionsNames.incrementAsync, increment)
   ..add(CounterActionsNames.decrementAsync, decrement);
 

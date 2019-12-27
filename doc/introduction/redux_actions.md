@@ -41,7 +41,7 @@ built_redux:
 // _$AppActions is generated
 abstract class AppActions extends ReduxActions {
   AppActions._();
-  factory AppActions() => new _$AppActions();
+  factory AppActions() => _$AppActions();
   ActionDispatcher<String> get addTodo;
   ActionDispatcher<String> get removeTodo;
   ActionDispatcher<String> get toggleTodoState;
@@ -57,14 +57,14 @@ With built_redux, you can optionally nest multiple instances of ReduxActions. Th
 // _$AppActions is generated
 abstract class AppActions extends ReduxActions {
   AppActions._();
-  factory AppActions() => new _$AppActions();
+  factory AppActions() => _$AppActions();
   TodosActions todos;
   FilterActions filter;
 }
 // _$TodosActions is generated
 abstract class TodosActions extends ReduxActions {
   TodosActions._();
-  factory TodosActions() => new _$TodosActions();
+  factory TodosActions() => _$TodosActions();
   ActionDispatcher<String> get addTodo;
   ActionDispatcher<String> get removeTodo;
   ActionDispatcher<String> get toggleTodoState;
@@ -73,7 +73,7 @@ abstract class TodosActions extends ReduxActions {
 // _$FilterActions is generated
 abstract class FilterActions extends ReduxActions {
   FilterActions._();
-  factory FilterActions() => new _$FilterActions();
+  factory FilterActions() => _$FilterActions();
   ActionDispatcher<int> get setFilter;
   ActionDispatcher<Null> get clearFilter;
 }
@@ -88,7 +88,7 @@ redux.dart:
 ```dart
 import 'actions.dart';
 
-store.dispatch(new AddTodo('get some eggs'));
+store.dispatch(AddTodo('get some eggs'));
 ```
 
 built_redux:

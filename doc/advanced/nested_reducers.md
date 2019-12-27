@@ -14,7 +14,7 @@ abstract class Base implements Built<Base, BaseBuilder> {
   Child get child;
 
   Base._();
-  factory Base() => new _$Base._(count: 0, child: new Child());
+  factory Base() => _$Base._(count: 0, child: Child());
 }
 
 // Child contains an count and a reference to an instance of Grandchild.
@@ -22,7 +22,7 @@ abstract class Child implements Built<Child, ChildBuilder> {
   int get count;
 
   Child._();
-  factory Child() => new _$Child._(count: 0, grandchild: new Grandchild());
+  factory Child() => _$Child._(count: 0, grandchild: Grandchild());
 }
 
 // baseReducerBuilder is a reducer that rebuilds Base when baseAction is dispatched.
@@ -31,7 +31,7 @@ abstract class Child implements Built<Child, ChildBuilder> {
 // actions that could rebuild any peice of state within the Base object.
 // Reducers added to the ReducerBuilder must have the signature:
 // (Base, Action<T>, BaseBuilder)
-final baseReducerBuilder = new ReducerBuilder<Base, BaseBuilder>()
+final baseReducerBuilder = ReducerBuilder<Base, BaseBuilder>()
   ..add<Null>(BaseActionsNames.baseAction, (s, a, b) => b.count++)
   ..combineNested(childReducerBuilder);
 
@@ -40,7 +40,7 @@ final baseReducerBuilder = new ReducerBuilder<Base, BaseBuilder>()
 // could be modified to handle more actions that rebuild Child.
 // Reducers added to the NestedReducerBuilder must have the signature:
 // (Child, Action<T>, ChildBuilder)
-final childReducerBuilder = new NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>(
+final childReducerBuilder = NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>(
         (s) => s.child, (b) => b.child) // maps from the main state object to the nested state
       ..add<Null>(ChildActionsNames.childAction, (s, a, b) => b.count++);
 
@@ -60,7 +60,7 @@ abstract class Base implements Built<Base, BaseBuilder> {
   BuiltList<int> get builtList;
 
   Base._();
-  factory Base() => new _$Base._(count: 0, child: new Child());
+  factory Base() => _$Base._(count: 0, child: Child());
 }
 
 
@@ -70,7 +70,7 @@ abstract class Base implements Built<Base, BaseBuilder> {
 // actions that could rebuild any peice of state within the Base object.
 // Reducers added to the ReducerBuilder must have the signature:
 // (Base, Action<T>, BaseBuilder)
-final baseReducerBuilder = new ReducerBuilder<Base, BaseBuilder>()
+final baseReducerBuilder = ReducerBuilder<Base, BaseBuilder>()
   ..add<Null>(BaseActionsNames.baseAction, (s, a, b) => b.count++)
   ..combineList(listReducerBuilder);
 
@@ -79,7 +79,7 @@ final baseReducerBuilder = new ReducerBuilder<Base, BaseBuilder>()
 // could be modified to handle more actions that rebuild builtList.
 // Reducers added to the ListReducerBuilder must have the signature:
 // (BuiltList<int>, Action<T>, ListBuilder<int>)
-final listReducerBuilder = new ListReducerBuilder<Collection, CollectionBuilder, int>(
+final listReducerBuilder = ListReducerBuilder<Collection, CollectionBuilder, int>(
         (s) => s.builtList, (b) => b.builtList) // maps from the main state object to the nested collection
       ..add<Null>(CollectionActionsNames.builtListAction, (s, a, b) => b.add(0));
 

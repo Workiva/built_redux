@@ -23,7 +23,7 @@ I must dispatch an action to tell the store to update. So I want to define two a
 ```dart
 abstract class AppActions extends ReduxActions {
   AppActions._();
-  factory AppActions() => new _$AppActions();
+  factory AppActions() => _$AppActions();
   ActionDispatcher<Null> increment;
   ActionDispatcher<Null> decrement;
 }
@@ -50,7 +50,7 @@ However, say my ui had a number input field next to each button, signifying how 
 ```dart
 abstract class AppActions extends ReduxActions {
   AppActions._();
-  factory AppActions() => new _$AppActions();
+  factory AppActions() => _$AppActions();
   ActionDispatcher<int> increment;
   ActionDispatcher<int> decrement;
 }
@@ -95,7 +95,7 @@ part 'app_actions.g.dart';
 
 abstract class AppActions extends ReduxActions {
   AppActions._();
-  factory AppActions() => new _$AppActions();
+  factory AppActions() => _$AppActions();
   ActionDispatcher<int> increment;
   ActionDispatcher<int> decrement;
 }
