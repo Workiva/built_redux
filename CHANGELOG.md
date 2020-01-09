@@ -1,3 +1,6 @@
+## 7.5.9
+* add type_annotate_public_apis lint ignore to generated files
+
 ## 7.5.8
 
 * rework generator to lift analyzer version constraint.
