@@ -9,6 +9,7 @@ part of test_counter;
 // ignore_for_file: avoid_classes_with_only_static_members
 // ignore_for_file: annotate_overrides
 // ignore_for_file: overridden_fields
+// ignore_for_file: type_annotate_public_apis
 
 class _$CounterActions extends CounterActions {
   factory _$CounterActions() => new _$CounterActions._();
