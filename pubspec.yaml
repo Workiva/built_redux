@@ -9,7 +9,7 @@ dependencies:
   analyzer: '>=0.33.0 <0.39.0'
   build: ^1.2.2
   built_collection: ^4.3.0
-  built_value: ">=6.8.2 <8.0.0"
+  built_value: '>=6.8.2 <8.0.0'
   source_gen: ^0.9.4+6
   test: ^1.9.1
 
