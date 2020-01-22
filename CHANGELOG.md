@@ -1,3 +1,8 @@
+## 7.5.10
+* add workiva_analysis_options
+* remove usage of new keyword in code and examples
+* bump various dependencies lower bounds
+
 ## 7.5.9
 * add type_annotate_public_apis lint ignore to generated files
 
