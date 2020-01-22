@@ -11,7 +11,7 @@ part 'test_counter.g.dart';
 
 abstract class CounterActions extends ReduxActions {
   CounterActions._();
-  factory CounterActions() => new _$CounterActions();
+  factory CounterActions() => _$CounterActions();
 
   ActionDispatcher<int> increment;
   ActionDispatcher<int> incrementOther;
@@ -21,7 +21,7 @@ abstract class CounterActions extends ReduxActions {
 
 abstract class SubCounterActions extends ReduxActions {
   SubCounterActions._();
-  factory SubCounterActions() => new _$SubCounterActions();
+  factory SubCounterActions() => _$SubCounterActions();
 
   ActionDispatcher<int> increment;
   ActionDispatcher<int> doubleIt;
@@ -38,13 +38,13 @@ void _incrementSubCount(
         Counter state, Action<int> action, CounterBuilder builder) =>
     builder.subCounter.subCount = state.subCounter.subCount + action.payload;
 
-final reducer = (new ReducerBuilder<Counter, CounterBuilder>()
+final reducer = (ReducerBuilder<Counter, CounterBuilder>()
       ..add(CounterActionsNames.increment, _increment)
       ..combine(_otherReducer)
       ..add(SubCounterActionsNames.increment, _incrementSubCount))
     .build();
 
-final _otherReducer = (new ReducerBuilder<Counter, CounterBuilder>()
+final _otherReducer = (ReducerBuilder<Counter, CounterBuilder>()
   ..add(CounterActionsNames.incrementOther, _incrementOther));
 
 abstract class Counter implements Built<Counter, CounterBuilder> {
@@ -58,7 +58,7 @@ abstract class Counter implements Built<Counter, CounterBuilder> {
   Counter._();
 
   factory Counter() =>
-      new _$Counter._(count: 1, otherCount: 1, subCounter: SubCounter());
+      _$Counter._(count: 1, otherCount: 1, subCounter: SubCounter());
 }
 
 abstract class SubCounter implements Built<SubCounter, SubCounterBuilder> {
@@ -66,7 +66,7 @@ abstract class SubCounter implements Built<SubCounter, SubCounterBuilder> {
 
   SubCounter._();
 
-  factory SubCounter() => new _$SubCounter._(subCount: 1);
+  factory SubCounter() => _$SubCounter._(subCount: 1);
 }
 
 // Middleware
@@ -76,11 +76,11 @@ abstract class MiddlewareActions extends ReduxActions {
   ActionDispatcher<int> tripleIt;
 
   MiddlewareActions._();
-  factory MiddlewareActions() => new _$MiddlewareActions();
+  factory MiddlewareActions() => _$MiddlewareActions();
 }
 
 var counterMiddleware =
-    (new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
+    (MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
           ..add(MiddlewareActionsNames.doubleIt, _doubleIt)
           ..combine(tripleItMiddlewareBuilder)
           ..combineNested(subCountNested))
@@ -93,7 +93,7 @@ void _doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
 }
 
 var tripleItMiddlewareBuilder =
-    new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
+    MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
       ..add(MiddlewareActionsNames.tripleIt, _tripleIt);
 
 void _tripleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
@@ -112,7 +112,7 @@ var subCountNested = NestedMiddlewareBuilder<
   ..combineMiddlewareBuilder(subCountMiddlewareBuilder);
 
 var subCountMiddlewareBuilder =
-    new MiddlewareBuilder<SubCounter, SubCounterBuilder, SubCounterActions>()
+    MiddlewareBuilder<SubCounter, SubCounterBuilder, SubCounterActions>()
       ..add(SubCounterActionsNames.doubleIt, _subCounterDoubleIt);
 
 void _subCounterDoubleIt(
@@ -125,8 +125,8 @@ void _subCounterDoubleIt(
 
 // Change handler
 
-StoreChangeHandlerBuilder<Counter, CounterBuilder,
-    CounterActions> createChangeHandler(
-        Completer comp) =>
-    (new StoreChangeHandlerBuilder<Counter, CounterBuilder, CounterActions>()
-      ..add(CounterActionsNames.increment, (change) => comp.complete(change)));
+StoreChangeHandlerBuilder<Counter, CounterBuilder, CounterActions>
+    createChangeHandler(Completer comp) =>
+        (StoreChangeHandlerBuilder<Counter, CounterBuilder, CounterActions>()
+          ..add(CounterActionsNames.increment,
+              (change) => comp.complete(change)));

@@ -11,7 +11,7 @@ Say I'm working on the counter app discussed in the [Actions](actions.md) sectio
 ```dart
 abstract class AppActions extends ReduxActions {
   AppActions._();
-  factory AppActions() => new _$AppActions();
+  factory AppActions() => _$AppActions();
   ActionDispatcher<int> increment;
   ActionDispatcher<int> decrement;
 }
@@ -22,7 +22,7 @@ and my state object as so:
 ```dart
 abstract class App implements Built<App, AppBuilder> {
   App._();
-  factory App() => new _$App._(count: 0);
+  factory App() => _$App._(count: 0);
 
   int get count;
 }

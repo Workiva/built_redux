@@ -4,7 +4,7 @@ ReducerBuilders allow you to register smaller reducer functions that handle a si
 
 ```dart
 
-var reducerBuilder = new ReducerBuilder<Counter, CounterBuilder>()
+var reducerBuilder = ReducerBuilder<Counter, CounterBuilder>()
   ..add(CounterActionsNames.increment, increment)
   ..add(CounterActionsNames.decrement, decrement);
 
@@ -18,10 +18,10 @@ decrement(Counter state, Action<int> action, CounterBuilder builder) {
 
 // Create a redux store holding the state of your app.
 // Its API contains three getters: stream, state, and actions.
-var store = new Store<Counter, CounterBuilder, CounterActions>(
+var store = Store<Counter, CounterBuilder, CounterActions>(
   reducerBuilder.build(), // build returns a reducer function
-  new Counter(),
-  new CounterActions(),
+  Counter(),
+  CounterActions(),
 );
 
 ```
@@ -30,7 +30,7 @@ The following would fail analysis if the decrement's `ActionDispatcher` had a ge
 
 ```dart
 
-var reducerBuilder = new ReducerBuilder<Counter, CounterBuilder>()
+var reducerBuilder = ReducerBuilder<Counter, CounterBuilder>()
   ..add(CounterActionsNames.increment, increment)
   ..add(CounterActionsNames.decrement, decrement); // would yield error
 

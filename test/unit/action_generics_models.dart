@@ -8,10 +8,9 @@ part 'action_generics_models.g.dart';
 
 /// Used to test code generation when the generic type of an action is a
 /// `typedef`
-typedef FutureOr<void> ThunkTypedef<
-    V extends Built<V, B>,
-    B extends Builder<V, B>,
-    A extends ReduxActions>(MiddlewareApi<V, B, A> api);
+typedef ThunkTypedef<V extends Built<V, B>, B extends Builder<V, B>,
+        A extends ReduxActions>
+    = FutureOr<void> Function(MiddlewareApi<V, B, A> api);
 
 class Foo<T> {}
 
@@ -22,7 +21,7 @@ class ClassWithBuilt<V extends Built<V, B>, B extends Builder<V, B>> {}
 // the action classes.
 abstract class ActionGenericsActions extends ReduxActions {
   ActionGenericsActions._();
-  factory ActionGenericsActions() => new _$ActionGenericsActions();
+  factory ActionGenericsActions() => _$ActionGenericsActions();
 
   ActionDispatcher<int> get intAction;
   ActionDispatcher<Null> get nullAction;
@@ -42,12 +41,12 @@ abstract class ActionGenerics
   int get count;
 
   ActionGenerics._();
-  factory ActionGenerics() => new _$ActionGenerics._(count: 0);
+  factory ActionGenerics() => _$ActionGenerics._(count: 0);
 }
 
 Reducer<ActionGenerics, ActionGenericsBuilder, dynamic>
     getActionGenericsReducer() =>
-        (new ReducerBuilder<ActionGenerics, ActionGenericsBuilder>()
+        (ReducerBuilder<ActionGenerics, ActionGenericsBuilder>()
               ..add<int>(ActionGenericsActionsNames.intAction,
                   (s, a, b) => b.count = s.count + a.payload)
               ..add<Null>(

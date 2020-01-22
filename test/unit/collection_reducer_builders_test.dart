@@ -8,10 +8,10 @@ void main() {
     Store<Collection, CollectionBuilder, CollectionActions> store;
 
     setUp(() {
-      store = new Store<Collection, CollectionBuilder, CollectionActions>(
+      store = Store<Collection, CollectionBuilder, CollectionActions>(
         getCollectionReducer(),
-        new Collection(),
-        new CollectionActions(),
+        Collection(),
+        CollectionActions(),
       );
     });
 

@@ -8,8 +8,8 @@ void main() {
     Store<Child, ChildBuilder, ChildActions> store;
 
     setUp(() {
-      store = new Store<Child, ChildBuilder, ChildActions>(
-          getInheritanceReducer(), new Child(), new ChildActions());
+      store = Store<Child, ChildBuilder, ChildActions>(
+          getInheritanceReducer(), Child(), ChildActions());
     });
 
     tearDown(() {

@@ -9,11 +9,11 @@ void main() {
     Store<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions> store;
 
     setUp(() {
-      store = new Store<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>(
+      store =
+          Store<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>(
         getActionGenericsReducer(),
-        new ActionGenerics(),
-        new ActionGenericsActions(),
+        ActionGenerics(),
+        ActionGenericsActions(),
         middleware: [thunkMiddleware],
       );
     });
@@ -39,7 +39,7 @@ void main() {
       store.actions.typdefAction(testThunk);
       expect(store.state.count, 21);
       store.actions.typdefAction(testThunkAsync);
-      await new Future<void>.delayed(const Duration(microseconds: 0));
+      await Future<void>.delayed(const Duration(microseconds: 0));
       expect(store.state.count, 29);
     });
   });

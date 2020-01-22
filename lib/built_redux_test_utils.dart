@@ -9,8 +9,8 @@ void expectDispatched<T>(
   ActionDispatcher<T> actionDispatcher, {
   void verifier(Action<T> action),
   @deprecated void verfier(Action<T> action),
-  int count: 1,
-  int max: 0,
+  int count = 1,
+  int max = 0,
   String id,
   String reason,
 }) {

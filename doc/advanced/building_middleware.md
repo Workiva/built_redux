@@ -4,7 +4,7 @@ MiddlewareBuilders allow you to register smaller middleware functions that handl
 
 ```dart
 
-final middlewareBuilder = new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
+final middlewareBuilder = MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
   ..add(CounterActionsNames.increment, increment)
   ..add(CounterActionsNames.decrement, decrement);
 
@@ -20,10 +20,10 @@ void decrement(MiddlewareApi<Counter, CounterBuilder, CounterActions> api, Actio
 
 // Create a redux store holding the state of your app.
 // Its API contains three getters: stream, state, and actions.
-var store = new Store<Counter, CounterBuilder, CounterActions>(
+var store = Store<Counter, CounterBuilder, CounterActions>(
   reducerBuilder.build(), // build returns a reducer function
-  new Counter(),
-  new CounterActions(),
+  Counter(),
+  CounterActions(),
   middleware: [
       middlewareBuilder.build(),
   ],
@@ -35,7 +35,7 @@ The following would fail analysis if the decrement's `ActionDispatcher` had a ge
 
 ```dart
 
-final middlewareBuilder = new MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
+final middlewareBuilder = MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
   ..add(CounterActionsNames.increment, increment)
   ..add(CounterActionsNames.decrement, decrement); // would yield error
 

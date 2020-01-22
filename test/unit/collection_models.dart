@@ -10,7 +10,7 @@ part 'collection_models.g.dart';
 // built collections contained inside Collection
 abstract class CollectionActions extends ReduxActions {
   CollectionActions._();
-  factory CollectionActions() => new _$CollectionActions();
+  factory CollectionActions() => _$CollectionActions();
 
   ActionDispatcher<Null> get builtListAction;
   ActionDispatcher<Null> get builtListMultimapAction;
@@ -28,7 +28,7 @@ abstract class Collection implements Built<Collection, CollectionBuilder> {
   BuiltSetMultimap<int, int> get builtSetMultimap;
 
   Collection._();
-  factory Collection() => new _$Collection();
+  factory Collection() => _$Collection();
 }
 
 // getCollectionReducer returns a Reducer that rebuilds Collection.
@@ -38,7 +38,7 @@ abstract class Collection implements Built<Collection, CollectionBuilder> {
 // Reducers added to the ReducerBuilder must have the signature:
 // (Collection, Action<T>, CollectionBuilder)
 Reducer<Collection, CollectionBuilder, dynamic> getCollectionReducer() =>
-    (new ReducerBuilder<Collection, CollectionBuilder>()
+    (ReducerBuilder<Collection, CollectionBuilder>()
           ..combineList(getListReducer())
           ..combineListMultimap(getListMultimapReducer())
           ..combineMap(getMapReducer())
@@ -52,7 +52,7 @@ Reducer<Collection, CollectionBuilder, dynamic> getCollectionReducer() =>
 // Reducers added to the ListReducerBuilder must have the signature:
 // (BuiltList<int>, Action<T>, ListBuilder<int>)
 ListReducerBuilder<Collection, CollectionBuilder, int> getListReducer() =>
-    new ListReducerBuilder<Collection, CollectionBuilder, int>(
+    ListReducerBuilder<Collection, CollectionBuilder, int>(
         (s) => s.builtList, (b) => b.builtList)
       ..add<Null>(
           CollectionActionsNames.builtListAction, (s, a, b) => b.add(0));
@@ -64,7 +64,7 @@ ListReducerBuilder<Collection, CollectionBuilder, int> getListReducer() =>
 // (BuiltListMultimap<int, int>, Action<T>, ListMultimapBuilder<int, int>)
 ListMultimapReducerBuilder<Collection, CollectionBuilder, int, int>
     getListMultimapReducer() =>
-        new ListMultimapReducerBuilder<Collection, CollectionBuilder, int, int>(
+        ListMultimapReducerBuilder<Collection, CollectionBuilder, int, int>(
             (s) => s.builtListMultimap, (b) => b.builtListMultimap)
           ..add<Null>(CollectionActionsNames.builtListMultimapAction,
               (s, a, b) => b.add(0, 0));
@@ -75,7 +75,7 @@ ListMultimapReducerBuilder<Collection, CollectionBuilder, int, int>
 // Reducers added to the MapReducerBuilder must have the signature:
 // (BuiltMap<int, int>, Action<T>, MapBuilder<int, int>)
 MapReducerBuilder<Collection, CollectionBuilder, int, int> getMapReducer() =>
-    new MapReducerBuilder<Collection, CollectionBuilder, int, int>(
+    MapReducerBuilder<Collection, CollectionBuilder, int, int>(
         (s) => s.builtMap, (b) => b.builtMap)
       ..add<Null>(CollectionActionsNames.builtMapAction, (s, a, b) => b[0] = 0);
 
@@ -85,7 +85,7 @@ MapReducerBuilder<Collection, CollectionBuilder, int, int> getMapReducer() =>
 // Reducers added to the SetReducerBuilder must have the signature:
 // (Set<int>, Action<T>, SetBuilder<int>)
 SetReducerBuilder<Collection, CollectionBuilder, int> getSetReducer() =>
-    new SetReducerBuilder<Collection, CollectionBuilder, int>(
+    SetReducerBuilder<Collection, CollectionBuilder, int>(
         (s) => s.builtSet, (b) => b.builtSet)
       ..add<Null>(CollectionActionsNames.builtSetAction, (s, a, b) => b.add(0));
 
@@ -96,7 +96,7 @@ SetReducerBuilder<Collection, CollectionBuilder, int> getSetReducer() =>
 // (BuiltSetMultimap<int, int>, Action<T>, SetMultimapBuilder<int, int>)
 SetMultimapReducerBuilder<Collection, CollectionBuilder, int, int>
     getSetMultimapReducer() =>
-        new SetMultimapReducerBuilder<Collection, CollectionBuilder, int, int>(
+        SetMultimapReducerBuilder<Collection, CollectionBuilder, int, int>(
             (s) => s.builtSetMultimap, (b) => b.builtSetMultimap)
           ..add<Null>(CollectionActionsNames.builtSetMultimapAction,
               (s, a, b) => b.add(0, 0));

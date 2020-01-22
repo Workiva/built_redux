@@ -12,19 +12,19 @@ part of collection_models;
 // ignore_for_file: type_annotate_public_apis
 
 class _$CollectionActions extends CollectionActions {
-  factory _$CollectionActions() => new _$CollectionActions._();
+  factory _$CollectionActions() => _$CollectionActions._();
   _$CollectionActions._() : super._();
 
   final builtListAction =
-      new ActionDispatcher<Null>('CollectionActions-builtListAction');
+      ActionDispatcher<Null>('CollectionActions-builtListAction');
   final builtListMultimapAction =
-      new ActionDispatcher<Null>('CollectionActions-builtListMultimapAction');
+      ActionDispatcher<Null>('CollectionActions-builtListMultimapAction');
   final builtMapAction =
-      new ActionDispatcher<Null>('CollectionActions-builtMapAction');
+      ActionDispatcher<Null>('CollectionActions-builtMapAction');
   final builtSetAction =
-      new ActionDispatcher<Null>('CollectionActions-builtSetAction');
+      ActionDispatcher<Null>('CollectionActions-builtSetAction');
   final builtSetMultimapAction =
-      new ActionDispatcher<Null>('CollectionActions-builtSetMultimapAction');
+      ActionDispatcher<Null>('CollectionActions-builtSetMultimapAction');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -38,15 +38,15 @@ class _$CollectionActions extends CollectionActions {
 
 class CollectionActionsNames {
   static final builtListAction =
-      new ActionName<Null>('CollectionActions-builtListAction');
+      ActionName<Null>('CollectionActions-builtListAction');
   static final builtListMultimapAction =
-      new ActionName<Null>('CollectionActions-builtListMultimapAction');
+      ActionName<Null>('CollectionActions-builtListMultimapAction');
   static final builtMapAction =
-      new ActionName<Null>('CollectionActions-builtMapAction');
+      ActionName<Null>('CollectionActions-builtMapAction');
   static final builtSetAction =
-      new ActionName<Null>('CollectionActions-builtSetAction');
+      ActionName<Null>('CollectionActions-builtSetAction');
   static final builtSetMultimapAction =
-      new ActionName<Null>('CollectionActions-builtSetMultimapAction');
+      ActionName<Null>('CollectionActions-builtSetMultimapAction');
 }
 
 // **************************************************************************

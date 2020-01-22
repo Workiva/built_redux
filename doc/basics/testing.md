@@ -11,9 +11,9 @@ void main() {
     Store<Counter, CounterBuilder, CounterActions> store;
 
     setUp(() {
-      var actions = new CounterActions();
-      var defaultValue = new Counter();
-      store = new Store<Counter, CounterBuilder, CounterActions>(
+      var actions = CounterActions();
+      var defaultValue = Counter();
+      store = Store<Counter, CounterBuilder, CounterActions>(
           reducer, defaultValue, actions);
     });
 
@@ -46,7 +46,7 @@ void main() {
     var uiButton;
 
     setUp(() {
-      actions = new CounterActions();
+      actions = CounterActions();
       uiButton = renderButton(actions);
     });
 

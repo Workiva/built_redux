@@ -12,11 +12,11 @@ part of example;
 // ignore_for_file: type_annotate_public_apis
 
 class _$CounterActions extends CounterActions {
-  factory _$CounterActions() => new _$CounterActions._();
+  factory _$CounterActions() => _$CounterActions._();
   _$CounterActions._() : super._();
 
-  final increment = new ActionDispatcher<int>('CounterActions-increment');
-  final decrement = new ActionDispatcher<int>('CounterActions-decrement');
+  final increment = ActionDispatcher<int>('CounterActions-increment');
+  final decrement = ActionDispatcher<int>('CounterActions-decrement');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -26,8 +26,8 @@ class _$CounterActions extends CounterActions {
 }
 
 class CounterActionsNames {
-  static final increment = new ActionName<int>('CounterActions-increment');
-  static final decrement = new ActionName<int>('CounterActions-decrement');
+  static final increment = ActionName<int>('CounterActions-increment');
+  static final decrement = ActionName<int>('CounterActions-decrement');
 }
 
 // **************************************************************************

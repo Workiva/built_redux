@@ -14,7 +14,7 @@ class Action<Payload> {
 }
 
 // Dispatches an action to the store
-typedef void Dispatcher<P>(Action<P> action);
+typedef Dispatcher<P> = void Function(Action<P> action);
 
 /// [ActionDispatcher] dispatches an action with the name provided
 /// to the constructor and the payload supplied when called. You will notice
@@ -29,7 +29,7 @@ class ActionDispatcher<P> {
   Dispatcher _dispatcher;
   final String _name;
 
-  void call([P payload]) => _dispatcher(new Action<P>(_name, payload));
+  void call([P payload]) => _dispatcher(Action<P>(_name, payload));
 
   ActionDispatcher(this._name);
 
@@ -72,10 +72,10 @@ class ActionDispatcher<P> {
 ///
 ///  ```dart
 ///  class _$BaseActions extends BaseActions {
-///   final ActionDispatcher<int> foo = new ActionDispatcher<int>('BaseActions-foo');
-///   final NestedActions nestedActions = new NestedActions();
+///   final ActionDispatcher<int> foo = ActionDispatcher<int>('BaseActions-foo');
+///   final NestedActions nestedActions = NestedActions();
 ///
-///   factory _$BaseActions() => new _$BaseActions._();
+///   factory _$BaseActions() => _$BaseActions._();
 ///   _$BaseActions._() : super._();
 ///
 ///   setDispatcher(dispatcher) {
@@ -85,13 +85,13 @@ class ActionDispatcher<P> {
 /// }
 ///
 ///  class BaseActionsNames {
-///   static ActionName foo = new ActionName<int>('BaseActions-foo');
+///   static ActionName foo = ActionName<int>('BaseActions-foo');
 /// }
 ///
 /// class _$NestedActions extends NestedActions {
-///   final ActionDispatcher<int> bar = new ActionDispatcher<int>('NestedActions-bar');
+///   final ActionDispatcher<int> bar = ActionDispatcher<int>('NestedActions-bar');
 ///
-///   factory _$NestedActions() => new _$NestedActions._();
+///   factory _$NestedActions() => _$NestedActions._();
 ///   _$NestedActions._() : super._();
 ///
 ///   setDispatcher(dispatcher) {
@@ -100,7 +100,7 @@ class ActionDispatcher<P> {
 /// }
 ///
 ///  class NestedActionsNames {
-///   static ActionName bar = new ActionName<int>('NestedActions-bar');
+///   static ActionName bar = ActionName<int>('NestedActions-bar');
 /// }
 /// ```
 abstract class ReduxActions {

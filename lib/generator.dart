@@ -6,7 +6,7 @@ import 'package:source_gen/source_gen.dart';
 class BuiltReduxGenerator extends Generator {
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
-    final result = new StringBuffer();
+    final result = StringBuffer();
     var hasWrittenHeaders = false;
     for (final element in library.allElements) {
       if (_isReduxActions(element) && element is ClassElement) {
@@ -30,7 +30,7 @@ const _lintIgnores = """
 // ignore_for_file: type_annotate_public_apis
 """;
 
-ActionsClass _actionsClassFromElement(ClassElement element) => new ActionsClass(
+ActionsClass _actionsClassFromElement(ClassElement element) => ActionsClass(
       element.name,
       _actionsFromElement(element).toSet(),
       _composedActionClasses(element).toSet(),
@@ -40,7 +40,7 @@ ActionsClass _actionsClassFromElement(ClassElement element) => new ActionsClass(
 Iterable<ComposedActionClass> _composedActionClasses(ClassElement element) =>
     element.fields
         .where((f) => _isReduxActions(f.type.element))
-        .map((f) => new ComposedActionClass(f.name, f.type.name));
+        .map((f) => ComposedActionClass(f.name, f.type.name));
 
 Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
     .where(_isActionDispatcher)
@@ -54,7 +54,7 @@ Iterable<ActionsClass> _actionsClassFromInheritedElements(
         .map(_actionsClassFromElement);
 
 Action _fieldElementToAction(ClassElement element, FieldElement field) =>
-    new Action('${element.name}-${field.name}', field.name,
+    Action('${element.name}-${field.name}', field.name,
         _fieldType(element, field));
 
 // hack to return the generics for the action
@@ -112,7 +112,7 @@ String _generateDispatchersIfNeeded(
 
 String _actionDispatcherClassTemplate(ActionsClass actionsClass) => '''
   class _\$${actionsClass.className} extends ${actionsClass.className}{
-    factory _\$${actionsClass.className}() => new _\$${actionsClass.className}._();
+    factory _\$${actionsClass.className}() => _\$${actionsClass.className}._();
     _\$${actionsClass.className}._() : super._();
 
     ${_allActionDispatcherFieldsTemplate(actionsClass)}
@@ -135,11 +135,11 @@ String _allComposedActionClassesFieldsTemplate(ActionsClass actionsClass) =>
         (comb, next) => '$comb\n${_composedActionClassesFieldTemplate(next)}');
 
 String _actionDispatcherFieldTemplate(Action action) =>
-    'final ${action.fieldName} = new  ActionDispatcher<${action.type}>(\'${action.actionName}\');';
+    'final ${action.fieldName} =  ActionDispatcher<${action.type}>(\'${action.actionName}\');';
 
 String _composedActionClassesFieldTemplate(
         ComposedActionClass composedActionClass) =>
-    'final ${composedActionClass.fieldName} = new ${composedActionClass.type}();';
+    'final ${composedActionClass.fieldName} = ${composedActionClass.type}();';
 
 String _allActionDispatcherSetDispatchersTemplate(ActionsClass actionsClass) =>
     actionsClass.allActions.fold(
@@ -170,7 +170,7 @@ String _allActionNamesFieldsTemplate(ActionsClass actionsClass) =>
         .fold('', (comb, next) => '$comb\n${_actionNameTemplate(next)}');
 
 String _actionNameTemplate(Action action) =>
-    'static final ${action.fieldName} = new ActionName<${action.type}>(\'${action.actionName}\');';
+    'static final ${action.fieldName} = ActionName<${action.type}>(\'${action.actionName}\');';
 
 class ActionsClass {
   final String className;
@@ -178,11 +178,11 @@ class ActionsClass {
   final Set<ComposedActionClass> composed;
   final Set<ActionsClass> inherited;
   ActionsClass(this.className, this.actions, this.composed, this.inherited);
-  Set<Action> get allActions => new Set<Action>.from(
+  Set<Action> get allActions => Set<Action>.from(
         actions.toList()
           ..addAll(inherited.map((ac) => ac.actions).expand((a) => a)),
       );
-  Set<ComposedActionClass> get allComposed => new Set<ComposedActionClass>.from(
+  Set<ComposedActionClass> get allComposed => Set<ComposedActionClass>.from(
         composed.toList()
           ..addAll(inherited.map((ac) => ac.composed).expand((c) => c)),
       );

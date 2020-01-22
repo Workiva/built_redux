@@ -16,7 +16,7 @@ class Store<
     Actions extends ReduxActions> {
   // stream used to dispatch changes to the state
   final StreamController<StoreChange<State, StateBuilder, dynamic>>
-      _stateController = new StreamController.broadcast();
+      _stateController = StreamController.broadcast();
 
   // the current state
   State _state;
@@ -26,14 +26,14 @@ class Store<
     Reducer<State, StateBuilder, dynamic> reducer,
     State defaultState,
     Actions actions, {
-    Iterable<Middleware<State, StateBuilder, Actions>> middleware: const [],
+    Iterable<Middleware<State, StateBuilder, Actions>> middleware = const [],
   }) {
     // set the initial state
     _state = defaultState;
 
     _actions = actions;
 
-    final api = new MiddlewareApi<State, StateBuilder, Actions>(this);
+    final api = MiddlewareApi<State, StateBuilder, Actions>(this);
 
     // setup the dispatch chain
     ActionHandler handler = (action) {
@@ -44,14 +44,14 @@ class Store<
 
       // update the internal state and publish the change
       if (!_stateController.isClosed)
-        _stateController.add(new StoreChange<State, StateBuilder, dynamic>(
-            state, _state, action));
+        _stateController.add(
+            StoreChange<State, StateBuilder, dynamic>(state, _state, action));
 
       _state = state;
     };
 
     // if middleware is give build the chain
-    if (middleware.length > 0) {
+    if (middleware.isNotEmpty) {
       // Scope each function with the store's api
       Iterable<NextActionHandler> chain = middleware.map((m) => m(api));
 
@@ -78,8 +78,8 @@ class Store<
   /// Useful for undo/redo, testing, and development tools
   void replaceState(State state) {
     if (_state != state) {
-      _stateController.add(new StoreChange<State, StateBuilder, dynamic>(
-          state, _state, new Action<Null>('replaceState', null)));
+      _stateController.add(StoreChange<State, StateBuilder, dynamic>(
+          state, _state, Action<Null>('replaceState', null)));
       _state = state;
     }
   }
@@ -105,7 +105,7 @@ class Store<
     StateMapper<State, StateBuilder, Substate> mapper,
   ) =>
       stream
-          .map((c) => new SubstateChange<Substate>(
+          .map((c) => SubstateChange<Substate>(
                 mapper(c.prev),
                 mapper(c.next),
               ))
@@ -125,7 +125,7 @@ class Store<
           ActionName<Payload> actionName) =>
       stream
           .where((c) => c.action.name == actionName.name)
-          .map((c) => new StoreChange<State, StateBuilder, Payload>(
+          .map((c) => StoreChange<State, StateBuilder, Payload>(
                 c.next,
                 c.prev,
                 c.action as Action<Payload>,

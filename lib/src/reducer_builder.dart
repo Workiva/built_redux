@@ -10,7 +10,7 @@ import 'typedefs.dart';
 /// Nested reducers can be added with [combineNested]
 class ReducerBuilder<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>> {
-  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  final _map = Map<String, Reducer<State, StateBuilder, dynamic>>();
 
   ReducerBuilder();
 
@@ -80,7 +80,7 @@ class ReducerBuilder<State extends Built<State, StateBuilder>,
 
 /// [Mapper] is a function that takes an object and maps it to another object.
 /// Used for state and builder mappers passed to [NestedReducerBuilder].
-typedef NestedState Mapper<State, NestedState>(State state);
+typedef Mapper<State, NestedState> = NestedState Function(State state);
 
 /// [NestedReducerBuilder] allows you to build a reducer that rebuilds built values
 /// nested within your main app state model. For example, consider the following built value
@@ -119,7 +119,7 @@ class NestedReducerBuilder<
     StateBuilder extends Builder<State, StateBuilder>,
     NestedState extends Built<NestedState, NestedStateBuilder>,
     NestedStateBuilder extends Builder<NestedState, NestedStateBuilder>> {
-  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  final _map = Map<String, Reducer<State, StateBuilder, dynamic>>();
   Mapper<State, NestedState> _stateMapper;
   Mapper<StateBuilder, NestedStateBuilder> _builderMapper;
 
@@ -156,7 +156,7 @@ class NestedReducerBuilder<
 /// model favor composition over inheritance. However, this may be
 /// useful when trying to share functionaity between two separate redux stores.
 class AbstractReducerBuilder<AState, AStateBuilder> {
-  final _map = new Map<String, CReducer<AState, AStateBuilder, dynamic>>();
+  final _map = Map<String, CReducer<AState, AStateBuilder, dynamic>>();
 
   /// Registers [reducer] function to the given [actionName]
   void add<Payload>(ActionName<Payload> actionName,
@@ -172,14 +172,14 @@ class AbstractReducerBuilder<AState, AStateBuilder> {
 /// This is the Reducer typedef without the Built/Builder constraints
 /// Used for built_collections since they do not implement Built/Builder
 /// but follow the same pattern.
-typedef void CReducer<AState, AStateBuilder, P>(
+typedef CReducer<AState, AStateBuilder, P> = void Function(
     AState state, Action<P> action, AStateBuilder builder);
 
 /// [ListReducerBuilder] returns a reducer builder that
 /// rebuilds a List nested within the state tree
 class ListReducerBuilder<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, T> {
-  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  final _map = Map<String, Reducer<State, StateBuilder, dynamic>>();
   Mapper<State, BuiltList<T>> _stateMapper;
   Mapper<StateBuilder, ListBuilder<T>> _builderMapper;
 
@@ -200,7 +200,7 @@ class ListReducerBuilder<State extends Built<State, StateBuilder>,
 /// rebuilds a ListMultimap nested within the state tree
 class ListMultimapReducerBuilder<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, K, V> {
-  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  final _map = Map<String, Reducer<State, StateBuilder, dynamic>>();
   Mapper<State, BuiltListMultimap<K, V>> _stateMapper;
   Mapper<StateBuilder, ListMultimapBuilder<K, V>> _builderMapper;
 
@@ -223,7 +223,7 @@ class ListMultimapReducerBuilder<State extends Built<State, StateBuilder>,
 /// rebuilds a Map nested within the state tree
 class MapReducerBuilder<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, K, V> {
-  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  final _map = Map<String, Reducer<State, StateBuilder, dynamic>>();
   Mapper<State, BuiltMap<K, V>> _stateMapper;
   Mapper<StateBuilder, MapBuilder<K, V>> _builderMapper;
 
@@ -244,7 +244,7 @@ class MapReducerBuilder<State extends Built<State, StateBuilder>,
 /// rebuilds a Set nested within the state tree
 class SetReducerBuilder<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, T> {
-  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  final _map = Map<String, Reducer<State, StateBuilder, dynamic>>();
   Mapper<State, BuiltSet<T>> _stateMapper;
   Mapper<StateBuilder, SetBuilder<T>> _builderMapper;
 
@@ -265,7 +265,7 @@ class SetReducerBuilder<State extends Built<State, StateBuilder>,
 /// rebuilds a SetMultimap nested within the state tree
 class SetMultimapReducerBuilder<State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>, K, V> {
-  final _map = new Map<String, Reducer<State, StateBuilder, dynamic>>();
+  final _map = Map<String, Reducer<State, StateBuilder, dynamic>>();
   Mapper<State, BuiltSetMultimap<K, V>> _stateMapper;
   Mapper<StateBuilder, SetMultimapBuilder<K, V>> _builderMapper;
 

@@ -8,10 +8,10 @@ void main() {
     Store<Base, BaseBuilder, BaseActions> store;
 
     setUp(() {
-      store = new Store<Base, BaseBuilder, BaseActions>(
+      store = Store<Base, BaseBuilder, BaseActions>(
         getBaseReducer(),
-        new Base(),
-        new BaseActions(),
+        Base(),
+        BaseActions(),
       );
     });
 

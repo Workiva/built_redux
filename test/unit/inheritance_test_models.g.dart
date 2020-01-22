@@ -12,13 +12,13 @@ part of inheritance_test_models;
 // ignore_for_file: type_annotate_public_apis
 
 class _$ChildActions extends ChildActions {
-  factory _$ChildActions() => new _$ChildActions._();
+  factory _$ChildActions() => _$ChildActions._();
   _$ChildActions._() : super._();
 
-  final childAction = new ActionDispatcher<Null>('ChildActions-childAction');
-  final parentAction = new ActionDispatcher<Null>('ParentActions-parentAction');
+  final childAction = ActionDispatcher<Null>('ChildActions-childAction');
+  final parentAction = ActionDispatcher<Null>('ParentActions-parentAction');
   final grandparentAction =
-      new ActionDispatcher<Null>('GrandparentActions-grandparentAction');
+      ActionDispatcher<Null>('GrandparentActions-grandparentAction');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -29,23 +29,21 @@ class _$ChildActions extends ChildActions {
 }
 
 class ChildActionsNames {
-  static final childAction = new ActionName<Null>('ChildActions-childAction');
-  static final parentAction =
-      new ActionName<Null>('ParentActions-parentAction');
+  static final childAction = ActionName<Null>('ChildActions-childAction');
+  static final parentAction = ActionName<Null>('ParentActions-parentAction');
   static final grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
+      ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 class ParentActionsNames {
-  static final parentAction =
-      new ActionName<Null>('ParentActions-parentAction');
+  static final parentAction = ActionName<Null>('ParentActions-parentAction');
   static final grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
+      ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 class GrandparentActionsNames {
   static final grandparentAction =
-      new ActionName<Null>('GrandparentActions-grandparentAction');
+      ActionName<Null>('GrandparentActions-grandparentAction');
 }
 
 // **************************************************************************

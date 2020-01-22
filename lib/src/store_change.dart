@@ -19,8 +19,9 @@ class StoreChange<State extends Built<State, StateBuilder>,
 }
 
 /// [StoreChangeHandler] handles a change the store after an action of type Action<T>
-typedef void StoreChangeHandler<P, State extends Built<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>>(
+typedef StoreChangeHandler<P, State extends Built<State, StateBuilder>,
+        StateBuilder extends Builder<State, StateBuilder>>
+    = void Function(
   StoreChange<State, StateBuilder, P> storeChange,
 );
 
@@ -32,15 +33,14 @@ class StoreChangeHandlerBuilder<
     State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
-  final _map =
-      new Map<String, StoreChangeHandler<dynamic, State, StateBuilder>>();
+  final _map = Map<String, StoreChangeHandler<dynamic, State, StateBuilder>>();
   StreamSubscription<StoreChange<State, StateBuilder, dynamic>> _subscription;
 
   /// Registers [handler] function to the given [actionName]
   void add<Payload>(ActionName<Payload> actionName,
       StoreChangeHandler<Payload, State, StateBuilder> handler) {
     _map[actionName.name] = (change) {
-      handler(new StoreChange<State, StateBuilder, Payload>(
+      handler(StoreChange<State, StateBuilder, Payload>(
         change.next,
         change.prev,
         change.action as Action<Payload>,

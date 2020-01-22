@@ -10,10 +10,10 @@ void main() {
     Store<Counter, CounterBuilder, CounterActions> store;
 
     setUp(() {
-      var actions = new CounterActions();
-      var defaultValue = new Counter();
+      var actions = CounterActions();
+      var defaultValue = Counter();
 
-      store = new Store<Counter, CounterBuilder, CounterActions>(
+      store = Store<Counter, CounterBuilder, CounterActions>(
           reducer, defaultValue, actions);
     });
 
@@ -23,7 +23,7 @@ void main() {
 
     test('basic action fires stream', () async {
       final onStateChangeCompleter =
-          new Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
+          Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
       store.stream.listen(onStateChangeCompleter.complete);
       store.actions.increment(2);
       final stateChange = await onStateChangeCompleter.future;
@@ -33,7 +33,7 @@ void main() {
 
     test('store change handler', () async {
       final onStateChangeCompleter =
-          new Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
+          Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
 
       final storeChangeHandler = createChangeHandler(onStateChangeCompleter);
       storeChangeHandler.build(store);
@@ -50,9 +50,9 @@ void main() {
 
     test('replaceState', () async {
       final onStateChangeCompleter =
-          new Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
+          Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
       final onStateChangeCompleter2 =
-          new Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
+          Completer<StoreChange<Counter, CounterBuilder, dynamic>>();
 
       store.stream.listen((state) {
         if (!onStateChangeCompleter.isCompleted)
@@ -66,14 +66,14 @@ void main() {
       expect(stateChange.prev.count, 1);
       expect(stateChange.next.count, 5);
 
-      store.replaceState(new Counter());
+      store.replaceState(Counter());
       stateChange = await onStateChangeCompleter2.future;
       expect(stateChange.prev.count, 5);
       expect(stateChange.next.count, 1);
     });
 
     test('substateStream', () async {
-      final completer = new Completer<SubstateChange<int>>();
+      final completer = Completer<SubstateChange<int>>();
       final sub = store.substateStream<int>((Counter state) => state.count);
       sub.listen(completer.complete);
 
@@ -87,7 +87,7 @@ void main() {
     });
 
     test('nextState stream', () async {
-      final completer = new Completer<Counter>();
+      final completer = Completer<Counter>();
       store.nextState.listen(completer.complete);
       store.actions.increment(4);
       var stateChange = await completer.future;
@@ -96,7 +96,7 @@ void main() {
 
     test('nextSubstate stream', () async {
       final sub = store.nextSubstate<int>((Counter state) => state.count);
-      final completer = new Completer<int>();
+      final completer = Completer<int>();
       sub.listen(completer.complete);
 
       store.actions.increment(4);
@@ -109,7 +109,7 @@ void main() {
 
     test('actionStream', () async {
       final onStateChangeCompleter =
-          new Completer<StoreChange<Counter, CounterBuilder, int>>();
+          Completer<StoreChange<Counter, CounterBuilder, int>>();
       store
           .actionStream(CounterActionsNames.increment)
           .listen(onStateChangeCompleter.complete);
@@ -149,7 +149,7 @@ void main() {
     });
 
     test('action toString', () async {
-      final action = new Action('foo', 1);
+      final action = Action('foo', 1);
       final expectedString = 'Action {\n  name: foo,\n  payload: 1,\n}';
 
       expect('$action', expectedString);

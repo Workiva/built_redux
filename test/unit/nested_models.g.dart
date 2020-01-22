@@ -12,12 +12,12 @@ part of nested_models;
 // ignore_for_file: type_annotate_public_apis
 
 class _$BaseActions extends BaseActions {
-  factory _$BaseActions() => new _$BaseActions._();
+  factory _$BaseActions() => _$BaseActions._();
   _$BaseActions._() : super._();
 
-  final baseAction = new ActionDispatcher<Null>('BaseActions-baseAction');
+  final baseAction = ActionDispatcher<Null>('BaseActions-baseAction');
 
-  final child = new ChildActions();
+  final child = ChildActions();
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -28,16 +28,16 @@ class _$BaseActions extends BaseActions {
 }
 
 class BaseActionsNames {
-  static final baseAction = new ActionName<Null>('BaseActions-baseAction');
+  static final baseAction = ActionName<Null>('BaseActions-baseAction');
 }
 
 class _$ChildActions extends ChildActions {
-  factory _$ChildActions() => new _$ChildActions._();
+  factory _$ChildActions() => _$ChildActions._();
   _$ChildActions._() : super._();
 
-  final childAction = new ActionDispatcher<Null>('ChildActions-childAction');
+  final childAction = ActionDispatcher<Null>('ChildActions-childAction');
 
-  final grandchild = new GrandchildActions();
+  final grandchild = GrandchildActions();
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -48,15 +48,15 @@ class _$ChildActions extends ChildActions {
 }
 
 class ChildActionsNames {
-  static final childAction = new ActionName<Null>('ChildActions-childAction');
+  static final childAction = ActionName<Null>('ChildActions-childAction');
 }
 
 class _$GrandchildActions extends GrandchildActions {
-  factory _$GrandchildActions() => new _$GrandchildActions._();
+  factory _$GrandchildActions() => _$GrandchildActions._();
   _$GrandchildActions._() : super._();
 
   final grandchildAction =
-      new ActionDispatcher<Null>('GrandchildActions-grandchildAction');
+      ActionDispatcher<Null>('GrandchildActions-grandchildAction');
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -66,7 +66,7 @@ class _$GrandchildActions extends GrandchildActions {
 
 class GrandchildActionsNames {
   static final grandchildAction =
-      new ActionName<Null>('GrandchildActions-grandchildAction');
+      ActionName<Null>('GrandchildActions-grandchildAction');
 }
 
 // **************************************************************************

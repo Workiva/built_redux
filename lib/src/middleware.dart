@@ -33,8 +33,8 @@ class MiddlewareBuilder<
     State extends Built<State, StateBuilder>,
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
-  var _map = new Map<String,
-      MiddlewareHandler<State, StateBuilder, Actions, dynamic>>();
+  var _map =
+      Map<String, MiddlewareHandler<State, StateBuilder, Actions, dynamic>>();
 
   void add<Payload>(ActionName<Payload> aMgr,
       MiddlewareHandler<State, StateBuilder, Actions, Payload> handler) {
@@ -123,8 +123,10 @@ class NestedMiddlewareBuilder<
 /// [MiddlewareHandler] is a function that handles an action in a middleware. Its is only for
 /// use with [MiddlewareBuilder]. If you are not using [MiddlewareBuilder] middleware must be
 /// declared as a [Middleware] function.
-typedef void MiddlewareHandler<
-    State extends Built<State, StateBuilder>,
-    StateBuilder extends Builder<State, StateBuilder>,
-    Actions extends ReduxActions,
-    Payload>(MiddlewareApi<State, StateBuilder, Actions> api, ActionHandler next, Action<Payload> action);
+typedef MiddlewareHandler<
+        State extends Built<State, StateBuilder>,
+        StateBuilder extends Builder<State, StateBuilder>,
+        Actions extends ReduxActions,
+        Payload>
+    = void Function(MiddlewareApi<State, StateBuilder, Actions> api,
+        ActionHandler next, Action<Payload> action);
