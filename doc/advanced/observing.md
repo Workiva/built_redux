@@ -24,7 +24,7 @@ store.actions.increment(1);
 ```
 
 If you would
-like to set up a stream thats payload is simply the next state, use store.nexState
+like to set up a stream thats payload is simply the next state, use store.nextState
 
 ```dart
 
