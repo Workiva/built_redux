@@ -1,3 +1,8 @@
+## 7.5.11
+* allow analyzer 0.39.0
+* make dispatcher name public
+* fix documentation typo
+
 ## 7.5.10
 * add workiva_analysis_options
 * remove usage of new keyword in code and examples
