@@ -1,3 +1,7 @@
+## 7.5.12
+* tighten analyzer to require ^0.39.0
+* fix analyzer deprecations
+
 ## 7.5.11
 * allow analyzer 0.39.0
 * make dispatcher name public
