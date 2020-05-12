@@ -2,8 +2,6 @@ name: built_redux
 version: 7.5.11
 description:
   A state management library written in dart that enforces immutability
-authors:
-- David Marne <davemarne@gmail.com>
 homepage: https://github.com/davidmarne/built_redux
 dependencies:
   analyzer: '>=0.33.0 <0.40.0'
