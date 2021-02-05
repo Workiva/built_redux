@@ -1,3 +1,7 @@
+## 7.5.12
+* update analyzer to dependency range 
+* fix analyzer deprecations
+
 ## 7.5.11
 * allow analyzer 0.39.0
 * make dispatcher name public
