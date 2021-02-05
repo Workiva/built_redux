@@ -19,8 +19,8 @@ class Store<
       _stateController = StreamController.broadcast();
 
   // the current state
-  State _state;
-  Actions _actions;
+  late State _state;
+  late final Actions _actions;
 
   Store(
     Reducer<State, StateBuilder, dynamic> reducer,
@@ -70,8 +70,6 @@ class Store<
   /// [dispose] removes closes both the dispatch and subscription stream
   Future<Null> dispose() async {
     await _stateController.close();
-    _state = null;
-    _actions = null;
   }
 
   /// [replaceState] replaces the state of your store.

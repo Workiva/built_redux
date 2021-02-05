@@ -83,12 +83,8 @@ class _$Base extends Base {
       (new BaseBuilder()..update(updates)).build();
 
   _$Base._({this.count, this.child}) : super._() {
-    if (count == null) {
-      throw new BuiltValueNullFieldError('Base', 'count');
-    }
-    if (child == null) {
-      throw new BuiltValueNullFieldError('Base', 'child');
-    }
+    BuiltValueNullFieldError.checkNotNull(count, 'Base', 'count');
+    BuiltValueNullFieldError.checkNotNull(child, 'Base', 'child');
   }
 
   @override
@@ -132,9 +128,10 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   BaseBuilder();
 
   BaseBuilder get _$this {
-    if (_$v != null) {
-      _count = _$v.count;
-      _child = _$v.child?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _count = $v.count;
+      _child = $v.child.toBuilder();
       _$v = null;
     }
     return this;
@@ -142,9 +139,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
 
   @override
   void replace(Base other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Base;
   }
 
@@ -157,7 +152,11 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   _$Base build() {
     _$Base _$result;
     try {
-      _$result = _$v ?? new _$Base._(count: count, child: child.build());
+      _$result = _$v ??
+          new _$Base._(
+              count:
+                  BuiltValueNullFieldError.checkNotNull(count, 'Base', 'count'),
+              child: child.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -184,12 +183,8 @@ class _$Child extends Child {
       (new ChildBuilder()..update(updates)).build();
 
   _$Child._({this.count, this.grandchild}) : super._() {
-    if (count == null) {
-      throw new BuiltValueNullFieldError('Child', 'count');
-    }
-    if (grandchild == null) {
-      throw new BuiltValueNullFieldError('Child', 'grandchild');
-    }
+    BuiltValueNullFieldError.checkNotNull(count, 'Child', 'count');
+    BuiltValueNullFieldError.checkNotNull(grandchild, 'Child', 'grandchild');
   }
 
   @override
@@ -237,9 +232,10 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
   ChildBuilder();
 
   ChildBuilder get _$this {
-    if (_$v != null) {
-      _count = _$v.count;
-      _grandchild = _$v.grandchild?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _count = $v.count;
+      _grandchild = $v.grandchild.toBuilder();
       _$v = null;
     }
     return this;
@@ -247,9 +243,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
 
   @override
   void replace(Child other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Child;
   }
 
@@ -262,8 +256,11 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
   _$Child build() {
     _$Child _$result;
     try {
-      _$result =
-          _$v ?? new _$Child._(count: count, grandchild: grandchild.build());
+      _$result = _$v ??
+          new _$Child._(
+              count: BuiltValueNullFieldError.checkNotNull(
+                  count, 'Child', 'count'),
+              grandchild: grandchild.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -288,9 +285,7 @@ class _$Grandchild extends Grandchild {
       (new GrandchildBuilder()..update(updates)).build();
 
   _$Grandchild._({this.count}) : super._() {
-    if (count == null) {
-      throw new BuiltValueNullFieldError('Grandchild', 'count');
-    }
+    BuiltValueNullFieldError.checkNotNull(count, 'Grandchild', 'count');
   }
 
   @override
@@ -328,8 +323,9 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
   GrandchildBuilder();
 
   GrandchildBuilder get _$this {
-    if (_$v != null) {
-      _count = _$v.count;
+    final $v = _$v;
+    if ($v != null) {
+      _count = $v.count;
       _$v = null;
     }
     return this;
@@ -337,9 +333,7 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
 
   @override
   void replace(Grandchild other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Grandchild;
   }
 
@@ -350,7 +344,10 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
 
   @override
   _$Grandchild build() {
-    final _$result = _$v ?? new _$Grandchild._(count: count);
+    final _$result = _$v ??
+        new _$Grandchild._(
+            count: BuiltValueNullFieldError.checkNotNull(
+                count, 'Grandchild', 'count'));
     replace(_$result);
     return _$result;
   }

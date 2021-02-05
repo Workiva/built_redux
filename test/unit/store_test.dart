@@ -7,7 +7,7 @@ import 'test_counter.dart';
 
 void main() {
   group('store', () {
-    Store<Counter, CounterBuilder, CounterActions> store;
+    late Store<Counter, CounterBuilder, CounterActions> store;
 
     setUp(() {
       var actions = CounterActions();

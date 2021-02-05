@@ -7,12 +7,12 @@ import 'built_redux.dart';
 /// It takes all of the same optional params as expectAsync.
 void expectDispatched<T>(
   ActionDispatcher<T> actionDispatcher, {
-  void verifier(Action<T> action),
-  @deprecated void verfier(Action<T> action),
+  void Function(Action<T> action)? verifier,
+  @deprecated void Function(Action<T> action)? verfier,
   int count = 1,
   int max = 0,
-  String id,
-  String reason,
+  String? id,
+  String? reason,
 }) {
   actionDispatcher.setDispatcher(expectAsync1((Action<dynamic> action) {
     if (verifier != null) verifier(action as Action<T>);

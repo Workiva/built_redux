@@ -5,7 +5,7 @@ import 'nested_models.dart';
 
 void main() {
   group('nested builts and actions', () {
-    Store<Base, BaseBuilder, BaseActions> store;
+    late Store<Base, BaseBuilder, BaseActions> store;
 
     setUp(() {
       store = Store<Base, BaseBuilder, BaseActions>(
@@ -23,15 +23,15 @@ void main() {
       expect(store.state.count, 0);
       expect(store.state.child.count, 0);
       expect(store.state.child.grandchild.count, 0);
-      store.actions.baseAction();
+      store.actions.baseAction(null);
       expect(store.state.count, 1);
       expect(store.state.child.count, 0);
       expect(store.state.child.grandchild.count, 0);
-      store.actions.child.childAction();
+      store.actions.child.childAction(null);
       expect(store.state.count, 1);
       expect(store.state.child.count, 1);
       expect(store.state.child.grandchild.count, 0);
-      store.actions.child.grandchild.grandchildAction();
+      store.actions.child.grandchild.grandchildAction(null);
       expect(store.state.count, 1);
       expect(store.state.child.count, 1);
       expect(store.state.child.grandchild.count, 1);

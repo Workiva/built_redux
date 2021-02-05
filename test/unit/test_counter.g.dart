@@ -91,15 +91,9 @@ class _$Counter extends Counter {
       (new CounterBuilder()..update(updates)).build();
 
   _$Counter._({this.count, this.otherCount, this.subCounter}) : super._() {
-    if (count == null) {
-      throw new BuiltValueNullFieldError('Counter', 'count');
-    }
-    if (otherCount == null) {
-      throw new BuiltValueNullFieldError('Counter', 'otherCount');
-    }
-    if (subCounter == null) {
-      throw new BuiltValueNullFieldError('Counter', 'subCounter');
-    }
+    BuiltValueNullFieldError.checkNotNull(count, 'Counter', 'count');
+    BuiltValueNullFieldError.checkNotNull(otherCount, 'Counter', 'otherCount');
+    BuiltValueNullFieldError.checkNotNull(subCounter, 'Counter', 'subCounter');
   }
 
   @override
@@ -154,10 +148,11 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
   CounterBuilder();
 
   CounterBuilder get _$this {
-    if (_$v != null) {
-      _count = _$v.count;
-      _otherCount = _$v.otherCount;
-      _subCounter = _$v.subCounter?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _count = $v.count;
+      _otherCount = $v.otherCount;
+      _subCounter = $v.subCounter.toBuilder();
       _$v = null;
     }
     return this;
@@ -165,9 +160,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   @override
   void replace(Counter other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Counter;
   }
 
@@ -182,8 +175,10 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
     try {
       _$result = _$v ??
           new _$Counter._(
-              count: count,
-              otherCount: otherCount,
+              count: BuiltValueNullFieldError.checkNotNull(
+                  count, 'Counter', 'count'),
+              otherCount: BuiltValueNullFieldError.checkNotNull(
+                  otherCount, 'Counter', 'otherCount'),
               subCounter: subCounter.build());
     } catch (_) {
       String _$failedField;
@@ -209,9 +204,7 @@ class _$SubCounter extends SubCounter {
       (new SubCounterBuilder()..update(updates)).build();
 
   _$SubCounter._({this.subCount}) : super._() {
-    if (subCount == null) {
-      throw new BuiltValueNullFieldError('SubCounter', 'subCount');
-    }
+    BuiltValueNullFieldError.checkNotNull(subCount, 'SubCounter', 'subCount');
   }
 
   @override
@@ -250,8 +243,9 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
   SubCounterBuilder();
 
   SubCounterBuilder get _$this {
-    if (_$v != null) {
-      _subCount = _$v.subCount;
+    final $v = _$v;
+    if ($v != null) {
+      _subCount = $v.subCount;
       _$v = null;
     }
     return this;
@@ -259,9 +253,7 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
 
   @override
   void replace(SubCounter other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubCounter;
   }
 
@@ -272,7 +264,10 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
 
   @override
   _$SubCounter build() {
-    final _$result = _$v ?? new _$SubCounter._(subCount: subCount);
+    final _$result = _$v ??
+        new _$SubCounter._(
+            subCount: BuiltValueNullFieldError.checkNotNull(
+                subCount, 'SubCounter', 'subCount'));
     replace(_$result);
     return _$result;
   }

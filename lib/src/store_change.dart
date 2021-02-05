@@ -34,7 +34,8 @@ class StoreChangeHandlerBuilder<
     StateBuilder extends Builder<State, StateBuilder>,
     Actions extends ReduxActions> {
   final _map = Map<String, StoreChangeHandler<dynamic, State, StateBuilder>>();
-  StreamSubscription<StoreChange<State, StateBuilder, dynamic>> _subscription;
+  late StreamSubscription<StoreChange<State, StateBuilder, dynamic>>
+      _subscription;
 
   /// Registers [handler] function to the given [actionName]
   void add<Payload>(ActionName<Payload> actionName,

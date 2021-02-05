@@ -6,7 +6,8 @@ import 'action_generics_models.dart';
 
 void main() {
   group('action generics', () {
-    Store<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions> store;
+    late Store<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
+        store;
 
     setUp(() {
       store =
@@ -26,7 +27,7 @@ void main() {
       expect(store.state.count, 0);
       store.actions.intAction(3);
       expect(store.state.count, 3);
-      store.actions.nullAction();
+      store.actions.nullAction(null);
       expect(store.state.count, 4);
       store.actions.nullAction(null);
       expect(store.state.count, 5);

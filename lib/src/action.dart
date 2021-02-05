@@ -7,11 +7,50 @@ class Action<Payload> {
   /// The actions payload.
   final Payload payload;
 
+  // factory Action(name, payload) => NullableAction(name, payload);
   Action(this.name, this.payload);
 
   @override
   String toString() => 'Action {\n  name: $name,\n  payload: $payload,\n}';
 }
+
+/// [Action] is the object passed to your reducer to signify the state change that needs to take place.
+/// Action [name]s should always be unique. Uniqeness is guarenteed when using ReduxActions.
+// class NonNullableAction<Payload> implements Action<Payload?> {
+//   /// A unique action name.
+//   final String _name;
+
+//   /// The actions payload.
+//   final Payload _payload;
+
+//   String get name => _name;
+
+//   Payload get payload => _payload;
+
+//   NonNullableAction(this._name, this._payload);
+
+//   @override
+//   String toString() => 'Action {\n  name: $name,\n  payload: $payload,\n}';
+// }
+
+// /// [Action] is the object passed to your reducer to signify the state change that needs to take place.
+// /// Action [name]s should always be unique. Uniqeness is guarenteed when using ReduxActions.
+// class NullableAction<Payload> implements Action<Payload> {
+//   /// A unique action name.
+//   final String _name;
+
+//   /// The actions payload.
+//   final Payload? _payload;
+
+//   String get name => _name;
+
+//   Payload? get payload => _payload;
+
+//   NullableAction(this._name, this._payload);
+
+//   @override
+//   String toString() => 'Action {\n  name: $name,\n  payload: $payload,\n}';
+// }
 
 // Dispatches an action to the store
 typedef Dispatcher<P> = void Function(Action<P> action);
@@ -26,12 +65,12 @@ typedef Dispatcher<P> = void Function(Action<P> action);
 /// store.actions.increment(3);
 /// ```
 class ActionDispatcher<P> {
-  Dispatcher _dispatcher;
+  late Dispatcher _dispatcher;
   final String _name;
 
   String get name => _name;
 
-  void call([P payload]) => _dispatcher(Action<P>(_name, payload));
+  void call(P payload) => _dispatcher(Action<P>(_name, payload));
 
   ActionDispatcher(this._name);
 

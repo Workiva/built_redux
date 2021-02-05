@@ -5,7 +5,7 @@ import 'inheritance_test_models.dart';
 
 void main() {
   group('inheritence', () {
-    Store<Child, ChildBuilder, ChildActions> store;
+    late Store<Child, ChildBuilder, ChildActions> store;
 
     setUp(() {
       store = Store<Child, ChildBuilder, ChildActions>(
@@ -20,15 +20,15 @@ void main() {
       expect(store.state.childCount, 0);
       expect(store.state.parentCount, 0);
       expect(store.state.grandparentCount, 0);
-      store.actions.childAction();
+      store.actions.childAction(null);
       expect(store.state.childCount, 1);
       expect(store.state.parentCount, 0);
       expect(store.state.grandparentCount, 0);
-      store.actions.parentAction();
+      store.actions.parentAction(null);
       expect(store.state.childCount, 1);
       expect(store.state.parentCount, 2);
       expect(store.state.grandparentCount, 0);
-      store.actions.grandparentAction();
+      store.actions.grandparentAction(null);
       expect(store.state.childCount, 1);
       expect(store.state.parentCount, 2);
       expect(store.state.grandparentCount, 3);

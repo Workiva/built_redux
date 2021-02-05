@@ -75,21 +75,13 @@ class _$Collection extends Collection {
       this.builtSet,
       this.builtSetMultimap})
       : super._() {
-    if (builtList == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtList');
-    }
-    if (builtListMultimap == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtListMultimap');
-    }
-    if (builtMap == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtMap');
-    }
-    if (builtSet == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtSet');
-    }
-    if (builtSetMultimap == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtSetMultimap');
-    }
+    BuiltValueNullFieldError.checkNotNull(builtList, 'Collection', 'builtList');
+    BuiltValueNullFieldError.checkNotNull(
+        builtListMultimap, 'Collection', 'builtListMultimap');
+    BuiltValueNullFieldError.checkNotNull(builtMap, 'Collection', 'builtMap');
+    BuiltValueNullFieldError.checkNotNull(builtSet, 'Collection', 'builtSet');
+    BuiltValueNullFieldError.checkNotNull(
+        builtSetMultimap, 'Collection', 'builtSetMultimap');
   }
 
   @override
@@ -164,12 +156,13 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
   CollectionBuilder();
 
   CollectionBuilder get _$this {
-    if (_$v != null) {
-      _builtList = _$v.builtList?.toBuilder();
-      _builtListMultimap = _$v.builtListMultimap?.toBuilder();
-      _builtMap = _$v.builtMap?.toBuilder();
-      _builtSet = _$v.builtSet?.toBuilder();
-      _builtSetMultimap = _$v.builtSetMultimap?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _builtList = $v.builtList.toBuilder();
+      _builtListMultimap = $v.builtListMultimap.toBuilder();
+      _builtMap = $v.builtMap.toBuilder();
+      _builtSet = $v.builtSet.toBuilder();
+      _builtSetMultimap = $v.builtSetMultimap.toBuilder();
       _$v = null;
     }
     return this;
@@ -177,9 +170,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
 
   @override
   void replace(Collection other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Collection;
   }
 

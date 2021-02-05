@@ -38,13 +38,11 @@ class _$Counter extends Counter {
   @override
   final int count;
 
-  factory _$Counter([void Function(CounterBuilder) updates]) =>
+  factory _$Counter([void Function(CounterBuilder)? updates]) =>
       (new CounterBuilder()..update(updates)).build();
 
-  _$Counter._({this.count}) : super._() {
-    if (count == null) {
-      throw new BuiltValueNullFieldError('Counter', 'count');
-    }
+  _$Counter._({required this.count}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(count, 'Counter', 'count');
   }
 
   @override
@@ -73,17 +71,18 @@ class _$Counter extends Counter {
 }
 
 class CounterBuilder implements Builder<Counter, CounterBuilder> {
-  _$Counter _$v;
+  _$Counter? _$v;
 
-  int _count;
-  int get count => _$this._count;
-  set count(int count) => _$this._count = count;
+  int? _count;
+  int? get count => _$this._count;
+  set count(int? count) => _$this._count = count;
 
   CounterBuilder();
 
   CounterBuilder get _$this {
-    if (_$v != null) {
-      _count = _$v.count;
+    final $v = _$v;
+    if ($v != null) {
+      _count = $v.count;
       _$v = null;
     }
     return this;
@@ -91,20 +90,21 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   @override
   void replace(Counter other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Counter;
   }
 
   @override
-  void update(void Function(CounterBuilder) updates) {
+  void update(void Function(CounterBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
   _$Counter build() {
-    final _$result = _$v ?? new _$Counter._(count: count);
+    final _$result = _$v ??
+        new _$Counter._(
+            count: BuiltValueNullFieldError.checkNotNull(
+                count, 'Counter', 'count'));
     replace(_$result);
     return _$result;
   }

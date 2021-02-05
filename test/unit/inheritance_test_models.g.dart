@@ -77,15 +77,10 @@ class _$Child extends Child {
 
   _$Child._({this.childCount, this.parentCount, this.grandparentCount})
       : super._() {
-    if (childCount == null) {
-      throw new BuiltValueNullFieldError('Child', 'childCount');
-    }
-    if (parentCount == null) {
-      throw new BuiltValueNullFieldError('Child', 'parentCount');
-    }
-    if (grandparentCount == null) {
-      throw new BuiltValueNullFieldError('Child', 'grandparentCount');
-    }
+    BuiltValueNullFieldError.checkNotNull(childCount, 'Child', 'childCount');
+    BuiltValueNullFieldError.checkNotNull(parentCount, 'Child', 'parentCount');
+    BuiltValueNullFieldError.checkNotNull(
+        grandparentCount, 'Child', 'grandparentCount');
   }
 
   @override
@@ -140,10 +135,11 @@ class ChildBuilder
   ChildBuilder();
 
   ChildBuilder get _$this {
-    if (_$v != null) {
-      _childCount = _$v.childCount;
-      _parentCount = _$v.parentCount;
-      _grandparentCount = _$v.grandparentCount;
+    final $v = _$v;
+    if ($v != null) {
+      _childCount = $v.childCount;
+      _parentCount = $v.parentCount;
+      _grandparentCount = $v.grandparentCount;
       _$v = null;
     }
     return this;
@@ -152,9 +148,7 @@ class ChildBuilder
   @override
 // ignore: override_on_non_overriding_method
   void replace(covariant Child other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Child;
   }
 
@@ -167,9 +161,12 @@ class ChildBuilder
   _$Child build() {
     final _$result = _$v ??
         new _$Child._(
-            childCount: childCount,
-            parentCount: parentCount,
-            grandparentCount: grandparentCount);
+            childCount: BuiltValueNullFieldError.checkNotNull(
+                childCount, 'Child', 'childCount'),
+            parentCount: BuiltValueNullFieldError.checkNotNull(
+                parentCount, 'Child', 'parentCount'),
+            grandparentCount: BuiltValueNullFieldError.checkNotNull(
+                grandparentCount, 'Child', 'grandparentCount'));
     replace(_$result);
     return _$result;
   }

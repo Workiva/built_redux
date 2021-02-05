@@ -58,7 +58,7 @@ Reducer<ActionGenerics, ActionGenericsBuilder, dynamic>
               ..add<Map<String, List<int>>>(
                   ActionGenericsActionsNames.mapStringToListIntAction,
                   (s, a, b) =>
-                      b.count += a.payload['k'].fold<int>(0, (c, n) => c + n)))
+                      b.count += a.payload['k']??.fold<int>(0, (c, n) => c + n)))
             .build();
 
 NextActionHandler thunkMiddleware(
