@@ -1,5 +1,5 @@
 ## 7.5.12
-* tighten analyzer to require ^0.39.0
+* update analyzer to dependency range 
 * fix analyzer deprecations
 
 ## 7.5.11
