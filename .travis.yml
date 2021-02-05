@@ -1,5 +1,5 @@
 language: dart
-dart: [dev]
+dart: [dev/release/2.12.0-51.0.dev]
 sudo: required
 addons:
   chrome: stable
