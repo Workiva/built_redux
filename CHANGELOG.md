@@ -4,6 +4,7 @@
 * address deprecations in generator
 * **Breaking changes**:
   * The argements to `ActionDispatcher.call` are no longer optional. when dispatching an action a payload a value must be provided. if the payload type is nullable null must be explicitly provided. append a `?` to the `ActionDispatcher` type parameter for any actions that can be dispatched with a null payload, e.g. `ActionDispatcher<int?>`.
+  * Remove previously deprecated test method
 
 ## 7.5.11
 * allow analyzer 0.39.0
