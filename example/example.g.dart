@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of example;
+part of 'example.dart';
 
 // **************************************************************************
 // BuiltReduxGenerator

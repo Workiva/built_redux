@@ -85,11 +85,11 @@ bool _isReduxActions(Element element) =>
     element is ClassElement && _hasSuperType(element, 'ReduxActions');
 
 bool _isActionDispatcher(FieldElement element) =>
-    element.type.name == 'ActionDispatcher';
+    element.type.element.name == 'ActionDispatcher';
 
 bool _hasSuperType(ClassElement classElement, String type) =>
     classElement.allSupertypes
-        .any((interfaceType) => interfaceType.name == type) &&
+        .any((interfaceType) => interfaceType.element.name == type) &&
     !classElement.displayName.startsWith('_\$');
 
 String _generateActions(ClassElement element) {

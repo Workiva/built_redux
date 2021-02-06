@@ -14,44 +14,6 @@ class Action<Payload> {
   String toString() => 'Action {\n  name: $name,\n  payload: $payload,\n}';
 }
 
-/// [Action] is the object passed to your reducer to signify the state change that needs to take place.
-/// Action [name]s should always be unique. Uniqeness is guarenteed when using ReduxActions.
-// class NonNullableAction<Payload> implements Action<Payload?> {
-//   /// A unique action name.
-//   final String _name;
-
-//   /// The actions payload.
-//   final Payload _payload;
-
-//   String get name => _name;
-
-//   Payload get payload => _payload;
-
-//   NonNullableAction(this._name, this._payload);
-
-//   @override
-//   String toString() => 'Action {\n  name: $name,\n  payload: $payload,\n}';
-// }
-
-// /// [Action] is the object passed to your reducer to signify the state change that needs to take place.
-// /// Action [name]s should always be unique. Uniqeness is guarenteed when using ReduxActions.
-// class NullableAction<Payload> implements Action<Payload> {
-//   /// A unique action name.
-//   final String _name;
-
-//   /// The actions payload.
-//   final Payload? _payload;
-
-//   String get name => _name;
-
-//   Payload? get payload => _payload;
-
-//   NullableAction(this._name, this._payload);
-
-//   @override
-//   String toString() => 'Action {\n  name: $name,\n  payload: $payload,\n}';
-// }
-
 // Dispatches an action to the store
 typedef Dispatcher<P> = void Function(Action<P> action);
 

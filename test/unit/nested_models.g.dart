@@ -79,10 +79,10 @@ class _$Base extends Base {
   @override
   final Child child;
 
-  factory _$Base([void Function(BaseBuilder) updates]) =>
+  factory _$Base([void Function(BaseBuilder)? updates]) =>
       (new BaseBuilder()..update(updates)).build();
 
-  _$Base._({this.count, this.child}) : super._() {
+  _$Base._({required this.count, required this.child}) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, 'Base', 'count');
     BuiltValueNullFieldError.checkNotNull(child, 'Base', 'child');
   }
@@ -115,15 +115,15 @@ class _$Base extends Base {
 }
 
 class BaseBuilder implements Builder<Base, BaseBuilder> {
-  _$Base _$v;
+  _$Base? _$v;
 
-  int _count;
-  int get count => _$this._count;
-  set count(int count) => _$this._count = count;
+  int? _count;
+  int? get count => _$this._count;
+  set count(int? count) => _$this._count = count;
 
-  ChildBuilder _child;
+  ChildBuilder? _child;
   ChildBuilder get child => _$this._child ??= new ChildBuilder();
-  set child(ChildBuilder child) => _$this._child = child;
+  set child(ChildBuilder? child) => _$this._child = child;
 
   BaseBuilder();
 
@@ -144,7 +144,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   }
 
   @override
-  void update(void Function(BaseBuilder) updates) {
+  void update(void Function(BaseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -158,7 +158,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
                   BuiltValueNullFieldError.checkNotNull(count, 'Base', 'count'),
               child: child.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'child';
         child.build();
@@ -179,10 +179,10 @@ class _$Child extends Child {
   @override
   final Grandchild grandchild;
 
-  factory _$Child([void Function(ChildBuilder) updates]) =>
+  factory _$Child([void Function(ChildBuilder)? updates]) =>
       (new ChildBuilder()..update(updates)).build();
 
-  _$Child._({this.count, this.grandchild}) : super._() {
+  _$Child._({required this.count, required this.grandchild}) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, 'Child', 'count');
     BuiltValueNullFieldError.checkNotNull(grandchild, 'Child', 'grandchild');
   }
@@ -217,16 +217,16 @@ class _$Child extends Child {
 }
 
 class ChildBuilder implements Builder<Child, ChildBuilder> {
-  _$Child _$v;
+  _$Child? _$v;
 
-  int _count;
-  int get count => _$this._count;
-  set count(int count) => _$this._count = count;
+  int? _count;
+  int? get count => _$this._count;
+  set count(int? count) => _$this._count = count;
 
-  GrandchildBuilder _grandchild;
+  GrandchildBuilder? _grandchild;
   GrandchildBuilder get grandchild =>
       _$this._grandchild ??= new GrandchildBuilder();
-  set grandchild(GrandchildBuilder grandchild) =>
+  set grandchild(GrandchildBuilder? grandchild) =>
       _$this._grandchild = grandchild;
 
   ChildBuilder();
@@ -248,7 +248,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
   }
 
   @override
-  void update(void Function(ChildBuilder) updates) {
+  void update(void Function(ChildBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -262,7 +262,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
                   count, 'Child', 'count'),
               grandchild: grandchild.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'grandchild';
         grandchild.build();
@@ -281,10 +281,10 @@ class _$Grandchild extends Grandchild {
   @override
   final int count;
 
-  factory _$Grandchild([void Function(GrandchildBuilder) updates]) =>
+  factory _$Grandchild([void Function(GrandchildBuilder)? updates]) =>
       (new GrandchildBuilder()..update(updates)).build();
 
-  _$Grandchild._({this.count}) : super._() {
+  _$Grandchild._({required this.count}) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, 'Grandchild', 'count');
   }
 
@@ -314,11 +314,11 @@ class _$Grandchild extends Grandchild {
 }
 
 class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
-  _$Grandchild _$v;
+  _$Grandchild? _$v;
 
-  int _count;
-  int get count => _$this._count;
-  set count(int count) => _$this._count = count;
+  int? _count;
+  int? get count => _$this._count;
+  set count(int? count) => _$this._count = count;
 
   GrandchildBuilder();
 
@@ -338,7 +338,7 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
   }
 
   @override
-  void update(void Function(GrandchildBuilder) updates) {
+  void update(void Function(GrandchildBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

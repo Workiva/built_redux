@@ -5,7 +5,7 @@ import 'collection_models.dart';
 
 void main() {
   group('collection reducer builders', () {
-    Store<Collection, CollectionBuilder, CollectionActions> store;
+    late Store<Collection, CollectionBuilder, CollectionActions> store;
 
     setUp(() {
       store = Store<Collection, CollectionBuilder, CollectionActions>(
@@ -26,35 +26,35 @@ void main() {
       expect(store.state.builtSet.length, 0);
       expect(store.state.builtSetMultimap.keys.length, 0);
 
-      store.actions.builtListAction();
+      store.actions.builtListAction(null);
       expect(store.state.builtList.length, 1);
       expect(store.state.builtListMultimap.keys.length, 0);
       expect(store.state.builtMap.keys.length, 0);
       expect(store.state.builtSet.length, 0);
       expect(store.state.builtSetMultimap.keys.length, 0);
 
-      store.actions.builtListMultimapAction();
+      store.actions.builtListMultimapAction(null);
       expect(store.state.builtList.length, 1);
       expect(store.state.builtListMultimap.keys.length, 1);
       expect(store.state.builtMap.keys.length, 0);
       expect(store.state.builtSet.length, 0);
       expect(store.state.builtSetMultimap.keys.length, 0);
 
-      store.actions.builtMapAction();
+      store.actions.builtMapAction(null);
       expect(store.state.builtList.length, 1);
       expect(store.state.builtListMultimap.keys.length, 1);
       expect(store.state.builtMap.keys.length, 1);
       expect(store.state.builtSet.length, 0);
       expect(store.state.builtSetMultimap.keys.length, 0);
 
-      store.actions.builtSetAction();
+      store.actions.builtSetAction(null);
       expect(store.state.builtList.length, 1);
       expect(store.state.builtListMultimap.keys.length, 1);
       expect(store.state.builtMap.keys.length, 1);
       expect(store.state.builtSet.length, 1);
       expect(store.state.builtSetMultimap.keys.length, 0);
 
-      store.actions.builtSetMultimapAction();
+      store.actions.builtSetMultimapAction(null);
       expect(store.state.builtList.length, 1);
       expect(store.state.builtListMultimap.keys.length, 1);
       expect(store.state.builtMap.keys.length, 1);

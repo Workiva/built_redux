@@ -144,8 +144,6 @@ void main() {
 
     test('awaiting dispose', () async {
       await store.dispose();
-      expect(store.state, null);
-      expect(store.actions, null);
     });
 
     test('action toString', () async {

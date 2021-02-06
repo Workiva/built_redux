@@ -58,12 +58,14 @@ abstract class Child
 // (Grandparent, Action<T>, GrandparentBuilder)
 Reducer<Child, ChildBuilder, dynamic> getInheritanceReducer() =>
     (ReducerBuilder<Child, ChildBuilder>()
-          ..add<Null>(ChildActionsNames.childAction,
-              (state, action, builder) => builder.childCount++)
+          ..add<Null>(
+              ChildActionsNames.childAction,
+              (state, action, builder) =>
+                  builder.childCount = state.childCount + 1)
           ..add<Null>(
               ChildActionsNames.parentAction,
               (Parent state, action, ParentBuilder builder) =>
-                  builder.parentCount += 2)
+                  builder.parentCount = state.parentCount + 2)
           ..combineAbstract(grandparentBuilder.build()))
         .build();
 
@@ -74,5 +76,7 @@ Reducer<Child, ChildBuilder, dynamic> getInheritanceReducer() =>
 // (Grandparent, Action<T>, GrandparentBuilder)
 AbstractReducerBuilder<Grandparent, GrandparentBuilder> grandparentBuilder =
     AbstractReducerBuilder<Grandparent, GrandparentBuilder>()
-      ..add<Null>(ChildActionsNames.grandparentAction,
-          (state, action, builder) => builder.grandparentCount += 3);
+      ..add<Null>(
+          ChildActionsNames.grandparentAction,
+          (state, action, builder) =>
+              builder.grandparentCount = state.grandparentCount + 3);

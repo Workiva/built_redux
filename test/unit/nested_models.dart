@@ -71,7 +71,8 @@ abstract class Grandchild implements Built<Grandchild, GrandchildBuilder> {
 // (Base, Action<T>, BaseBuilder)
 Reducer<Base, BaseBuilder, dynamic> getBaseReducer() =>
     (ReducerBuilder<Base, BaseBuilder>()
-          ..add<Null>(BaseActionsNames.baseAction, (s, a, b) => b.count++)
+          ..add<Null>(
+              BaseActionsNames.baseAction, (s, a, b) => b.count = s.count + 1)
           ..combineNested(getChildReducer())
           ..combineNested(getNestedGrandchildReducer()))
         .build();
@@ -85,7 +86,8 @@ NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>
     getChildReducer() =>
         (NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>(
             (s) => s.child, (b) => b.child)
-          ..add<Null>(ChildActionsNames.childAction, (s, a, b) => b.count++));
+          ..add<Null>(ChildActionsNames.childAction,
+              (s, a, b) => b.count = s.count + 1));
 
 // getGrandchildReducer returns a nested reducer builder that rebuilds the
 // grandchild built when grandchildAction is dispatched. This NestedReducerBuilder
@@ -100,5 +102,5 @@ NestedReducerBuilder<Base, BaseBuilder, Grandchild, GrandchildBuilder>
 
 ReducerBuilder<Grandchild, GrandchildBuilder> getGrandchildReducer() =>
     ReducerBuilder<Grandchild, GrandchildBuilder>()
-      ..add<Null>(
-          GrandchildActionsNames.grandchildAction, (s, a, b) => b.count++);
+      ..add<Null>(GrandchildActionsNames.grandchildAction,
+          (s, a, b) => b.count = s.count + 1);

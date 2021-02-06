@@ -53,15 +53,15 @@ class GrandparentActionsNames {
 abstract class ParentBuilder {
   void replace(Parent other);
   void update(void Function(ParentBuilder) updates);
-  int get parentCount;
-  set parentCount(int parentCount);
+  int? get parentCount;
+  set parentCount(int? parentCount);
 }
 
 abstract class GrandparentBuilder {
   void replace(Grandparent other);
   void update(void Function(GrandparentBuilder) updates);
-  int get grandparentCount;
-  set grandparentCount(int grandparentCount);
+  int? get grandparentCount;
+  set grandparentCount(int? grandparentCount);
 }
 
 class _$Child extends Child {
@@ -72,10 +72,13 @@ class _$Child extends Child {
   @override
   final int grandparentCount;
 
-  factory _$Child([void Function(ChildBuilder) updates]) =>
+  factory _$Child([void Function(ChildBuilder)? updates]) =>
       (new ChildBuilder()..update(updates)).build();
 
-  _$Child._({this.childCount, this.parentCount, this.grandparentCount})
+  _$Child._(
+      {required this.childCount,
+      required this.parentCount,
+      required this.grandparentCount})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(childCount, 'Child', 'childCount');
     BuiltValueNullFieldError.checkNotNull(parentCount, 'Child', 'parentCount');
@@ -117,19 +120,19 @@ class _$Child extends Child {
 
 class ChildBuilder
     implements Builder<Child, ChildBuilder>, ParentBuilder, GrandparentBuilder {
-  _$Child _$v;
+  _$Child? _$v;
 
-  int _childCount;
-  int get childCount => _$this._childCount;
-  set childCount(int childCount) => _$this._childCount = childCount;
+  int? _childCount;
+  int? get childCount => _$this._childCount;
+  set childCount(int? childCount) => _$this._childCount = childCount;
 
-  int _parentCount;
-  int get parentCount => _$this._parentCount;
-  set parentCount(int parentCount) => _$this._parentCount = parentCount;
+  int? _parentCount;
+  int? get parentCount => _$this._parentCount;
+  set parentCount(int? parentCount) => _$this._parentCount = parentCount;
 
-  int _grandparentCount;
-  int get grandparentCount => _$this._grandparentCount;
-  set grandparentCount(int grandparentCount) =>
+  int? _grandparentCount;
+  int? get grandparentCount => _$this._grandparentCount;
+  set grandparentCount(int? grandparentCount) =>
       _$this._grandparentCount = grandparentCount;
 
   ChildBuilder();
@@ -153,7 +156,7 @@ class ChildBuilder
   }
 
   @override
-  void update(void Function(ChildBuilder) updates) {
+  void update(void Function(ChildBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

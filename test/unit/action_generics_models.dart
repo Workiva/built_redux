@@ -55,16 +55,16 @@ Reducer<ActionGenerics, ActionGenericsBuilder, dynamic>
         (ReducerBuilder<ActionGenerics, ActionGenericsBuilder>()
               ..add<int>(ActionGenericsActionsNames.intAction,
                   (s, a, b) => b.count = s.count + a.payload)
-              ..add<Null>(
-                  ActionGenericsActionsNames.nullAction, (s, a, b) => b.count++)
+              ..add<Null>(ActionGenericsActionsNames.nullAction,
+                  (s, a, b) => b.count = s.count + 1)
               ..add<List<int>>(
                   ActionGenericsActionsNames.listIntAction,
-                  (s, a, b) =>
-                      b.count += a.payload.fold<int>(0, (c, n) => c + n))
+                  (s, a, b) => b.count =
+                      s.count + a.payload.fold<int>(0, (c, n) => c + n))
               ..add<Map<String, List<int>>>(
                   ActionGenericsActionsNames.mapStringToListIntAction,
-                  (s, a, b) =>
-                      b.count += a.payload['k']!.fold<int>(0, (c, n) => c + n)))
+                  (s, a, b) => b.count =
+                      s.count + a.payload['k']!.fold<int>(0, (c, n) => c + n)))
             .build();
 
 NextActionHandler thunkMiddleware(
