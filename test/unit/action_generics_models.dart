@@ -25,13 +25,19 @@ abstract class ActionGenericsActions extends ReduxActions {
 
   ActionDispatcher<int> get intAction;
   ActionDispatcher<Null> get nullAction;
+  ActionDispatcher<int?> get nullableIntAction;
   ActionDispatcher<Set<int>> get setIntAction;
+  ActionDispatcher<Set<int>?> get nullableSetIntAction;
   ActionDispatcher<List<int>> get listIntAction;
   ActionDispatcher<Map<String, List<int>>> get mapStringToListIntAction;
   ActionDispatcher<
       ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
           ActionGenericsActions>> get typdefAction;
+  ActionDispatcher<
+      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
+          ActionGenericsActions>?> get typdefNullableAction;
   ActionDispatcher<Foo<int>> get fooAction;
+  ActionDispatcher<Foo<int?>> get fooActionWithNestedNullable;
   ActionDispatcher<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
       get classWithBuiltAction;
 }
@@ -49,16 +55,16 @@ Reducer<ActionGenerics, ActionGenericsBuilder, dynamic>
         (ReducerBuilder<ActionGenerics, ActionGenericsBuilder>()
               ..add<int>(ActionGenericsActionsNames.intAction,
                   (s, a, b) => b.count = s.count + a.payload)
-              ..add<Null>(
-                  ActionGenericsActionsNames.nullAction, (s, a, b) => b.count++)
+              ..add<Null>(ActionGenericsActionsNames.nullAction,
+                  (s, a, b) => b.count = s.count + 1)
               ..add<List<int>>(
                   ActionGenericsActionsNames.listIntAction,
-                  (s, a, b) =>
-                      b.count += a.payload.fold<int>(0, (c, n) => c + n))
+                  (s, a, b) => b.count =
+                      s.count + a.payload.fold<int>(0, (c, n) => c + n))
               ..add<Map<String, List<int>>>(
                   ActionGenericsActionsNames.mapStringToListIntAction,
-                  (s, a, b) =>
-                      b.count += a.payload['k'].fold<int>(0, (c, n) => c + n)))
+                  (s, a, b) => b.count =
+                      s.count + a.payload['k']!.fold<int>(0, (c, n) => c + n)))
             .build();
 
 NextActionHandler thunkMiddleware(

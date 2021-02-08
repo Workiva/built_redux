@@ -5,7 +5,7 @@ import 'test_counter.dart';
 
 void main() {
   group('expectDispatch', () {
-    CounterActions actions;
+    late CounterActions actions;
 
     setUp(() {
       actions = CounterActions();

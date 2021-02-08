@@ -40,7 +40,7 @@ ActionsClass _actionsClassFromElement(ClassElement element) => ActionsClass(
 Iterable<ComposedActionClass> _composedActionClasses(ClassElement element) =>
     element.fields
         .where((f) => _isReduxActions(f.type.element))
-        .map((f) => ComposedActionClass(f.name, f.type.name));
+        .map((f) => ComposedActionClass(f.name, f.type.element.name));
 
 Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
     .where(_isActionDispatcher)
@@ -85,11 +85,11 @@ bool _isReduxActions(Element element) =>
     element is ClassElement && _hasSuperType(element, 'ReduxActions');
 
 bool _isActionDispatcher(FieldElement element) =>
-    element.type.name == 'ActionDispatcher';
+    element.type.element.name == 'ActionDispatcher';
 
 bool _hasSuperType(ClassElement classElement, String type) =>
     classElement.allSupertypes
-        .any((interfaceType) => interfaceType.name == type) &&
+        .any((interfaceType) => interfaceType.element.name == type) &&
     !classElement.displayName.startsWith('_\$');
 
 String _generateActions(ClassElement element) {

@@ -65,31 +65,23 @@ class _$Collection extends Collection {
   @override
   final BuiltSetMultimap<int, int> builtSetMultimap;
 
-  factory _$Collection([void Function(CollectionBuilder) updates]) =>
+  factory _$Collection([void Function(CollectionBuilder)? updates]) =>
       (new CollectionBuilder()..update(updates)).build();
 
   _$Collection._(
-      {this.builtList,
-      this.builtListMultimap,
-      this.builtMap,
-      this.builtSet,
-      this.builtSetMultimap})
+      {required this.builtList,
+      required this.builtListMultimap,
+      required this.builtMap,
+      required this.builtSet,
+      required this.builtSetMultimap})
       : super._() {
-    if (builtList == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtList');
-    }
-    if (builtListMultimap == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtListMultimap');
-    }
-    if (builtMap == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtMap');
-    }
-    if (builtSet == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtSet');
-    }
-    if (builtSetMultimap == null) {
-      throw new BuiltValueNullFieldError('Collection', 'builtSetMultimap');
-    }
+    BuiltValueNullFieldError.checkNotNull(builtList, 'Collection', 'builtList');
+    BuiltValueNullFieldError.checkNotNull(
+        builtListMultimap, 'Collection', 'builtListMultimap');
+    BuiltValueNullFieldError.checkNotNull(builtMap, 'Collection', 'builtMap');
+    BuiltValueNullFieldError.checkNotNull(builtSet, 'Collection', 'builtSet');
+    BuiltValueNullFieldError.checkNotNull(
+        builtSetMultimap, 'Collection', 'builtSetMultimap');
   }
 
   @override
@@ -133,43 +125,44 @@ class _$Collection extends Collection {
 }
 
 class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
-  _$Collection _$v;
+  _$Collection? _$v;
 
-  ListBuilder<int> _builtList;
+  ListBuilder<int>? _builtList;
   ListBuilder<int> get builtList =>
       _$this._builtList ??= new ListBuilder<int>();
-  set builtList(ListBuilder<int> builtList) => _$this._builtList = builtList;
+  set builtList(ListBuilder<int>? builtList) => _$this._builtList = builtList;
 
-  ListMultimapBuilder<int, int> _builtListMultimap;
+  ListMultimapBuilder<int, int>? _builtListMultimap;
   ListMultimapBuilder<int, int> get builtListMultimap =>
       _$this._builtListMultimap ??= new ListMultimapBuilder<int, int>();
-  set builtListMultimap(ListMultimapBuilder<int, int> builtListMultimap) =>
+  set builtListMultimap(ListMultimapBuilder<int, int>? builtListMultimap) =>
       _$this._builtListMultimap = builtListMultimap;
 
-  MapBuilder<int, int> _builtMap;
+  MapBuilder<int, int>? _builtMap;
   MapBuilder<int, int> get builtMap =>
       _$this._builtMap ??= new MapBuilder<int, int>();
-  set builtMap(MapBuilder<int, int> builtMap) => _$this._builtMap = builtMap;
+  set builtMap(MapBuilder<int, int>? builtMap) => _$this._builtMap = builtMap;
 
-  SetBuilder<int> _builtSet;
+  SetBuilder<int>? _builtSet;
   SetBuilder<int> get builtSet => _$this._builtSet ??= new SetBuilder<int>();
-  set builtSet(SetBuilder<int> builtSet) => _$this._builtSet = builtSet;
+  set builtSet(SetBuilder<int>? builtSet) => _$this._builtSet = builtSet;
 
-  SetMultimapBuilder<int, int> _builtSetMultimap;
+  SetMultimapBuilder<int, int>? _builtSetMultimap;
   SetMultimapBuilder<int, int> get builtSetMultimap =>
       _$this._builtSetMultimap ??= new SetMultimapBuilder<int, int>();
-  set builtSetMultimap(SetMultimapBuilder<int, int> builtSetMultimap) =>
+  set builtSetMultimap(SetMultimapBuilder<int, int>? builtSetMultimap) =>
       _$this._builtSetMultimap = builtSetMultimap;
 
   CollectionBuilder();
 
   CollectionBuilder get _$this {
-    if (_$v != null) {
-      _builtList = _$v.builtList?.toBuilder();
-      _builtListMultimap = _$v.builtListMultimap?.toBuilder();
-      _builtMap = _$v.builtMap?.toBuilder();
-      _builtSet = _$v.builtSet?.toBuilder();
-      _builtSetMultimap = _$v.builtSetMultimap?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _builtList = $v.builtList.toBuilder();
+      _builtListMultimap = $v.builtListMultimap.toBuilder();
+      _builtMap = $v.builtMap.toBuilder();
+      _builtSet = $v.builtSet.toBuilder();
+      _builtSetMultimap = $v.builtSetMultimap.toBuilder();
       _$v = null;
     }
     return this;
@@ -177,14 +170,12 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
 
   @override
   void replace(Collection other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Collection;
   }
 
   @override
-  void update(void Function(CollectionBuilder) updates) {
+  void update(void Function(CollectionBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -200,7 +191,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
               builtSet: builtSet.build(),
               builtSetMultimap: builtSetMultimap.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'builtList';
         builtList.build();

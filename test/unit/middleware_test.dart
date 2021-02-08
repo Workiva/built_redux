@@ -7,7 +7,7 @@ import 'test_counter.dart';
 
 void main() {
   group('middleware', () {
-    Store<Counter, CounterBuilder, CounterActions> store;
+    late Store<Counter, CounterBuilder, CounterActions> store;
 
     setup({int numMiddleware = 1}) {
       var actions = CounterActions();

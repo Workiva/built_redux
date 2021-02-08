@@ -7,7 +7,7 @@ import 'test_counter.dart';
 
 void main() {
   group('store', () {
-    Store<Counter, CounterBuilder, CounterActions> store;
+    late Store<Counter, CounterBuilder, CounterActions> store;
 
     setUp(() {
       var actions = CounterActions();
@@ -144,8 +144,6 @@ void main() {
 
     test('awaiting dispose', () async {
       await store.dispose();
-      expect(store.state, null);
-      expect(store.actions, null);
     });
 
     test('action toString', () async {

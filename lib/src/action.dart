@@ -7,6 +7,7 @@ class Action<Payload> {
   /// The actions payload.
   final Payload payload;
 
+  // factory Action(name, payload) => NullableAction(name, payload);
   Action(this.name, this.payload);
 
   @override
@@ -26,12 +27,12 @@ typedef Dispatcher<P> = void Function(Action<P> action);
 /// store.actions.increment(3);
 /// ```
 class ActionDispatcher<P> {
-  Dispatcher _dispatcher;
+  late Dispatcher _dispatcher;
   final String _name;
 
   String get name => _name;
 
-  void call([P payload]) => _dispatcher(Action<P>(_name, payload));
+  void call(P payload) => _dispatcher(Action<P>(_name, payload));
 
   ActionDispatcher(this._name);
 

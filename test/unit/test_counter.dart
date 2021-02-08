@@ -13,18 +13,18 @@ abstract class CounterActions extends ReduxActions {
   CounterActions._();
   factory CounterActions() => _$CounterActions();
 
-  ActionDispatcher<int> increment;
-  ActionDispatcher<int> incrementOther;
-  SubCounterActions subCounterActions;
-  MiddlewareActions middlewareActions;
+  ActionDispatcher<int> get increment;
+  ActionDispatcher<int> get incrementOther;
+  SubCounterActions get subCounterActions;
+  MiddlewareActions get middlewareActions;
 }
 
 abstract class SubCounterActions extends ReduxActions {
   SubCounterActions._();
   factory SubCounterActions() => _$SubCounterActions();
 
-  ActionDispatcher<int> increment;
-  ActionDispatcher<int> doubleIt;
+  ActionDispatcher<int> get increment;
+  ActionDispatcher<int> get doubleIt;
 }
 
 void _increment(Counter state, Action<int> action, CounterBuilder builder) =>
@@ -72,8 +72,8 @@ abstract class SubCounter implements Built<SubCounter, SubCounterBuilder> {
 // Middleware
 
 abstract class MiddlewareActions extends ReduxActions {
-  ActionDispatcher<int> doubleIt;
-  ActionDispatcher<int> tripleIt;
+  ActionDispatcher<int> get doubleIt;
+  ActionDispatcher<int> get tripleIt;
 
   MiddlewareActions._();
   factory MiddlewareActions() => _$MiddlewareActions();
