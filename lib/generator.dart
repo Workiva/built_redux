@@ -25,7 +25,6 @@ class BuiltReduxGenerator extends Generator {
 
 const _lintIgnores = """
 // ignore_for_file: avoid_classes_with_only_static_members
-// ignore_for_file: annotate_overrides
 // ignore_for_file: overridden_fields
 // ignore_for_file: type_annotate_public_apis
 """;
@@ -38,9 +37,9 @@ ActionsClass _actionsClassFromElement(ClassElement element) => ActionsClass(
     );
 
 Iterable<ComposedActionClass> _composedActionClasses(ClassElement element) =>
-    element.fields
-        .where((f) => _isReduxActions(f.type.element))
-        .map((f) => ComposedActionClass(f.name, f.type.element.name));
+    element.fields.where((f) => _isReduxActions(f.type.element)).map((f) =>
+        ComposedActionClass(
+            f.name, f.type.getDisplayString(withNullability: true)));
 
 Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
     .where(_isActionDispatcher)
@@ -64,12 +63,12 @@ String _fieldType(ClassElement element, FieldElement field) {
   if (field.isSynthetic) {
     return _syntheticFieldType(element, field);
   }
-  return _getGenerics(field.source.contents.data, field.nameOffset);
+  return _getGenerics(field.source!.contents.data, field.nameOffset);
 }
 
 String _syntheticFieldType(ClassElement element, FieldElement field) {
   final method = element.getGetter(field.name);
-  return _getGenerics(method.source.contents.data, method.nameOffset);
+  return _getGenerics(method!.source.contents.data, method.nameOffset);
 }
 
 String _getGenerics(String source, int nameOffset) {
@@ -81,11 +80,12 @@ String _getGenerics(String source, int nameOffset) {
       trimBeforeActionDispatcher.lastIndexOf('>'));
 }
 
-bool _isReduxActions(Element element) =>
+bool _isReduxActions(Element? element) =>
     element is ClassElement && _hasSuperType(element, 'ReduxActions');
 
-bool _isActionDispatcher(FieldElement element) =>
-    element.type.element.name == 'ActionDispatcher';
+bool _isActionDispatcher(FieldElement element) => element.type
+    .getDisplayString(withNullability: true)
+    .startsWith('ActionDispatcher<');
 
 bool _hasSuperType(ClassElement classElement, String type) =>
     classElement.allSupertypes
