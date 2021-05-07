@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -40,7 +41,7 @@ ActionsClass _actionsClassFromElement(ClassElement element) => ActionsClass(
 Iterable<ComposedActionClass> _composedActionClasses(ClassElement element) =>
     element.fields
         .where((f) => _isReduxActions(f.type.element))
-        .map((f) => ComposedActionClass(f.name, f.type.element.name));
+        .map((f) => ComposedActionClass(f.name, f.type.element!.name!));
 
 Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
     .where(_isActionDispatcher)
@@ -64,16 +65,16 @@ String _fieldType(ClassElement element, FieldElement field) {
   if (field.isSynthetic) {
     return _syntheticFieldType(element, field);
   }
-  return _getGenerics(field.source.contents.data, field.nameOffset);
+  return _getGenerics(field.source?.contents.data, field.nameOffset);
 }
 
 String _syntheticFieldType(ClassElement element, FieldElement field) {
   final method = element.getGetter(field.name);
-  return _getGenerics(method.source.contents.data, method.nameOffset);
+  return _getGenerics(method?.source.contents.data, method?.nameOffset ?? 0);
 }
 
-String _getGenerics(String source, int nameOffset) {
-  final trimAfterName = source.substring(0, nameOffset);
+String _getGenerics(String? source, int nameOffset) {
+  final trimAfterName = source?.substring(0, nameOffset) ?? '';
   final trimBeforeActionDispatcher =
       trimAfterName.substring(trimAfterName.lastIndexOf('ActionDispatcher'));
   return trimBeforeActionDispatcher.substring(
@@ -81,11 +82,11 @@ String _getGenerics(String source, int nameOffset) {
       trimBeforeActionDispatcher.lastIndexOf('>'));
 }
 
-bool _isReduxActions(Element element) =>
+bool _isReduxActions(Element? element) =>
     element is ClassElement && _hasSuperType(element, 'ReduxActions');
 
 bool _isActionDispatcher(FieldElement element) =>
-    element.type.element.name == 'ActionDispatcher';
+    element.type.element?.name == 'ActionDispatcher';
 
 bool _hasSuperType(ClassElement classElement, String type) =>
     classElement.allSupertypes
