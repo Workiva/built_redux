@@ -1,3 +1,8 @@
+## 8.0.0
+* updated analyzer, source_gen, build, build_test dependency ranges
+* fix nnbd issues in generator
+* set sdk range lower bound to 2.12.0
+  
 ## 8.0.0-nullsafety.0
 * add tests that generate actions with nullable generics
 * fixed issue where ++ does not work on builder value
