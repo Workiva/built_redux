@@ -39,7 +39,7 @@ ActionsClass _actionsClassFromElement(ClassElement element) => ActionsClass(
 Iterable<ComposedActionClass> _composedActionClasses(ClassElement element) =>
     element.fields.where((f) => _isReduxActions(f.type.element)).map((f) =>
         ComposedActionClass(
-            f.name, f.type.getDisplayString(withNullability: true)));
+            f.name, f.type.getDisplayString(withNullability: false)));
 
 Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
     .where(_isActionDispatcher)
