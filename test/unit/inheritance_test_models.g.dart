@@ -77,15 +77,10 @@ class _$Child extends Child {
 
   _$Child._({this.childCount, this.parentCount, this.grandparentCount})
       : super._() {
-    if (childCount == null) {
-      throw new BuiltValueNullFieldError('Child', 'childCount');
-    }
-    if (parentCount == null) {
-      throw new BuiltValueNullFieldError('Child', 'parentCount');
-    }
-    if (grandparentCount == null) {
-      throw new BuiltValueNullFieldError('Child', 'grandparentCount');
-    }
+    BuiltValueNullFieldError.checkNotNull(childCount, 'Child', 'childCount');
+    BuiltValueNullFieldError.checkNotNull(parentCount, 'Child', 'parentCount');
+    BuiltValueNullFieldError.checkNotNull(
+        grandparentCount, 'Child', 'grandparentCount');
   }
 
   @override
@@ -126,24 +121,26 @@ class ChildBuilder
 
   int _childCount;
   int get childCount => _$this._childCount;
-  set childCount(int childCount) => _$this._childCount = childCount;
+  set childCount(covariant int childCount) => _$this._childCount = childCount;
 
   int _parentCount;
   int get parentCount => _$this._parentCount;
-  set parentCount(int parentCount) => _$this._parentCount = parentCount;
+  set parentCount(covariant int parentCount) =>
+      _$this._parentCount = parentCount;
 
   int _grandparentCount;
   int get grandparentCount => _$this._grandparentCount;
-  set grandparentCount(int grandparentCount) =>
+  set grandparentCount(covariant int grandparentCount) =>
       _$this._grandparentCount = grandparentCount;
 
   ChildBuilder();
 
   ChildBuilder get _$this {
-    if (_$v != null) {
-      _childCount = _$v.childCount;
-      _parentCount = _$v.parentCount;
-      _grandparentCount = _$v.grandparentCount;
+    final $v = _$v;
+    if ($v != null) {
+      _childCount = $v.childCount;
+      _parentCount = $v.parentCount;
+      _grandparentCount = $v.grandparentCount;
       _$v = null;
     }
     return this;
@@ -152,9 +149,7 @@ class ChildBuilder
   @override
 // ignore: override_on_non_overriding_method
   void replace(covariant Child other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Child;
   }
 
@@ -167,12 +162,15 @@ class ChildBuilder
   _$Child build() {
     final _$result = _$v ??
         new _$Child._(
-            childCount: childCount,
-            parentCount: parentCount,
-            grandparentCount: grandparentCount);
+            childCount: BuiltValueNullFieldError.checkNotNull(
+                childCount, 'Child', 'childCount'),
+            parentCount: BuiltValueNullFieldError.checkNotNull(
+                parentCount, 'Child', 'parentCount'),
+            grandparentCount: BuiltValueNullFieldError.checkNotNull(
+                grandparentCount, 'Child', 'grandparentCount'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
