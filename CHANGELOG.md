@@ -1,3 +1,6 @@
+## 7.5.14
+* update build to dependency range 
+
 ## 7.5.13
 * update analyzer to dependency range 
 
