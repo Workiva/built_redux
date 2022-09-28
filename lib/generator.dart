@@ -8,8 +8,8 @@ class BuiltReduxGenerator extends Generator {
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     final result = StringBuffer();
     var hasWrittenHeaders = false;
-    for (final element in library.allElements) {
-      if (_isReduxActions(element) && element is InterfaceElement) {
+    for (final element in library.allElements.whereType<InterfaceElement>()) {
+      if (_isReduxActions(element)) {
         if (!hasWrittenHeaders) {
           hasWrittenHeaders = true;
           result.writeln(_lintIgnores);
