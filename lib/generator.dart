@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -29,44 +30,45 @@ const _lintIgnores = """
 // ignore_for_file: type_annotate_public_apis
 """;
 
-ActionsClass _actionsClassFromElement(ClassElement element) => ActionsClass(
+ActionsClass _actionsClassFromElement(InterfaceElement element) => ActionsClass(
       element.name,
       _actionsFromElement(element).toSet(),
       _composedActionClasses(element).toSet(),
       _actionsClassFromInheritedElements(element).toSet(),
     );
 
-Iterable<ComposedActionClass> _composedActionClasses(ClassElement element) =>
-    element.fields.where((f) => _isReduxActions(f.type.element)).map((f) =>
+Iterable<ComposedActionClass> _composedActionClasses(
+        InterfaceElement element) =>
+    element.fields.where((f) => _isReduxActions(f.type.element2)).map((f) =>
         ComposedActionClass(
             f.name, f.type.getDisplayString(withNullability: true)));
 
-Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
+Iterable<Action> _actionsFromElement(InterfaceElement element) => element.fields
     .where(_isActionDispatcher)
     .map((field) => _fieldElementToAction(element, field));
 
 Iterable<ActionsClass> _actionsClassFromInheritedElements(
-        ClassElement element) =>
+        InterfaceElement element) =>
     element.allSupertypes
-        .map((s) => s.element)
+        .map((s) => s.element2)
         .where(_isReduxActions)
         .map(_actionsClassFromElement);
 
-Action _fieldElementToAction(ClassElement element, FieldElement field) =>
+Action _fieldElementToAction(InterfaceElement element, FieldElement field) =>
     Action('${element.name}-${field.name}', field.name,
         _fieldType(element, field));
 
 // hack to return the generics for the action
 // this is used so action whose payloads are of generated types
 // will not result in dynamic
-String _fieldType(ClassElement element, FieldElement field) {
+String _fieldType(InterfaceElement element, FieldElement field) {
   if (field.isSynthetic) {
     return _syntheticFieldType(element, field);
   }
   return _getGenerics(field.source!.contents.data, field.nameOffset);
 }
 
-String _syntheticFieldType(ClassElement element, FieldElement field) {
+String _syntheticFieldType(InterfaceElement element, FieldElement field) {
   final method = element.getGetter(field.name);
   return _getGenerics(method!.source.contents.data, method.nameOffset);
 }
@@ -89,7 +91,7 @@ bool _isActionDispatcher(FieldElement element) => element.type
 
 bool _hasSuperType(ClassElement classElement, String type) =>
     classElement.allSupertypes
-        .any((interfaceType) => interfaceType.element.name == type) &&
+        .any((interfaceType) => interfaceType.element2.name == type) &&
     !classElement.displayName.startsWith('_\$');
 
 String _generateActions(ClassElement element) {
