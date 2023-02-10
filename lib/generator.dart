@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
 class BuiltReduxGenerator extends Generator {
@@ -8,6 +7,8 @@ class BuiltReduxGenerator extends Generator {
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     final result = StringBuffer();
     var hasWrittenHeaders = false;
+    final nndbEnabled = await buildStep.inputLibrary
+        .then((value) => value.featureSet.isEnabled(Feature.non_nullable));
     for (final element in library.allElements) {
       if (_isReduxActions(element) && element is ClassElement) {
         if (!hasWrittenHeaders) {
@@ -15,7 +16,7 @@ class BuiltReduxGenerator extends Generator {
           result.writeln(_lintIgnores);
         }
         log.info('Generating action classes for ${element.name}');
-        result.writeln(_generateActions(element));
+        result.writeln(_generateActions(element, nndbEnabled));
       }
     }
 
@@ -29,28 +30,30 @@ const _lintIgnores = """
 // ignore_for_file: type_annotate_public_apis
 """;
 
-ActionsClass _actionsClassFromElement(ClassElement element) => ActionsClass(
+ActionsClass _actionsClassFromElement(ClassElement element, bool nndbEnabled) =>
+    ActionsClass(
       element.name,
       _actionsFromElement(element).toSet(),
-      _composedActionClasses(element).toSet(),
-      _actionsClassFromInheritedElements(element).toSet(),
+      _composedActionClasses(element, nndbEnabled).toSet(),
+      _actionsClassFromInheritedElements(element, nndbEnabled).toSet(),
     );
 
-Iterable<ComposedActionClass> _composedActionClasses(ClassElement element) =>
+Iterable<ComposedActionClass> _composedActionClasses(
+        ClassElement element, bool nndbEnabled) =>
     element.fields.where((f) => _isReduxActions(f.type.element)).map((f) =>
         ComposedActionClass(
-            f.name, f.type.getDisplayString(withNullability: true)));
+            f.name, f.type.getDisplayString(withNullability: nndbEnabled)));
 
 Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
     .where(_isActionDispatcher)
     .map((field) => _fieldElementToAction(element, field));
 
 Iterable<ActionsClass> _actionsClassFromInheritedElements(
-        ClassElement element) =>
+        ClassElement element, bool nndbEnabled) =>
     element.allSupertypes
         .map((s) => s.element)
         .where(_isReduxActions)
-        .map(_actionsClassFromElement);
+        .map((it) => _actionsClassFromElement(it, nndbEnabled));
 
 Action _fieldElementToAction(ClassElement element, FieldElement field) =>
     Action('${element.name}-${field.name}', field.name,
@@ -92,8 +95,8 @@ bool _hasSuperType(ClassElement classElement, String type) =>
         .any((interfaceType) => interfaceType.element.name == type) &&
     !classElement.displayName.startsWith('_\$');
 
-String _generateActions(ClassElement element) {
-  final actionClass = _actionsClassFromElement(element);
+String _generateActions(ClassElement element, bool nndbEnabled) {
+  final actionClass = _actionsClassFromElement(element, nndbEnabled);
   return _generateDispatchersIfNeeded(element, actionClass) +
       _actionNamesClassTemplate(actionClass);
 }
