@@ -1,3 +1,7 @@
+## 8.0.1
+* updated analyzer range to allow 2.x.x
+* add gh action workflow
+
 ## 8.0.0
 * updated analyzer, source_gen, build, build_test dependency ranges
 * fix nnbd issues in generator
