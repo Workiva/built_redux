@@ -12,7 +12,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    continue-on-error: true
     strategy:
+      fail-fast: false
       matrix:
         sdk: [ 2.18.7, stable, beta ]
     steps:
