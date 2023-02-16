@@ -1,3 +1,6 @@
+## 8.0.3
+* reopen analyzer range
+
 ## 8.0.2
 * only use nndb in generator if nndb feature is enabled. prevents build issues for non nndb consumers
 
