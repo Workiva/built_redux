@@ -1,3 +1,6 @@
+## 8.0.2
+* only use nndb in generator if nndb feature is enabled. prevents build issues for non nndb consumers
+
 ## 8.0.1
 * updated analyzer range to allow 2.x.x
 * add gh action workflow
