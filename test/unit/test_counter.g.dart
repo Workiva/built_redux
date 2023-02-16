@@ -87,14 +87,14 @@ class _$Counter extends Counter {
   final SubCounter subCounter;
 
   factory _$Counter([void Function(CounterBuilder)? updates]) =>
-      (new CounterBuilder()..update(updates))._build();
+      (new CounterBuilder()..update(updates)).build();
 
   _$Counter._(
       {required this.count, required this.otherCount, required this.subCounter})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(count, r'Counter', 'count');
-    BuiltValueNullFieldError.checkNotNull(otherCount, r'Counter', 'otherCount');
-    BuiltValueNullFieldError.checkNotNull(subCounter, r'Counter', 'subCounter');
+    BuiltValueNullFieldError.checkNotNull(count, 'Counter', 'count');
+    BuiltValueNullFieldError.checkNotNull(otherCount, 'Counter', 'otherCount');
+    BuiltValueNullFieldError.checkNotNull(subCounter, 'Counter', 'subCounter');
   }
 
   @override
@@ -121,7 +121,7 @@ class _$Counter extends Counter {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'Counter')
+    return (newBuiltValueToStringHelper('Counter')
           ..add('count', count)
           ..add('otherCount', otherCount)
           ..add('subCounter', subCounter))
@@ -171,17 +171,15 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
   }
 
   @override
-  Counter build() => _build();
-
-  _$Counter _build() {
+  _$Counter build() {
     _$Counter _$result;
     try {
       _$result = _$v ??
           new _$Counter._(
               count: BuiltValueNullFieldError.checkNotNull(
-                  count, r'Counter', 'count'),
+                  count, 'Counter', 'count'),
               otherCount: BuiltValueNullFieldError.checkNotNull(
-                  otherCount, r'Counter', 'otherCount'),
+                  otherCount, 'Counter', 'otherCount'),
               subCounter: subCounter.build());
     } catch (_) {
       late String _$failedField;
@@ -190,7 +188,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
         subCounter.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Counter', _$failedField, e.toString());
+            'Counter', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -204,10 +202,10 @@ class _$SubCounter extends SubCounter {
   final int subCount;
 
   factory _$SubCounter([void Function(SubCounterBuilder)? updates]) =>
-      (new SubCounterBuilder()..update(updates))._build();
+      (new SubCounterBuilder()..update(updates)).build();
 
   _$SubCounter._({required this.subCount}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(subCount, r'SubCounter', 'subCount');
+    BuiltValueNullFieldError.checkNotNull(subCount, 'SubCounter', 'subCount');
   }
 
   @override
@@ -230,7 +228,7 @@ class _$SubCounter extends SubCounter {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'SubCounter')
+    return (newBuiltValueToStringHelper('SubCounter')
           ..add('subCount', subCount))
         .toString();
   }
@@ -266,16 +264,14 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
   }
 
   @override
-  SubCounter build() => _build();
-
-  _$SubCounter _build() {
+  _$SubCounter build() {
     final _$result = _$v ??
         new _$SubCounter._(
             subCount: BuiltValueNullFieldError.checkNotNull(
-                subCount, r'SubCounter', 'subCount'));
+                subCount, 'SubCounter', 'subCount'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new

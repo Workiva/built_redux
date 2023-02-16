@@ -79,11 +79,11 @@ class _$Base extends Base {
   final Child child;
 
   factory _$Base([void Function(BaseBuilder)? updates]) =>
-      (new BaseBuilder()..update(updates))._build();
+      (new BaseBuilder()..update(updates)).build();
 
   _$Base._({required this.count, required this.child}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(count, r'Base', 'count');
-    BuiltValueNullFieldError.checkNotNull(child, r'Base', 'child');
+    BuiltValueNullFieldError.checkNotNull(count, 'Base', 'count');
+    BuiltValueNullFieldError.checkNotNull(child, 'Base', 'child');
   }
 
   @override
@@ -106,7 +106,7 @@ class _$Base extends Base {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'Base')
+    return (newBuiltValueToStringHelper('Base')
           ..add('count', count)
           ..add('child', child))
         .toString();
@@ -148,15 +148,13 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   }
 
   @override
-  Base build() => _build();
-
-  _$Base _build() {
+  _$Base build() {
     _$Base _$result;
     try {
       _$result = _$v ??
           new _$Base._(
-              count: BuiltValueNullFieldError.checkNotNull(
-                  count, r'Base', 'count'),
+              count:
+                  BuiltValueNullFieldError.checkNotNull(count, 'Base', 'count'),
               child: child.build());
     } catch (_) {
       late String _$failedField;
@@ -165,7 +163,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
         child.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Base', _$failedField, e.toString());
+            'Base', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -181,11 +179,11 @@ class _$Child extends Child {
   final Grandchild grandchild;
 
   factory _$Child([void Function(ChildBuilder)? updates]) =>
-      (new ChildBuilder()..update(updates))._build();
+      (new ChildBuilder()..update(updates)).build();
 
   _$Child._({required this.count, required this.grandchild}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(count, r'Child', 'count');
-    BuiltValueNullFieldError.checkNotNull(grandchild, r'Child', 'grandchild');
+    BuiltValueNullFieldError.checkNotNull(count, 'Child', 'count');
+    BuiltValueNullFieldError.checkNotNull(grandchild, 'Child', 'grandchild');
   }
 
   @override
@@ -210,7 +208,7 @@ class _$Child extends Child {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'Child')
+    return (newBuiltValueToStringHelper('Child')
           ..add('count', count)
           ..add('grandchild', grandchild))
         .toString();
@@ -254,15 +252,13 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
   }
 
   @override
-  Child build() => _build();
-
-  _$Child _build() {
+  _$Child build() {
     _$Child _$result;
     try {
       _$result = _$v ??
           new _$Child._(
               count: BuiltValueNullFieldError.checkNotNull(
-                  count, r'Child', 'count'),
+                  count, 'Child', 'count'),
               grandchild: grandchild.build());
     } catch (_) {
       late String _$failedField;
@@ -271,7 +267,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
         grandchild.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Child', _$failedField, e.toString());
+            'Child', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -285,10 +281,10 @@ class _$Grandchild extends Grandchild {
   final int count;
 
   factory _$Grandchild([void Function(GrandchildBuilder)? updates]) =>
-      (new GrandchildBuilder()..update(updates))._build();
+      (new GrandchildBuilder()..update(updates)).build();
 
   _$Grandchild._({required this.count}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(count, r'Grandchild', 'count');
+    BuiltValueNullFieldError.checkNotNull(count, 'Grandchild', 'count');
   }
 
   @override
@@ -311,7 +307,7 @@ class _$Grandchild extends Grandchild {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'Grandchild')..add('count', count))
+    return (newBuiltValueToStringHelper('Grandchild')..add('count', count))
         .toString();
   }
 }
@@ -346,16 +342,14 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
   }
 
   @override
-  Grandchild build() => _build();
-
-  _$Grandchild _build() {
+  _$Grandchild build() {
     final _$result = _$v ??
         new _$Grandchild._(
             count: BuiltValueNullFieldError.checkNotNull(
-                count, r'Grandchild', 'count'));
+                count, 'Grandchild', 'count'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
