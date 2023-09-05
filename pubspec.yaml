@@ -3,7 +3,7 @@ version: 8.0.4
 description: A state management library written in dart that enforces immutability
 homepage: https://github.com/davidmarne/built_redux
 dependencies:
-  analyzer: '>=1.0.0 <3.0.0'
+  analyzer: '>=1.0.0 <5.0.0'
   build: ">=1.0.0 <3.0.0"
   built_collection: ^5.0.0
   built_value: ^8.0.0
