@@ -53,7 +53,8 @@ Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
 Iterable<ActionsClass> _actionsClassFromInheritedElements(
         ClassElement element, bool nndbEnabled) =>
     element.allSupertypes
-        .map((s) => s.element)
+        .map((s) => s.element is ClassElement ? s.element : null)
+        .whereType<ClassElement>()
         .where(_isReduxActions)
         .map((it) => _actionsClassFromElement(it, nndbEnabled));
 

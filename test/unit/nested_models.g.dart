@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of nested_models;
+part of 'nested_models.dart';
 
 // **************************************************************************
 // BuiltReduxGenerator
@@ -79,7 +79,7 @@ class _$Base extends Base {
   final Child child;
 
   factory _$Base([void Function(BaseBuilder)? updates]) =>
-      (new BaseBuilder()..update(updates))._build();
+      (BaseBuilder()..update(updates))._build();
 
   _$Base._({required this.count, required this.child}) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, r'Base', 'count');
@@ -91,7 +91,7 @@ class _$Base extends Base {
       (toBuilder()..update(updates)).build();
 
   @override
-  BaseBuilder toBuilder() => new BaseBuilder()..replace(this);
+  BaseBuilder toBuilder() => BaseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -101,7 +101,11 @@ class _$Base extends Base {
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, count.hashCode), child.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, count.hashCode);
+    _$hash = $jc(_$hash, child.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -121,7 +125,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   set count(int? count) => _$this._count = count;
 
   ChildBuilder? _child;
-  ChildBuilder get child => _$this._child ??= new ChildBuilder();
+  ChildBuilder get child => _$this._child ??= ChildBuilder();
   set child(ChildBuilder? child) => _$this._child = child;
 
   BaseBuilder();
@@ -154,7 +158,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
     _$Base _$result;
     try {
       _$result = _$v ??
-          new _$Base._(
+          _$Base._(
               count: BuiltValueNullFieldError.checkNotNull(
                   count, r'Base', 'count'),
               child: child.build());
@@ -164,8 +168,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
         _$failedField = 'child';
         child.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'Base', _$failedField, e.toString());
+        throw BuiltValueNestedFieldError(r'Base', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -181,7 +184,7 @@ class _$Child extends Child {
   final Grandchild grandchild;
 
   factory _$Child([void Function(ChildBuilder)? updates]) =>
-      (new ChildBuilder()..update(updates))._build();
+      (ChildBuilder()..update(updates))._build();
 
   _$Child._({required this.count, required this.grandchild}) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, r'Child', 'count');
@@ -193,7 +196,7 @@ class _$Child extends Child {
       (toBuilder()..update(updates)).build();
 
   @override
-  ChildBuilder toBuilder() => new ChildBuilder()..replace(this);
+  ChildBuilder toBuilder() => ChildBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -205,7 +208,11 @@ class _$Child extends Child {
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, count.hashCode), grandchild.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, count.hashCode);
+    _$hash = $jc(_$hash, grandchild.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -226,7 +233,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
 
   GrandchildBuilder? _grandchild;
   GrandchildBuilder get grandchild =>
-      _$this._grandchild ??= new GrandchildBuilder();
+      _$this._grandchild ??= GrandchildBuilder();
   set grandchild(GrandchildBuilder? grandchild) =>
       _$this._grandchild = grandchild;
 
@@ -260,7 +267,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
     _$Child _$result;
     try {
       _$result = _$v ??
-          new _$Child._(
+          _$Child._(
               count: BuiltValueNullFieldError.checkNotNull(
                   count, r'Child', 'count'),
               grandchild: grandchild.build());
@@ -270,8 +277,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
         _$failedField = 'grandchild';
         grandchild.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'Child', _$failedField, e.toString());
+        throw BuiltValueNestedFieldError(r'Child', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -285,7 +291,7 @@ class _$Grandchild extends Grandchild {
   final int count;
 
   factory _$Grandchild([void Function(GrandchildBuilder)? updates]) =>
-      (new GrandchildBuilder()..update(updates))._build();
+      (GrandchildBuilder()..update(updates))._build();
 
   _$Grandchild._({required this.count}) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, r'Grandchild', 'count');
@@ -296,7 +302,7 @@ class _$Grandchild extends Grandchild {
       (toBuilder()..update(updates)).build();
 
   @override
-  GrandchildBuilder toBuilder() => new GrandchildBuilder()..replace(this);
+  GrandchildBuilder toBuilder() => GrandchildBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -306,7 +312,10 @@ class _$Grandchild extends Grandchild {
 
   @override
   int get hashCode {
-    return $jf($jc(0, count.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, count.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -350,7 +359,7 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
 
   _$Grandchild _build() {
     final _$result = _$v ??
-        new _$Grandchild._(
+        _$Grandchild._(
             count: BuiltValueNullFieldError.checkNotNull(
                 count, r'Grandchild', 'count'));
     replace(_$result);
@@ -358,4 +367,4 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint
