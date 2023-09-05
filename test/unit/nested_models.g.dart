@@ -79,7 +79,7 @@ class _$Base extends Base {
   final Child child;
 
   factory _$Base([void Function(BaseBuilder)? updates]) =>
-      (new BaseBuilder()..update(updates))._build();
+      (BaseBuilder()..update(updates))._build();
 
   _$Base._({required this.count, required this.child}) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, r'Base', 'count');
@@ -91,7 +91,7 @@ class _$Base extends Base {
       (toBuilder()..update(updates)).build();
 
   @override
-  BaseBuilder toBuilder() => new BaseBuilder()..replace(this);
+  BaseBuilder toBuilder() => BaseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -125,7 +125,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   set count(int? count) => _$this._count = count;
 
   ChildBuilder? _child;
-  ChildBuilder get child => _$this._child ??= new ChildBuilder();
+  ChildBuilder get child => _$this._child ??= ChildBuilder();
   set child(ChildBuilder? child) => _$this._child = child;
 
   BaseBuilder();
@@ -158,7 +158,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
     _$Base _$result;
     try {
       _$result = _$v ??
-          new _$Base._(
+          _$Base._(
               count: BuiltValueNullFieldError.checkNotNull(
                   count, r'Base', 'count'),
               child: child.build());
@@ -168,8 +168,7 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
         _$failedField = 'child';
         child.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'Base', _$failedField, e.toString());
+        throw BuiltValueNestedFieldError(r'Base', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -185,7 +184,7 @@ class _$Child extends Child {
   final Grandchild grandchild;
 
   factory _$Child([void Function(ChildBuilder)? updates]) =>
-      (new ChildBuilder()..update(updates))._build();
+      (ChildBuilder()..update(updates))._build();
 
   _$Child._({required this.count, required this.grandchild}) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, r'Child', 'count');
@@ -197,7 +196,7 @@ class _$Child extends Child {
       (toBuilder()..update(updates)).build();
 
   @override
-  ChildBuilder toBuilder() => new ChildBuilder()..replace(this);
+  ChildBuilder toBuilder() => ChildBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -234,7 +233,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
 
   GrandchildBuilder? _grandchild;
   GrandchildBuilder get grandchild =>
-      _$this._grandchild ??= new GrandchildBuilder();
+      _$this._grandchild ??= GrandchildBuilder();
   set grandchild(GrandchildBuilder? grandchild) =>
       _$this._grandchild = grandchild;
 
@@ -268,7 +267,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
     _$Child _$result;
     try {
       _$result = _$v ??
-          new _$Child._(
+          _$Child._(
               count: BuiltValueNullFieldError.checkNotNull(
                   count, r'Child', 'count'),
               grandchild: grandchild.build());
@@ -278,8 +277,7 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
         _$failedField = 'grandchild';
         grandchild.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'Child', _$failedField, e.toString());
+        throw BuiltValueNestedFieldError(r'Child', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -293,7 +291,7 @@ class _$Grandchild extends Grandchild {
   final int count;
 
   factory _$Grandchild([void Function(GrandchildBuilder)? updates]) =>
-      (new GrandchildBuilder()..update(updates))._build();
+      (GrandchildBuilder()..update(updates))._build();
 
   _$Grandchild._({required this.count}) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, r'Grandchild', 'count');
@@ -304,7 +302,7 @@ class _$Grandchild extends Grandchild {
       (toBuilder()..update(updates)).build();
 
   @override
-  GrandchildBuilder toBuilder() => new GrandchildBuilder()..replace(this);
+  GrandchildBuilder toBuilder() => GrandchildBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -361,7 +359,7 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
 
   _$Grandchild _build() {
     final _$result = _$v ??
-        new _$Grandchild._(
+        _$Grandchild._(
             count: BuiltValueNullFieldError.checkNotNull(
                 count, r'Grandchild', 'count'));
     replace(_$result);

@@ -65,7 +65,7 @@ class _$Collection extends Collection {
   final BuiltSetMultimap<int, int> builtSetMultimap;
 
   factory _$Collection([void Function(CollectionBuilder)? updates]) =>
-      (new CollectionBuilder()..update(updates))._build();
+      (CollectionBuilder()..update(updates))._build();
 
   _$Collection._(
       {required this.builtList,
@@ -89,7 +89,7 @@ class _$Collection extends Collection {
       (toBuilder()..update(updates)).build();
 
   @override
-  CollectionBuilder toBuilder() => new CollectionBuilder()..replace(this);
+  CollectionBuilder toBuilder() => CollectionBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -130,28 +130,27 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
   _$Collection? _$v;
 
   ListBuilder<int>? _builtList;
-  ListBuilder<int> get builtList =>
-      _$this._builtList ??= new ListBuilder<int>();
+  ListBuilder<int> get builtList => _$this._builtList ??= ListBuilder<int>();
   set builtList(ListBuilder<int>? builtList) => _$this._builtList = builtList;
 
   ListMultimapBuilder<int, int>? _builtListMultimap;
   ListMultimapBuilder<int, int> get builtListMultimap =>
-      _$this._builtListMultimap ??= new ListMultimapBuilder<int, int>();
+      _$this._builtListMultimap ??= ListMultimapBuilder<int, int>();
   set builtListMultimap(ListMultimapBuilder<int, int>? builtListMultimap) =>
       _$this._builtListMultimap = builtListMultimap;
 
   MapBuilder<int, int>? _builtMap;
   MapBuilder<int, int> get builtMap =>
-      _$this._builtMap ??= new MapBuilder<int, int>();
+      _$this._builtMap ??= MapBuilder<int, int>();
   set builtMap(MapBuilder<int, int>? builtMap) => _$this._builtMap = builtMap;
 
   SetBuilder<int>? _builtSet;
-  SetBuilder<int> get builtSet => _$this._builtSet ??= new SetBuilder<int>();
+  SetBuilder<int> get builtSet => _$this._builtSet ??= SetBuilder<int>();
   set builtSet(SetBuilder<int>? builtSet) => _$this._builtSet = builtSet;
 
   SetMultimapBuilder<int, int>? _builtSetMultimap;
   SetMultimapBuilder<int, int> get builtSetMultimap =>
-      _$this._builtSetMultimap ??= new SetMultimapBuilder<int, int>();
+      _$this._builtSetMultimap ??= SetMultimapBuilder<int, int>();
   set builtSetMultimap(SetMultimapBuilder<int, int>? builtSetMultimap) =>
       _$this._builtSetMultimap = builtSetMultimap;
 
@@ -188,7 +187,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
     _$Collection _$result;
     try {
       _$result = _$v ??
-          new _$Collection._(
+          _$Collection._(
               builtList: builtList.build(),
               builtListMultimap: builtListMultimap.build(),
               builtMap: builtMap.build(),
@@ -208,7 +207,7 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
         _$failedField = 'builtSetMultimap';
         builtSetMultimap.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'Collection', _$failedField, e.toString());
       }
       rethrow;

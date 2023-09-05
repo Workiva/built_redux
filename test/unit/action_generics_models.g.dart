@@ -97,7 +97,7 @@ class _$ActionGenerics extends ActionGenerics {
   final int count;
 
   factory _$ActionGenerics([void Function(ActionGenericsBuilder)? updates]) =>
-      (new ActionGenericsBuilder()..update(updates))._build();
+      (ActionGenericsBuilder()..update(updates))._build();
 
   _$ActionGenerics._({required this.count}) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, r'ActionGenerics', 'count');
@@ -108,8 +108,7 @@ class _$ActionGenerics extends ActionGenerics {
       (toBuilder()..update(updates)).build();
 
   @override
-  ActionGenericsBuilder toBuilder() =>
-      new ActionGenericsBuilder()..replace(this);
+  ActionGenericsBuilder toBuilder() => ActionGenericsBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -167,7 +166,7 @@ class ActionGenericsBuilder
 
   _$ActionGenerics _build() {
     final _$result = _$v ??
-        new _$ActionGenerics._(
+        _$ActionGenerics._(
             count: BuiltValueNullFieldError.checkNotNull(
                 count, r'ActionGenerics', 'count'));
     replace(_$result);

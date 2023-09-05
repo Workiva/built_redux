@@ -87,7 +87,7 @@ class _$Counter extends Counter {
   final SubCounter subCounter;
 
   factory _$Counter([void Function(CounterBuilder)? updates]) =>
-      (new CounterBuilder()..update(updates))._build();
+      (CounterBuilder()..update(updates))._build();
 
   _$Counter._(
       {required this.count, required this.otherCount, required this.subCounter})
@@ -102,7 +102,7 @@ class _$Counter extends Counter {
       (toBuilder()..update(updates)).build();
 
   @override
-  CounterBuilder toBuilder() => new CounterBuilder()..replace(this);
+  CounterBuilder toBuilder() => CounterBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -146,7 +146,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   SubCounterBuilder? _subCounter;
   SubCounterBuilder get subCounter =>
-      _$this._subCounter ??= new SubCounterBuilder();
+      _$this._subCounter ??= SubCounterBuilder();
   set subCounter(SubCounterBuilder? subCounter) =>
       _$this._subCounter = subCounter;
 
@@ -181,7 +181,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
     _$Counter _$result;
     try {
       _$result = _$v ??
-          new _$Counter._(
+          _$Counter._(
               count: BuiltValueNullFieldError.checkNotNull(
                   count, r'Counter', 'count'),
               otherCount: BuiltValueNullFieldError.checkNotNull(
@@ -193,7 +193,7 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
         _$failedField = 'subCounter';
         subCounter.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'Counter', _$failedField, e.toString());
       }
       rethrow;
@@ -208,7 +208,7 @@ class _$SubCounter extends SubCounter {
   final int subCount;
 
   factory _$SubCounter([void Function(SubCounterBuilder)? updates]) =>
-      (new SubCounterBuilder()..update(updates))._build();
+      (SubCounterBuilder()..update(updates))._build();
 
   _$SubCounter._({required this.subCount}) : super._() {
     BuiltValueNullFieldError.checkNotNull(subCount, r'SubCounter', 'subCount');
@@ -219,7 +219,7 @@ class _$SubCounter extends SubCounter {
       (toBuilder()..update(updates)).build();
 
   @override
-  SubCounterBuilder toBuilder() => new SubCounterBuilder()..replace(this);
+  SubCounterBuilder toBuilder() => SubCounterBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -277,7 +277,7 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
 
   _$SubCounter _build() {
     final _$result = _$v ??
-        new _$SubCounter._(
+        _$SubCounter._(
             subCount: BuiltValueNullFieldError.checkNotNull(
                 subCount, r'SubCounter', 'subCount'));
     replace(_$result);

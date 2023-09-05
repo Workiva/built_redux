@@ -72,7 +72,7 @@ class _$Child extends Child {
   final int grandparentCount;
 
   factory _$Child([void Function(ChildBuilder)? updates]) =>
-      (new ChildBuilder()..update(updates))._build();
+      (ChildBuilder()..update(updates))._build();
 
   _$Child._(
       {required this.childCount,
@@ -90,7 +90,7 @@ class _$Child extends Child {
       (toBuilder()..update(updates)).build();
 
   @override
-  ChildBuilder toBuilder() => new ChildBuilder()..replace(this);
+  ChildBuilder toBuilder() => ChildBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -169,7 +169,7 @@ class ChildBuilder
 
   _$Child _build() {
     final _$result = _$v ??
-        new _$Child._(
+        _$Child._(
             childCount: BuiltValueNullFieldError.checkNotNull(
                 childCount, r'Child', 'childCount'),
             parentCount: BuiltValueNullFieldError.checkNotNull(
