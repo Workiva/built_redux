@@ -1,3 +1,6 @@
+## 8.0.6
+* restrict analyzer to 5.x
+
 ## 8.0.5
 * open analyzer range to 5
 
