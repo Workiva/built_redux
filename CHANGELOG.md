@@ -1,3 +1,6 @@
+## 8.0.4
+* open analyzer range to 5
+
 ## 8.0.3
 * reopen analyzer range
 
