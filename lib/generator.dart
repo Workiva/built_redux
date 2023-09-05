@@ -53,9 +53,10 @@ Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
 Iterable<ActionsClass> _actionsClassFromInheritedElements(
         ClassElement element, bool nndbEnabled) =>
     element.allSupertypes
-        .map((s) => s.element as ClassElement)
+        .map((s) => s.element is ClassElement ? s.element as ClassElement : null)
+        .where((element) => element != null)
         .where(_isReduxActions)
-        .map((it) => _actionsClassFromElement(it, nndbEnabled));
+        .map((it) => _actionsClassFromElement(it!, nndbEnabled));
 
 Action _fieldElementToAction(ClassElement element, FieldElement field) =>
     Action('${element.name}-${field.name}', field.name,
