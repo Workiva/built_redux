@@ -1,4 +1,4 @@
-## 8.0.4
+## 8.0.5
 * open analyzer range to 5
 
 ## 8.0.3
