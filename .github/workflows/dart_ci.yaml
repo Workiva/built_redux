@@ -30,6 +30,6 @@ jobs:
       - name: Analyze project source
         run: dart analyze
       - name: Run tests on chrome
-        run: dart pub run build_runner test --delete-conflicting-outputs -- -p chrome
+        run: dart run build_runner test --delete-conflicting-outputs -- -p chrome
       - name: Run tests in release mode on chrome
-        run: dart pub run build_runner test --release --delete-conflicting-outputs -- -p chrome
+        run: dart run build_runner test --release --delete-conflicting-outputs -- -p chrome
