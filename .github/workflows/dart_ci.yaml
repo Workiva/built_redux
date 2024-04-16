@@ -9,6 +9,11 @@ on:
     branches:
       - '**'
 
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -16,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk: [ 2.18.7, 2.19.6, stable ]
+        sdk: [ 2.19.6 ]
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
@@ -26,10 +31,15 @@ jobs:
         run: dart pub get
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
-        if: ${{ matrix.sdk == '2.18.7' }}
+        if: ${{ matrix.sdk == '2.19.6' }}
       - name: Analyze project source
         run: dart analyze
       - name: Run tests on chrome
         run: dart run build_runner test --delete-conflicting-outputs -- -p chrome
       - name: Run tests in release mode on chrome
         run: dart run build_runner test --release --delete-conflicting-outputs -- -p chrome
+      - name: Publish SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: ./
+          format: cyclonedx-json
