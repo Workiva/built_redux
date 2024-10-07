@@ -1,1 +1,2 @@
-include: package:workiva_analysis_options/v1.yaml
+include: package:workiva_analysis_options/v2.yaml
+
