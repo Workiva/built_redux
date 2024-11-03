@@ -3,9 +3,6 @@ targets:
     builders:
       built_redux|built_redux:
         enabled: true
-      build_web_compilers:entrypoint:
-        generate_for:
-        - test/**_test.dart
 
 builders:
   built_redux:

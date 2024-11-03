@@ -39,6 +39,7 @@ jobs:
       - name: Run tests in release mode
         run: dart test -c dart2js -p chrome
       - name: Publish SBOM
+        if: ${{ matrix.sdk == '2.19.6' }}
         uses: anchore/sbom-action@v0
         with:
           path: ./
