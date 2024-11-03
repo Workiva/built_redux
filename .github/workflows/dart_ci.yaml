@@ -35,9 +35,9 @@ jobs:
       - name: Analyze project source
         run: dart analyze
       - name: Run tests in dev mode
-        run: dart run build_runner test --delete-conflicting-outputs
+        run: dart test -p chrome
       - name: Run tests in release mode
-        run: dart run build_runner test --release --delete-conflicting-outputs
+        run: dart test -c dart2js -p chrome
       - name: Publish SBOM
         uses: anchore/sbom-action@v0
         with:
