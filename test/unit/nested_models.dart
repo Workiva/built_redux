@@ -72,7 +72,9 @@ abstract class Grandchild implements Built<Grandchild, GrandchildBuilder> {
 Reducer<Base, BaseBuilder, dynamic> getBaseReducer() =>
     (ReducerBuilder<Base, BaseBuilder>()
           ..add<Null>(
-              BaseActionsNames.baseAction, (s, a, b) => b.count = s.count + 1)
+            BaseActionsNames.baseAction,
+            (s, a, b) => b.count = s.count + 1,
+          )
           ..combineNested(getChildReducer())
           ..combineNested(getNestedGrandchildReducer()))
         .build();
@@ -83,11 +85,14 @@ Reducer<Base, BaseBuilder, dynamic> getBaseReducer() =>
 // Reducers added to the NestedReducerBuilder must have the signature:
 // (Child, Action<T>, ChildBuilder)
 NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>
-    getChildReducer() =>
-        (NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>(
-            (s) => s.child, (b) => b.child)
-          ..add<Null>(ChildActionsNames.childAction,
-              (s, a, b) => b.count = s.count + 1));
+getChildReducer() =>
+    (NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>(
+      (s) => s.child,
+      (b) => b.child,
+    )..add<Null>(
+      ChildActionsNames.childAction,
+      (s, a, b) => b.count = s.count + 1,
+    ));
 
 // getGrandchildReducer returns a nested reducer builder that rebuilds the
 // grandchild built when grandchildAction is dispatched. This NestedReducerBuilder
@@ -95,12 +100,14 @@ NestedReducerBuilder<Base, BaseBuilder, Child, ChildBuilder>
 // Reducers added to the NestedReducerBuilder must have the signature:
 // (Grandchild, Action<T>, GrandchildBuilder)
 NestedReducerBuilder<Base, BaseBuilder, Grandchild, GrandchildBuilder>
-    getNestedGrandchildReducer() =>
-        NestedReducerBuilder<Base, BaseBuilder, Grandchild, GrandchildBuilder>(
-            (s) => s.child.grandchild, (b) => b.child.grandchild)
-          ..combineReducerBuilder(getGrandchildReducer());
+getNestedGrandchildReducer() =>
+    NestedReducerBuilder<Base, BaseBuilder, Grandchild, GrandchildBuilder>(
+      (s) => s.child.grandchild,
+      (b) => b.child.grandchild,
+    )..combineReducerBuilder(getGrandchildReducer());
 
 ReducerBuilder<Grandchild, GrandchildBuilder> getGrandchildReducer() =>
-    ReducerBuilder<Grandchild, GrandchildBuilder>()
-      ..add<Null>(GrandchildActionsNames.grandchildAction,
-          (s, a, b) => b.count = s.count + 1);
+    ReducerBuilder<Grandchild, GrandchildBuilder>()..add<Null>(
+      GrandchildActionsNames.grandchildAction,
+      (s, a, b) => b.count = s.count + 1,
+    );

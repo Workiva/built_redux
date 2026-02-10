@@ -9,7 +9,10 @@ void main() {
 
     setUp(() {
       store = Store<Child, ChildBuilder, ChildActions>(
-          getInheritanceReducer(), Child(), ChildActions());
+        getInheritanceReducer(),
+        Child(),
+        ChildActions(),
+      );
     });
 
     tearDown(() {

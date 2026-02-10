@@ -54,8 +54,9 @@ class _$GrandchildActions extends GrandchildActions {
   factory _$GrandchildActions() => _$GrandchildActions._();
   _$GrandchildActions._() : super._();
 
-  final grandchildAction =
-      ActionDispatcher<Null>('GrandchildActions-grandchildAction');
+  final grandchildAction = ActionDispatcher<Null>(
+    'GrandchildActions-grandchildAction',
+  );
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -64,8 +65,9 @@ class _$GrandchildActions extends GrandchildActions {
 }
 
 class GrandchildActionsNames {
-  static final grandchildAction =
-      ActionName<Null>('GrandchildActions-grandchildAction');
+  static final grandchildAction = ActionName<Null>(
+    'GrandchildActions-grandchildAction',
+  );
 }
 
 // **************************************************************************
@@ -157,11 +159,16 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
   _$Base _build() {
     _$Base _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$Base._(
-              count: BuiltValueNullFieldError.checkNotNull(
-                  count, r'Base', 'count'),
-              child: child.build());
+            count: BuiltValueNullFieldError.checkNotNull(
+              count,
+              r'Base',
+              'count',
+            ),
+            child: child.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -266,11 +273,16 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
   _$Child _build() {
     _$Child _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$Child._(
-              count: BuiltValueNullFieldError.checkNotNull(
-                  count, r'Child', 'count'),
-              grandchild: grandchild.build());
+            count: BuiltValueNullFieldError.checkNotNull(
+              count,
+              r'Child',
+              'count',
+            ),
+            grandchild: grandchild.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -320,8 +332,9 @@ class _$Grandchild extends Grandchild {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'Grandchild')..add('count', count))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'Grandchild',
+    )..add('count', count)).toString();
   }
 }
 
@@ -358,10 +371,15 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
   Grandchild build() => _build();
 
   _$Grandchild _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$Grandchild._(
-            count: BuiltValueNullFieldError.checkNotNull(
-                count, r'Grandchild', 'count'));
+          count: BuiltValueNullFieldError.checkNotNull(
+            count,
+            r'Grandchild',
+            'count',
+          ),
+        );
     replace(_$result);
     return _$result;
   }

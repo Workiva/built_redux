@@ -14,7 +14,10 @@ void main() {
       var defaultValue = Counter();
 
       store = Store<Counter, CounterBuilder, CounterActions>(
-          reducer, defaultValue, actions);
+        reducer,
+        defaultValue,
+        actions,
+      );
     });
 
     tearDown(() {
@@ -132,9 +135,11 @@ void main() {
     });
 
     test('should not publish pending events if disposed', () async {
-      store.nextState.listen(expectAsync1((Counter _) {
-        expect(store.actions, isNotNull);
-      }));
+      store.nextState.listen(
+        expectAsync1((Counter _) {
+          expect(store.actions, isNotNull);
+        }),
+      );
 
       store.actions.increment(1);
 

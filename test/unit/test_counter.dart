@@ -31,18 +31,23 @@ void _increment(Counter state, Action<int> action, CounterBuilder builder) =>
     builder.count = state.count + action.payload;
 
 void _incrementOther(
-        Counter state, Action<int> action, CounterBuilder builder) =>
-    builder.otherCount = state.otherCount + action.payload;
+  Counter state,
+  Action<int> action,
+  CounterBuilder builder,
+) => builder.otherCount = state.otherCount + action.payload;
 
 void _incrementSubCount(
-        Counter state, Action<int> action, CounterBuilder builder) =>
-    builder.subCounter.subCount = state.subCounter.subCount + action.payload;
+  Counter state,
+  Action<int> action,
+  CounterBuilder builder,
+) => builder.subCounter.subCount = state.subCounter.subCount + action.payload;
 
-final reducer = (ReducerBuilder<Counter, CounterBuilder>()
-      ..add(CounterActionsNames.increment, _increment)
-      ..combine(_otherReducer)
-      ..add(SubCounterActionsNames.increment, _incrementSubCount))
-    .build();
+final reducer =
+    (ReducerBuilder<Counter, CounterBuilder>()
+          ..add(CounterActionsNames.increment, _increment)
+          ..combine(_otherReducer)
+          ..add(SubCounterActionsNames.increment, _incrementSubCount))
+        .build();
 
 final _otherReducer = (ReducerBuilder<Counter, CounterBuilder>()
   ..add(CounterActionsNames.incrementOther, _incrementOther));
@@ -86,8 +91,11 @@ var counterMiddleware =
           ..combineNested(subCountNested))
         .build();
 
-void _doubleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
-    ActionHandler next, Action<int> action) {
+void _doubleIt(
+  MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
+  ActionHandler next,
+  Action<int> action,
+) {
   api.actions.increment(api.state.count * 2);
   next(action);
 }
@@ -96,29 +104,35 @@ var tripleItMiddlewareBuilder =
     MiddlewareBuilder<Counter, CounterBuilder, CounterActions>()
       ..add(MiddlewareActionsNames.tripleIt, _tripleIt);
 
-void _tripleIt(MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
-    ActionHandler next, Action<int> action) {
+void _tripleIt(
+  MiddlewareApi<Counter, CounterBuilder, CounterActions> api,
+  ActionHandler next,
+  Action<int> action,
+) {
   api.actions.increment(api.state.count * 3);
   next(action);
 }
 
-var subCountNested = NestedMiddlewareBuilder<
-    Counter,
-    CounterBuilder,
-    CounterActions,
-    SubCounter,
-    SubCounterBuilder,
-    SubCounterActions>((c) => c.subCounter, (a) => a.subCounterActions)
-  ..combineMiddlewareBuilder(subCountMiddlewareBuilder);
+var subCountNested =
+    NestedMiddlewareBuilder<
+        Counter,
+        CounterBuilder,
+        CounterActions,
+        SubCounter,
+        SubCounterBuilder,
+        SubCounterActions
+      >((c) => c.subCounter, (a) => a.subCounterActions)
+      ..combineMiddlewareBuilder(subCountMiddlewareBuilder);
 
 var subCountMiddlewareBuilder =
     MiddlewareBuilder<SubCounter, SubCounterBuilder, SubCounterActions>()
       ..add(SubCounterActionsNames.doubleIt, _subCounterDoubleIt);
 
 void _subCounterDoubleIt(
-    MiddlewareApi<SubCounter, SubCounterBuilder, SubCounterActions> api,
-    ActionHandler next,
-    Action<int> action) {
+  MiddlewareApi<SubCounter, SubCounterBuilder, SubCounterActions> api,
+  ActionHandler next,
+  Action<int> action,
+) {
   api.actions.increment(api.state.subCount * 2);
   next(action);
 }
@@ -126,7 +140,6 @@ void _subCounterDoubleIt(
 // Change handler
 
 StoreChangeHandlerBuilder<Counter, CounterBuilder, CounterActions>
-    createChangeHandler(Completer comp) =>
-        (StoreChangeHandlerBuilder<Counter, CounterBuilder, CounterActions>()
-          ..add(CounterActionsNames.increment,
-              (change) => comp.complete(change)));
+createChangeHandler(Completer comp) =>
+    (StoreChangeHandlerBuilder<Counter, CounterBuilder, CounterActions>()
+      ..add(CounterActionsNames.increment, (change) => comp.complete(change)));

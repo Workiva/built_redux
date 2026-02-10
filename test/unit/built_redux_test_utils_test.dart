@@ -17,17 +17,24 @@ void main() {
     });
 
     test('expectDispatch verifier', () {
-      expectDispatched<int>(actions.increment, verifier: (action) {
-        expect(action.payload, 1);
-      });
+      expectDispatched<int>(
+        actions.increment,
+        verifier: (action) {
+          expect(action.payload, 1);
+        },
+      );
 
       actions.increment(1);
     });
 
     test('expectDispatch verifier count 2', () {
-      expectDispatched<int>(actions.increment, count: 2, verifier: (action) {
-        expect(action.payload, 1);
-      });
+      expectDispatched<int>(
+        actions.increment,
+        count: 2,
+        verifier: (action) {
+          expect(action.payload, 1);
+        },
+      );
 
       actions.increment(1);
       actions.increment(1);

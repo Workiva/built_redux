@@ -32,8 +32,9 @@ class _$CounterActions extends CounterActions {
 
 class CounterActionsNames {
   static final increment = ActionName<int>('CounterActions-increment');
-  static final incrementOther =
-      ActionName<int>('CounterActions-incrementOther');
+  static final incrementOther = ActionName<int>(
+    'CounterActions-incrementOther',
+  );
 }
 
 class _$SubCounterActions extends SubCounterActions {
@@ -89,9 +90,11 @@ class _$Counter extends Counter {
   factory _$Counter([void Function(CounterBuilder)? updates]) =>
       (CounterBuilder()..update(updates))._build();
 
-  _$Counter._(
-      {required this.count, required this.otherCount, required this.subCounter})
-      : super._() {
+  _$Counter._({
+    required this.count,
+    required this.otherCount,
+    required this.subCounter,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(count, r'Counter', 'count');
     BuiltValueNullFieldError.checkNotNull(otherCount, r'Counter', 'otherCount');
     BuiltValueNullFieldError.checkNotNull(subCounter, r'Counter', 'subCounter');
@@ -180,13 +183,21 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
   _$Counter _build() {
     _$Counter _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$Counter._(
-              count: BuiltValueNullFieldError.checkNotNull(
-                  count, r'Counter', 'count'),
-              otherCount: BuiltValueNullFieldError.checkNotNull(
-                  otherCount, r'Counter', 'otherCount'),
-              subCounter: subCounter.build());
+            count: BuiltValueNullFieldError.checkNotNull(
+              count,
+              r'Counter',
+              'count',
+            ),
+            otherCount: BuiltValueNullFieldError.checkNotNull(
+              otherCount,
+              r'Counter',
+              'otherCount',
+            ),
+            subCounter: subCounter.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -194,7 +205,10 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
         subCounter.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'Counter', _$failedField, e.toString());
+          r'Counter',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -237,9 +251,9 @@ class _$SubCounter extends SubCounter {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'SubCounter')
-          ..add('subCount', subCount))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'SubCounter',
+    )..add('subCount', subCount)).toString();
   }
 }
 
@@ -276,10 +290,15 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
   SubCounter build() => _build();
 
   _$SubCounter _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$SubCounter._(
-            subCount: BuiltValueNullFieldError.checkNotNull(
-                subCount, r'SubCounter', 'subCount'));
+          subCount: BuiltValueNullFieldError.checkNotNull(
+            subCount,
+            r'SubCounter',
+            'subCount',
+          ),
+        );
     replace(_$result);
     return _$result;
   }
