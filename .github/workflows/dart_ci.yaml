@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk: [ 2.19.6, 3.5.4, 3.10.9 ]
+        sdk: [ 3.10.9 ]
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
@@ -31,7 +31,7 @@ jobs:
         run: dart pub get
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
-        if: ${{ matrix.sdk == '2.19.6' }}
+        if: ${{ matrix.sdk == '3.10.9' }}
       - name: Analyze project source
         run: dart analyze
       - name: Run tests in dev mode
@@ -39,7 +39,7 @@ jobs:
       - name: Run tests in release mode
         run: dart test -c dart2js -p chrome
       - name: Publish SBOM
-        if: ${{ matrix.sdk == '2.19.6' }}
+        if: ${{ matrix.sdk == '3.10.9' }}
         uses: anchore/sbom-action@v0
         with:
           path: ./

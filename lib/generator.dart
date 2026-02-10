@@ -9,8 +9,9 @@ class BuiltReduxGenerator extends Generator {
   Future<String> generate(LibraryReader library, BuildStep buildStep) async {
     final result = StringBuffer();
     var hasWrittenHeaders = false;
-    final nndbEnabled = await buildStep.inputLibrary
-        .then((value) => value.featureSet.isEnabled(Feature.non_nullable));
+    final nndbEnabled = await buildStep.inputLibrary.then(
+      (value) => value.featureSet.isEnabled(Feature.non_nullable),
+    );
     for (final element in library.allElements) {
       if (_isReduxActions(element) && element is ClassElement) {
         if (!hasWrittenHeaders) {
@@ -34,33 +35,43 @@ const _lintIgnores = """
 
 ActionsClass _actionsClassFromElement(ClassElement element, bool nndbEnabled) =>
     ActionsClass(
-      element.name,
+      element.name!,
       _actionsFromElement(element).toSet(),
       _composedActionClasses(element, nndbEnabled).toSet(),
       _actionsClassFromInheritedElements(element, nndbEnabled).toSet(),
     );
 
 Iterable<ComposedActionClass> _composedActionClasses(
-        ClassElement element, bool nndbEnabled) =>
-    element.fields.where((f) => _isReduxActions(f.type.element)).map((f) =>
-        ComposedActionClass(
-            f.name, f.type.getDisplayString(withNullability: nndbEnabled)));
+  ClassElement element,
+  bool nndbEnabled,
+) => element.fields
+    .where((f) => _isReduxActions(f.type.element))
+    .map(
+      (f) => ComposedActionClass(
+        f.name!,
+        f.type.getDisplayString(),
+      ),
+    );
 
 Iterable<Action> _actionsFromElement(ClassElement element) => element.fields
     .where(_isActionDispatcher)
     .map((field) => _fieldElementToAction(element, field));
 
 Iterable<ActionsClass> _actionsClassFromInheritedElements(
-        ClassElement element, bool nndbEnabled) =>
-    element.allSupertypes
-        .map((s) => s.element is ClassElement ? s.element : null)
-        .whereType<ClassElement>()
-        .where(_isReduxActions)
-        .map((it) => _actionsClassFromElement(it, nndbEnabled));
+  ClassElement element,
+  bool nndbEnabled,
+) => element.allSupertypes
+    .map((s) => s.element is ClassElement ? s.element : null)
+    .whereType<ClassElement>()
+    .where(_isReduxActions)
+    .map((it) => _actionsClassFromElement(it, nndbEnabled));
 
 Action _fieldElementToAction(ClassElement element, FieldElement field) =>
-    Action('${element.name}-${field.name}', field.name,
-        _fieldType(element, field));
+    Action(
+      '${element.name!}-${field.name!}',
+      field.name!,
+      _fieldType(element, field),
+    );
 
 // hack to return the generics for the action
 // this is used so action whose payloads are of generated types
@@ -69,33 +80,44 @@ String _fieldType(ClassElement element, FieldElement field) {
   if (field.isSynthetic) {
     return _syntheticFieldType(element, field);
   }
-  return _getGenerics(field.source!.contents.data, field.nameOffset);
+  final fragment = field.firstFragment;
+  return _getGenerics(
+    fragment.libraryFragment.source.contents.data,
+    fragment.nameOffset!,
+  );
 }
 
 String _syntheticFieldType(ClassElement element, FieldElement field) {
-  final method = element.getGetter(field.name);
-  return _getGenerics(method!.source.contents.data, method.nameOffset);
+  final method = element.getGetter(field.name!);
+  final fragment = method!.firstFragment;
+  return _getGenerics(
+    fragment.libraryFragment.source.contents.data,
+    fragment.nameOffset!,
+  );
 }
 
 String _getGenerics(String source, int nameOffset) {
   final trimAfterName = source.substring(0, nameOffset);
-  final trimBeforeActionDispatcher =
-      trimAfterName.substring(trimAfterName.lastIndexOf('ActionDispatcher'));
+  final trimBeforeActionDispatcher = trimAfterName.substring(
+    trimAfterName.lastIndexOf('ActionDispatcher'),
+  );
   return trimBeforeActionDispatcher.substring(
-      trimBeforeActionDispatcher.indexOf('<') + 1,
-      trimBeforeActionDispatcher.lastIndexOf('>'));
+    trimBeforeActionDispatcher.indexOf('<') + 1,
+    trimBeforeActionDispatcher.lastIndexOf('>'),
+  );
 }
 
 bool _isReduxActions(Element? element) =>
     element is ClassElement && _hasSuperType(element, 'ReduxActions');
 
 bool _isActionDispatcher(FieldElement element) => element.type
-    .getDisplayString(withNullability: true)
+    .getDisplayString()
     .startsWith('ActionDispatcher<');
 
 bool _hasSuperType(ClassElement classElement, String type) =>
-    classElement.allSupertypes
-        .any((interfaceType) => interfaceType.element.name == type) &&
+    classElement.allSupertypes.any(
+      (interfaceType) => interfaceType.element.name == type,
+    ) &&
     !classElement.displayName.startsWith('_\$');
 
 String _generateActions(ClassElement element, bool nndbEnabled) {
@@ -105,10 +127,11 @@ String _generateActions(ClassElement element, bool nndbEnabled) {
 }
 
 String _generateDispatchersIfNeeded(
-        ClassElement element, ActionsClass actionsClass) =>
-    element.constructors.length > 1
-        ? _actionDispatcherClassTemplate(actionsClass)
-        : '';
+  ClassElement element,
+  ActionsClass actionsClass,
+) => element.constructors.length > 1
+    ? _actionDispatcherClassTemplate(actionsClass)
+    : '';
 
 /*
 
@@ -116,7 +139,8 @@ String _generateDispatchersIfNeeded(
 
 */
 
-String _actionDispatcherClassTemplate(ActionsClass actionsClass) => '''
+String _actionDispatcherClassTemplate(ActionsClass actionsClass) =>
+    '''
   class _\$${actionsClass.className} extends ${actionsClass.className}{
     factory _\$${actionsClass.className}() => _\$${actionsClass.className}._();
     _\$${actionsClass.className}._() : super._();
@@ -134,27 +158,35 @@ String _actionDispatcherClassTemplate(ActionsClass actionsClass) => '''
 
 String _allActionDispatcherFieldsTemplate(ActionsClass actionsClass) =>
     actionsClass.allActions.fold(
-        '', (comb, next) => '$comb\n${_actionDispatcherFieldTemplate(next)}');
+      '',
+      (comb, next) => '$comb\n${_actionDispatcherFieldTemplate(next)}',
+    );
 
 String _allComposedActionClassesFieldsTemplate(ActionsClass actionsClass) =>
-    actionsClass.allComposed.fold('',
-        (comb, next) => '$comb\n${_composedActionClassesFieldTemplate(next)}');
+    actionsClass.allComposed.fold(
+      '',
+      (comb, next) => '$comb\n${_composedActionClassesFieldTemplate(next)}',
+    );
 
 String _actionDispatcherFieldTemplate(Action action) =>
     'final ${action.fieldName} =  ActionDispatcher<${action.type}>(\'${action.actionName}\');';
 
 String _composedActionClassesFieldTemplate(
-        ComposedActionClass composedActionClass) =>
-    'final ${composedActionClass.fieldName} = ${composedActionClass.type}();';
+  ComposedActionClass composedActionClass,
+) => 'final ${composedActionClass.fieldName} = ${composedActionClass.type}();';
 
 String _allActionDispatcherSetDispatchersTemplate(ActionsClass actionsClass) =>
     actionsClass.allActions.fold(
-        '', (comb, next) => '$comb\n${_setDispatcheTemplate(next.fieldName)}');
+      '',
+      (comb, next) => '$comb\n${_setDispatcheTemplate(next.fieldName)}',
+    );
 
 String _allComposedActionClassesSetDispatchersTemplate(
-        ActionsClass actionsClass) =>
-    actionsClass.allComposed.fold(
-        '', (comb, next) => '$comb\n${_setDispatcheTemplate(next.fieldName)}');
+  ActionsClass actionsClass,
+) => actionsClass.allComposed.fold(
+  '',
+  (comb, next) => '$comb\n${_setDispatcheTemplate(next.fieldName)}',
+);
 
 String _setDispatcheTemplate(String fieldName) =>
     '${fieldName}.setDispatcher(dispatcher);';
@@ -165,15 +197,16 @@ String _setDispatcheTemplate(String fieldName) =>
 
 // */
 
-String _actionNamesClassTemplate(ActionsClass actionsClass) => '''
+String _actionNamesClassTemplate(ActionsClass actionsClass) =>
+    '''
   class ${actionsClass.className}Names {
     ${_allActionNamesFieldsTemplate(actionsClass)}
   }
 ''';
 
-String _allActionNamesFieldsTemplate(ActionsClass actionsClass) =>
-    actionsClass.allActions
-        .fold('', (comb, next) => '$comb\n${_actionNameTemplate(next)}');
+String _allActionNamesFieldsTemplate(ActionsClass actionsClass) => actionsClass
+    .allActions
+    .fold('', (comb, next) => '$comb\n${_actionNameTemplate(next)}');
 
 String _actionNameTemplate(Action action) =>
     'static final ${action.fieldName} = ActionName<${action.type}>(\'${action.actionName}\');';
@@ -185,13 +218,13 @@ class ActionsClass {
   final Set<ActionsClass> inherited;
   ActionsClass(this.className, this.actions, this.composed, this.inherited);
   Set<Action> get allActions => Set<Action>.from(
-        actions.toList()
-          ..addAll(inherited.map((ac) => ac.actions).expand((a) => a)),
-      );
+    actions.toList()
+      ..addAll(inherited.map((ac) => ac.actions).expand((a) => a)),
+  );
   Set<ComposedActionClass> get allComposed => Set<ComposedActionClass>.from(
-        composed.toList()
-          ..addAll(inherited.map((ac) => ac.composed).expand((c) => c)),
-      );
+    composed.toList()
+      ..addAll(inherited.map((ac) => ac.composed).expand((c) => c)),
+  );
 
   @override
   bool operator ==(Object other) {
