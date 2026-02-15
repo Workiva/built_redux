@@ -67,8 +67,9 @@ class _$Counter extends Counter {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'Counter')..add('count', count))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'Counter',
+    )..add('count', count)).toString();
   }
 }
 
@@ -105,10 +106,15 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
   Counter build() => _build();
 
   _$Counter _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$Counter._(
-            count: BuiltValueNullFieldError.checkNotNull(
-                count, r'Counter', 'count'));
+          count: BuiltValueNullFieldError.checkNotNull(
+            count,
+            r'Counter',
+            'count',
+          ),
+        );
     replace(_$result);
     return _$result;
   }

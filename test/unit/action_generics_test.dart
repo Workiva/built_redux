@@ -7,16 +7,16 @@ import 'action_generics_models.dart';
 void main() {
   group('action generics', () {
     late Store<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
-        store;
+    store;
 
     setUp(() {
       store =
           Store<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>(
-        getActionGenericsReducer(),
-        ActionGenerics(),
-        ActionGenericsActions(),
-        middleware: [thunkMiddleware],
-      );
+            getActionGenericsReducer(),
+            ActionGenerics(),
+            ActionGenericsActions(),
+            middleware: [thunkMiddleware],
+          );
     });
 
     tearDown(() {
@@ -47,13 +47,15 @@ void main() {
 }
 
 void testThunk(
-    MiddlewareApi<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
-        api) {
+  MiddlewareApi<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
+  api,
+) {
   api.actions.intAction(4);
 }
 
 Future<void> testThunkAsync(
-    MiddlewareApi<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
-        api) async {
+  MiddlewareApi<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
+  api,
+) async {
   api.actions.intAction(8);
 }

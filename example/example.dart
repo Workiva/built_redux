@@ -4,8 +4,8 @@ import 'package:built_redux/built_redux.dart';
 part 'example.g.dart';
 
 void main() {
-// Create a redux store holding the state of your app.
-// Its API contains three getters: stream, state, and actions.
+  // Create a redux store holding the state of your app.
+  // Its API contains three getters: stream, state, and actions.
   final store = Store<Counter, CounterBuilder, CounterActions>(
     reducerBuilder.build(), // build returns a reducer function
     Counter(),

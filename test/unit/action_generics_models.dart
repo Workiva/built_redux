@@ -8,9 +8,11 @@ part 'action_generics_models.g.dart';
 
 /// Used to test code generation when the generic type of an action is a
 /// `typedef`
-typedef ThunkTypedef<V extends Built<V, B>, B extends Builder<V, B>,
-        A extends ReduxActions>
-    = FutureOr<void> Function(MiddlewareApi<V, B, A> api);
+typedef ThunkTypedef<
+  V extends Built<V, B>,
+  B extends Builder<V, B>,
+  A extends ReduxActions
+> = FutureOr<void> Function(MiddlewareApi<V, B, A> api);
 
 class Foo<T> {}
 
@@ -31,15 +33,17 @@ abstract class ActionGenericsActions extends ReduxActions {
   ActionDispatcher<List<int>> get listIntAction;
   ActionDispatcher<Map<String, List<int>>> get mapStringToListIntAction;
   ActionDispatcher<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>> get typdefAction;
+    ThunkTypedef<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
+  >
+  get typdefAction;
   ActionDispatcher<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>?> get typdefNullableAction;
+    ThunkTypedef<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>?
+  >
+  get typdefNullableAction;
   ActionDispatcher<Foo<int>> get fooAction;
   ActionDispatcher<Foo<int?>> get fooActionWithNestedNullable;
   ActionDispatcher<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>
-      get classWithBuiltAction;
+  get classWithBuiltAction;
 }
 
 abstract class ActionGenerics
@@ -51,30 +55,40 @@ abstract class ActionGenerics
 }
 
 Reducer<ActionGenerics, ActionGenericsBuilder, dynamic>
-    getActionGenericsReducer() =>
-        (ReducerBuilder<ActionGenerics, ActionGenericsBuilder>()
-              ..add<int>(ActionGenericsActionsNames.intAction,
-                  (s, a, b) => b.count = s.count + a.payload)
-              ..add<Null>(ActionGenericsActionsNames.nullAction,
-                  (s, a, b) => b.count = s.count + 1)
-              ..add<List<int>>(
-                  ActionGenericsActionsNames.listIntAction,
-                  (s, a, b) => b.count =
-                      s.count + a.payload.fold<int>(0, (c, n) => c + n))
-              ..add<Map<String, List<int>>>(
-                  ActionGenericsActionsNames.mapStringToListIntAction,
-                  (s, a, b) => b.count =
-                      s.count + a.payload['k']!.fold<int>(0, (c, n) => c + n)))
-            .build();
+getActionGenericsReducer() =>
+    (ReducerBuilder<ActionGenerics, ActionGenericsBuilder>()
+          ..add<int>(
+            ActionGenericsActionsNames.intAction,
+            (s, a, b) => b.count = s.count + a.payload,
+          )
+          ..add<Null>(
+            ActionGenericsActionsNames.nullAction,
+            (s, a, b) => b.count = s.count + 1,
+          )
+          ..add<List<int>>(
+            ActionGenericsActionsNames.listIntAction,
+            (s, a, b) =>
+                b.count = s.count + a.payload.fold<int>(0, (c, n) => c + n),
+          )
+          ..add<Map<String, List<int>>>(
+            ActionGenericsActionsNames.mapStringToListIntAction,
+            (s, a, b) => b.count =
+                s.count + a.payload['k']!.fold<int>(0, (c, n) => c + n),
+          ))
+        .build();
 
 NextActionHandler thunkMiddleware(
   MiddlewareApi<ActionGenerics, ActionGenericsBuilder, ActionGenericsActions>
-      api,
+  api,
 ) =>
     (ActionHandler next) => (Action a) {
-          if (a.payload is ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-              ActionGenericsActions>)
-            a.payload(api);
-          else
-            next(a);
-        };
+      if (a.payload
+          is ThunkTypedef<
+            ActionGenerics,
+            ActionGenericsBuilder,
+            ActionGenericsActions
+          >)
+        a.payload(api);
+      else
+        next(a);
+    };

@@ -41,11 +41,8 @@ abstract class Child
   int get childCount;
 
   Child._();
-  factory Child() => _$Child._(
-        childCount: 0,
-        parentCount: 0,
-        grandparentCount: 0,
-      );
+  factory Child() =>
+      _$Child._(childCount: 0, parentCount: 0, grandparentCount: 0);
 }
 
 // getBaseReducer returns a reducer that rebuilds Child when childAction is dispatched.
@@ -59,13 +56,15 @@ abstract class Child
 Reducer<Child, ChildBuilder, dynamic> getInheritanceReducer() =>
     (ReducerBuilder<Child, ChildBuilder>()
           ..add<Null>(
-              ChildActionsNames.childAction,
-              (state, action, builder) =>
-                  builder.childCount = state.childCount + 1)
+            ChildActionsNames.childAction,
+            (state, action, builder) =>
+                builder.childCount = state.childCount + 1,
+          )
           ..add<Null>(
-              ChildActionsNames.parentAction,
-              (Parent state, action, ParentBuilder builder) =>
-                  builder.parentCount = state.parentCount + 2)
+            ChildActionsNames.parentAction,
+            (Parent state, action, ParentBuilder builder) =>
+                builder.parentCount = state.parentCount + 2,
+          )
           ..combineAbstract(grandparentBuilder.build()))
         .build();
 
@@ -75,8 +74,8 @@ Reducer<Child, ChildBuilder, dynamic> getInheritanceReducer() =>
 // Reducers added to the AbstractReducerBuilder must have the signature:
 // (Grandparent, Action<T>, GrandparentBuilder)
 AbstractReducerBuilder<Grandparent, GrandparentBuilder> grandparentBuilder =
-    AbstractReducerBuilder<Grandparent, GrandparentBuilder>()
-      ..add<Null>(
-          ChildActionsNames.grandparentAction,
-          (state, action, builder) =>
-              builder.grandparentCount = state.grandparentCount + 3);
+    AbstractReducerBuilder<Grandparent, GrandparentBuilder>()..add<Null>(
+      ChildActionsNames.grandparentAction,
+      (state, action, builder) =>
+          builder.grandparentCount = state.grandparentCount + 3,
+    );

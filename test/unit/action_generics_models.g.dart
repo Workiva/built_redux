@@ -16,30 +16,47 @@ class _$ActionGenericsActions extends ActionGenericsActions {
 
   final intAction = ActionDispatcher<int>('ActionGenericsActions-intAction');
   final nullAction = ActionDispatcher<Null>('ActionGenericsActions-nullAction');
-  final nullableIntAction =
-      ActionDispatcher<int?>('ActionGenericsActions-nullableIntAction');
-  final setIntAction =
-      ActionDispatcher<Set<int>>('ActionGenericsActions-setIntAction');
-  final nullableSetIntAction =
-      ActionDispatcher<Set<int>?>('ActionGenericsActions-nullableSetIntAction');
-  final listIntAction =
-      ActionDispatcher<List<int>>('ActionGenericsActions-listIntAction');
+  final nullableIntAction = ActionDispatcher<int?>(
+    'ActionGenericsActions-nullableIntAction',
+  );
+  final setIntAction = ActionDispatcher<Set<int>>(
+    'ActionGenericsActions-setIntAction',
+  );
+  final nullableSetIntAction = ActionDispatcher<Set<int>?>(
+    'ActionGenericsActions-nullableSetIntAction',
+  );
+  final listIntAction = ActionDispatcher<List<int>>(
+    'ActionGenericsActions-listIntAction',
+  );
   final mapStringToListIntAction = ActionDispatcher<Map<String, List<int>>>(
-      'ActionGenericsActions-mapStringToListIntAction');
-  final typdefAction = ActionDispatcher<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
-  final typdefNullableAction = ActionDispatcher<
-          ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-              ActionGenericsActions>?>(
-      'ActionGenericsActions-typdefNullableAction');
-  final fooAction =
-      ActionDispatcher<Foo<int>>('ActionGenericsActions-fooAction');
+    'ActionGenericsActions-mapStringToListIntAction',
+  );
+  final typdefAction =
+      ActionDispatcher<
+        ThunkTypedef<
+          ActionGenerics,
+          ActionGenericsBuilder,
+          ActionGenericsActions
+        >
+      >('ActionGenericsActions-typdefAction');
+  final typdefNullableAction =
+      ActionDispatcher<
+        ThunkTypedef<
+          ActionGenerics,
+          ActionGenericsBuilder,
+          ActionGenericsActions
+        >?
+      >('ActionGenericsActions-typdefNullableAction');
+  final fooAction = ActionDispatcher<Foo<int>>(
+    'ActionGenericsActions-fooAction',
+  );
   final fooActionWithNestedNullable = ActionDispatcher<Foo<int?>>(
-      'ActionGenericsActions-fooActionWithNestedNullable');
+    'ActionGenericsActions-fooActionWithNestedNullable',
+  );
   final classWithBuiltAction =
       ActionDispatcher<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
-          'ActionGenericsActions-classWithBuiltAction');
+        'ActionGenericsActions-classWithBuiltAction',
+      );
 
   @override
   void setDispatcher(Dispatcher dispatcher) {
@@ -60,32 +77,50 @@ class _$ActionGenericsActions extends ActionGenericsActions {
 
 class ActionGenericsActionsNames {
   static final intAction = ActionName<int>('ActionGenericsActions-intAction');
-  static final nullAction =
-      ActionName<Null>('ActionGenericsActions-nullAction');
-  static final nullableIntAction =
-      ActionName<int?>('ActionGenericsActions-nullableIntAction');
-  static final setIntAction =
-      ActionName<Set<int>>('ActionGenericsActions-setIntAction');
-  static final nullableSetIntAction =
-      ActionName<Set<int>?>('ActionGenericsActions-nullableSetIntAction');
-  static final listIntAction =
-      ActionName<List<int>>('ActionGenericsActions-listIntAction');
+  static final nullAction = ActionName<Null>(
+    'ActionGenericsActions-nullAction',
+  );
+  static final nullableIntAction = ActionName<int?>(
+    'ActionGenericsActions-nullableIntAction',
+  );
+  static final setIntAction = ActionName<Set<int>>(
+    'ActionGenericsActions-setIntAction',
+  );
+  static final nullableSetIntAction = ActionName<Set<int>?>(
+    'ActionGenericsActions-nullableSetIntAction',
+  );
+  static final listIntAction = ActionName<List<int>>(
+    'ActionGenericsActions-listIntAction',
+  );
   static final mapStringToListIntAction = ActionName<Map<String, List<int>>>(
-      'ActionGenericsActions-mapStringToListIntAction');
-  static final typdefAction = ActionName<
-      ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-          ActionGenericsActions>>('ActionGenericsActions-typdefAction');
-  static final typdefNullableAction = ActionName<
-          ThunkTypedef<ActionGenerics, ActionGenericsBuilder,
-              ActionGenericsActions>?>(
-      'ActionGenericsActions-typdefNullableAction');
-  static final fooAction =
-      ActionName<Foo<int>>('ActionGenericsActions-fooAction');
+    'ActionGenericsActions-mapStringToListIntAction',
+  );
+  static final typdefAction =
+      ActionName<
+        ThunkTypedef<
+          ActionGenerics,
+          ActionGenericsBuilder,
+          ActionGenericsActions
+        >
+      >('ActionGenericsActions-typdefAction');
+  static final typdefNullableAction =
+      ActionName<
+        ThunkTypedef<
+          ActionGenerics,
+          ActionGenericsBuilder,
+          ActionGenericsActions
+        >?
+      >('ActionGenericsActions-typdefNullableAction');
+  static final fooAction = ActionName<Foo<int>>(
+    'ActionGenericsActions-fooAction',
+  );
   static final fooActionWithNestedNullable = ActionName<Foo<int?>>(
-      'ActionGenericsActions-fooActionWithNestedNullable');
+    'ActionGenericsActions-fooActionWithNestedNullable',
+  );
   static final classWithBuiltAction =
       ActionName<ClassWithBuilt<ActionGenerics, ActionGenericsBuilder>>(
-          'ActionGenericsActions-classWithBuiltAction');
+        'ActionGenericsActions-classWithBuiltAction',
+      );
 }
 
 // **************************************************************************
@@ -126,8 +161,9 @@ class _$ActionGenerics extends ActionGenerics {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'ActionGenerics')..add('count', count))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'ActionGenerics',
+    )..add('count', count)).toString();
   }
 }
 
@@ -165,10 +201,15 @@ class ActionGenericsBuilder
   ActionGenerics build() => _build();
 
   _$ActionGenerics _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$ActionGenerics._(
-            count: BuiltValueNullFieldError.checkNotNull(
-                count, r'ActionGenerics', 'count'));
+          count: BuiltValueNullFieldError.checkNotNull(
+            count,
+            r'ActionGenerics',
+            'count',
+          ),
+        );
     replace(_$result);
     return _$result;
   }

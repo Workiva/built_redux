@@ -13,7 +13,15 @@ void expectDispatched<T>(
   String? id,
   String? reason,
 }) {
-  actionDispatcher.setDispatcher(expectAsync1((Action<dynamic> action) {
-    if (verifier != null) verifier(action as Action<T>);
-  }, count: count, max: max, id: id, reason: reason));
+  actionDispatcher.setDispatcher(
+    expectAsync1(
+      (Action<dynamic> action) {
+        if (verifier != null) verifier(action as Action<T>);
+      },
+      count: count,
+      max: max,
+      id: id,
+      reason: reason,
+    ),
+  );
 }
