@@ -1,3 +1,23 @@
+## 8.0.11
+* Support analyzer range `>=10.0.0 <15.0.0`
+* Update generator for analyzer 14 compatibility
+
+## 8.0.10
+* Update SDK constraint to `^3.10.0`
+* Update analyzer constraint to `^10.0.0`
+* Update dependencies and generator for Dart 3.10
+
+## 8.0.9
+* Allow analyzer 6 (`>=5.0.0 <7.0.0`)
+* Bump dependency ranges for `build`, `built_value`, and `source_gen`
+
+## 8.0.8
+* Migrate to `workiva_analysis_options` v2
+
+## 8.0.7
+* Fix up GitHub workflows and add publish workflow
+* Add SBOM publishing in CI
+
 ## 8.0.6
 * restrict analyzer to 5.x
 
