@@ -134,10 +134,7 @@ class _$ActionGenerics extends ActionGenerics {
   factory _$ActionGenerics([void Function(ActionGenericsBuilder)? updates]) =>
       (ActionGenericsBuilder()..update(updates))._build();
 
-  _$ActionGenerics._({required this.count}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(count, r'ActionGenerics', 'count');
-  }
-
+  _$ActionGenerics._({required this.count}) : super._();
   @override
   ActionGenerics rebuild(void Function(ActionGenericsBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -188,7 +185,6 @@ class ActionGenericsBuilder
 
   @override
   void replace(ActionGenerics other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ActionGenerics;
   }
 

@@ -83,11 +83,7 @@ class _$Base extends Base {
   factory _$Base([void Function(BaseBuilder)? updates]) =>
       (BaseBuilder()..update(updates))._build();
 
-  _$Base._({required this.count, required this.child}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(count, r'Base', 'count');
-    BuiltValueNullFieldError.checkNotNull(child, r'Base', 'child');
-  }
-
+  _$Base._({required this.count, required this.child}) : super._();
   @override
   Base rebuild(void Function(BaseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -144,7 +140,6 @@ class BaseBuilder implements Builder<Base, BaseBuilder> {
 
   @override
   void replace(Base other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Base;
   }
 
@@ -193,11 +188,7 @@ class _$Child extends Child {
   factory _$Child([void Function(ChildBuilder)? updates]) =>
       (ChildBuilder()..update(updates))._build();
 
-  _$Child._({required this.count, required this.grandchild}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(count, r'Child', 'count');
-    BuiltValueNullFieldError.checkNotNull(grandchild, r'Child', 'grandchild');
-  }
-
+  _$Child._({required this.count, required this.grandchild}) : super._();
   @override
   Child rebuild(void Function(ChildBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -258,7 +249,6 @@ class ChildBuilder implements Builder<Child, ChildBuilder> {
 
   @override
   void replace(Child other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Child;
   }
 
@@ -305,10 +295,7 @@ class _$Grandchild extends Grandchild {
   factory _$Grandchild([void Function(GrandchildBuilder)? updates]) =>
       (GrandchildBuilder()..update(updates))._build();
 
-  _$Grandchild._({required this.count}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(count, r'Grandchild', 'count');
-  }
-
+  _$Grandchild._({required this.count}) : super._();
   @override
   Grandchild rebuild(void Function(GrandchildBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -358,7 +345,6 @@ class GrandchildBuilder implements Builder<Grandchild, GrandchildBuilder> {
 
   @override
   void replace(Grandchild other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Grandchild;
   }
 

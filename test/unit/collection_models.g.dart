@@ -83,26 +83,7 @@ class _$Collection extends Collection {
     required this.builtMap,
     required this.builtSet,
     required this.builtSetMultimap,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      builtList,
-      r'Collection',
-      'builtList',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      builtListMultimap,
-      r'Collection',
-      'builtListMultimap',
-    );
-    BuiltValueNullFieldError.checkNotNull(builtMap, r'Collection', 'builtMap');
-    BuiltValueNullFieldError.checkNotNull(builtSet, r'Collection', 'builtSet');
-    BuiltValueNullFieldError.checkNotNull(
-      builtSetMultimap,
-      r'Collection',
-      'builtSetMultimap',
-    );
-  }
-
+  }) : super._();
   @override
   Collection rebuild(void Function(CollectionBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -190,7 +171,6 @@ class CollectionBuilder implements Builder<Collection, CollectionBuilder> {
 
   @override
   void replace(Collection other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Collection;
   }
 
