@@ -72,7 +72,7 @@ Action _fieldElementToAction(ClassElement element, FieldElement field) =>
 // this is used so action whose payloads are of generated types
 // will not result in dynamic
 String _fieldType(ClassElement element, FieldElement field) {
-  if (field.isSynthetic) {
+  if (!field.isOriginDeclaration) {
     return _syntheticFieldType(element, field);
   }
   final fragment = field.firstFragment;

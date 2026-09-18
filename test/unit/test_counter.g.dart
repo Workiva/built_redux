@@ -94,12 +94,7 @@ class _$Counter extends Counter {
     required this.count,
     required this.otherCount,
     required this.subCounter,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(count, r'Counter', 'count');
-    BuiltValueNullFieldError.checkNotNull(otherCount, r'Counter', 'otherCount');
-    BuiltValueNullFieldError.checkNotNull(subCounter, r'Counter', 'subCounter');
-  }
-
+  }) : super._();
   @override
   Counter rebuild(void Function(CounterBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -168,7 +163,6 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   @override
   void replace(Counter other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Counter;
   }
 
@@ -224,10 +218,7 @@ class _$SubCounter extends SubCounter {
   factory _$SubCounter([void Function(SubCounterBuilder)? updates]) =>
       (SubCounterBuilder()..update(updates))._build();
 
-  _$SubCounter._({required this.subCount}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(subCount, r'SubCounter', 'subCount');
-  }
-
+  _$SubCounter._({required this.subCount}) : super._();
   @override
   SubCounter rebuild(void Function(SubCounterBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -277,7 +268,6 @@ class SubCounterBuilder implements Builder<SubCounter, SubCounterBuilder> {
 
   @override
   void replace(SubCounter other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubCounter;
   }
 

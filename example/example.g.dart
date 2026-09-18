@@ -40,10 +40,7 @@ class _$Counter extends Counter {
   factory _$Counter([void Function(CounterBuilder)? updates]) =>
       (CounterBuilder()..update(updates))._build();
 
-  _$Counter._({required this.count}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(count, r'Counter', 'count');
-  }
-
+  _$Counter._({required this.count}) : super._();
   @override
   Counter rebuild(void Function(CounterBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -93,7 +90,6 @@ class CounterBuilder implements Builder<Counter, CounterBuilder> {
 
   @override
   void replace(Counter other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Counter;
   }
 

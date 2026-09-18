@@ -53,14 +53,14 @@ class GrandparentActionsNames {
 // BuiltValueGenerator
 // **************************************************************************
 
-abstract class ParentBuilder {
+abstract mixin class ParentBuilder {
   void replace(Parent other);
   void update(void Function(ParentBuilder) updates);
   int? get parentCount;
   set parentCount(int? parentCount);
 }
 
-abstract class GrandparentBuilder {
+abstract mixin class GrandparentBuilder {
   void replace(Grandparent other);
   void update(void Function(GrandparentBuilder) updates);
   int? get grandparentCount;
@@ -82,16 +82,7 @@ class _$Child extends Child {
     required this.childCount,
     required this.parentCount,
     required this.grandparentCount,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(childCount, r'Child', 'childCount');
-    BuiltValueNullFieldError.checkNotNull(parentCount, r'Child', 'parentCount');
-    BuiltValueNullFieldError.checkNotNull(
-      grandparentCount,
-      r'Child',
-      'grandparentCount',
-    );
-  }
-
+  }) : super._();
   @override
   Child rebuild(void Function(ChildBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -162,7 +153,6 @@ class ChildBuilder
   @override
   // ignore: override_on_non_overriding_method
   void replace(covariant Child other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Child;
   }
 
